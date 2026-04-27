@@ -9,6 +9,7 @@ import DeficitClock from '../components/DeficitClock';
 import PersonalImpactCalculator from '../components/PersonalImpactCalculator';
 import RainyDayCountdown from '../components/RainyDayCountdown';
 import BudgetBreakdown from '../components/BudgetBreakdown.astro';
+import IFOPublications from '../components/IFOPublications.astro';
 import '../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
@@ -141,6 +142,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           depletionDateISO="2027-06-30"
           rainyDayBalanceUSD={rainyDayUSD}
         />
+      </section>
+
+      <section class="mt-20">
+        <IFOPublications />
       </section>
 
       <section class="mt-20 rounded-lg border border-white/10 bg-surface p-8">

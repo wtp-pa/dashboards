@@ -2,8 +2,9 @@ name: Data Pipeline
 
 on:
   schedule:
-    # Monthly on the 1st at 06:00 UTC. Each fetcher decides internally if its source has new data.
-    - cron: "0 6 1 * *"
+    # Weekly on Mondays at 06:00 UTC. Each fetcher decides internally if its source has new data;
+    # weekly cadence keeps the IFO publications card on the landing page reasonably fresh.
+    - cron: "0 6 * * MON"
   workflow_dispatch: {}
 
 permissions:
