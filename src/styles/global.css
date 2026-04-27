@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+/*
+ * Brand color tokens — APPROXIMATE, sampled from the WTP-PA logo.
+ * Replace with official brand kit hex codes when available.
+ * Keep in sync with src/config.ts (charts and OG images need hex values too).
+ */
+@theme {
+  --color-wtp-navy: #1B2A5E;
+  --color-wtp-gold: #D4B962;
+  --color-wtp-red: #C8262C;
+  --color-wtp-light-blue: #7FB6C0;
+  --color-page: #0A0E1A;
+  --color-surface: #13182B;
+}
+
+body {
+  background-color: var(--color-page);
+  color: white;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}

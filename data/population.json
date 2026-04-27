@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-26",
+  "source": {
+    "primary": "U.S. Census Bureau",
+    "url": "https://api.census.gov/",
+    "dataset": "ACS 5-year estimates"
+  },
+  "state": "Pennsylvania",
+  "stateAbbr": "PA",
+  "population": 13000000,
+  "households": 5100000,
+  "counties": 67,
+  "notes": "Approximate; refresh annually from Census ACS"
+}

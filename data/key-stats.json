@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-26",
+  "stats": [
+    {
+      "key": "spendingGrowthSince2018",
+      "value": "50%",
+      "label": "General Fund spending growth since FY 2018-19",
+      "source": "PA IFO"
+    },
+    {
+      "key": "medicaidGrowthSince2018",
+      "value": "71%",
+      "absoluteIncreaseUSD": 5000000000,
+      "label": "Medicaid spending growth since 2018",
+      "source": "Commonwealth Foundation"
+    },
+    {
+      "key": "longTermLivingGrowthVsRevenue",
+      "value": "3x faster",
+      "label": "Long-Term Living growth rate vs. state revenue",
+      "source": "PA IFO"
+    },
+    {
+      "key": "schoolDistrictReservesUSD",
+      "value": 6780000000,
+      "label": "School district reserves",
+      "source": "Commonwealth Foundation"
+    },
+    {
+      "key": "rainyDayFundBalanceUSD",
+      "value": 7000000000,
+      "label": "Rainy Day Fund balance",
+      "source": "PA Treasury"
+    },
+    {
+      "key": "generalFundDepletionFY",
+      "value": "2025-26",
+      "label": "Projected General Fund balance depletion (fiscal year)",
+      "source": "PA IFO"
+    },
+    {
+      "key": "rainyDayFundDepletionFY",
+      "value": "2026-27",
+      "label": "Projected Rainy Day Fund depletion (fiscal year)",
+      "source": "PA IFO"
+    },
+    {
+      "key": "deficitPerFamilyOf4USD",
+      "value": 1500,
+      "label": "Cost per PA family of 4 to close the deficit",
+      "source": "PA IFO / Commonwealth Foundation"
+    },
+    {
+      "key": "corporateWelfareUSD",
+      "value": 1490000000,
+      "label": "Corporate welfare spending",
+      "source": "Commonwealth Foundation"
+    }
+  ]
+}

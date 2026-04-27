@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-26",
+  "source": {
+    "primary": "PA Independent Fiscal Office (IFO)",
+    "url": "https://www.ifo.state.pa.us/",
+    "publication": "IFO Budget Brief, Feb 2026 + Fiscal Outlook"
+  },
+  "projections": [
+    {
+      "fiscalYear": "2025-26",
+      "structuralDeficitUSD": 3900000000,
+      "generalFundSpendingUSD": 50090000000,
+      "generalFundNetRevenueUSD": 45300000000,
+      "notes": "Enacted budget passed Nov 2025"
+    },
+    {
+      "fiscalYear": "2026-27",
+      "structuralDeficitUSD": 6700000000,
+      "notes": "Projected; assumes no policy changes"
+    },
+    {
+      "fiscalYear": "2029-30",
+      "structuralDeficitUSD": 8400000000,
+      "notes": "IFO 5-year Fiscal Outlook"
+    }
+  ]
+}
