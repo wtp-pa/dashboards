@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-26",
+  "fiscalYear": "2025-26",
+  "totalUSD": 45300000000,
+  "source": {
+    "primary": "PA Independent Fiscal Office",
+    "url": "https://www.ifo.state.pa.us/",
+    "notes": "FY 2025-26 General Fund net revenue. Breakdown approximated from IFO Monthly Revenue Update categories and FY 2024-25 actuals (proportions are highly stable year over year). Verify exact dollars against latest IFO publication before any public launch."
+  },
+  "sources": [
+    {
+      "key": "personalIncomeTax",
+      "label": "Personal Income Tax",
+      "amountUSD": 18500000000,
+      "shortDescription": "PA's flat 3.07% tax on wages and most income — paid by working Pennsylvanians and retirees with taxable income"
+    },
+    {
+      "key": "salesAndUseTax",
+      "label": "Sales and Use Tax",
+      "amountUSD": 13500000000,
+      "shortDescription": "6% on most retail purchases (with exemptions for groceries, clothing, and prescriptions)"
+    },
+    {
+      "key": "corporateNetIncomeTax",
+      "label": "Corporate Net Income Tax",
+      "amountUSD": 4000000000,
+      "shortDescription": "Tax on corporate profits — rate is being phased down to 4.99% by 2031"
+    },
+    {
+      "key": "otherTaxes",
+      "label": "Other Taxes",
+      "amountUSD": 5800000000,
+      "shortDescription": "Cigarette, liquor, gross receipts, inheritance, realty transfer, and other tax revenues"
+    },
+    {
+      "key": "nonTaxRevenue",
+      "label": "Non-Tax Revenue",
+      "amountUSD": 3500000000,
+      "shortDescription": "Licenses, fees, fines, treasury investment earnings"
+    }
+  ]
+}

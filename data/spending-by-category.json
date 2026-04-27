@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-26",
+  "fiscalYear": "2025-26",
+  "totalUSD": 50090000000,
+  "source": {
+    "primary": "Pennsylvania Enacted Budget FY 2025-26",
+    "secondary": "PA Office of the Budget",
+    "url": "https://www.budget.pa.gov/",
+    "notes": "Approximated from FY 2025-26 enacted budget summary categories. Department-level dollar amounts vary year over year; proportions are stable. Verify exact dollars against the official Enacted Budget line-item book before any public launch."
+  },
+  "categories": [
+    {
+      "key": "humanServices",
+      "label": "Human Services",
+      "amountUSD": 22000000000,
+      "shortDescription": "Mostly Medicaid (Medical Assistance), Long-Term Living, child welfare, mental health — fastest-growing spending area",
+      "majorSubcategories": ["Medical Assistance", "Long-Term Living", "Cash Assistance"]
+    },
+    {
+      "key": "education",
+      "label": "Education",
+      "amountUSD": 15000000000,
+      "shortDescription": "Pre-K-12 basic and special education, plus state appropriations to PASSHE / community colleges / state-related universities",
+      "majorSubcategories": ["Pre-K-12 Basic Education", "Special Education", "Higher Education"]
+    },
+    {
+      "key": "corrections",
+      "label": "Corrections",
+      "amountUSD": 3000000000,
+      "shortDescription": "State prisons, probation, parole — incarcerates ~37,000 people"
+    },
+    {
+      "key": "debtAndTreasury",
+      "label": "Debt Service & Treasury",
+      "amountUSD": 2000000000,
+      "shortDescription": "Interest and principal payments on outstanding state debt"
+    },
+    {
+      "key": "otherDepartments",
+      "label": "All Other Departments",
+      "amountUSD": 8090000000,
+      "shortDescription": "Health, Agriculture, Environmental Protection, Transportation match, State Police, Labor, Aging, Military Affairs, and dozens of smaller agencies"
+    }
+  ]
+}
