@@ -1,0 +1,44 @@
+import { useEffect, useState } from "react";
+import { formatCurrencyFull } from "../lib/format";
+import { accruedDeficit, fiscalYearBounds } from "../lib/fiscal";
+
+interface Props {
+  fiscalYear: string;
+  annualDeficitUSD: number;
+}
+
+export default function DeficitClock({ fiscalYear, annualDeficitUSD }: Props) {
+  const { start, end } = fiscalYearBounds(fiscalYear);
+  const [accrued, setAccrued] = useState(() =>
+    accruedDeficit(annualDeficitUSD, start, end),
+  );
+
+  useEffect(() => {
+    const reducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion) return;
+
+    const id = setInterval(() => {
+      setAccrued(accruedDeficit(annualDeficitUSD, start, end));
+    }, 100);
+    return () => clearInterval(id);
+  }, [annualDeficitUSD, start.getTime(), end.getTime()]);
+
+  const annualB = (annualDeficitUSD / 1e9).toFixed(1);
+
+  return (
+    <div className="text-center">
+      <div className="font-mono text-4xl font-bold text-wtp-red tabular-nums tracking-tight md:text-7xl">
+        {formatCurrencyFull(accrued)}
+      </div>
+      <div className="mt-4 text-xs uppercase tracking-[0.2em] text-white/60">
+        FY {fiscalYear} structural deficit accrued so far
+      </div>
+      <div className="mt-1 text-xs text-white/40">
+        of ${annualB}B projected annual total · Source: PA Independent Fiscal Office
+      </div>
+    </div>
+  );
+}

@@ -2,15 +2,31 @@
 import { config } from '../config';
 import projections from '../../data/projections.json';
 import keyStats from '../../data/key-stats.json';
+import population from '../../data/population.json';
+import DeficitClock from '../components/DeficitClock';
+import PersonalImpactCalculator from '../components/PersonalImpactCalculator';
+import RainyDayCountdown from '../components/RainyDayCountdown';
 import '../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
-const currentDeficitB = currentFY ? (currentFY.structuralDeficitUSD / 1e9).toFixed(1) : '—';
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
+const generalFundSpending = currentFY?.generalFundSpendingUSD ?? 50_090_000_000;
 
 const stat = (key: string) => keyStats.stats.find((s) => s.key === key);
 const familyShare = stat('deficitPerFamilyOf4USD');
+const rainyDayBalance = stat('rainyDayFundBalanceUSD');
 const medicaid = stat('medicaidGrowthSince2018');
 const reserves = stat('schoolDistrictReservesUSD');
+
+const baseFamilyShareUSD = typeof familyShare?.value === 'number' ? familyShare.value : 1500;
+const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 7_000_000_000;
+
+const annualB = (annualDeficit / 1e9).toFixed(1);
+const spendingB = (generalFundSpending / 1e9).toFixed(2);
+
+const pageTitle = `${config.project.name} — ${config.party.shortName}`;
+const pageDescription = `Pennsylvania faces a $${annualB}B structural deficit. Track it in real time. Built by ${config.party.shortName}.`;
+const ogImageUrl = new URL(config.brand.logoPath, Astro.url).toString();
 ---
 
 <html lang="en">
@@ -19,11 +35,19 @@ const reserves = stat('schoolDistrictReservesUSD');
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{config.project.name} — {config.party.shortName}</title>
-    <meta
-      name="description"
-      content={`Tracking PA's structural deficit and budget. Built by ${config.party.shortName}.`}
-    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.toString()} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
   </head>
   <body class="min-h-screen bg-page text-white">
     <header class="border-b border-white/10 px-6 py-4">
@@ -36,21 +60,25 @@ const reserves = stat('schoolDistrictReservesUSD');
       </div>
     </header>
 
-    <main class="mx-auto max-w-6xl px-6 py-16">
-      <section class="text-center">
-        <p class="text-sm uppercase tracking-widest text-wtp-gold">Coming Soon</p>
-        <h1 class="mt-2 text-4xl font-bold leading-tight md:text-6xl">
-          Pennsylvania's Structural Deficit
-        </h1>
-        <div class="mt-8 font-mono text-6xl text-wtp-red md:text-8xl">
-          ${currentDeficitB}B
+    <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <section>
+        <p class="text-center text-xs uppercase tracking-[0.2em] text-wtp-gold">
+          Pennsylvania's structural deficit
+        </p>
+        <h1 class="sr-only">Pennsylvania Structural Deficit Counter</h1>
+        <div class="mt-8">
+          <DeficitClock
+            client:load
+            fiscalYear="2025-26"
+            annualDeficitUSD={annualDeficit}
+          />
         </div>
-        <p class="mt-4 text-sm text-white/70">
-          FY 2025-26 — Source: PA Independent Fiscal Office
+        <p class="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-white/70">
+          Pennsylvania's General Fund is on track to spend <strong class="text-white">${spendingB}B</strong> this fiscal year while collecting only ~$45.3B in revenue. The <strong class="text-wtp-red">${annualB}B</strong> gap is the structural deficit — projected to grow to $6.7B next year and $8.4B by FY 2029-30.
         </p>
       </section>
 
-      <section class="mt-20 grid gap-6 md:grid-cols-3">
+      <section class="mt-24 grid gap-6 md:grid-cols-3">
         <div class="rounded-lg border border-white/10 bg-surface p-6">
           <div class="text-3xl font-bold text-wtp-red">${familyShare?.value ?? '—'}</div>
           <div class="mt-2 text-sm text-white/70">{familyShare?.label}</div>
@@ -68,12 +96,28 @@ const reserves = stat('schoolDistrictReservesUSD');
         </div>
       </section>
 
+      <section class="mt-12 grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <PersonalImpactCalculator
+            client:visible
+            baseFamilyShareUSD={baseFamilyShareUSD}
+            totalDeficitUSD={annualDeficit}
+            totalHouseholds={population.households}
+          />
+        </div>
+        <RainyDayCountdown
+          client:visible
+          depletionDateISO="2027-06-30"
+          rainyDayBalanceUSD={rainyDayUSD}
+        />
+      </section>
+
       <section class="mt-20 rounded-lg border border-white/10 bg-surface p-8">
         <h2 class="text-2xl font-bold">What's Being Built</h2>
         <ul class="mt-6 space-y-3 text-white/80">
-          <li><strong class="text-white">Phase 1:</strong> Live deficit clock, key stats, social sharing</li>
-          <li><strong class="text-white">Phase 2:</strong> Spending breakdown by department, revenue vs. spending tracker</li>
-          <li><strong class="text-white">Phase 3:</strong> Personal impact calculator, embed widgets</li>
+          <li><strong class="text-white">Phase 1:</strong> Live deficit clock <span class="text-wtp-gold">(live above)</span>, key stats, social sharing</li>
+          <li><strong class="text-white">Phase 2:</strong> Spending breakdown by department (treemap), revenue vs. spending tracker</li>
+          <li><strong class="text-white">Phase 3:</strong> Personal impact calculator <span class="text-wtp-gold">(live above)</span>, embed widgets</li>
           <li><strong class="text-white">Phase 4:</strong> Budget vs. actual variance, vendor leaderboard, contract scrutiny</li>
         </ul>
       </section>
