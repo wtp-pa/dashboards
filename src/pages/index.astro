@@ -26,7 +26,9 @@ const spendingB = (generalFundSpending / 1e9).toFixed(2);
 
 const pageTitle = `${config.project.name} — ${config.party.shortName}`;
 const pageDescription = `Pennsylvania faces a $${annualB}B structural deficit. Track it in real time. Built by ${config.party.shortName}.`;
-const ogImageUrl = new URL(config.brand.logoPath, Astro.url).toString();
+const siteOrigin = Astro.site ?? Astro.url;
+const ogImageUrl = new URL(config.brand.logoPath, siteOrigin).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 ---
 
 <html lang="en">
@@ -42,7 +44,7 @@ const ogImageUrl = new URL(config.brand.logoPath, Astro.url).toString();
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url.toString()} />
+    <meta property="og:url" content={canonicalUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
