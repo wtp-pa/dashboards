@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-04-27",
+  "fiscalYear": "2024-25",
+  "totalFederalFundsToPaUSD": 50000000000,
+  "source": {
+    "primary": "USAspending.gov + KFF Medicaid State Indicators + PA Office of the Budget federal funds reporting",
+    "url": "https://www.usaspending.gov/state/pennsylvania",
+    "notes": "Approximated. Federal funds to PA vary year to year (especially with one-time spikes like ARPA). FMAP rates are set by HHS and reported in CMS data. Verify exact dollars against current USAspending.gov state page and KFF state Medicaid indicators before any public launch."
+  },
+  "majorPrograms": [
+    {
+      "key": "medicaid",
+      "label": "Medicaid (Medical Assistance)",
+      "amountUSD": 17000000000,
+      "shortDescription": "Largest single federal flow. FMAP ~52% for traditional Medicaid, 90% for ACA expansion population. Covers ~3 million Pennsylvanians."
+    },
+    {
+      "key": "snap",
+      "label": "SNAP (Food Stamps)",
+      "amountUSD": 3500000000,
+      "shortDescription": "100% federally funded benefits to PA residents; state administers eligibility"
+    },
+    {
+      "key": "education",
+      "label": "Education",
+      "amountUSD": 3000000000,
+      "shortDescription": "Title I (low-income districts), IDEA (special education), Pell Grants, federal student aid"
+    },
+    {
+      "key": "highway",
+      "label": "Highway & Transportation",
+      "amountUSD": 2000000000,
+      "shortDescription": "Federal Highway Trust Fund — matches state PennDOT spending on roads, bridges, transit"
+    },
+    {
+      "key": "otherFederal",
+      "label": "Other Federal Programs",
+      "amountUSD": 24500000000,
+      "shortDescription": "TANF, WIC, housing assistance, environmental, public safety, infrastructure, unemployment admin, ARPA tail, agricultural, etc."
+    }
+  ],
+  "riskScenarios": [
+    {
+      "key": "fmapCut10pct",
+      "label": "Federal Medicaid match drops 10%",
+      "deficitImpactUSD": 1700000000,
+      "shortDescription": "PA owes roughly $1.7B more from state funds — adds ~45% to the current $3.9B structural deficit"
+    },
+    {
+      "key": "expansionRepeal",
+      "label": "ACA Medicaid expansion repealed",
+      "deficitImpactUSD": 4000000000,
+      "shortDescription": "PA loses the 90% federal match for ~700,000 expansion enrollees; state on hook for full coverage or has to drop the population"
+    },
+    {
+      "key": "snapCutsTransfer",
+      "label": "Federal SNAP costs partly shifted to states",
+      "deficitImpactUSD": 700000000,
+      "shortDescription": "Recent federal proposals would transfer some SNAP benefit costs to states based on payment-error rates; PA's share would be ~$700M annually"
+    }
+  ]
+}

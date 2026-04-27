@@ -10,6 +10,7 @@ import PersonalImpactCalculator from '../components/PersonalImpactCalculator';
 import RainyDayCountdown from '../components/RainyDayCountdown';
 import BudgetBreakdown from '../components/BudgetBreakdown.astro';
 import IFOPublications from '../components/IFOPublications.astro';
+import FederalContext from '../components/FederalContext.astro';
 import '../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
@@ -108,6 +109,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <p class="mt-10 max-w-3xl text-base leading-relaxed text-white/80">
           The <strong class="text-wtp-red">~${gapB} billion gap</strong> between what comes in and what goes out is the structural deficit ticking above. It's projected to grow to <strong class="text-white">$6.7 billion</strong> next year and <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes.
         </p>
+      </section>
+
+      <section class="mt-24">
+        <FederalContext />
       </section>
 
       <section class="mt-24 grid gap-6 md:grid-cols-3">
