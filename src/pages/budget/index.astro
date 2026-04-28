@@ -26,6 +26,7 @@ const baseFamilyShareUSD = typeof familyShare?.value === 'number' ? familyShare.
 const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 7_000_000_000;
 
 const annualB = (annualDeficit / 1e9).toFixed(1);
+const gapB = ((spendingByCategory.totalUSD - revenueSources.totalUSD) / 1e9).toFixed(1);
 
 const pageTitle = `${config.project.name} — ${config.party.shortName}`;
 const pageDescription = `Pennsylvania faces a $${annualB}B structural deficit. Track it in real time. Built by ${config.party.shortName}.`;
@@ -84,6 +85,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
       <section class="mt-24" id="how-it-works">
         <h2 class="text-3xl font-bold md:text-4xl">How Pennsylvania's money works</h2>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-white/80">
+          The <strong class="text-white">General Fund</strong> is the state's main operating budget. Each year it collects about <strong class="text-white">$45 billion</strong> — almost entirely from income and sales taxes paid by working Pennsylvanians — and spends about <strong class="text-white">$50 billion</strong> on services, mostly Medicaid and education.
+        </p>
 
         <div class="mt-10 grid gap-6 lg:grid-cols-2">
           <BudgetBreakdown
@@ -101,6 +105,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             source={spendingByCategory.source.primary}
           />
         </div>
+
+        <p class="mt-10 max-w-3xl text-base leading-relaxed text-white/80">
+          The <strong class="text-wtp-red">~${gapB} billion gap</strong> between what comes in and what goes out is the structural deficit ticking above. It's projected to grow to <strong class="text-white">$6.7 billion</strong> next year and <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes.
+        </p>
       </section>
 
       <section class="mt-24">

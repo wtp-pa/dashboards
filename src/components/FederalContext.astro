@@ -11,6 +11,14 @@ const medicaidB = medicaidProgram ? (medicaidProgram.amountUSD / 1e9).toFixed(0)
   <p class="text-xs uppercase tracking-[0.2em] text-wtp-gold">Federal dependency</p>
   <h2 class="mt-2 text-3xl font-bold md:text-4xl">The other ${totalB} billion</h2>
 
+  <p class="mt-6 max-w-3xl text-base leading-relaxed text-white/80">
+    Pennsylvania doesn't only spend the <strong class="text-white">$50 billion</strong> from its General Fund. It also receives roughly <strong class="text-white">${totalB} billion</strong> in federal dollars each year — a parallel river of money that flows into Medicaid, education, food assistance, transportation, and dozens of smaller programs. About a third of that, <strong class="text-white">~${medicaidB} billion</strong>, is the federal share of PA's Medicaid program.
+  </p>
+
+  <p class="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
+    The structural deficit ticking at the top of this page <strong class="text-wtp-gold">assumes that money keeps flowing</strong>. If it gets cut, the gap grows fast.
+  </p>
+
   <div class="mt-10">
     <BudgetBreakdown
       title="Federal dollars flowing into PA"
