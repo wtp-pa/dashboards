@@ -4,7 +4,7 @@
 
 ## Where you are
 
-- **Local dir**: `/Users/xtina/Projects/WTP/wtp-budget-watch/` (the directory name is historical; the GitHub repo is now `wtp-pa/dashboards`. Optionally rename locally to match.)
+- **Local dir**: `/Users/xtina/Projects/WTP/dashboards/`
 - **GitHub repo**: <https://github.com/wtp-pa/dashboards>
 - **Live site**: <https://dashboards.wtpppa.org>
 - **Memory dir**: `/Users/xtina/.claude/projects/-Users-xtina-Projects-WTP/memory/` — read this on startup. It contains user profile, GitHub identities, brand info, project history, and behavioral feedback from prior sessions. Critical context lives there.
