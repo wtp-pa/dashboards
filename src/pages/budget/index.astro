@@ -115,7 +115,25 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <FederalContext />
       </section>
 
-      <section class="mt-24 grid gap-6 md:grid-cols-3">
+      <section class="mt-20 overflow-hidden rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 text-center md:p-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Empowering People · Restoring Trust</p>
+        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
+          Want a state government that earns your trust?
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
+          We The People Party of Pennsylvania believes accountability requires data, not slogans. If you want a different kind of state party — one that shows you the numbers and follows through — become a member.
+        </p>
+        <a
+          href="https://www.wtpppa.org/membership"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-8 inline-block rounded-md bg-wtp-sky px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-wtp-navy no-underline transition hover:bg-wtp-cream"
+        >
+          Become a Member →
+        </a>
+      </section>
+
+      <section class="mt-20 grid gap-6 md:grid-cols-3">
         <div class="rounded-lg border border-white/10 bg-surface p-6">
           <div class="text-3xl font-bold text-wtp-red">${familyShare?.value ?? '—'}</div>
           <div class="mt-2 text-sm text-wtp-cream/70">{familyShare?.label}</div>
@@ -151,24 +169,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
       <section class="mt-20">
         <IFOPublications />
-      </section>
-
-      <section class="mt-24 overflow-hidden rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 text-center md:p-14">
-        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Empowering People · Restoring Trust</p>
-        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
-          Want a state government that earns your trust?
-        </h2>
-        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
-          We The People Party of Pennsylvania believes accountability requires data, not slogans. If you want a different kind of state party — one that shows you the numbers and follows through — become a founding member.
-        </p>
-        <a
-          href="https://www.wtpppa.org/membership"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-8 inline-block rounded-md bg-wtp-sky px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-wtp-navy no-underline transition hover:bg-wtp-cream"
-        >
-          Become a Founding Member →
-        </a>
       </section>
     </main>
 

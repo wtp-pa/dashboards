@@ -31,7 +31,7 @@ export const config = {
       red: "#C8262C",
       white: "#FFFFFF",
       page: "#08091F",
-      surface: "#15184E",
+      surface: "#1B1F5E",
     },
     fontFamily: '"Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif',
     logoPath: "/wtp-logo.png",
