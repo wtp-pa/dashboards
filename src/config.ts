@@ -35,6 +35,7 @@ export const config = {
     },
     fontFamily: '"Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif',
     logoPath: "/wtp-logo.png",
+    ogImagePath: "/og-image.png",
   },
   project: {
     // The currently-built project. Used by /budget pages and the embed widget.

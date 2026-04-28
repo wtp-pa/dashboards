@@ -32,7 +32,7 @@ const gapB = ((spendingByCategory.totalUSD - revenueSources.totalUSD) / 1e9).toF
 const pageTitle = `${config.project.name} — ${config.party.shortName}`;
 const pageDescription = `Pennsylvania faces a $${annualB}B structural deficit. Track it in real time. Built by ${config.party.shortName}.`;
 const siteOrigin = Astro.site ?? Astro.url;
-const ogImageUrl = new URL(config.brand.logoPath, siteOrigin).toString();
+const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 ---
 
@@ -58,13 +58,19 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
   </head>
   <body class="min-h-screen bg-page text-white">
     <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center gap-3">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-3">
         <a href="/" class="flex items-center gap-3 hover:opacity-80 transition">
           <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-12 w-auto" />
           <div>
             <div class="text-sm text-wtp-cream/60">{config.party.name}</div>
             <div class="text-lg font-semibold">{config.project.name}</div>
           </div>
+        </a>
+        <a
+          href={config.party.website}
+          class="hidden text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky sm:inline-block"
+        >
+          wtpppa.org →
         </a>
       </div>
     </header>

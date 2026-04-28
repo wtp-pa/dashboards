@@ -13,7 +13,7 @@ const lastIFORefreshFormatted = new Intl.DateTimeFormat('en-US', {
 const pageTitle = `Methodology — ${config.project.name}`;
 const pageDescription = `How PA Budget Watch works: where the data comes from, what's auto-updated, and what to keep in mind.`;
 const siteOrigin = Astro.site ?? Astro.url;
-const ogImageUrl = new URL(config.brand.logoPath, siteOrigin).toString();
+const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 ---
 
@@ -34,13 +34,19 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
   </head>
   <body class="min-h-screen bg-page text-white">
     <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center gap-3">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-3">
         <a href="/" class="flex items-center gap-3 hover:opacity-80 transition">
           <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-12 w-auto" />
           <div>
             <div class="text-sm text-wtp-cream/60">{config.party.name}</div>
             <div class="text-lg font-semibold">{config.project.name}</div>
           </div>
+        </a>
+        <a
+          href={config.party.website}
+          class="hidden text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky sm:inline-block"
+        >
+          wtpppa.org →
         </a>
       </div>
     </header>

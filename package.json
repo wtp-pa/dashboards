@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node scripts/generate-og.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "og:gen": "node scripts/generate-og.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",
@@ -20,5 +22,10 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@fontsource/poppins": "^5.2.7",
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.26.0"
   }
 }
