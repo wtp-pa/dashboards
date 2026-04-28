@@ -9,41 +9,48 @@ const encoded = encodeURIComponent(tweetText);
 const encodedUrl = encodeURIComponent(url);
 const twitterHref = `https://twitter.com/intent/tweet?text=${encoded}&url=${encodedUrl}`;
 const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+
+const baseBtn = "inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/15 bg-surface/50 text-wtp-cream/80 transition hover:border-wtp-sky/60 hover:text-wtp-sky";
 ---
 
-<div class="mt-10 flex flex-wrap items-center justify-center gap-2 text-sm sm:gap-3">
+<div class="mt-10 flex flex-wrap items-center justify-center gap-2 text-sm">
   <span class="text-wtp-cream/50">Share:</span>
 
   <a
     href={twitterHref}
     target="_blank"
     rel="noopener noreferrer"
-    class="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-surface/50 px-3 py-1.5 text-wtp-cream/80 no-underline transition hover:border-wtp-sky/60 hover:text-wtp-sky"
-    aria-label="Share on X (Twitter)"
+    class={baseBtn + " no-underline"}
+    aria-label="Share on X"
+    title="Share on X"
   >
     <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    X
   </a>
 
   <a
     href={facebookHref}
     target="_blank"
     rel="noopener noreferrer"
-    class="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-surface/50 px-3 py-1.5 text-wtp-cream/80 no-underline transition hover:border-wtp-sky/60 hover:text-wtp-sky"
+    class={baseBtn + " no-underline"}
     aria-label="Share on Facebook"
+    title="Share on Facebook"
   >
     <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-    Facebook
   </a>
 
   <button
     type="button"
     data-share-instagram={url}
-    class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-white/15 bg-surface/50 px-3 py-1.5 text-wtp-cream/80 transition hover:border-wtp-sky/60 hover:text-wtp-sky"
-    aria-label="Share on Instagram"
+    class={baseBtn + " cursor-pointer"}
+    aria-label="Share on Instagram (copies link)"
+    title="Share on Instagram (copies link)"
   >
-    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.07 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07C3.892 21.84 2.357 20.286 2.21 17.061c-.058-1.265-.07-1.644-.07-4.849s.013-3.584.07-4.849C2.358 4.135 3.873 2.589 7.151 2.43 8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-    <span data-share-instagram-label>Instagram</span>
+    <span class="share-icon" data-share-icon-default>
+      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.07 4.849c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07C3.892 21.84 2.357 20.286 2.21 17.061c-.058-1.265-.07-1.644-.07-4.849s.013-3.584.07-4.849C2.358 4.135 3.873 2.589 7.151 2.43 8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+    </span>
+    <span class="share-icon hidden text-wtp-sky" data-share-icon-success>
+      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
   </button>
 
   <button
@@ -51,25 +58,43 @@ const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}
     data-share-native
     data-share-url={url}
     data-share-text={tweetText}
-    class="hidden cursor-pointer items-center gap-1.5 rounded-md border border-white/15 bg-surface/50 px-3 py-1.5 text-wtp-cream/80 transition hover:border-wtp-sky/60 hover:text-wtp-sky"
+    class={"hidden " + baseBtn + " cursor-pointer"}
     aria-label="Share via your device"
+    title="Share via your device"
   >
     <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true"><circle cx="18" cy="5" r="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="19" r="3" stroke-linecap="round" stroke-linejoin="round"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-linecap="round"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-linecap="round"/></svg>
-    Share
   </button>
 
   <button
     type="button"
     data-share-copy={url}
-    class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-white/15 bg-surface/50 px-3 py-1.5 text-wtp-cream/80 transition hover:border-wtp-sky/60 hover:text-wtp-sky"
+    class={baseBtn + " cursor-pointer"}
+    aria-label="Copy link"
+    title="Copy link"
   >
-    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span data-share-copy-label>Copy link</span>
+    <span class="share-icon" data-share-icon-default>
+      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <span class="share-icon hidden text-wtp-sky" data-share-icon-success>
+      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-none stroke-current stroke-2" aria-hidden="true"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
   </button>
 </div>
 
 <script is:inline>
-  // Reveal native share button only if Web Share API is available (typically mobile).
+  function flashSuccess(btn) {
+    const def = btn.querySelector("[data-share-icon-default]");
+    const ok = btn.querySelector("[data-share-icon-success]");
+    if (!def || !ok) return;
+    def.classList.add("hidden");
+    ok.classList.remove("hidden");
+    setTimeout(() => {
+      ok.classList.add("hidden");
+      def.classList.remove("hidden");
+    }, 1800);
+  }
+
+  // Native share — only show on devices that support it
   if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
     document.querySelectorAll("[data-share-native]").forEach((btn) => {
       btn.classList.remove("hidden");
@@ -88,39 +113,32 @@ const facebookHref = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}
     });
   }
 
-  // Copy-link
+  // Copy link
   document.querySelectorAll("[data-share-copy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const url = btn.getAttribute("data-share-copy");
-      const label = btn.querySelector("[data-share-copy-label]");
-      if (!url || !label) return;
+      if (!url) return;
       try {
         await navigator.clipboard.writeText(url);
-        const original = label.textContent;
-        label.textContent = "Copied ✓";
-        setTimeout(() => { label.textContent = original; }, 2000);
+        flashSuccess(btn);
       } catch (err) {
         console.error("Copy failed", err);
       }
     });
   });
 
-  // Instagram: copy link, open instagram.com, hint to user.
+  // Instagram: copy link, open instagram.com
   document.querySelectorAll("[data-share-instagram]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const url = btn.getAttribute("data-share-instagram");
-      const label = btn.querySelector("[data-share-instagram-label]");
-      if (!url || !label) return;
+      if (!url) return;
       try {
         await navigator.clipboard.writeText(url);
       } catch (err) {
-        // ignore — most browsers allow it
+        // ignore — clipboard may not be available
       }
-      const original = label.textContent;
-      label.textContent = "Link copied ✓";
-      // Open Instagram in a new tab so user can paste in story/DM
+      flashSuccess(btn);
       window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
-      setTimeout(() => { label.textContent = original; }, 3000);
     });
   });
 </script>

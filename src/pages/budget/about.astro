@@ -34,20 +34,18 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
   </head>
   <body class="min-h-screen bg-page text-white">
     <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-3">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <a href="/" class="flex items-center gap-3 hover:opacity-80 transition">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-12 w-auto" />
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto sm:h-12" />
           <div>
-            <div class="text-sm text-wtp-cream/60">{config.party.name}</div>
-            <div class="text-lg font-semibold">{config.project.name}</div>
+            <div class="text-xs text-wtp-cream/60 sm:text-sm">{config.party.name}</div>
+            <div class="text-base font-semibold sm:text-lg">{config.project.name}</div>
           </div>
         </a>
-        <a
-          href={config.party.website}
-          class="hidden text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky sm:inline-block"
-        >
-          wtpppa.org →
-        </a>
+        <nav class="flex items-center gap-4 text-sm">
+          <a href="/budget/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Dashboard</a>
+          <a href={config.party.website} class="text-wtp-cream/70 no-underline hover:text-wtp-sky">wtpppa.org →</a>
+        </nav>
       </div>
     </header>
 

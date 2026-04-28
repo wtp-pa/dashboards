@@ -1,0 +1,36 @@
+---
+import federalData from '../../data/federal-funds.json';
+---
+
+<div class="rounded-lg border border-wtp-red/30 bg-wtp-red/5 p-6 md:p-8">
+  <div class="flex items-start gap-3">
+    <span class="mt-0.5 text-2xl leading-none">⚠</span>
+    <div>
+      <h3 class="text-xl font-bold text-wtp-red">Cliff scenarios</h3>
+      <p class="mt-2 text-sm text-wtp-cream/70">
+        What happens to PA's structural deficit if any of these federal cuts materialize:
+      </p>
+    </div>
+  </div>
+
+  <dl class="mt-6 space-y-5">
+    {federalData.riskScenarios.map((scenario) => (
+      <div class="flex items-start gap-4 border-l-2 border-wtp-red/40 pl-4">
+        <div class="flex-1">
+          <dt class="font-semibold text-white">{scenario.label}</dt>
+          <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/70">{scenario.shortDescription}</dd>
+        </div>
+        <div class="flex-shrink-0 text-right">
+          <div class="font-mono text-2xl font-bold text-wtp-red md:text-3xl">
+            +${(scenario.deficitImpactUSD / 1e9).toFixed(1)}B
+          </div>
+          <div class="text-xs text-wtp-cream/40">added to deficit</div>
+        </div>
+      </div>
+    ))}
+  </dl>
+
+  <p class="mt-6 text-xs text-wtp-cream/40">
+    Sources: KFF Medicaid State Indicators, CMS FMAP tables, PA Office of the Budget federal funds reporting. Scenario impacts are estimates based on current program sizes; actual cuts would depend on specific federal legislation.
+  </p>
+</div>
