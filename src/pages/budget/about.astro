@@ -1,0 +1,144 @@
+---
+import { config } from '../../config';
+import projections from '../../../data/projections.json';
+import ifoData from '../../../data/ifo-publications.json';
+import '../../styles/global.css';
+
+const lastIFORefresh = new Date(ifoData.lastUpdated);
+const lastIFORefreshFormatted = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long',
+  timeZone: 'America/New_York',
+}).format(lastIFORefresh);
+
+const pageTitle = `Methodology — ${config.project.name}`;
+const pageDescription = `How PA Budget Watch works: where the data comes from, what's auto-updated, and what to keep in mind.`;
+const siteOrigin = Astro.site ?? Astro.url;
+const ogImageUrl = new URL(config.brand.logoPath, siteOrigin).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center gap-3">
+        <a href="/" class="flex items-center gap-3 hover:opacity-80 transition">
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-12 w-auto" />
+          <div>
+            <div class="text-sm text-wtp-cream/60">{config.party.name}</div>
+            <div class="text-lg font-semibold">{config.project.name}</div>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-6 py-16 md:py-24">
+      <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Methodology</p>
+      <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">How PA Budget Watch works</h1>
+      <p class="mt-6 text-base leading-relaxed text-wtp-cream/80 md:text-lg">
+        Every number on this dashboard comes from a public source we cite. This page explains where each piece of data comes from, what's automatically refreshed, and what you should keep in mind when reading it.
+      </p>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">What "structural deficit" means</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          Pennsylvania's General Fund — the state's main operating budget — is on track to spend roughly $50 billion this fiscal year while collecting about $45 billion in revenue. The gap between the two is the operating deficit; the portion that's <em>permanent and recurring</em> rather than papered over with one-time funds is what economists call the <strong class="text-white">structural deficit</strong>. The PA Independent Fiscal Office (IFO) currently puts that figure at <strong class="text-wtp-red">$3.9 billion</strong> for FY 2025-26, projected to grow to $6.7 billion next year and $8.4 billion by FY 2029-30 if nothing changes.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">Where each number comes from</h2>
+        <dl class="mt-6 space-y-6">
+          <div>
+            <dt class="font-semibold text-white">Live deficit ticker</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Calculated from IFO's $3.9B annual structural deficit projection, ticked up second by second based on fraction of the fiscal year elapsed (PA's fiscal year runs July 1 – June 30). The number you see is "deficit accrued so far this fiscal year." Source: <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">PA IFO</a>.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Revenue and spending breakdowns</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              FY 2025-26 General Fund totals (~$45B revenue, ~$50B spending) approximated from the PA IFO Monthly Revenue Update categories and the FY 2025-26 Enacted Budget published by the Office of the Budget. Per-category percentages are stable year over year; the dollar splits shown are good approximations and will be replaced with live monthly actuals in Phase 2.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Federal funding context + cliff scenarios</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Compiled from <a href="https://www.usaspending.gov/state/pennsylvania" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov</a> (federal awards to PA), KFF Medicaid State Indicators (FMAP rates), and the Office of the Budget federal funds reporting. The cliff scenarios (FMAP cut, ACA expansion repeal, SNAP cost-shift) are modeled estimates based on current program sizes; actual cuts would depend on specific federal legislation.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Personal impact calculator</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Anchored on IFO's own "$1,500 per family of 4" figure for closing the FY 2025-26 deficit. We scale per capita by household size, then for the time-horizon view we sum projected annual shares using IFO's growth curve ($3.9B → $6.7B → $8.4B), extrapolated linearly beyond FY 2029-30.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Rainy Day Fund countdown</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Counts down to the IFO-projected end of the Rainy Day Fund's depletion window (FY 2026-27). Based on the current ~$7B balance and the projected drawdown rate.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Latest from PA IFO</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Scraped automatically from <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">ifo.state.pa.us</a> by a GitHub Actions cron job that runs every Monday at 06:00 UTC. The five most recent publications are pulled and committed to the repo as a JSON file. New publications appear here within ~7 days of being released. Last refreshed: <strong class="text-white">{lastIFORefreshFormatted}</strong>.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">What's auto-updated vs. seed data</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          The IFO publications card is the only fully-live data source on this dashboard right now. Every other number was compiled from official PA sources and committed manually to the repository as JSON. Phase 2 of this project (planned) will add automated fetchers for monthly revenue, department-level spending, and federal funding flows.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">Limitations and caveats</h2>
+        <ul class="mt-4 space-y-3 text-base leading-relaxed text-wtp-cream/80">
+          <li>— Per-category dollar splits are approximate; absolute totals reconcile with IFO and Office of the Budget figures, but per-line splits will refine as live fetchers come online.</li>
+          <li>— "Cliff scenarios" are modeled estimates, not predictions. Their purpose is to show order-of-magnitude impact, not to forecast specific federal cuts.</li>
+          <li>— The personal impact calculator uses a per-capita scaling assumption that's editorial — not all households would actually pay the same share if the deficit were closed via taxes (PA's flat income tax means scaling is roughly linear, but exemptions and credits vary).</li>
+          <li>— Brand colors are pulled from the WTP-PA Squarespace site palette; the dashboard logo file is currently a PNG converted from the source WebP.</li>
+        </ul>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">Want to verify or contribute?</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          The full source code is open at <a href={config.project.repoUrl} class="text-wtp-sky underline" target="_blank" rel="noopener">github.com/wtp-pa/dashboards</a>. Every data file is committed to git, so you can see exactly when each number changed and where it came from. Issues, corrections, and suggestions welcome via GitHub.
+        </p>
+      </section>
+
+      <p class="mt-16 text-center text-sm">
+        <a href="/budget/" class="text-wtp-sky hover:text-white">← Back to the dashboard</a>
+      </p>
+    </main>
+
+    <footer class="mt-20 border-t border-white/10 px-6 py-8 text-sm text-wtp-cream/60">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

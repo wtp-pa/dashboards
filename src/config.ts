@@ -62,9 +62,9 @@ export const config = {
         status: "coming-soon" as const,
       },
       {
-        name: "Legislator Scorecards",
-        slug: "legislator",
-        tagline: "How your representatives vote on the issues that matter",
+        name: "Elected Officials Watch",
+        slug: "elected-officials",
+        tagline: "How your representatives vote and how they align with the WTP-PA platform",
         status: "coming-soon" as const,
       },
       {

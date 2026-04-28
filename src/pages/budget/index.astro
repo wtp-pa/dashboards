@@ -11,6 +11,7 @@ import RainyDayCountdown from '../../components/RainyDayCountdown';
 import BudgetBreakdown from '../../components/BudgetBreakdown.astro';
 import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
+import ShareRow from '../../components/ShareRow.astro';
 import '../../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
@@ -81,6 +82,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             annualDeficitUSD={annualDeficit}
           />
         </div>
+        <ShareRow
+          url={canonicalUrl}
+          tweetText={`Pennsylvania has a $${annualB} billion structural deficit — and growing. Tracked live by ${config.party.shortName}.`}
+        />
       </section>
 
       <section class="mt-24" id="how-it-works">
@@ -176,6 +181,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
         <div>Built by {config.party.name}</div>
         <div class="flex gap-4">
+          <a href="/budget/about" class="hover:text-white">Methodology</a>
           <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
           <a href={config.party.socials.twitter} class="hover:text-white">X</a>
           <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
