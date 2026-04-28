@@ -28,7 +28,7 @@ export default function PersonalImpactCalculator({
       <h3 className="mt-2 text-2xl font-bold">Your share of PA's deficit</h3>
 
       <div className="mt-6">
-        <div className="text-sm text-white/70">How many people in your household?</div>
+        <div className="text-sm text-wtp-cream/70">How many people in your household?</div>
         <div className="mt-3 flex flex-wrap gap-2">
           {HOUSEHOLD_OPTIONS.map((n) => (
             <button
@@ -38,7 +38,7 @@ export default function PersonalImpactCalculator({
               className={`min-w-[3.5rem] flex-1 rounded-md border px-4 py-3 text-lg font-semibold transition ${
                 householdSize === n
                   ? "border-wtp-sky bg-wtp-sky/10 text-wtp-sky"
-                  : "border-white/10 text-white/70 hover:border-white/30 hover:text-white"
+                  : "border-white/10 text-wtp-cream/70 hover:border-white/30 hover:text-white"
               }`}
             >
               {n === 6 ? "6+" : n}
@@ -48,18 +48,18 @@ export default function PersonalImpactCalculator({
       </div>
 
       <div className="mt-8 rounded-md bg-page/60 p-6 text-center">
-        <div className="text-xs uppercase tracking-[0.2em] text-white/50">
+        <div className="text-xs uppercase tracking-[0.2em] text-wtp-cream/50">
           Your household's share
         </div>
         <div className="mt-3 font-mono text-4xl font-bold text-wtp-red md:text-5xl">
           ${formatNumber(yourShare)}
         </div>
-        <div className="mt-3 text-xs text-white/50">
+        <div className="mt-3 text-xs text-wtp-cream/50">
           Based on IFO's $1,500-per-family-of-4 figure, scaled by household size
         </div>
       </div>
 
-      <div className="mt-4 text-center text-xs text-white/40">
+      <div className="mt-4 text-center text-xs text-wtp-cream/40">
         Average across all PA households: ${formatNumber(avgPerHousehold)}
       </div>
     </div>

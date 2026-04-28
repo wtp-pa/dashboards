@@ -24,14 +24,14 @@ const formatPubDate = (iso: string | null) => {
       <div class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Live data</div>
       <h3 class="mt-2 text-2xl font-bold">Latest from PA IFO</h3>
     </div>
-    <div class="flex items-center gap-2 text-xs text-white/50">
+    <div class="flex items-center gap-2 text-xs text-wtp-cream/50">
       <span class="inline-block h-2 w-2 animate-pulse rounded-full bg-green-500"></span>
       <span>Refreshed {lastUpdatedFormatted}</span>
     </div>
   </header>
 
-  <p class="mt-3 text-sm text-white/60">
-    Scraped weekly from <a href={ifoData.source.url} class="text-white/80 underline hover:text-white">ifo.state.pa.us</a> — every new publication appears here automatically.
+  <p class="mt-3 text-sm text-wtp-cream/60">
+    Scraped weekly from <a href={ifoData.source.url} class="text-wtp-cream/80 underline hover:text-white">ifo.state.pa.us</a> — every new publication appears here automatically.
   </p>
 
   <ol class="mt-6 space-y-5">
@@ -49,12 +49,12 @@ const formatPubDate = (iso: string | null) => {
           {pub.title}
         </a>
         {pub.summary && (
-          <p class="mt-2 text-sm leading-relaxed text-white/60">{pub.summary}</p>
+          <p class="mt-2 text-sm leading-relaxed text-wtp-cream/60">{pub.summary}</p>
         )}
         {pub.pdfUrl && (
           <a
             href={pub.pdfUrl}
-            class="mt-2 inline-block text-xs text-white/50 underline hover:text-white"
+            class="mt-2 inline-block text-xs text-wtp-cream/50 underline hover:text-white"
             target="_blank"
             rel="noopener noreferrer"
           >

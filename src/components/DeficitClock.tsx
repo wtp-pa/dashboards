@@ -42,10 +42,10 @@ export default function DeficitClock({
       <div className={numberClasses}>{formatCurrencyFull(accrued)}</div>
       {!compact && (
         <>
-          <div className="mt-4 text-xs uppercase tracking-[0.2em] text-white/60">
+          <div className="mt-4 text-xs uppercase tracking-[0.2em] text-wtp-cream/60">
             FY {fiscalYear} structural deficit accrued so far
           </div>
-          <div className="mt-1 text-xs text-white/40">
+          <div className="mt-1 text-xs text-wtp-cream/40">
             of ${annualB}B projected annual total · Source: PA Independent Fiscal Office
           </div>
         </>

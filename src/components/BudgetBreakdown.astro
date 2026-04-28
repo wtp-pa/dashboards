@@ -37,7 +37,7 @@ const totalB = (totalUSD / 1e9).toFixed(1);
 <section class="rounded-lg border border-white/10 bg-surface p-6 md:p-8">
   <header class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-4">
     <h3 class="text-xl font-bold md:text-2xl">{title}</h3>
-    <div class="text-sm text-white/60">
+    <div class="text-sm text-wtp-cream/60">
       Total <span class="font-mono text-white">${totalB}B</span> · FY {fiscalYear}
     </div>
   </header>
@@ -63,13 +63,13 @@ const totalB = (totalUSD / 1e9).toFixed(1);
         <div class="flex-1">
           <div class="flex flex-wrap items-baseline justify-between gap-2">
             <dt class="font-semibold">{it.label}</dt>
-            <dd class="text-sm tabular-nums text-white/70">
+            <dd class="text-sm tabular-nums text-wtp-cream/70">
               ${(it.amountUSD / 1e9).toFixed(1)}B
-              <span class="ml-2 text-white/40">{it.pct.toFixed(0)}%</span>
+              <span class="ml-2 text-wtp-cream/40">{it.pct.toFixed(0)}%</span>
             </dd>
           </div>
           {it.shortDescription && (
-            <p class="mt-1 text-xs leading-relaxed text-white/50">
+            <p class="mt-1 text-xs leading-relaxed text-wtp-cream/50">
               {it.shortDescription}
             </p>
           )}
@@ -78,5 +78,5 @@ const totalB = (totalUSD / 1e9).toFixed(1);
     ))}
   </dl>
 
-  <p class="mt-6 text-xs text-white/40">Source: {source}</p>
+  <p class="mt-6 text-xs text-wtp-cream/40">Source: {source}</p>
 </section>

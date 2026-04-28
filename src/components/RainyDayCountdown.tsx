@@ -30,13 +30,13 @@ export default function RainyDayCountdown({
       <div className="mt-3 font-mono text-5xl font-bold text-wtp-red tabular-nums">
         {formatNumber(days)}
       </div>
-      <div className="mt-2 text-sm text-white/70">
+      <div className="mt-2 text-sm text-wtp-cream/70">
         days until projected depletion
       </div>
-      <div className="mt-6 text-xs text-white/40">
+      <div className="mt-6 text-xs text-wtp-cream/40">
         Currently ${balanceB}B · Projected drain by FY 2026-27
       </div>
-      <div className="mt-1 text-xs text-white/40">
+      <div className="mt-1 text-xs text-wtp-cream/40">
         Source: PA Treasury / IFO projections
       </div>
     </div>
