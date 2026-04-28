@@ -22,7 +22,7 @@ export default function PersonalImpactCalculator({
 
   return (
     <div className="rounded-lg border border-white/10 bg-surface p-8">
-      <div className="text-xs uppercase tracking-[0.2em] text-wtp-gold">
+      <div className="text-xs uppercase tracking-[0.2em] text-wtp-sky">
         Personal Impact
       </div>
       <h3 className="mt-2 text-2xl font-bold">Your share of PA's deficit</h3>
@@ -37,7 +37,7 @@ export default function PersonalImpactCalculator({
               onClick={() => setHouseholdSize(n)}
               className={`min-w-[3.5rem] flex-1 rounded-md border px-4 py-3 text-lg font-semibold transition ${
                 householdSize === n
-                  ? "border-wtp-gold bg-wtp-gold/10 text-wtp-gold"
+                  ? "border-wtp-sky bg-wtp-sky/10 text-wtp-sky"
                   : "border-white/10 text-white/70 hover:border-white/30 hover:text-white"
               }`}
             >

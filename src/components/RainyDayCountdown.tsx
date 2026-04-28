@@ -24,7 +24,7 @@ export default function RainyDayCountdown({
 
   return (
     <div className="rounded-lg border border-white/10 bg-surface p-8 text-center">
-      <div className="text-xs uppercase tracking-[0.2em] text-wtp-gold">
+      <div className="text-xs uppercase tracking-[0.2em] text-wtp-sky">
         Rainy Day Fund
       </div>
       <div className="mt-3 font-mono text-5xl font-bold text-wtp-red tabular-nums">

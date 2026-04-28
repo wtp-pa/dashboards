@@ -21,7 +21,7 @@ const formatPubDate = (iso: string | null) => {
 <section class="rounded-lg border border-white/10 bg-surface p-6 md:p-8">
   <header class="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between md:gap-4">
     <div>
-      <div class="text-xs uppercase tracking-[0.2em] text-wtp-gold">Live data</div>
+      <div class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Live data</div>
       <h3 class="mt-2 text-2xl font-bold">Latest from PA IFO</h3>
     </div>
     <div class="flex items-center gap-2 text-xs text-white/50">
@@ -37,12 +37,12 @@ const formatPubDate = (iso: string | null) => {
   <ol class="mt-6 space-y-5">
     {ifoData.publications.map((pub) => (
       <li class="border-l-2 border-white/10 pl-4">
-        <div class="text-xs uppercase tracking-wider text-wtp-gold">
+        <div class="text-xs uppercase tracking-wider text-wtp-sky">
           {formatPubDate(pub.date)}
         </div>
         <a
           href={pub.url}
-          class="mt-1 block text-base font-semibold text-white hover:text-wtp-gold md:text-lg"
+          class="mt-1 block text-base font-semibold text-white hover:text-wtp-sky md:text-lg"
           target="_blank"
           rel="noopener noreferrer"
         >

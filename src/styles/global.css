@@ -1,21 +1,34 @@
 @import "tailwindcss";
 
 /*
- * Brand color tokens — APPROXIMATE, sampled from the WTP-PA logo.
- * Replace with official brand kit hex codes when available.
- * Keep in sync with src/config.ts (charts and OG images need hex values too).
+ * Brand color tokens — matches WTP-PA Squarespace site palette.
+ *   Navy  #15184E — primary brand (logo background, headlines on light bg)
+ *   Sky   #7EC7DA — primary accent (replaces previous "gold" role)
+ *   Indigo#2E3279 — secondary accent
+ *   Cream #F5F2E8 — warm light (alternative to pure white for body text)
+ *   Gold  #D4B962 — logo-stripe color, available for selective use
+ *   Red   #C8262C — deficit / danger
+ *
+ * For dark-mode dashboard bg, page is near-black; surface is slightly
+ * lifted brand-aware navy.
  */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 @theme {
-  --color-wtp-navy: #1B2A5E;
+  --color-wtp-navy: #15184E;
+  --color-wtp-sky: #7EC7DA;
+  --color-wtp-indigo: #2E3279;
+  --color-wtp-cream: #F5F2E8;
   --color-wtp-gold: #D4B962;
   --color-wtp-red: #C8262C;
-  --color-wtp-light-blue: #7FB6C0;
-  --color-page: #0A0E1A;
-  --color-surface: #13182B;
+  --color-page: #08091F;
+  --color-surface: #15184E;
+
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 body {
   background-color: var(--color-page);
   color: white;
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }

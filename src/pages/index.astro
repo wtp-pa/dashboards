@@ -46,7 +46,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
     <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <section class="text-center">
-        <p class="text-xs uppercase tracking-[0.2em] text-wtp-gold">{config.portfolio.tagline}</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">{config.portfolio.tagline}</p>
         <h1 class="mt-4 text-4xl font-bold leading-tight md:text-6xl">
           Pennsylvania Watch
         </h1>
@@ -61,7 +61,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           const href = isLive ? `/${project.slug}` : null;
           const cardClasses = `rounded-lg border p-8 transition ${
             isLive
-              ? 'border-white/15 bg-surface hover:border-wtp-gold/50 hover:bg-surface/80'
+              ? 'border-white/15 bg-surface hover:border-wtp-sky/50 hover:bg-surface/80'
               : 'border-white/5 bg-surface/40 opacity-60'
           }`;
 
@@ -70,7 +70,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="text-2xl font-bold">{project.name}</h3>
                 {isLive ? (
-                  <span class="text-xs uppercase tracking-widest text-wtp-gold">Live</span>
+                  <span class="text-xs uppercase tracking-widest text-wtp-sky">Live</span>
                 ) : (
                   <span class="text-xs uppercase tracking-widest text-white/40">Coming soon</span>
                 )}
@@ -80,7 +80,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
                 <p class="mt-4 font-mono text-xl font-bold text-wtp-red">${annualDeficitB}B and growing</p>
               )}
               {isLive && (
-                <p class="mt-6 text-sm text-wtp-gold">Open dashboard →</p>
+                <p class="mt-6 text-sm text-wtp-sky">Open dashboard →</p>
               )}
             </>
           );
@@ -98,7 +98,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70">
           The We The People Party of Pennsylvania believes accountability requires data — not slogans. These dashboards make government finances and decisions visible, sourced, and shareable, so any Pennsylvanian can see what's actually happening with their state.
         </p>
-        <a href={config.party.website} class="mt-6 inline-block text-sm text-wtp-gold hover:text-white">
+        <a href={config.party.website} class="mt-6 inline-block text-sm text-wtp-sky hover:text-white">
           Visit wtpppa.org →
         </a>
       </section>

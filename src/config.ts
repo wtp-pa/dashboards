@@ -20,16 +20,20 @@ export const config = {
     },
   },
   brand: {
-    // APPROXIMATE — sampled from logo. Replace with official brand kit hex codes when available.
+    // Matches WTP-PA Squarespace site palette + Poppins font.
+    // Source: Site Styles → Colors / Fonts on wtpppa.org
     colors: {
-      navy: "#1B2A5E",
+      navy: "#15184E",
+      sky: "#7EC7DA",
+      indigo: "#2E3279",
+      cream: "#F5F2E8",
       gold: "#D4B962",
       red: "#C8262C",
-      lightBlue: "#7FB6C0",
       white: "#FFFFFF",
-      page: "#0A0E1A",
-      surface: "#13182B",
+      page: "#08091F",
+      surface: "#15184E",
     },
+    fontFamily: '"Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif',
     logoPath: "/wtp-logo.png",
   },
   project: {
