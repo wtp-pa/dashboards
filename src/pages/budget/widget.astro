@@ -1,0 +1,48 @@
+---
+import { config } from '../../config';
+import projections from '../../../data/projections.json';
+import DeficitClock from '../../components/DeficitClock';
+import '../../styles/global.css';
+
+const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PA Budget Watch — live deficit counter</title>
+    <meta name="description" content="Live ticker of PA's structural deficit. Click for the full dashboard." />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="bg-page text-white">
+    <a
+      href={config.project.dashboardUrl}
+      target="_top"
+      rel="noopener"
+      class="block rounded-lg border border-white/10 bg-surface p-5 no-underline transition hover:border-wtp-gold/40"
+    >
+      <div class="flex items-center gap-3">
+        <img src={config.brand.logoPath} alt="" class="h-8 w-auto" />
+        <div class="text-[11px] uppercase tracking-[0.18em] text-wtp-gold">
+          PA Structural Deficit · FY 2025-26
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <DeficitClock
+          client:load
+          fiscalYear="2025-26"
+          annualDeficitUSD={annualDeficit}
+          compact
+        />
+      </div>
+
+      <div class="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
+        <span class="text-[10px] text-white/40">Source: PA IFO</span>
+        <span class="text-sm font-semibold text-wtp-gold">View full dashboard →</span>
+      </div>
+    </a>
+  </body>
+</html>

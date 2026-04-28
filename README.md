@@ -1,10 +1,13 @@
-# PA Budget Watch
+# WTP-PA Dashboards
 
-Interactive budget accountability dashboard for the **We The People Party of Pennsylvania**. Tracks PA's structural deficit, spending, and (Phase 4) line-item budget-vs-actual variance.
+Civic accountability dashboards for the **We The People Party of Pennsylvania**. A monorepo for all WTP-PA tracking tools — currently hosting **PA Budget Watch**, with placeholders for Legislation Tracker, Legislator Scorecards, and Local Impact Dashboard.
 
-Inspired by usdebtclock.org but for PA state finances — and with editorial framing that aligns with WTP-PA's fiscal accountability platform.
+**Live:**
+- Portfolio landing: <https://dashboards.wtpppa.org/>
+- PA Budget Watch: <https://dashboards.wtpppa.org/budget>
+- Embed widget for Squarespace: <https://dashboards.wtpppa.org/budget/widget>
 
-> **Status:** scaffold complete; Phase 1 (deficit clock + key stats) not yet built. Landing page is a "this project lives" placeholder using seed data from the spec.
+The dashboards are embedded in editorial pages on the main party site at <https://www.wtpppa.org> (under the "Watch" navigation). The Squarespace pages own all narrative copy; this repo owns the data and live components.
 
 ## Stack
 
@@ -13,13 +16,13 @@ Inspired by usdebtclock.org but for PA state finances — and with editorial fra
 | Frontend | Astro 6 + React 19 islands + Tailwind 4 + TypeScript (strict) |
 | Data store | JSON files in `data/` — versioned in git, no database |
 | Data pipeline | Python 3.12 scripts in `pipeline/`, scheduled by GitHub Actions |
-| Hosting | Vercel free tier (demo); iframe-embeddable on the WTP-PA Squarespace site later |
+| Hosting | GitHub Pages (free, no vendor lock-in beyond GitHub itself) |
 
-**Why this stack instead of Next.js + Supabase + Vercel cron** (the spec's original proposal): the workload is mostly-static, public, and slow-moving. Supabase free-tier projects pause after 1 week of inactivity (bad for a niche civic tool). Putting cron in Next.js API routes couples data fetching to web hosting. Python is the right tool for parsing IFO Excel files and scraping PA Treasury. JSON in git gives a free audit trail. See `docs/spec.md` for the full rationale.
+See `CONTRIBUTING.md` for stack rationale and the decision log.
 
 ## Local development
 
-Requires Node 22+ and (for the pipeline) Python 3.12+.
+Requires Node 22+ (for the site) and Python 3.12+ (for the data pipeline).
 
 ```bash
 # Install JS deps
@@ -39,57 +42,112 @@ For the data pipeline:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r pipeline/requirements.txt
-python pipeline/fetch_ifo.py   # all fetchers are stubs for now
+
+# Run the IFO publications scraper
+python pipeline/fetch_ifo.py
 ```
+
+## Deploying
+
+**Auto-deploy on push to `main`.** The `.github/workflows/pages-deploy.yml` workflow builds Astro and deploys to GitHub Pages whenever `main` updates. Custom domain `dashboards.wtpppa.org` is configured via `public/CNAME`.
+
+To manually trigger a deploy: GitHub repo → **Actions** → **Deploy to GitHub Pages** → **Run workflow**.
+
+To check deploy status: <https://github.com/wtp-pa/dashboards/actions>.
+
+## Data pipeline
+
+`.github/workflows/data-pipeline.yml` runs every Monday at 06:00 UTC. It executes the Python scrapers, commits any updated JSON files in `data/`, and pushes to `main` — which triggers a fresh site deploy. The dashboard updates automatically when source data changes; no human in the loop unless a scraper breaks.
+
+A scheduled health-check agent runs on **2026-05-18** to verify the IFO scraper is still functioning. If the scraper has gone stale (likely because IFO restructured their HTML), the agent will diagnose and open a PR with a fix.
+
+## Common edits
+
+| To change | Edit |
+|---|---|
+| Brand colors | `src/config.ts` AND `src/styles/global.css` (keep them in sync) |
+| Party metadata (name, taglines, socials) | `src/config.ts` |
+| Portfolio project list (add/remove/launch a project) | `src/config.ts` (`portfolio.projects` array) |
+| Seed data (deficit projections, key stats, etc.) | `data/*.json` |
+| Federal funds approximations | `data/federal-funds.json` |
+| Pipeline schedule (e.g., daily instead of weekly) | `.github/workflows/data-pipeline.yml` cron |
+| Adding a new project | See **Adding a new dashboard** below |
+
+After any edit: `git push`. GitHub Actions handles the deploy.
+
+## Adding a new dashboard
+
+The portfolio is structured for new projects to slot in:
+
+1. Add the project to `src/config.ts` (`portfolio.projects` array) with `status: 'coming-soon'`
+2. Create `src/pages/<slug>/index.astro` for the full dashboard
+3. Create `src/pages/<slug>/widget.astro` for the Squarespace embed
+4. Add data files to `data/` (project-specific JSON)
+5. Add scrapers to `pipeline/` if needed; wire into `.github/workflows/data-pipeline.yml`
+6. Once shippable, flip `status: 'live'` in config
+7. Create a corresponding Squarespace page under wtpppa.org/watch/
 
 ## Project layout
 
 ```
-wtp-budget-watch/
+dashboards/
 ├── src/
-│   ├── pages/index.astro       # landing page
-│   ├── components/             # React islands (charts, clock, calculator)
-│   ├── styles/global.css       # Tailwind + brand color tokens
-│   ├── lib/                    # shared TS utilities
-│   └── config.ts               # brand + party metadata (edit when forking)
-├── data/                       # JSON output from pipeline (committed)
-│   ├── projections.json        # IFO 5-year structural deficit projections
-│   ├── key-stats.json          # quick stats (deficit per family, depletion dates)
-│   └── population.json         # Census PA population/households
-├── pipeline/                   # Python data fetchers
-│   ├── fetch_ifo.py
-│   ├── fetch_openbookpa.py
-│   ├── fetch_census.py
+│   ├── pages/
+│   │   ├── index.astro              # portfolio landing (/)
+│   │   └── budget/
+│   │       ├── index.astro          # full PA Budget Watch (/budget)
+│   │       └── widget.astro         # embed widget (/budget/widget)
+│   ├── components/
+│   │   ├── DeficitClock.tsx
+│   │   ├── PersonalImpactCalculator.tsx
+│   │   ├── RainyDayCountdown.tsx
+│   │   ├── BudgetBreakdown.astro
+│   │   ├── FederalContext.astro
+│   │   └── IFOPublications.astro
+│   ├── lib/
+│   │   ├── format.ts                # currency / number formatters
+│   │   └── fiscal.ts                # PA fiscal-year math
+│   ├── styles/global.css            # Tailwind + brand color tokens
+│   └── config.ts                    # all metadata (party, brand, projects)
+├── data/                            # JSON, committed to git
+│   ├── projections.json             # IFO 5-year structural deficit projections
+│   ├── key-stats.json               # quick stats
+│   ├── population.json              # Census PA totals
+│   ├── revenue-sources.json         # General Fund revenue by category
+│   ├── spending-by-category.json    # Spending by category
+│   ├── federal-funds.json           # Federal flows + cliff scenarios
+│   └── ifo-publications.json        # Auto-updated by scraper, weekly
+├── pipeline/                        # Python data pipeline
+│   ├── fetch_ifo.py                 # Scrapes ifo.state.pa.us publications
+│   ├── fetch_openbookpa.py          # Stub
+│   ├── fetch_census.py              # Stub
 │   ├── requirements.txt
 │   └── README.md
 ├── .github/workflows/
-│   └── data-pipeline.yml       # monthly cron + manual trigger
-├── docs/spec.md                # full project spec including Phase 4
-├── public/wtp-logo.png         # WTP-PA logo
-└── README.md
+│   ├── pages-deploy.yml             # Builds + deploys site on push to main
+│   └── data-pipeline.yml            # Weekly cron for scrapers
+├── public/
+│   ├── CNAME                        # GitHub Pages custom domain
+│   └── wtp-logo.png                 # WTP-PA logo asset
+├── docs/spec.md                     # PA Budget Watch original spec + Phase 4
+└── CONTRIBUTING.md                  # Stack rationale, decision log, dont-do list
 ```
 
-## Deploy to Vercel (demo)
+## Status
 
-1. Sign up at vercel.com using your **civic GitHub account** (not your personal or business account)
-2. Click **New Project**, import `wtp-pa/wtp-budget-watch`
-3. Vercel auto-detects Astro — no config needed
-4. Deploy → get a URL like `wtp-budget-watch-xyz.vercel.app`
-5. Share that URL with party officers for the demo
+Currently live in `/budget`:
+- Live deficit clock (FY 2025-26 accrued, ticking)
+- Revenue + spending stacked-bar breakdowns
+- Federal dependency section with cliff-risk scenarios
+- Personal impact calculator (household-size-based)
+- Rainy Day Fund countdown
+- Latest IFO publications card (auto-refreshed weekly)
 
-To embed on the wtpppa.org Squarespace site later: add a Code Block with `<iframe src="https://your-vercel-url" width="100%" height="600">`. No migration needed.
-
-## Forking for another state party
-
-This project is open-source so other state parties can adapt it for their state's budget data.
-
-Edit:
-
-1. **`src/config.ts`** — your party name, colors, socials, logo
-2. **`data/*.json`** — your state's projections, stats, population
-3. (eventually) **`pipeline/`** — fetchers for your state's official data sources
-
-The architecture stays the same.
+Planned (per `docs/spec.md` Phase 4):
+- Budget vs. actual variance dashboard
+- Top-vendor spending leaderboard
+- Contract scrutiny (sole-source flags, no-bid awards)
+- Spending citation trails
 
 ## License
 

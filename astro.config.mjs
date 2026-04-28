@@ -8,8 +8,8 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   // Production URL for absolute links (OG/Twitter images, sitemaps, RSS).
-  // Set to the Vercel demo URL for now; change when migrating to a custom domain.
-  site: 'https://wtp-budget-watch.vercel.app',
+  // Hosted on GitHub Pages with custom domain.
+  site: 'https://dashboards.wtpppa.org',
 
   vite: {
     plugins: [tailwindcss()]

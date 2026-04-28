@@ -33,10 +33,45 @@ export const config = {
     logoPath: "/wtp-logo.png",
   },
   project: {
+    // The currently-built project. Used by /budget pages and the embed widget.
     name: "PA Budget Watch",
-    repoUrl: "https://github.com/wtp-pa/wtp-budget-watch",
+    repoUrl: "https://github.com/wtp-pa/dashboards",
     license: "MIT",
+    dashboardUrl: "https://dashboards.wtpppa.org/budget",
+  },
+  portfolio: {
+    // The umbrella that holds all WTP-PA dashboards. Used by the / landing page.
+    name: "WTP-PA Dashboards",
+    tagline: "Tools for Pennsylvania accountability",
+    baseUrl: "https://dashboards.wtpppa.org",
+    projects: [
+      {
+        name: "PA Budget Watch",
+        slug: "budget",
+        tagline: "Tracking Pennsylvania's $3.9B structural deficit in real time",
+        status: "live" as const,
+      },
+      {
+        name: "Legislation Tracker",
+        slug: "legislation",
+        tagline: "Scoring PA bills against WTP-PA platform positions",
+        status: "coming-soon" as const,
+      },
+      {
+        name: "Legislator Scorecards",
+        slug: "legislator",
+        tagline: "How your representatives vote on the issues that matter",
+        status: "coming-soon" as const,
+      },
+      {
+        name: "Local Impact",
+        slug: "local",
+        tagline: "How state policy affects your county and community",
+        status: "coming-soon" as const,
+      },
+    ],
   },
 } as const;
 
 export type Config = typeof config;
+export type Project = (typeof config.portfolio.projects)[number];

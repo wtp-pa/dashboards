@@ -1,0 +1,170 @@
+---
+import { config } from '../../config';
+import projections from '../../../data/projections.json';
+import keyStats from '../../../data/key-stats.json';
+import population from '../../../data/population.json';
+import revenueSources from '../../../data/revenue-sources.json';
+import spendingByCategory from '../../../data/spending-by-category.json';
+import DeficitClock from '../../components/DeficitClock';
+import PersonalImpactCalculator from '../../components/PersonalImpactCalculator';
+import RainyDayCountdown from '../../components/RainyDayCountdown';
+import BudgetBreakdown from '../../components/BudgetBreakdown.astro';
+import IFOPublications from '../../components/IFOPublications.astro';
+import FederalContext from '../../components/FederalContext.astro';
+import '../../styles/global.css';
+
+const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
+
+const stat = (key: string) => keyStats.stats.find((s) => s.key === key);
+const familyShare = stat('deficitPerFamilyOf4USD');
+const rainyDayBalance = stat('rainyDayFundBalanceUSD');
+const medicaid = stat('medicaidGrowthSince2018');
+const reserves = stat('schoolDistrictReservesUSD');
+
+const baseFamilyShareUSD = typeof familyShare?.value === 'number' ? familyShare.value : 1500;
+const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 7_000_000_000;
+
+const annualB = (annualDeficit / 1e9).toFixed(1);
+
+const pageTitle = `${config.project.name} — ${config.party.shortName}`;
+const pageDescription = `Pennsylvania faces a $${annualB}B structural deficit. Track it in real time. Built by ${config.party.shortName}.`;
+const siteOrigin = Astro.site ?? Astro.url;
+const ogImageUrl = new URL(config.brand.logoPath, siteOrigin).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center gap-3">
+        <a href="/" class="flex items-center gap-3 hover:opacity-80 transition">
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-12 w-auto" />
+          <div>
+            <div class="text-sm text-white/60">{config.party.name}</div>
+            <div class="text-lg font-semibold">{config.project.name}</div>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <section>
+        <p class="text-center text-xs uppercase tracking-[0.2em] text-wtp-gold">
+          Pennsylvania's structural deficit
+        </p>
+        <h1 class="sr-only">Pennsylvania Structural Deficit Counter</h1>
+        <div class="mt-8">
+          <DeficitClock
+            client:load
+            fiscalYear="2025-26"
+            annualDeficitUSD={annualDeficit}
+          />
+        </div>
+      </section>
+
+      <section class="mt-24" id="how-it-works">
+        <h2 class="text-3xl font-bold md:text-4xl">How Pennsylvania's money works</h2>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <BudgetBreakdown
+            title="Where the money comes from"
+            totalUSD={revenueSources.totalUSD}
+            fiscalYear={revenueSources.fiscalYear}
+            segments={revenueSources.sources}
+            source={revenueSources.source.primary}
+          />
+          <BudgetBreakdown
+            title="Where the money goes"
+            totalUSD={spendingByCategory.totalUSD}
+            fiscalYear={spendingByCategory.fiscalYear}
+            segments={spendingByCategory.categories}
+            source={spendingByCategory.source.primary}
+          />
+        </div>
+      </section>
+
+      <section class="mt-24">
+        <FederalContext />
+      </section>
+
+      <section class="mt-24 grid gap-6 md:grid-cols-3">
+        <div class="rounded-lg border border-white/10 bg-surface p-6">
+          <div class="text-3xl font-bold text-wtp-red">${familyShare?.value ?? '—'}</div>
+          <div class="mt-2 text-sm text-white/70">{familyShare?.label}</div>
+          <div class="mt-3 text-xs text-white/40">{familyShare?.source}</div>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-surface p-6">
+          <div class="text-3xl font-bold text-wtp-red">{medicaid?.value}</div>
+          <div class="mt-2 text-sm text-white/70">{medicaid?.label}</div>
+          <div class="mt-3 text-xs text-white/40">{medicaid?.source}</div>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-surface p-6">
+          <div class="text-3xl font-bold text-wtp-gold">$6.78B</div>
+          <div class="mt-2 text-sm text-white/70">{reserves?.label} sitting unused</div>
+          <div class="mt-3 text-xs text-white/40">{reserves?.source}</div>
+        </div>
+      </section>
+
+      <section class="mt-12 grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+          <PersonalImpactCalculator
+            client:visible
+            baseFamilyShareUSD={baseFamilyShareUSD}
+            totalDeficitUSD={annualDeficit}
+            totalHouseholds={population.households}
+          />
+        </div>
+        <RainyDayCountdown
+          client:visible
+          depletionDateISO="2027-06-30"
+          rainyDayBalanceUSD={rainyDayUSD}
+        />
+      </section>
+
+      <section class="mt-20">
+        <IFOPublications />
+      </section>
+
+      <section class="mt-20 rounded-lg border border-white/10 bg-surface p-8">
+        <h2 class="text-2xl font-bold">What's Being Built</h2>
+        <ul class="mt-6 space-y-3 text-white/80">
+          <li><strong class="text-white">Phase 1:</strong> Live deficit clock <span class="text-wtp-gold">(live above)</span>, key stats, social sharing</li>
+          <li><strong class="text-white">Phase 2:</strong> Where money comes from and goes <span class="text-wtp-gold">(live above)</span>, revenue vs. spending over time, spending treemap with drill-down</li>
+          <li><strong class="text-white">Phase 3:</strong> Personal impact calculator <span class="text-wtp-gold">(live above)</span>, embed widgets</li>
+          <li><strong class="text-white">Phase 4:</strong> Budget vs. actual variance, vendor leaderboard, contract scrutiny</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="mt-20 border-t border-white/10 px-6 py-8 text-sm text-white/60">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
