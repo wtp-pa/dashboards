@@ -416,7 +416,7 @@ const topPillars = Object.entries(pillarById)
           <input
             type="text"
             id="address-input"
-            placeholder="Street + town (e.g., 24 Main Ave, Berwyn)"
+            placeholder="Street + town (e.g., 100 Market St, Harrisburg)"
             aria-label="Street address"
             class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
           />
@@ -723,30 +723,57 @@ const topPillars = Object.entries(pillarById)
         highlightOfficials(ids);
       }
 
-      document.getElementById('zip-form').addEventListener('submit', (e) => {
+      document.getElementById('zip-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const zip = (document.getElementById('zip-input').value || '').trim();
         if (!/^\d{5}$/.test(zip)) {
           showResult(`<p class="text-wtp-cream/70">Please enter a 5-digit ZIP code.</p>`);
           return;
         }
-        const entry = zips[zip];
-        if (!entry) {
+        // Geocode the ZIP via Nominatim to a lat/lng, then sample a small
+        // bbox around it for /people.geo (a ZIP can span district lines).
+        showResult(`<p class="text-wtp-cream/70">Looking up ${zip}…</p>`);
+        try {
+          const geo = await geocodePlace(`${zip}, Pennsylvania, USA`);
+          if (!geo) {
+            renderAreaCard({
+              areaLabel: 'ZIP not found',
+              areaDetail: zip,
+              footerNote: 'Geocoder could not pinpoint that ZIP. Double-check the digits, or use the address input above.',
+            });
+            highlightOfficials([]);
+            return;
+          }
+          const reps = geo.bbox
+            ? await findRepsAcrossBbox(geo.bbox, geo.lat, geo.lng)
+            : await findReps_loose(geo.lat, geo.lng, 1500);
+          if (!reps.length) {
+            renderAreaCard({
+              areaLabel: 'Your ZIP',
+              areaDetail: zip,
+              noRepsMessage: 'OpenStates returned no PA legislators for this ZIP. Are you sure it is a PA ZIP?',
+            });
+            highlightOfficials([]);
+            return;
+          }
+          const districts = Array.from(new Set(reps.map((r) => r.district).filter(Boolean))).sort();
           renderAreaCard({
-            areaLabel: 'ZIP not in our coverage yet',
+            areaLabel: 'Your ZIP',
             areaDetail: zip,
-            noRepsMessage: 'Demo ZIPs that work: 18301 (Stroudsburg), 18020 (Bethlehem), 15301 (Washington), 19131 (Philadelphia). Comprehensive PA-wide ZIP coverage is on the roadmap.',
-            footerNote: 'Until ZIP coverage expands, try the name search or pick your county above.',
+            districts,
+            reps,
+            footerNote: reps.length > 2
+              ? `ZIP areas can straddle district lines — ${reps.length} legislators serve parts of this ZIP. Type your street address for the exact pair.`
+              : 'For your specific street, type your address above.',
           });
-          highlightOfficials([]);
-          return;
+          highlightOfficials(reps.map((r) => r.id));
+        } catch (err) {
+          renderAreaCard({
+            areaLabel: 'Lookup failed',
+            areaDetail: zip,
+            footerNote: 'Could not reach the geocoder. Try the address input. (' + (err && err.message ? err.message : 'unknown') + ')',
+          });
         }
-        const districts = [entry.senate, entry.house].filter(Boolean);
-        findByDistricts(districts, {
-          label: 'Your ZIP code',
-          detail: zip,
-          footerNote: 'ZIP-to-district lookup uses approximate coverage. Verify with the PA General Assembly site for absolute certainty.',
-        });
       });
 
       // Lat/lng → OpenStates /people.geo → match to our roster.
