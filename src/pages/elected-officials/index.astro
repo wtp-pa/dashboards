@@ -88,7 +88,7 @@ for (const o of officials) {
 const pageTitle = `PA Elected Officials Watch — ${config.party.shortName}`;
 const pageDescription = `How Pennsylvania legislators vote — and how their votes line up with the WTP-PA platform. Search by ZIP code or county.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/`;
-const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
+const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
 const projectName = 'PA Elected Officials Watch';
 
 // Inline payloads for the client-side lookup. Tiny JSON, no extra fetch.
@@ -419,7 +419,7 @@ const topPillars = Object.entries(pillarById)
         <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
           <div class="min-w-0">
             <h2 class="text-lg font-bold md:text-xl">Find your representatives</h2>
-            <p class="mt-0.5 text-xs text-wtp-cream/60">Reps are elected by district, not county — type your address for the most accurate match.</p>
+            <p class="mt-0.5 text-xs text-wtp-cream/60">Type an address, ZIP, or county — we'll match you to the legislators representing your area.</p>
           </div>
           <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
             <span class="group-open:hidden">Show</span>
@@ -429,60 +429,39 @@ const topPillars = Object.entries(pillarById)
         </summary>
         <div class="border-t border-wtp-sky/20 px-5 pb-5 pt-4 md:px-6 md:pb-6">
 
-        <form id="address-form" class="flex flex-col gap-2 sm:flex-row sm:items-center" novalidate>
-          <input
-            type="text"
-            id="address-input"
-            placeholder="Street + town (e.g., 100 Market St, Harrisburg)"
-            aria-label="Street address"
-            class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-          />
-          <div class="flex gap-2">
-            <button type="submit" class="flex-1 rounded-md bg-wtp-sky px-4 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90 sm:flex-none">Find</button>
-            <button type="button" id="geo-button" class="flex flex-shrink-0 items-center gap-1.5 rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-xs font-semibold text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my location">
-              <span aria-hidden="true">📍</span>
-              <span class="hidden sm:inline">My location</span>
-            </button>
-          </div>
-        </form>
-
-        <details class="mt-3">
-          <summary class="cursor-pointer text-xs text-wtp-cream/50 hover:text-wtp-cream/80">Don't have an address handy? Try by county or ZIP instead</summary>
-          <div class="mt-3 space-y-3">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <span class="w-24 flex-shrink-0 text-xs uppercase tracking-wider text-wtp-cream/50">By county</span>
-              <select
-                id="county-select"
-                aria-label="County"
-                class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-3 py-2 text-sm text-white focus:border-wtp-sky focus:outline-none sm:max-w-xs"
-              >
-                <option value="">Pick a county…</option>
-                {countyOptions.map((c) => <option value={c}>{c} County</option>)}
-              </select>
+          <form id="lookup-form" class="flex flex-col gap-2 sm:flex-row sm:items-stretch" novalidate>
+            <input
+              type="text"
+              id="lookup-input"
+              autocomplete="off"
+              placeholder="Address, ZIP, or county (e.g., 100 Market St, Harrisburg)"
+              aria-label="Address, ZIP code, or county"
+              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+            />
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 rounded-md bg-wtp-sky px-5 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90 sm:flex-none">Find</button>
+              <button type="button" id="geo-button" class="flex flex-shrink-0 items-center gap-1.5 rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-sm font-semibold text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my current location" aria-label="Use my location">
+                <span aria-hidden="true">📍</span>
+                <span class="sr-only sm:not-sr-only sm:inline">My location</span>
+              </button>
             </div>
-            <form id="zip-form" class="flex flex-col gap-2 sm:flex-row sm:items-center" novalidate>
-              <span class="w-24 flex-shrink-0 text-xs uppercase tracking-wider text-wtp-cream/50">By ZIP</span>
-              <input
-                type="text"
-                id="zip-input"
-                inputmode="numeric"
-                pattern="[0-9]{5}"
-                maxlength="5"
-                placeholder="e.g., 17109"
-                aria-label="ZIP code"
-                class="w-32 rounded-md border border-white/15 bg-page px-3 py-2 text-center font-mono text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-              />
-              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-4 py-2 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">Find</button>
-            </form>
-            <p class="text-[11px] text-wtp-cream/40">Either lookup samples multiple points to catch every overlapping district. Address input above gives the most precise pair.</p>
-          </div>
-        </details>
+          </form>
 
-        <p class="mt-3 text-[11px] text-wtp-cream/40">Address & location lookups geocode you privately (U.S. Census or OpenStreetMap), then OpenStates returns your reps. Nothing is logged.</p>
+          <p class="mt-2 text-[11px] text-wtp-cream/40">
+            Examples: <span class="text-wtp-cream/60">17109</span> · <span class="text-wtp-cream/60">Allegheny County</span> · <span class="text-wtp-cream/60">100 Market St, Harrisburg</span>. Privately geocoded; nothing logged.
+          </p>
 
-        <div id="lookup-result" class="mt-4 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-3 text-sm"></div>
+          <div id="lookup-result" class="mt-4 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-3 text-sm"></div>
         </div>
       </details>
+      {/* Hidden county dropdown kept out of the DOM; the auto-detect parser
+          handles county input directly from the lookup field. The select#county-select
+          element below is referenced by other listeners — keep it as a hidden input
+          to maintain backward compat with the earlier wiring. */}
+      <select id="county-select" aria-hidden="true" class="hidden">
+        <option value=""></option>
+        {countyOptions.map((c) => <option value={c}>{c}</option>)}
+      </select>
 
       <section class="mt-14">
         <div class="flex flex-wrap items-baseline justify-between gap-3">
@@ -751,15 +730,43 @@ const topPillars = Object.entries(pillarById)
         highlightOfficials(ids);
       }
 
-      document.getElementById('zip-form').addEventListener('submit', async (e) => {
+      // Auto-detect what the user typed: 5 digits = ZIP; "X County" or
+      // matches one of our 67 counties = county lookup; everything else =
+      // address geocoded via Census + Nominatim.
+      const PA_COUNTIES = new Set(Object.keys(countyPop).map((c) => c.toLowerCase()));
+
+      function classifyLookup(raw) {
+        const s = (raw || '').trim();
+        if (!s) return { kind: 'empty' };
+        if (/^\d{5}$/.test(s)) return { kind: 'zip', value: s };
+        const lower = s.toLowerCase();
+        const stripped = lower.replace(/\s*county\s*$/, '').trim();
+        if (PA_COUNTIES.has(stripped)) {
+          // Recover original capitalization from countyPop keys.
+          const original = Object.keys(countyPop).find((c) => c.toLowerCase() === stripped);
+          return { kind: 'county', value: original };
+        }
+        return { kind: 'address', value: s };
+      }
+
+      // Single-input dispatcher. Works for address / ZIP / county.
+      document.getElementById('lookup-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const zip = (document.getElementById('zip-input').value || '').trim();
-        if (!/^\d{5}$/.test(zip)) {
-          showResult(`<p class="text-wtp-cream/70">Please enter a 5-digit ZIP code.</p>`);
+        const raw = (document.getElementById('lookup-input').value || '').trim();
+        const cls = classifyLookup(raw);
+        if (cls.kind === 'empty') {
+          showResult('<p class="text-wtp-cream/70">Type an address, 5-digit ZIP, or county name.</p>');
           return;
         }
-        // Geocode the ZIP via Nominatim to a lat/lng, then sample a small
-        // bbox around it for /people.geo (a ZIP can span district lines).
+        if (cls.kind === 'zip') return runZipLookup(cls.value);
+        if (cls.kind === 'county') return runCountyLookup(cls.value);
+        return runAddressLookup(cls.value);
+      });
+
+      // Same handlers, factored so the single form can call any of them.
+      // ZIP and county both go through multi-point sampling; address goes
+      // through Census → Nominatim two-stage.
+      async function runZipLookup(zip) {
         showResult(`<p class="text-wtp-cream/70">Looking up ${zip}…</p>`);
         try {
           const geo = await geocodePlace(`${zip}, Pennsylvania, USA`);
@@ -767,7 +774,7 @@ const topPillars = Object.entries(pillarById)
             renderAreaCard({
               areaLabel: 'ZIP not found',
               areaDetail: zip,
-              footerNote: 'Geocoder could not pinpoint that ZIP. Double-check the digits, or use the address input above.',
+              footerNote: 'Geocoder could not pinpoint that ZIP. Double-check the digits, or try a street address.',
             });
             highlightOfficials([]);
             return;
@@ -779,7 +786,7 @@ const topPillars = Object.entries(pillarById)
             renderAreaCard({
               areaLabel: 'Your ZIP',
               areaDetail: zip,
-              noRepsMessage: 'OpenStates returned no PA legislators for this ZIP. Are you sure it is a PA ZIP?',
+              noRepsMessage: explainEmptyResult(zip),
             });
             highlightOfficials([]);
             return;
@@ -791,18 +798,23 @@ const topPillars = Object.entries(pillarById)
             districts,
             reps,
             footerNote: reps.length > 2
-              ? `ZIP areas can straddle district lines — ${reps.length} legislators serve parts of this ZIP. Type your street address for the exact pair.`
-              : 'For your specific street, type your address above.',
+              ? `ZIP areas can straddle district lines — ${reps.length} legislators serve parts of this ZIP. Type a street address for the exact pair.`
+              : 'For your specific street, type your full address.',
           });
           highlightOfficials(reps.map((r) => r.id));
         } catch (err) {
           renderAreaCard({
             areaLabel: 'Lookup failed',
             areaDetail: zip,
-            footerNote: 'Could not reach the geocoder. Try the address input. (' + (err && err.message ? err.message : 'unknown') + ')',
+            footerNote: 'Could not reach the geocoder. (' + (err && err.message ? err.message : 'unknown') + ')',
           });
         }
-      });
+      }
+
+      // Best guess at why we got 0 results — usually OpenStates daily quota.
+      function explainEmptyResult(detail) {
+        return 'OpenStates returned no PA legislators. This usually means the daily lookup quota was hit (resets at midnight UTC). Try again later, or use the name search below.';
+      }
 
       // Lat/lng → OpenStates /people.geo → match to our roster.
       async function findByLatLng(lat, lng, areaContext) {
@@ -1062,9 +1074,7 @@ const topPillars = Object.entries(pillarById)
         return out;
       }
 
-      document.getElementById('address-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const address = (document.getElementById('address-input').value || '').trim();
+      async function runAddressLookup(address) {
         if (!address) return;
         showResult('<p class="text-wtp-cream/70">Geocoding the address…</p>');
         try {
@@ -1073,7 +1083,7 @@ const topPillars = Object.entries(pillarById)
             renderAreaCard({
               areaLabel: 'Address not found',
               areaDetail: address,
-              footerNote: 'Census geocoder could not resolve this address. Try adding a city or ZIP, or use the county dropdown.',
+              footerNote: 'Geocoder could not resolve this. Try adding a city or ZIP, or just type a ZIP code.',
             });
             highlightOfficials([]);
             return;
@@ -1081,25 +1091,19 @@ const topPillars = Object.entries(pillarById)
           findByLatLng(geo.lat, geo.lng, {
             label: 'Your address',
             detail: geo.matched || address,
-            footerNote: 'Geocoded by U.S. Census Bureau (free, no key); reps looked up via OpenStates.',
+            footerNote: `Geocoded by ${geo.source || 'U.S. Census'}; reps looked up via OpenStates.`,
           });
         } catch (err) {
           renderAreaCard({
             areaLabel: 'Geocoder failed',
             areaDetail: address,
-            footerNote: 'Could not reach the Census geocoder. ' + (err && err.message ? err.message : ''),
+            footerNote: 'Could not reach the geocoder. ' + (err && err.message ? err.message : ''),
           });
         }
-      });
+      }
 
-      document.getElementById('county-select').addEventListener('change', async (e) => {
-        const county = e.target.value;
-        if (!county) {
-          showResult('');
-          resultEl.classList.add('hidden');
-          highlightOfficials([]);
-          return;
-        }
+      async function runCountyLookup(county) {
+        if (!county) return;
         const pop = countyPop[county];
         const popLine = pop
           ? `<strong class="text-white">${fmtNum(pop)}</strong> residents (2020)`

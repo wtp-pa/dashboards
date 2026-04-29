@@ -172,7 +172,25 @@ async function main() {
     "public/og-legislation.png",
   );
 
-  console.log(`  Deficit: $${annualB}B · Bills monitored: ${monitoredCount}`);
+  // Elected Officials Watch
+  const officials = JSON.parse(
+    await readFile(resolve(repoRoot, "data/elected-officials/officials.json"), "utf-8"),
+  );
+  const totalOfficials = officials.officials.length;
+
+  await renderCard(
+    card({
+      kicker: "WTPPPA · Pennsylvania Elected Officials Watch",
+      headlineNumber: String(totalOfficials),
+      headlineNumberColor: COLORS.sky,
+      headlineLabel: "PA legislators tracked",
+      footer: "Find your reps · See what they sponsor · dashboards.wtpppa.org/elected-officials",
+    }),
+    fonts,
+    "public/og-elected-officials.png",
+  );
+
+  console.log(`  Deficit: $${annualB}B · Bills monitored: ${monitoredCount} · Officials: ${totalOfficials}`);
 }
 
 main().catch((err) => {

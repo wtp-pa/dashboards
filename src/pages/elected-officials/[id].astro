@@ -216,7 +216,7 @@ const formatDate = (iso: string) => {
 const pageTitle = `${official.name} — ${config.party.shortName} Elected Officials Watch`;
 const pageDescription = `${official.title} ${official.name} (${official.party}, ${official.district}): ${primaryBills.length} bills introduced, ${cosponsorBills.length} cosponsored this session.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/${official.id}/`;
-const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
+const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
 ---
 
 <!doctype html>
@@ -264,14 +264,17 @@ const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
       <!-- Hero card — visually echoes the index trading card -->
       <section class="mt-6 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
         <div class="flex flex-col gap-6 md:flex-row md:items-start">
-          {(official as { photoUrl?: string | null }).photoUrl && (
-            <img
-              src={(official as { photoUrl?: string }).photoUrl}
-              alt={`${official.name} headshot`}
-              class="h-32 w-32 flex-shrink-0 rounded-md border border-white/10 object-cover md:h-40 md:w-40"
-              loading="lazy"
-            />
-          )}
+          {/* Initials avatar — PA's legacy photo URLs all 301→403 so we
+              avoid the broken-image UX entirely. Pure CSS, works on every
+              device, and matches the brand palette. */}
+          <div class="flex h-32 w-32 flex-shrink-0 items-center justify-center rounded-md border border-wtp-sky/30 bg-gradient-to-br from-wtp-navy to-wtp-indigo text-4xl font-bold text-wtp-sky md:h-40 md:w-40 md:text-5xl">
+            {(() => {
+              const parts = official.name.replace(/[^A-Za-z\s]/g, '').trim().split(/\s+/);
+              const first = parts[0]?.[0] ?? '';
+              const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+              return (first + last).toUpperCase();
+            })()}
+          </div>
           <div class="min-w-0 flex-1">
             <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-wtp-cream/60">
               <span>{official.title}</span>
