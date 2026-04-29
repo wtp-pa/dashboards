@@ -13,7 +13,8 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/sb507",
       "summary": "Modernizes Pennsylvania's regulatory framework for midwives, expanding access to midwifery services and updating professional standards.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "HB2218",
@@ -24,7 +25,8 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/hb2218",
       "summary": "Increases funding for school counselors in Pennsylvania public schools to address student mental health and academic outcomes.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "HB830",
@@ -35,7 +37,21 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/hb830",
       "summary": "Requires schools to notify parents when their child is involved in bullying incidents, either as a victim or perpetrator.",
-      "matchedPositions": []
+      "matchedPositions": [
+        "school-choice"
+      ],
+      "matches": [
+        {
+          "positionId": "school-choice",
+          "score": 0.11,
+          "evidence": "shares terms: parent, school",
+          "mechanism": "tfidf",
+          "overlappingTerms": [
+            "parent",
+            "school"
+          ]
+        }
+      ]
     },
     {
       "id": "HB344",
@@ -48,6 +64,15 @@
       "summary": "Requires landlords to disclose parking fees separately from rent in lease agreements to improve cost transparency for renters.",
       "matchedPositions": [
         "transparency-blockchain"
+      ],
+      "matches": [
+        {
+          "positionId": "transparency-blockchain",
+          "score": 0.032,
+          "evidence": "matched keyword \"transparency\"",
+          "mechanism": "keyword",
+          "overlappingTerms": []
+        }
       ]
     },
     {
@@ -59,7 +84,8 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/hr374",
       "summary": "Ceremonial resolution honoring the Catholic War Veterans organization for service to Pennsylvania veterans.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "SB1313",
@@ -70,7 +96,8 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/sb1313",
       "summary": "Allows Pennsylvania residents serving in the military to obtain hunting licenses at resident rates while stationed out of state.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "SB1311",
@@ -81,7 +108,8 @@
       "lastAction": "2026-04-28",
       "url": "https://www.palegis.us/legislation/bills/2025/sb1311",
       "summary": "Creates a public registry of individuals convicted of felony animal abuse, similar to existing sex offender registries.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "HB2151",
@@ -92,7 +120,8 @@
       "lastAction": "2026-04-23",
       "url": "https://www.palegis.us/legislation/bills/2025/hb2151",
       "summary": "Establishes statewide community standards governing the siting, energy use, water consumption, and environmental impact of large data center developments.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     },
     {
       "id": "SR276",
@@ -105,6 +134,15 @@
       "summary": "Memorial resolution urging Congress to ban members of Congress and senior officials from trading individual stocks while in office.",
       "matchedPositions": [
         "no-stock-trading"
+      ],
+      "matches": [
+        {
+          "positionId": "no-stock-trading",
+          "score": 0.248,
+          "evidence": "matched keyword \"insider trading\"",
+          "mechanism": "keyword",
+          "overlappingTerms": []
+        }
       ]
     },
     {
@@ -116,8 +154,11 @@
       "lastAction": "2026-04-23",
       "url": "https://www.palegis.us/legislation/bills/2025/hb2400",
       "summary": "Pennsylvania's annual general appropriations bill setting the FY 2026-27 operating budget for all state government functions.",
-      "matchedPositions": []
+      "matchedPositions": [],
+      "matches": []
     }
   ],
-  "lastMatched": "2026-04-29T00:31:16.746245+00:00"
+  "lastMatched": "2026-04-29T00:58:06.293748+00:00",
+  "matchThreshold": 0.07,
+  "tfidfThreshold": 0.1
 }

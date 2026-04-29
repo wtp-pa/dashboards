@@ -40,25 +40,30 @@ const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
       <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">How we screen bills</h1>
 
       <section class="prose prose-invert mt-10 max-w-none space-y-6 text-base leading-relaxed text-wtp-cream/80">
-        <h2 class="text-2xl font-bold text-white">Two-step process</h2>
+        <h2 class="text-2xl font-bold text-white">How we match bills to the platform</h2>
         <p>
-          Pennsylvania introduces thousands of bills each session. We don't try to score every one — that's where bad takes come from. Instead, every bill on this page goes through two steps:
+          Every bill goes through two complementary matchers — both transparent, both runnable on your laptop in under a second:
         </p>
-        <ol class="ml-6 list-decimal space-y-2 marker:text-wtp-sky">
+        <ol class="ml-6 list-decimal space-y-3 marker:text-wtp-sky">
           <li>
-            <strong class="text-white">Topic detection (automatic).</strong> A keyword matcher reads each bill's title and summary and tags the {config.party.shortName} <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">platform planks</a> it touches. The keyword list lives in <code class="text-wtp-cream/90">data/legislation/platform.json</code> and is open-source.
+            <strong class="text-white">Keyword matcher (precise).</strong> Each platform plank has a hand-picked keyword list. A word-boundary regex scans every bill's title + summary; a hit is recorded with the exact keyword that fired. This catches the obvious cases ("insider trading" in a bill → matches our plank against stock trading by officials) and is easy to audit — the keyword lists live in <code class="text-wtp-cream/90">data/legislation/platform.json</code>.
           </li>
           <li>
-            <strong class="text-white">Alignment call (human).</strong> An editor reads the bill text and records whether it's <em>aligned</em>, <em>mixed</em>, or <em>opposed</em> in <code class="text-wtp-cream/90">data/legislation/manual_review.json</code>, with a one-line note. Bills without an editorial note are shown as <em>under review</em>.
+            <strong class="text-white">TF-IDF cosine similarity (semantic).</strong> A standard text-similarity model (term-frequency × inverse-document-frequency) compares each bill against each plank's full description and keywords. Words are stemmed first, so "midwifery" matches "midwives". Hits above a similarity threshold are recorded along with the highest-contributing overlapping terms — those are what you see in the "shares terms" line on each card.
           </li>
         </ol>
 
+        <h2 class="text-2xl font-bold text-white">What we don't try to do automatically</h2>
+        <p>
+          Neither matcher knows whether a bill is <em>good</em> or <em>bad</em> from {config.party.shortName}'s perspective. They detect <em>topical overlap</em> — that this bill touches a plank in our platform. The alignment call (aligned / mixed / opposed) is a separate, optional editorial step recorded in <code class="text-wtp-cream/90">data/legislation/manual_review.json</code>. Bills without an editorial note show up as <em>under review</em>.
+        </p>
+
         <h2 class="text-2xl font-bold text-white">Why no AI scoring</h2>
         <p>
-          We don't use a language model to decide alignment. Two reasons. First, asking an AI "is this bill aligned with our platform?" produces confident-sounding output regardless of whether the model actually understood the bill — and we don't want to launder our editorial judgment through a black box. Second, paying for a hosted LLM is a recurring cost we'd rather not put on the party.
+          We don't use a language model to decide alignment. Asking an AI "is this bill aligned with our platform?" produces confident-sounding output regardless of whether the model actually understood the bill — and we don't want to launder our editorial judgment through a black box. The math we do use (regex + TF-IDF) is open, deterministic, and reproducible from the same inputs.
         </p>
         <p>
-          Keyword matching has obvious limits — the word "transparency" in a bill about parking-fee disclosure isn't the same as "government transparency" — but the human review step catches those.
+          The trade-off: surface-level vocabulary matching has obvious limits. The word "transparency" in a bill about parking-fee disclosure isn't the same as "government transparency" — that kind of false positive shows up as a low similarity score in the drill-down, and the editorial review step catches it.
         </p>
 
         <h2 class="text-2xl font-bold text-white">The {platform.pillars.length} pillars we check against</h2>

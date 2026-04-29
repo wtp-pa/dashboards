@@ -3,6 +3,13 @@ import platform from '../../../data/legislation/platform.json';
 
 type Alignment = 'aligned' | 'mixed' | 'opposed' | 'under-review';
 
+interface Match {
+  positionId: string;
+  score: number;
+  evidence: string;
+  mechanism: 'keyword' | 'tfidf';
+}
+
 export interface Props {
   id: string;
   chamber: string;
@@ -12,7 +19,7 @@ export interface Props {
   lastAction: string;
   url: string;
   summary: string;
-  matchedPositions: string[];
+  matches: Match[];
   alignment: Alignment;
   reviewNote?: string;
   reviewedBy?: string;
@@ -21,7 +28,7 @@ export interface Props {
 
 const {
   id, chamber, title, sponsor, status, lastAction, url, summary,
-  matchedPositions, alignment, reviewNote, reviewedBy, reviewedAt,
+  matches, alignment, reviewNote, reviewedBy, reviewedAt,
 } = Astro.props;
 
 const alignmentMeta: Record<Alignment, { label: string; cls: string; dot: string }> = {
@@ -49,15 +56,24 @@ const alignmentMeta: Record<Alignment, { label: string; cls: string; dot: string
 
 const meta = alignmentMeta[alignment];
 
-// Look up the full position object for each matched position ID, with the
-// pillar it belongs to.
-const positionDetails = matchedPositions.map((posId) => {
+// Look up the full position object for each match, attaching pillar info and
+// the evidence string from the matcher.
+const matchDetails = matches.map((m) => {
   for (const pillar of platform.pillars) {
-    const position = pillar.positions.find((p) => p.id === posId);
-    if (position) return { ...position, pillarName: pillar.name, pillarId: pillar.id };
+    const position = pillar.positions.find((p) => p.id === m.positionId);
+    if (position) {
+      return {
+        ...position,
+        pillarName: pillar.name,
+        pillarId: pillar.id,
+        score: m.score,
+        evidence: m.evidence,
+        mechanism: m.mechanism,
+      };
+    }
   }
   return null;
-}).filter(<T>(x: T | null): x is T => x !== null);
+}).filter(<T,>(x: T | null): x is T => x !== null);
 
 const formatDate = (iso: string) =>
   new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -91,15 +107,21 @@ const formatDate = (iso: string) =>
   <div class="border-t border-white/5 px-5 pb-5 pt-4 text-sm leading-relaxed">
     <p class="text-wtp-cream/80">{summary}</p>
 
-    {positionDetails.length > 0 && (
+    {matchDetails.length > 0 && (
       <div class="mt-5">
-        <div class="text-xs uppercase tracking-[0.18em] text-wtp-cream/40">Touches platform planks</div>
+        <div class="text-xs uppercase tracking-[0.18em] text-wtp-cream/40">Why we flagged this</div>
         <ul class="mt-2 space-y-2">
-          {positionDetails.map((p) => (
+          {matchDetails.map((p) => (
             <li class="rounded-md border border-white/10 bg-white/5 p-3">
-              <div class="text-xs uppercase tracking-wider text-wtp-sky">{p.pillarName}</div>
+              <div class="flex items-baseline justify-between gap-3">
+                <div class="text-xs uppercase tracking-wider text-wtp-sky">{p.pillarName}</div>
+                <div class="text-xs text-wtp-cream/40" title={`${p.mechanism === 'keyword' ? 'Direct keyword match' : 'TF-IDF cosine similarity'} score`}>
+                  {p.mechanism === 'keyword' ? '✦' : '~'} {p.score.toFixed(2)}
+                </div>
+              </div>
               <div class="mt-1 text-sm font-medium text-white">{p.title}</div>
-              <div class="mt-1 text-xs text-wtp-cream/60">{p.summary}</div>
+              <div class="mt-1 text-xs italic text-wtp-cream/50">{p.evidence}</div>
+              <div class="mt-2 text-xs text-wtp-cream/60">{p.summary}</div>
             </li>
           ))}
         </ul>
@@ -118,7 +140,7 @@ const formatDate = (iso: string) =>
       </div>
     )}
 
-    {alignment === 'under-review' && positionDetails.length === 0 && (
+    {alignment === 'under-review' && matchDetails.length === 0 && (
       <p class="mt-5 text-xs italic text-wtp-cream/40">
         No platform planks were auto-detected and no editorial review has been recorded yet.
       </p>
