@@ -57,10 +57,10 @@ export const config = {
         status: "live" as const,
       },
       {
-        name: "Legislation Tracker",
+        name: "PA Legislation Watch",
         slug: "legislation",
         tagline: "Scoring PA bills against WTP-PA platform positions",
-        status: "coming-soon" as const,
+        status: "live" as const,
       },
       {
         name: "Elected Officials Watch",

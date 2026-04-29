@@ -1,0 +1,29 @@
+{
+  "$comment": "Editor-curated alignment scores per bill. The matcher tags each bill with platform-position keywords automatically; this file is where a human editor (party officer or volunteer) records the actual alignment call. Without an entry here, a bill renders as 'under-review' on the dashboard. Schema: bill ID → { alignment, note, reviewedBy, reviewedAt }. alignment must be one of: aligned | mixed | opposed.",
+  "reviews": {
+    "SR276": {
+      "alignment": "aligned",
+      "note": "Directly mirrors the WTP-PA platform plank to ban securities trading by officials in office.",
+      "reviewedBy": "WTP-PA editorial",
+      "reviewedAt": "2026-04-28"
+    },
+    "SB1313": {
+      "alignment": "aligned",
+      "note": "Treats deployed PA service members as residents for hunting licenses — narrow but consistent with platform support for both Second Amendment access and protection of Pennsylvania soldiers.",
+      "reviewedBy": "WTP-PA editorial",
+      "reviewedAt": "2026-04-28"
+    },
+    "SB507": {
+      "alignment": "aligned",
+      "note": "Expands access to alternative health practitioners (midwives), aligned with the platform's medical freedom and alternative-medicine planks.",
+      "reviewedBy": "WTP-PA editorial",
+      "reviewedAt": "2026-04-28"
+    },
+    "HB2151": {
+      "alignment": "mixed",
+      "note": "Statewide standards for data center siting touch our zoning-reform plank — the platform calls for fewer land-use restrictions, but also for community input on developments. Needs further review of the bill text.",
+      "reviewedBy": "WTP-PA editorial",
+      "reviewedAt": "2026-04-28"
+    }
+  }
+}

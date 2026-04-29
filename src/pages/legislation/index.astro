@@ -1,0 +1,172 @@
+---
+import '../../styles/global.css';
+import { config } from '../../config';
+import BillCard from '../../components/legislation/BillCard.astro';
+import billsData from '../../../data/legislation/bills.json';
+import platform from '../../../data/legislation/platform.json';
+import manualReviewDoc from '../../../data/legislation/manual_review.json';
+
+type Alignment = 'aligned' | 'mixed' | 'opposed' | 'under-review';
+type ManualReview = { alignment: Exclude<Alignment, 'under-review'>; note: string; reviewedBy?: string; reviewedAt?: string };
+
+const reviews = manualReviewDoc.reviews as Record<string, ManualReview>;
+
+const enriched = billsData.bills.map((bill) => {
+  const review = reviews[bill.id];
+  return {
+    ...bill,
+    alignment: (review?.alignment ?? 'under-review') as Alignment,
+    reviewNote: review?.note,
+    reviewedBy: review?.reviewedBy,
+    reviewedAt: review?.reviewedAt,
+  };
+});
+
+const alignmentOrder: Record<Alignment, number> = {
+  aligned: 0,
+  opposed: 1,
+  mixed: 2,
+  'under-review': 3,
+};
+
+const sortedBills = [...enriched].sort((a, b) => {
+  const cmp = alignmentOrder[a.alignment] - alignmentOrder[b.alignment];
+  if (cmp !== 0) return cmp;
+  return b.lastAction.localeCompare(a.lastAction);
+});
+
+const counts = enriched.reduce((acc, b) => {
+  acc[b.alignment] = (acc[b.alignment] ?? 0) + 1;
+  return acc;
+}, {} as Record<Alignment, number>);
+
+const lastFetched = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long',
+  timeStyle: 'short',
+  timeZone: 'America/New_York',
+}).format(new Date(billsData.lastFetched));
+
+const pageTitle = `PA Legislation Watch — ${config.party.shortName}`;
+const pageDescription = `Tracking Pennsylvania bills against the WTP-PA platform. ${enriched.length} bills currently monitored.`;
+const canonicalUrl = `${config.portfolio.baseUrl}/legislation/`;
+const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
+const projectName = 'PA Legislation Watch';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
+        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
+        </a>
+        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
+          {config.party.name}
+        </a>
+        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
+          <a href="/legislation/about" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Methodology</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <section>
+        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Pennsylvania legislation, scored against our platform</p>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-6xl">PA Legislation Watch</h1>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80 md:text-lg">
+          Every bill below has been screened against the {platform.pillars.length} pillars of the {config.party.shortName} <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">platform</a>. Auto-tagging shows which planks each bill touches; the alignment indicator is set by an editor after reading the bill.
+        </p>
+
+        <div class="mt-10 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
+          <div class="rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 px-4 py-3">
+            <div class="text-2xl font-bold text-wtp-sky">{counts.aligned ?? 0}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Aligned</div>
+          </div>
+          <div class="rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 px-4 py-3">
+            <div class="text-2xl font-bold text-wtp-gold">{counts.mixed ?? 0}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Mixed</div>
+          </div>
+          <div class="rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-4 py-3">
+            <div class="text-2xl font-bold text-wtp-red">{counts.opposed ?? 0}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Opposed</div>
+          </div>
+          <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+            <div class="text-2xl font-bold text-wtp-cream/70">{counts['under-review'] ?? 0}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Under review</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mt-16">
+        <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 class="text-2xl font-bold md:text-3xl">{enriched.length} bills tracked · {billsData.session}</h2>
+          <div class="text-xs text-wtp-cream/50">Updated {lastFetched}</div>
+        </div>
+
+        <div class="mt-8 space-y-3">
+          {sortedBills.map((bill) => (
+            <BillCard
+              id={bill.id}
+              chamber={bill.chamber}
+              title={bill.title}
+              sponsor={bill.sponsor}
+              status={bill.status}
+              lastAction={bill.lastAction}
+              url={bill.url}
+              summary={bill.summary}
+              matchedPositions={bill.matchedPositions}
+              alignment={bill.alignment}
+              reviewNote={bill.reviewNote}
+              reviewedBy={bill.reviewedBy}
+              reviewedAt={bill.reviewedAt}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-20 rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 md:p-12">
+        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">{config.party.tagline}</p>
+        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">Want a state party that reads the bills?</h2>
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
+          Most Pennsylvania bills never make it past committee — but the ones that do shape your daily life. We screen each one against {config.party.shortName}'s platform so you don't have to. Become a member to help us keep watch.
+        </p>
+        <div class="mt-6">
+          <a href={config.party.website} class="inline-block rounded-md bg-wtp-sky px-6 py-3 text-sm font-semibold text-wtp-navy no-underline transition hover:bg-wtp-sky/90">
+            Join {config.party.shortName} →
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
+          <a href="/legislation/about" class="hover:text-white">Methodology</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
