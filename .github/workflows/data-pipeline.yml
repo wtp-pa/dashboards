@@ -61,6 +61,12 @@ jobs:
       - name: Score officials against platform
         run: python pipeline/elected-officials/score_officials.py
 
+      - name: Run accuracy tests (data + integration)
+        env:
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+        run: python3 tests/run.py --integration
+        continue-on-error: true  # surface issues without blocking the data commit
+
       - name: Commit updated data
         run: |
           git config user.name "wtp-budget-watch-bot"

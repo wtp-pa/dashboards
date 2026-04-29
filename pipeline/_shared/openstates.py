@@ -90,6 +90,7 @@ class OpenStatesClient:
                     retry_after = resp.headers.get("Retry-After", "")
                     wait = int(retry_after) if retry_after.isdigit() else 10 * (attempt + 1)
                     print(f"  rate-limited, sleeping {wait}s before retry...", file=sys.stderr)
+                    last_err = OpenStatesError(f"429 Too Many Requests after {wait}s wait")
                     time.sleep(wait)
                     continue
                 resp.raise_for_status()
@@ -97,8 +98,11 @@ class OpenStatesClient:
             except (requests.Timeout, requests.HTTPError) as e:
                 last_err = e
                 time.sleep(3 * (attempt + 1))
-        assert last_err is not None
-        raise OpenStatesError(f"GET {url} failed after {MAX_RETRIES} attempts: {last_err}") from last_err
+        # All retries exhausted — raise a clear error rather than asserting.
+        msg = f"GET {url} failed after {MAX_RETRIES} attempts"
+        if last_err is not None:
+            msg += f": {last_err}"
+        raise OpenStatesError(msg) from last_err
 
     def paginate(
         self,

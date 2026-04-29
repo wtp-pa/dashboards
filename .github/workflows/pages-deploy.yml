@@ -30,6 +30,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup Python (for data tests)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run data accuracy tests
+        run: python3 tests/run.py
+
       - name: Build Astro
         env:
           # Embedded into client-side JS at build time so the "Use my

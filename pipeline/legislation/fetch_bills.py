@@ -37,7 +37,7 @@ OUTPUT_PATH = Path(__file__).parent.parent.parent / "data" / "legislation" / "bi
 JURISDICTION = "pa"
 SESSION = "2025-2026"  # OpenStates session identifier for PA
 SESSION_LABEL = "2025-2026 Regular Session"  # human-readable; used in bills.json for the dashboard
-MAX_PAGES = 25  # cap to ~500 bills per run; tune as needed
+MAX_PAGES = 300  # PA files ~4-5k bills/session; 300 pages × 20/page covers it
 
 _CHAMBER_BY_PREFIX = {
     "HB": "House", "HR": "House", "HCO": "House", "HCR": "House",

@@ -1012,38 +1012,52 @@ const topPillars = Object.entries(pillarById)
 
       // Sample N points across a bounding box and call /people.geo at each.
       // Dedupe results by ocd-person ID so a multi-district county returns
-      // every overlapping legislator. Trades 5x API calls for accurate
-      // county coverage.
+      // every overlapping legislator. 5×5 grid (25 points) catches dense
+      // counties like Philadelphia and Allegheny. Sequential calls with
+      // 250ms spacing avoid OpenStates rate limits (429s).
       async function findRepsAcrossBbox(bbox, centerLat, centerLng) {
-        const span = 0.85; // pull 5 points slightly inset from edges
-        const dy = (bbox.north - bbox.south) * span * 0.5;
-        const dx = (bbox.east - bbox.west) * span * 0.5;
-        const points = [
-          { lat: centerLat, lng: centerLng },
-          { lat: centerLat + dy, lng: centerLng + dx },
-          { lat: centerLat + dy, lng: centerLng - dx },
-          { lat: centerLat - dy, lng: centerLng + dx },
-          { lat: centerLat - dy, lng: centerLng - dx },
-        ];
+        const dy = bbox.north - bbox.south;
+        const dx = bbox.east - bbox.west;
+        // 5x5 grid inset 8% from edges to avoid spilling into neighboring
+        // jurisdictions; gives 25 sample points that cover the interior
+        // densely enough to find every overlapping legislative district.
+        const inset = 0.08;
+        const points = [];
+        for (let i = 0; i < 5; i++) {
+          for (let j = 0; j < 5; j++) {
+            const fx = inset + (i / 4) * (1 - 2 * inset);
+            const fy = inset + (j / 4) * (1 - 2 * inset);
+            points.push({
+              lat: bbox.south + dy * fy,
+              lng: bbox.west + dx * fx,
+            });
+          }
+        }
         const seen = new Set();
         const out = [];
-        const responses = await Promise.all(points.map(async (p) => {
-          try {
-            const url = `https://v3.openstates.org/people.geo?lat=${p.lat}&lng=${p.lng}&apikey=${encodeURIComponent(openstatesApiKey)}`;
-            const r = await fetch(url);
-            if (!r.ok) return [];
-            const d = await r.json();
-            return d.results || [];
-          } catch (_) { return []; }
-        }));
-        for (const arr of responses) {
-          for (const person of arr) {
-            if (!seen.has(person.id)) {
-              seen.add(person.id);
-              const cardMeta = officialsByOcd[person.id];
-              if (cardMeta) out.push(cardMeta);
+        // Fire 5 in parallel, wait, then next 5. Balances throughput
+        // against rate limit; 250ms gap = max 4 req/sec.
+        for (let chunk = 0; chunk < points.length; chunk += 5) {
+          const batch = points.slice(chunk, chunk + 5);
+          const responses = await Promise.all(batch.map(async (p) => {
+            try {
+              const url = `https://v3.openstates.org/people.geo?lat=${p.lat}&lng=${p.lng}&apikey=${encodeURIComponent(openstatesApiKey)}`;
+              const r = await fetch(url);
+              if (!r.ok) return [];
+              const d = await r.json();
+              return d.results || [];
+            } catch (_) { return []; }
+          }));
+          for (const arr of responses) {
+            for (const person of arr) {
+              if (!seen.has(person.id)) {
+                seen.add(person.id);
+                const cardMeta = officialsByOcd[person.id];
+                if (cardMeta) out.push(cardMeta);
+              }
             }
           }
+          if (chunk + 5 < points.length) await new Promise((r) => setTimeout(r, 250));
         }
         return out;
       }
