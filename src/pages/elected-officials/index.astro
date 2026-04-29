@@ -344,59 +344,76 @@ const topPillars = Object.entries(pillarById)
         </div>
       </details>
 
-      <section class="mt-10 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
-        <div class="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 class="text-xl font-bold md:text-2xl">What the General Assembly has been working on</h2>
-          <div class="text-xs text-wtp-cream/50">{officialsDoc.session}</div>
-        </div>
-        <p class="mt-2 max-w-3xl text-sm text-wtp-cream/70">
-          Aggregate output across all 253 PA legislators this session. This is the universe of work — what your senator does is one slice of this.
-        </p>
+      <details class="group mt-10 rounded-lg border border-white/10 bg-surface/40 transition hover:border-white/20">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
+          <div class="min-w-0 flex-1">
+            <h2 class="text-base font-semibold text-white">What the General Assembly has been working on</h2>
+            <p class="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-wtp-cream/70">
+              <span><strong class="text-white">{totalBillsFiled.toLocaleString()}</strong> bills introduced</span>
+              <span class="text-wtp-cream/40">·</span>
+              <span><strong class="text-wtp-sky">{billsTouchingPlatform.toLocaleString()}</strong> touch our platform</span>
+              <span class="text-wtp-cream/40">·</span>
+              <span><strong class="text-wtp-gold">{billsPastCommittee.toLocaleString()}</strong> past committee</span>
+              <span class="text-wtp-cream/40">·</span>
+              <span><strong class="text-white">{billsBecameLaw.toLocaleString()}</strong> signed</span>
+            </p>
+          </div>
+          <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
+            <span class="group-open:hidden">Detail</span>
+            <span class="hidden group-open:inline">Hide</span>
+            <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+          </div>
+        </summary>
+        <div class="border-t border-white/10 px-5 pb-5 pt-4 md:px-6 md:pb-6">
+          <p class="text-sm text-wtp-cream/70">
+            Aggregate output across all 253 PA legislators this session ({officialsDoc.session}). This is the universe of work — what your senator does is one slice of this.
+          </p>
 
-        <div class="mt-6 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
-          <div class="rounded-md border border-white/10 bg-white/5 p-4">
-            <div class="text-3xl font-bold text-white">{totalBillsFiled.toLocaleString()}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Bills introduced</div>
-          </div>
-          <div class="rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-4">
-            <div class="text-3xl font-bold text-wtp-sky">{billsTouchingPlatform.toLocaleString()}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touch our platform</div>
-          </div>
-          <div class="rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-4">
-            <div class="text-3xl font-bold text-wtp-gold">{billsPastCommittee.toLocaleString()}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Made it past committee</div>
-          </div>
-          <div class="rounded-md border border-wtp-red/20 bg-wtp-red/5 p-4">
-            <div class="text-3xl font-bold text-white">{billsBecameLaw.toLocaleString()}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Signed into law</div>
-          </div>
-        </div>
-
-        {topPillars.length > 0 && (
-          <div class="mt-6">
-            <div class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Most-introduced platform topics this session</div>
-            <div class="mt-2 space-y-1.5">
-              {topPillars.map((p) => {
-                const widthPct = Math.round((p.count / topPillars[0].count) * 100);
-                return (
-                  <div class="flex items-center gap-3 text-xs">
-                    <span class="w-32 flex-shrink-0 truncate text-wtp-cream/80">{p.name}</span>
-                    <span class="relative h-2 flex-1 overflow-hidden rounded-full bg-white/5">
-                      <span class="absolute inset-y-0 left-0 bg-wtp-sky" style={`width: ${widthPct}%`}></span>
-                    </span>
-                    <span class="w-16 flex-shrink-0 text-right font-mono text-wtp-cream/60">{p.count} bills</span>
-                  </div>
-                );
-              })}
+          <div class="mt-5 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
+            <div class="rounded-md border border-white/10 bg-white/5 p-4">
+              <div class="text-3xl font-bold text-white">{totalBillsFiled.toLocaleString()}</div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Bills introduced</div>
+            </div>
+            <div class="rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-4">
+              <div class="text-3xl font-bold text-wtp-sky">{billsTouchingPlatform.toLocaleString()}</div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touch our platform</div>
+            </div>
+            <div class="rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-4">
+              <div class="text-3xl font-bold text-wtp-gold">{billsPastCommittee.toLocaleString()}</div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Made it past committee</div>
+            </div>
+            <div class="rounded-md border border-wtp-red/20 bg-wtp-red/5 p-4">
+              <div class="text-3xl font-bold text-white">{billsBecameLaw.toLocaleString()}</div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Signed into law</div>
             </div>
           </div>
-        )}
 
-        <p class="mt-5 text-xs text-wtp-cream/50">
-          {Math.round((billsBecameLaw / totalBillsFiled) * 100) || 0}% of bills introduced this session have become law so far.
-          Most die in committee — see <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> for which platform-touching bills are still alive.
-        </p>
-      </section>
+          {topPillars.length > 0 && (
+            <div class="mt-6">
+              <div class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Most-introduced platform topics this session</div>
+              <div class="mt-2 space-y-1.5">
+                {topPillars.map((p) => {
+                  const widthPct = Math.round((p.count / topPillars[0].count) * 100);
+                  return (
+                    <div class="flex items-center gap-3 text-xs">
+                      <span class="w-32 flex-shrink-0 truncate text-wtp-cream/80">{p.name}</span>
+                      <span class="relative h-2 flex-1 overflow-hidden rounded-full bg-white/5">
+                        <span class="absolute inset-y-0 left-0 bg-wtp-sky" style={`width: ${widthPct}%`}></span>
+                      </span>
+                      <span class="w-16 flex-shrink-0 text-right font-mono text-wtp-cream/60">{p.count} bills</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <p class="mt-5 text-xs text-wtp-cream/50">
+            {Math.round((billsBecameLaw / totalBillsFiled) * 100) || 0}% of bills introduced this session have become law so far.
+            Most die in committee — see <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> for which platform-touching bills are still alive.
+          </p>
+        </div>
+      </details>
 
       <details open class="group mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 transition hover:border-wtp-sky/40">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">

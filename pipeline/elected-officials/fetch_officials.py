@@ -77,36 +77,48 @@ def _district_label(raw: str | int | None, chamber: str) -> str:
 def _term_dates_default(chamber: str, district_str: str) -> tuple[int | None, int | None]:
     """
     Best-effort term dates when OpenStates doesn't supply them. Based on PA
-    Senate cycle parity (odd districts elect in non-presidential years, even
-    districts in presidential years; 4-year terms) and PA House (all elected
-    every 2 years; 2-year terms based on most recent even year).
+    cycle parity (Senate odd districts elect in non-presidential even years
+    [2018, 2022, 2026...], even districts in presidential years [2020, 2024,
+    2028...]; 4-year terms). PA House: all elected every even year, 2-year
+    terms.
+
+    PA elections are in November; terms begin December (or January). Until
+    that November we treat the most-recent past cycle as the current term;
+    after November of an election year, swing to the next term.
     """
     today = datetime.now(timezone.utc)
     year = today.year
+    pre_election = today.month < 11
     digits = re.search(r"(\d+)", district_str or "")
+
+    def last_cycle(start_year: int, every: int) -> int | None:
+        # Walk back to most-recent past election year of this cycle.
+        if year < start_year:
+            return None
+        candidate = year - ((year - start_year) % every)
+        if candidate == year and pre_election:
+            # This year IS a cycle year, but the election hasn't happened
+            # yet — current term is from the PREVIOUS cycle.
+            candidate -= every
+        return candidate if candidate >= start_year else None
+
     if chamber == "House":
-        # House: 2-year terms; took office Dec of last even year.
-        last_even = year if year % 2 == 0 else year - 1
-        # If we're past the swearing-in (Dec) but before next election (Nov),
-        # we're in last_even..last_even+2.
-        return last_even, last_even + 2
+        # House: 2-year term, sworn in year after election.
+        # Election year 2022 → term 2023–2024.
+        cy = last_cycle(2018, 2)
+        if cy is None:
+            return None, None
+        return cy + 1, cy + 2
     if not digits:
         return None, None
     n = int(digits.group(1))
-    if n % 2 == 1:
-        # Odd districts: non-presidential year cycle (2018, 2022, 2026, ...)
-        last_cycle = year if (year % 4 == 2) else (year - ((year % 4) + 2) % 4 if year % 2 == 0 else year - 1)
-        # Simpler: walk back to most recent year with year % 4 == 2 and ≤ current.
-        last_cycle = year - ((year - 2022) % 4) if year >= 2022 else None
-        if last_cycle is None:
-            return None, None
-        return last_cycle + 1, last_cycle + 5
-    else:
-        # Even districts: presidential year cycle (2020, 2024, 2028, ...)
-        last_cycle = year - ((year - 2024) % 4) if year >= 2024 else None
-        if last_cycle is None:
-            return None, None
-        return last_cycle + 1, last_cycle + 5
+    # Senate: 4-year term, sworn in year after election.
+    # Election year 2022 → term 2023–2026.
+    cy = last_cycle(2022, 4) if n % 2 == 1 else last_cycle(2020, 4)
+    if cy is None:
+        return None, None
+    return cy + 1, cy + 4
+
 
 
 def _build_new_record(person: dict) -> dict | None:
