@@ -9,7 +9,11 @@
 export const config = {
   party: {
     name: "We The People Party of Pennsylvania",
-    shortName: "WTP-PA",
+    shortName: "WTPPPA",
+    // Per officer guidance (Nathan, 2026-04-29): the abbreviation is WTPPPA
+    // — three p's, no dash, no space. When rendered in 2 colors, "WTPP" goes
+    // in one color and "PA" in the contrast color.
+    shortNameSplit: { primary: "WTPP", accent: "PA" },
     state: "Pennsylvania",
     stateAbbr: "PA",
     tagline: "Empowering People. Restoring Trust.",
@@ -20,7 +24,7 @@ export const config = {
     },
   },
   brand: {
-    // Matches WTP-PA Squarespace site palette + Poppins font.
+    // Matches WTPPPA Squarespace site palette + Poppins font.
     // Source: Site Styles → Colors / Fonts on wtpppa.org
     colors: {
       navy: "#15184E",
@@ -45,8 +49,8 @@ export const config = {
     dashboardUrl: "https://dashboards.wtpppa.org/budget",
   },
   portfolio: {
-    // The umbrella that holds all WTP-PA dashboards. Used by the / landing page.
-    name: "WTP-PA Dashboards",
+    // The umbrella that holds all WTPPPA dashboards. Used by the / landing page.
+    name: "WTPPPA Dashboards",
     tagline: "Tools for Pennsylvania accountability",
     baseUrl: "https://dashboards.wtpppa.org",
     projects: [
@@ -59,13 +63,13 @@ export const config = {
       {
         name: "PA Legislation Watch",
         slug: "legislation",
-        tagline: "Scoring PA bills against WTP-PA platform positions",
+        tagline: "Scoring PA bills against the WTPPPA platform",
         status: "live" as const,
       },
       {
         name: "Elected Officials Watch",
         slug: "elected-officials",
-        tagline: "How your representatives vote and how they align with the WTP-PA platform",
+        tagline: "How your representatives vote and how they align with the WTPPPA platform",
         status: "coming-soon" as const,
       },
       {

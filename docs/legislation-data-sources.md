@@ -67,7 +67,7 @@ A citizen who wants to know what a given bill actually does has to:
 2. Click through to a PDF
 3. Read 2-10 pages of cross-references to other acts
 
-That's worth saying out loud on the methodology page — and it's a future advocacy lever for WTP-PA: PA could mandate plain-English summaries on bill listings, like several other states do. We've documented the data shape we'd need; if the law changes, the pipeline change to consume it is one afternoon's work.
+That's worth saying out loud on the methodology page — and it's a future advocacy lever for WTPPPA: PA could mandate plain-English summaries on bill listings, like several other states do. We've documented the data shape we'd need; if the law changes, the pipeline change to consume it is one afternoon's work.
 
 ## Re-evaluation triggers
 

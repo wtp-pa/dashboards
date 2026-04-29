@@ -1,5 +1,5 @@
 {
-  "$comment": "WTP-PA platform pillars + positions, encoded for matching against PA bills. Source: https://www.wtpppa.org/platform \u2014 keep in sync when the website changes. Each position has 'keywords' (matched against bill title+summary), a 'stance' (WTP-PA's direction on the topic), and 'stanceVerbs' (verb phrases that, when they appear in a bill on this topic, suggest the bill is moving in that direction). Edit stanceVerbs freely \u2014 they're the lever for tuning auto-alignment accuracy.",
+  "$comment": "WTPPPA platform pillars + positions, encoded for matching against PA bills. Source: https://www.wtpppa.org/platform \u2014 keep in sync when the website changes. Each position has 'keywords' (matched against bill title+summary), a 'stance' (WTPPPA's direction on the topic), and 'stanceVerbs' (verb phrases that, when they appear in a bill on this topic, suggest the bill is moving in that direction). Edit stanceVerbs freely \u2014 they're the lever for tuning auto-alignment accuracy.",
   "version": "2.0.0",
   "source": "https://www.wtpppa.org/platform",
   "lastUpdated": "2026-04-29",

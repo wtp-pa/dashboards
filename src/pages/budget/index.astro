@@ -61,7 +61,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <header class="border-b border-white/10 px-6 py-4">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
         <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
           <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{config.project.name}</div>
         </a>
         <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
@@ -118,6 +118,13 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <p class="mt-10 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
           The <strong class="text-wtp-red">~${gapB} billion gap</strong> between what comes in and what goes out is the structural deficit ticking above. It's projected to grow to <strong class="text-white">$6.7 billion</strong> next year and <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes.
         </p>
+
+        <aside class="mt-10 max-w-3xl rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 p-5 text-sm leading-relaxed text-wtp-cream/80">
+          <div class="text-xs uppercase tracking-[0.18em] text-wtp-gold">Wait — what about property tax?</div>
+          <p class="mt-2">
+            Pennsylvania property taxes don't appear above because they aren't <em>state</em> revenue. PA is one of the few states where property tax is collected and spent entirely by <strong class="text-white">local government</strong> — school districts (the largest share), counties, and municipalities — and never enters the state General Fund. That's why a Pennsylvanian can pay one of the highest property tax burdens in the country and still see a state-level structural deficit. Property tax reform is in <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">our platform</a> — but the fix happens at the local and state-policy level, not in the state's revenue mix.
+          </p>
+        </aside>
       </section>
 
       <section class="mt-24">

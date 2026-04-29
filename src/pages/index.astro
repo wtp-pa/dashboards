@@ -1,6 +1,7 @@
 ---
 import { config } from '../config';
 import projections from '../../data/projections.json';
+import BrandShortName from '../components/BrandShortName.astro';
 import '../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
@@ -37,9 +38,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <header class="border-b border-white/10 px-6 py-4">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
         <div class="flex min-w-0 items-center gap-3 md:justify-self-start">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
           <div class="min-w-0 leading-tight">
-            <div class="truncate text-base font-semibold sm:text-lg">{config.portfolio.name}</div>
+            <div class="truncate text-base font-semibold sm:text-lg">
+              <BrandShortName primaryClass="text-white" accentClass="text-wtp-gold" /> Dashboards
+            </div>
           </div>
         </div>
         <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">

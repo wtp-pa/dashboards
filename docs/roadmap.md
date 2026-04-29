@@ -1,4 +1,4 @@
-# WTP-PA Dashboards — Roadmap
+# WTPPPA Dashboards — Roadmap
 
 A living document of what's live, what's in progress, and what's planned across the dashboard portfolio. Updated as projects ship.
 
@@ -72,7 +72,7 @@ Reconciliation between enacted-budget line items (in PDFs from the General Assem
 
 ## Legislation Tracker — planned
 
-The accountability tool that scores PA bills against the WTP-PA platform. Funded by Claude API (pending WTP-PA party billing — not personal account).
+The accountability tool that scores PA bills against the WTPPPA platform. Funded by Claude API (pending WTPPPA party billing — not personal account).
 
 Approach (from prior planning):
 - Python or TypeScript CLI/script first, no web UI on day 1
@@ -82,8 +82,8 @@ Approach (from prior planning):
 - Once scoring works, build `/legislation` dashboard route + widget
 
 Blockers:
-- WTP-PA needs its own Anthropic API billing account (don't use personal billing)
-- Need the WTP-PA platform document as the canonical text to score against
+- WTPPPA needs its own Anthropic API billing account (don't use personal billing)
+- Need the WTPPPA platform document as the canonical text to score against
 - Need a sample PA bill for initial testing
 
 Hosting note: when this ships a UI, the static dashboard pages live on GitHub Pages alongside `/budget`. The serverless API endpoint (calling Claude API) needs Cloudflare Workers free tier or similar — GH Pages doesn't run server code.

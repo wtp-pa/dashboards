@@ -2,6 +2,7 @@
 import '../../styles/global.css';
 import { config } from '../../config';
 import BillCard from '../../components/legislation/BillCard.astro';
+import BrandShortName from '../../components/BrandShortName.astro';
 import billsData from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import manualReviewDoc from '../../../data/legislation/manual_review.json';
@@ -171,7 +172,7 @@ const lastFetched = new Intl.DateTimeFormat('en-US', {
 }).format(new Date(billsData.lastFetched));
 
 const pageTitle = `PA Legislation Watch — ${config.party.shortName}`;
-const pageDescription = `Tracking Pennsylvania bills against the WTP-PA platform. ${enriched.length} bills currently monitored.`;
+const pageDescription = `Tracking Pennsylvania bills against the ${config.party.shortName} platform. ${enriched.length} bills currently monitored.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/legislation/`;
 const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
 const projectName = 'PA Legislation Watch';
@@ -200,7 +201,7 @@ const projectName = 'PA Legislation Watch';
     <header class="border-b border-white/10 px-6 py-4">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
         <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
           <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
         </a>
         <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
@@ -372,8 +373,10 @@ const projectName = 'PA Legislation Watch';
           Most Pennsylvania bills never make it past committee — but the ones that do shape your daily life. We screen each one against {config.party.shortName}'s platform so you don't have to. Become a member to help us keep watch.
         </p>
         <div class="mt-6">
-          <a href={config.party.website} class="inline-block rounded-md bg-wtp-sky px-6 py-3 text-sm font-semibold text-wtp-navy no-underline transition hover:bg-wtp-sky/90">
-            Join {config.party.shortName} →
+          <a href={config.party.website} class="inline-flex items-center gap-2 rounded-md bg-wtp-sky px-6 py-3 text-sm font-semibold text-wtp-navy no-underline transition hover:bg-wtp-sky/90">
+            <span>Join</span>
+            <BrandShortName primaryClass="text-wtp-navy" accentClass="text-wtp-red" />
+            <span>→</span>
           </a>
         </div>
       </section>

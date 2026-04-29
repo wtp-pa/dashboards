@@ -1,0 +1,27 @@
+---
+import { config } from '../config';
+
+// Renders the party short name with the 2-color treatment per officer
+// brand guidance (2026-04-29): "WTPP" in primary, "PA" in accent. Used
+// anywhere the abbreviation appears as a wordmark / hero element. Body
+// text uses the plain `config.party.shortName` instead.
+
+export interface Props {
+  primaryClass?: string;
+  accentClass?: string;
+  tag?: 'span' | 'strong';
+}
+
+const {
+  primaryClass = 'text-wtp-cream',
+  accentClass = 'text-wtp-gold',
+  tag = 'span',
+} = Astro.props;
+
+const Tag = tag;
+const { primary, accent } = config.party.shortNameSplit;
+---
+
+<Tag class="font-bold tracking-tight">
+  <span class={primaryClass}>{primary}</span><span class={accentClass}>{accent}</span>
+</Tag>
