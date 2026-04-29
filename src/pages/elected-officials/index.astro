@@ -6,12 +6,18 @@ import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
 import zipDoc from '../../../data/elected-officials/zip-districts.json';
+import billsDoc from '../../../data/legislation/bills.json';
+import platform from '../../../data/legislation/platform.json';
+import { stageOf, STAGE_LABELS } from '../../lib/bills';
 
 type PillarBreakdown = {
   pillarId: string;
   pillarName: string;
   withPlatform: number;
   againstPlatform: number;
+  noted?: number;
+  primarySponsor?: number;
+  cosponsor?: number;
 };
 type Scorecard = {
   officialId: string;
@@ -21,6 +27,7 @@ type Scorecard = {
   againstPlatform: number;
   alignmentRate: number | null;
   byPillar?: PillarBreakdown[];
+  billsSponsored?: { primary: number; cosponsor: number; touchingPlatform: number };
 };
 
 const scorecards = scorecardsDoc.scorecards as Scorecard[];
@@ -34,11 +41,19 @@ const officials = officialsDoc.officials.map((o) => {
     scorableVotes: sc?.scorableVotes ?? 0,
     totalVotes: sc?.totalVotes ?? 0,
     byPillar: sc?.byPillar ?? [],
+    billsSponsored: sc?.billsSponsored ?? { primary: 0, cosponsor: 0, touchingPlatform: 0 },
   };
 });
 
-// Sorted by alignment descending, with un-rated officials at the end.
+// Sort by sponsorship activity descending — that's the strongest "what they
+// care about" signal. Tie-break by primary count, then alignment rate.
 const sortedOfficials = [...officials].sort((a, b) => {
+  const aTouching = a.billsSponsored.touchingPlatform;
+  const bTouching = b.billsSponsored.touchingPlatform;
+  if (bTouching !== aTouching) return bTouching - aTouching;
+  const aPrimary = a.billsSponsored.primary;
+  const bPrimary = b.billsSponsored.primary;
+  if (bPrimary !== aPrimary) return bPrimary - aPrimary;
   if (a.alignmentRate === null && b.alignmentRate === null) return 0;
   if (a.alignmentRate === null) return 1;
   if (b.alignmentRate === null) return -1;
@@ -65,6 +80,48 @@ const projectName = 'PA Elected Officials Watch';
 // Inline payloads for the client-side lookup. Tiny JSON, no extra fetch.
 const zipPayload = JSON.stringify(zipDoc.zips);
 const districtPayload = JSON.stringify(districtToOfficial);
+
+// Aggregate "what the General Assembly has actually been doing" stats —
+// derived from bills.json so they auto-update with every cron run.
+const allBills = billsDoc.bills as Array<{
+  id: string;
+  title: string;
+  status: string;
+  matches: Array<{ positionId: string }>;
+}>;
+const totalBillsFiled = allBills.length;
+const billsByStage = allBills.reduce((acc, b) => {
+  const stage = stageOf(b.status);
+  acc[stage] = (acc[stage] ?? 0) + 1;
+  return acc;
+}, {} as Record<string, number>);
+const billsBecameLaw = billsByStage['signed'] ?? 0;
+const billsPastCommittee = (billsByStage['on-floor'] ?? 0) + (billsByStage['passed'] ?? 0) + billsBecameLaw;
+const billsTouchingPlatform = allBills.filter((b) => b.matches.length > 0).length;
+
+// Top pillars by bill count across the whole session.
+const pillarById = Object.fromEntries(
+  platform.pillars.map((p) => [p.id, { name: p.name, count: 0 }]),
+);
+const positionToPillar = new Map<string, string>();
+for (const pillar of platform.pillars) {
+  for (const pos of pillar.positions) positionToPillar.set(pos.id, pillar.id);
+}
+for (const bill of allBills) {
+  const seenPillars = new Set<string>();
+  for (const m of bill.matches) {
+    const pid = positionToPillar.get(m.positionId);
+    if (pid && !seenPillars.has(pid)) {
+      seenPillars.add(pid);
+      pillarById[pid].count += 1;
+    }
+  }
+}
+const topPillars = Object.entries(pillarById)
+  .map(([id, v]) => ({ id, name: v.name, count: v.count }))
+  .filter((p) => p.count > 0)
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 5);
 ---
 
 <!doctype html>
@@ -119,7 +176,7 @@ const districtPayload = JSON.stringify(districtToOfficial);
         <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
           <div class="min-w-0">
             <h2 class="text-base font-semibold text-white">Wait — who are these people, exactly?</h2>
-            <p class="mt-1 text-xs text-wtp-cream/70">A 60-second civics primer on the state legislature, separate from Congress, with much more impact on your daily life.</p>
+            <p class="mt-1 text-xs text-wtp-cream/70">A 90-second civics primer: who they are, what they decide, and what's <em>not</em> their job (it goes to Congress or your local government instead).</p>
           </div>
           <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
             <span class="group-open:hidden">Show</span>
@@ -127,13 +184,13 @@ const districtPayload = JSON.stringify(districtToOfficial);
             <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
           </div>
         </summary>
-        <div class="space-y-4 border-t border-wtp-sky/20 px-5 pb-5 pt-4 text-sm leading-relaxed text-wtp-cream/85 md:px-6 md:pb-6">
+        <div class="space-y-5 border-t border-wtp-sky/20 px-5 pb-5 pt-4 text-sm leading-relaxed text-wtp-cream/85 md:px-6 md:pb-6">
           <div class="grid gap-4 md:grid-cols-2">
             <div>
               <h3 class="text-xs uppercase tracking-wider text-wtp-sky">State legislature ≠ Congress</h3>
               <p class="mt-1">
                 The U.S. Congress (Senate + House) makes <em>federal</em> law in Washington D.C. — same laws for all 50 states.
-                The <strong class="text-white">Pennsylvania General Assembly</strong> is separate. It makes laws that apply only to PA — schools, roads, taxes, courts, prisons, healthcare programs, voting rules. Most laws that touch your day-to-day life are state laws, not federal.
+                The <strong class="text-white">Pennsylvania General Assembly</strong> is separate. It makes laws that apply only to PA. Most laws that touch your day-to-day life are state laws, not federal.
               </p>
             </div>
             <div>
@@ -144,24 +201,122 @@ const districtPayload = JSON.stringify(districtToOfficial);
                 <li>Total: <strong class="text-white">253 state legislators</strong>, all in Harrisburg.</li>
               </ul>
             </div>
-            <div>
-              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">How they get there</h3>
-              <p class="mt-1">
-                Each PA voter is in one Senate district (SD-1 through SD-50) and one House district (HD-1 through HD-203). On election day you vote for the candidate in your district — not statewide. Senators and Reps are elected by their district only. <strong class="text-white">Use the ZIP / county lookup above to find yours.</strong>
-              </p>
-            </div>
-            <div>
-              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">What they do</h3>
-              <p class="mt-1">
-                They write, debate, amend, and vote on bills. Most bills die in committee and never get a floor vote — see <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>. The bills that <em>do</em> get a recorded floor vote are what we score legislators on here.
-              </p>
+          </div>
+
+          <div>
+            <h3 class="text-xs uppercase tracking-wider text-wtp-sky">Who decides what — quick reference</h3>
+            <p class="mt-1 text-xs text-wtp-cream/60">If you're frustrated about something, this is where to direct that frustration.</p>
+            <div class="mt-3 grid gap-3 md:grid-cols-3">
+              <div class="rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-3">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-wtp-sky">PA General Assembly (these people)</div>
+                <ul class="mt-2 space-y-1 text-xs text-wtp-cream/85">
+                  <li>State income tax & corporate tax</li>
+                  <li>Public school funding formula</li>
+                  <li>Election rules (mail-in ballots, IDs, hours)</li>
+                  <li>State criminal code & sentencing</li>
+                  <li>Driver's licenses, vehicle code</li>
+                  <li>State universities & community colleges</li>
+                  <li>Medicaid expansion</li>
+                  <li>Marijuana, alcohol, gambling laws</li>
+                  <li>Healthcare provider licensing</li>
+                  <li>State courts above the magistrate level</li>
+                </ul>
+              </div>
+              <div class="rounded-md border border-white/15 bg-white/5 p-3">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-wtp-cream/70">U.S. Congress (federal)</div>
+                <ul class="mt-2 space-y-1 text-xs text-wtp-cream/75">
+                  <li>Federal income tax</li>
+                  <li>Social Security & Medicare</li>
+                  <li>National defense, military</li>
+                  <li>Immigration & citizenship</li>
+                  <li>Interstate commerce regulation</li>
+                  <li>Federal civil-rights laws</li>
+                  <li>Federal courts</li>
+                  <li>Postal service, currency</li>
+                  <li>Trade agreements & tariffs</li>
+                </ul>
+              </div>
+              <div class="rounded-md border border-white/15 bg-white/5 p-3">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-wtp-cream/70">Local (county / city / township)</div>
+                <ul class="mt-2 space-y-1 text-xs text-wtp-cream/75">
+                  <li>Property tax rate (your bill)</li>
+                  <li>School district policies & boards</li>
+                  <li>Local zoning & permits</li>
+                  <li>Police staffing & funding</li>
+                  <li>Trash, water, snow removal</li>
+                  <li>Local roads (not state highways)</li>
+                  <li>Magistrate / district courts</li>
+                  <li>County prisons, sheriff</li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-3 text-xs text-wtp-cream/75">
-            <strong class="text-wtp-gold">A note on what's empty:</strong> Most bills that get to a floor vote are procedural amendments — naming bridges, technical Title 75 vehicle code updates, insurance regulation. Bills that touch our platform (criminal-justice reform, election integrity, monopoly busting) often die in committee and never reach a roll call. So a card showing "no platform-touching votes yet" doesn't mean a legislator is silent — it means the platform-relevant bills haven't reached the floor on their watch yet.
+
+          <div>
+            <h3 class="text-xs uppercase tracking-wider text-wtp-sky">What does a legislator's day-to-day look like?</h3>
+            <ul class="mt-2 grid gap-2 text-xs md:grid-cols-2">
+              <li class="rounded-md bg-white/5 p-3"><strong class="text-white">Introduce bills.</strong> They write or co-write proposed laws. This is the strongest signal of priorities — a legislator chooses what to put their name on.</li>
+              <li class="rounded-md bg-white/5 p-3"><strong class="text-white">Vote on bills.</strong> Yes/no on whatever reaches the floor. Most votes are on others' bills, often along party lines or on procedural details.</li>
+              <li class="rounded-md bg-white/5 p-3"><strong class="text-white">Serve on committees.</strong> Committees decide which bills die and which advance. Subject-matter focus (Education, Judiciary, Health) reveals where they have influence.</li>
+              <li class="rounded-md bg-white/5 p-3"><strong class="text-white">Constituent services.</strong> Help residents navigate the state — driver's license trouble, unemployment claims, getting a state agency to respond. Off-the-books but real.</li>
+            </ul>
           </div>
         </div>
       </details>
+
+      <section class="mt-10 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
+        <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 class="text-xl font-bold md:text-2xl">What the General Assembly has been working on</h2>
+          <div class="text-xs text-wtp-cream/50">{officialsDoc.session}</div>
+        </div>
+        <p class="mt-2 max-w-3xl text-sm text-wtp-cream/70">
+          Aggregate output across all 253 PA legislators this session. This is the universe of work — what your senator does is one slice of this.
+        </p>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
+          <div class="rounded-md border border-white/10 bg-white/5 p-4">
+            <div class="text-3xl font-bold text-white">{totalBillsFiled.toLocaleString()}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Bills introduced</div>
+          </div>
+          <div class="rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-4">
+            <div class="text-3xl font-bold text-wtp-sky">{billsTouchingPlatform.toLocaleString()}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touch our platform</div>
+          </div>
+          <div class="rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-4">
+            <div class="text-3xl font-bold text-wtp-gold">{billsPastCommittee.toLocaleString()}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Made it past committee</div>
+          </div>
+          <div class="rounded-md border border-wtp-red/20 bg-wtp-red/5 p-4">
+            <div class="text-3xl font-bold text-white">{billsBecameLaw.toLocaleString()}</div>
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Signed into law</div>
+          </div>
+        </div>
+
+        {topPillars.length > 0 && (
+          <div class="mt-6">
+            <div class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Most-introduced platform topics this session</div>
+            <div class="mt-2 space-y-1.5">
+              {topPillars.map((p) => {
+                const widthPct = Math.round((p.count / topPillars[0].count) * 100);
+                return (
+                  <div class="flex items-center gap-3 text-xs">
+                    <span class="w-32 flex-shrink-0 truncate text-wtp-cream/80">{p.name}</span>
+                    <span class="relative h-2 flex-1 overflow-hidden rounded-full bg-white/5">
+                      <span class="absolute inset-y-0 left-0 bg-wtp-sky" style={`width: ${widthPct}%`}></span>
+                    </span>
+                    <span class="w-16 flex-shrink-0 text-right font-mono text-wtp-cream/60">{p.count} bills</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <p class="mt-5 text-xs text-wtp-cream/50">
+          {Math.round((billsBecameLaw / totalBillsFiled) * 100) || 0}% of bills introduced this session have become law so far.
+          Most die in committee — see <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> for which platform-touching bills are still alive.
+        </p>
+      </section>
 
       <section class="mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 p-6 md:p-8">
         <h2 class="text-xl font-bold md:text-2xl">Find your representatives</h2>
@@ -204,7 +359,28 @@ const districtPayload = JSON.stringify(districtToOfficial);
           <h2 class="text-2xl font-bold md:text-3xl">{officials.length} officials tracked</h2>
           <div class="text-xs text-wtp-cream/50">{officialsDoc.session}</div>
         </div>
-        <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform alignment. Click a card for vote-by-vote detail.</p>
+        <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform-touching sponsorship activity. Click a card for the full vote-by-vote and bill-by-bill detail.</p>
+
+        <details class="group mt-5 rounded-md border border-white/10 bg-white/5 transition hover:border-white/20">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+            <span class="text-sm font-semibold text-white">How to read a legislator's card</span>
+            <span class="flex flex-shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-wtp-sky">
+              <span class="group-open:hidden">Show</span>
+              <span class="hidden group-open:inline">Hide</span>
+              <span class="grid h-7 w-7 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-sm font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+            </span>
+          </summary>
+          <div class="border-t border-white/10 px-4 py-4 text-xs leading-relaxed text-wtp-cream/80 md:text-sm">
+            <ul class="space-y-2">
+              <li><strong class="text-white">Bills introduced (the big number)</strong> = how many bills this legislator put their own name on as primary sponsor this session. Strongest "what they care about" signal — they chose to write or champion these.</li>
+              <li><strong class="text-white">+ N cosponsor</strong> = bills others introduced that this legislator signed onto. Weaker signal but still topical interest.</li>
+              <li><strong class="text-white">"X of N touch our platform"</strong> = how many of their sponsored bills match a {config.party.shortName} platform pillar. Bills can sponsor a topic without aligning with our position — alignment lives in <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>.</li>
+              <li><strong class="text-white">Most-sponsored pillars (mini bars)</strong> = which platform topics they put their effort into. Solid sky bar = primary sponsor, faded sky = cosponsor.</li>
+              <li><strong class="text-white">Voting record</strong> = how they voted on others' bills that reached a roll-call floor vote. Often along party lines or on procedural amendments — a weaker signal than what they sponsor. Will say "no scorable floor votes yet" if no platform-touching bills reached the floor on their watch.</li>
+              <li><strong class="text-wtp-gold">Heads up:</strong> a high "sponsored" number isn't impact — many bills die in committee. Look for sponsorship <em>plus</em> committee progression on the detail page.</li>
+            </ul>
+          </div>
+        </details>
 
         <div id="roster" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {sortedOfficials.map((o) => (
@@ -221,6 +397,7 @@ const districtPayload = JSON.stringify(districtToOfficial);
                 scorableVotes={o.scorableVotes}
                 totalVotes={o.totalVotes}
                 byPillar={o.byPillar}
+                billsSponsored={o.billsSponsored}
                 chamber={o.chamber}
                 currentTermStart={(o as { currentTermStart?: number | null }).currentTermStart}
                 currentTermEnd={(o as { currentTermEnd?: number | null }).currentTermEnd}

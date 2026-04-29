@@ -1,49 +1,197 @@
 {
   "$comment": "Computed by pipeline/elected-officials/score_officials.py as a JOIN of data/elected-officials/votes.json against data/legislation/bills.json + manual_review.json. Refreshed by GitHub Actions whenever votes or bills change. Do not hand-edit \u2014 your changes will be overwritten on the next pipeline run.",
-  "lastComputed": "2026-04-29T18:04:07.726180+00:00",
+  "lastComputed": "2026-04-29T18:17:43.991294+00:00",
   "scorecards": [
     {
       "officialId": "sen-rosemary-brown",
+      "billsSponsored": {
+        "primary": 3,
+        "cosponsor": 21,
+        "touchingPlatform": 4
+      },
+      "topSponsoredBills": [
+        {
+          "billId": "SR288",
+          "billTitle": "A Resolution designating the month of April 2026 as \"Distracted Driving Awareness Month\" in Pennsylvania.",
+          "alignment": "under-review",
+          "status": "Referred to Rules & Executive Nominations",
+          "lastAction": "2026-04-23",
+          "primary": true
+        },
+        {
+          "billId": "SB998",
+          "billTitle": "An Act providing for the Nurse Education Capacity Expansion Grant Program; and imposing duties on the Department of Community and Economic Development.",
+          "alignment": "under-review",
+          "status": "Referred to Education",
+          "lastAction": "2026-04-21",
+          "primary": true
+        },
+        {
+          "billId": "SB979",
+          "billTitle": "An Act amending Title 53 (Municipalities Generally) of the Pennsylvania Consolidated Statutes, in consolidated county assessment, further providing for changes in assessed valuation.",
+          "alignment": "topic-only",
+          "status": "Laid on the table (Pursuant to Senate Rule 9)",
+          "lastAction": "2026-03-24",
+          "primary": true
+        }
+      ],
       "totalVotes": 63,
       "scorableVotes": 0,
       "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
       "alignmentRate": null,
-      "byPillar": [],
+      "byPillar": [
+        {
+          "pillarId": "economic",
+          "pillarName": "Economic Opportunity",
+          "withPlatform": 0,
+          "againstPlatform": 0,
+          "noted": 0,
+          "primarySponsor": 1,
+          "cosponsor": 4
+        }
+      ],
       "keyVotes": []
     },
     {
       "officialId": "sen-lisa-boscola",
+      "billsSponsored": {
+        "primary": 5,
+        "cosponsor": 10,
+        "touchingPlatform": 2
+      },
+      "topSponsoredBills": [
+        {
+          "billId": "SB1264",
+          "billTitle": "An Act amending Title 75 (Vehicles) of the Pennsylvania Consolidated Statutes, providing for consumer gas tax relief and for Commonwealth indebtedness.",
+          "alignment": "under-review",
+          "status": "Referred to Transportation",
+          "lastAction": "2026-04-23",
+          "primary": true
+        },
+        {
+          "billId": "SB1265",
+          "billTitle": "An Act amending Title 75 (Vehicles) of the Pennsylvania Consolidated Statutes, providing for consumer diesel fuel tax relief and for Commonwealth indebtedness.",
+          "alignment": "under-review",
+          "status": "Referred to Transportation",
+          "lastAction": "2026-04-23",
+          "primary": true
+        },
+        {
+          "billId": "SB1272",
+          "billTitle": "An Act amending the act of June 3, 1937 (P.L.1333, No.320), known as the Pennsylvania Election Code, in dates of elections and primaries and special elections, further providing for special elections for Senator and Representative in the General Assembly.",
+          "alignment": "topic-only",
+          "status": "Referred to State Government",
+          "lastAction": "2026-04-14",
+          "primary": true
+        },
+        {
+          "billId": "SB1280",
+          "billTitle": "An Act directing the Department of Education to establish a career and technical education program of study in shipbuilding and maritime trades; providing for grants and coordination with apprenticeship programs; and imposing powers and duties on the Department of Education.",
+          "alignment": "topic-only",
+          "status": "Referred to Education",
+          "lastAction": "2026-04-14",
+          "primary": true
+        },
+        {
+          "billId": "SB804",
+          "billTitle": "An Act amending Title 35 (Health and Safety) of the Pennsylvania Consolidated Statutes, providing for medical devices.",
+          "alignment": "under-review",
+          "status": "Referred to Health",
+          "lastAction": "2026-03-24",
+          "primary": true
+        }
+      ],
       "totalVotes": 28,
       "scorableVotes": 0,
       "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
       "alignmentRate": null,
-      "byPillar": [],
+      "byPillar": [
+        {
+          "pillarId": "economic",
+          "pillarName": "Economic Opportunity",
+          "withPlatform": 0,
+          "againstPlatform": 0,
+          "noted": 0,
+          "primarySponsor": 1,
+          "cosponsor": 0
+        },
+        {
+          "pillarId": "honest-government",
+          "pillarName": "Honest Government",
+          "withPlatform": 0,
+          "againstPlatform": 0,
+          "noted": 0,
+          "primarySponsor": 1,
+          "cosponsor": 0
+        }
+      ],
       "keyVotes": []
     },
     {
       "officialId": "sen-camera-bartolotta",
+      "billsSponsored": {
+        "primary": 1,
+        "cosponsor": 16,
+        "touchingPlatform": 1
+      },
+      "topSponsoredBills": [
+        {
+          "billId": "SB1273",
+          "billTitle": "An Act amending Title 74 (Transportation) of the Pennsylvania Consolidated Statutes, in turnpike, further providing for electronic toll collection.",
+          "alignment": "under-review",
+          "status": "Second consideration",
+          "lastAction": "2026-04-22",
+          "primary": true
+        }
+      ],
       "totalVotes": 41,
       "scorableVotes": 0,
       "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
       "alignmentRate": null,
-      "byPillar": [],
+      "byPillar": [
+        {
+          "pillarId": "economic",
+          "pillarName": "Economic Opportunity",
+          "withPlatform": 0,
+          "againstPlatform": 0,
+          "noted": 0,
+          "primarySponsor": 0,
+          "cosponsor": 1
+        }
+      ],
       "keyVotes": []
     },
     {
       "officialId": "sen-vincent-hughes",
+      "billsSponsored": {
+        "primary": 0,
+        "cosponsor": 23,
+        "touchingPlatform": 2
+      },
+      "topSponsoredBills": [],
       "totalVotes": 32,
       "scorableVotes": 0,
       "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
       "alignmentRate": null,
-      "byPillar": [],
+      "byPillar": [
+        {
+          "pillarId": "economic",
+          "pillarName": "Economic Opportunity",
+          "withPlatform": 0,
+          "againstPlatform": 0,
+          "noted": 0,
+          "primarySponsor": 0,
+          "cosponsor": 3
+        }
+      ],
       "keyVotes": []
     }
   ]

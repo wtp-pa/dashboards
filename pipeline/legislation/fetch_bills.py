@@ -72,6 +72,26 @@ def _primary_sponsor(bill: dict) -> str:
     return f"{label}{party_hint}".strip()
 
 
+def _all_sponsors(bill: dict) -> list[dict]:
+    """
+    Return the full sponsor list for a bill in a structured shape that lets
+    the EO scorer JOIN against officials.json by openstatesId. Drops
+    organizational sponsorships (no person ID to match).
+    """
+    out: list[dict] = []
+    for s in bill.get("sponsorships") or []:
+        if s.get("entity_type") != "person":
+            continue
+        person = s.get("person") or {}
+        ocd_id = person.get("id")
+        out.append({
+            "openstatesId": ocd_id,
+            "name": s.get("name") or person.get("name") or "",
+            "primary": bool(s.get("primary")),
+        })
+    return out
+
+
 def _latest_action(bill: dict) -> tuple[str, str]:
     """Return (status_label, iso_date)."""
     description = bill.get("latest_action_description") or "No recent action"
@@ -126,6 +146,7 @@ def main() -> int:
             "chamber": _chamber_from_id(bid),
             "title": (raw.get("title") or "").strip(),
             "sponsor": _primary_sponsor(raw),
+            "sponsors": _all_sponsors(raw),
             "status": status,
             "lastAction": last_action,
             "url": _bill_url(raw),

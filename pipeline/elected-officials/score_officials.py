@@ -115,6 +115,15 @@ def main() -> int:
     for vote in votes_doc["votes"]:
         votes_by_official[vote["officialId"]].append(vote)
 
+    # Reverse index: openstatesId → set of (billId, isPrimary). Built from
+    # bills.json sponsors, which fetch_bills now retains for every bill.
+    sponsorships_by_person: dict[str, list[tuple[str, bool]]] = defaultdict(list)
+    for b in bills_doc["bills"]:
+        for s in b.get("sponsors") or []:
+            ocd = s.get("openstatesId")
+            if ocd:
+                sponsorships_by_person[ocd].append((b["id"], bool(s.get("primary"))))
+
     scorecards = []
     for official in officials_doc["officials"]:
         official_id = official["id"]
@@ -123,8 +132,45 @@ def main() -> int:
         with_count = 0
         against_count = 0
         noted_count = 0  # vote on a bill that touches us but can't be scored
-        by_pillar: dict[str, dict[str, int]] = defaultdict(lambda: {"with": 0, "against": 0, "noted": 0})
+        by_pillar: dict[str, dict[str, int]] = defaultdict(
+            lambda: {"with": 0, "against": 0, "noted": 0, "primarySponsor": 0, "cosponsor": 0}
+        )
         key_votes: list[dict] = []
+
+        # Sponsorship JOIN — what bills did this official put their name on?
+        # Bills they introduced/cosponsored are a stronger "what they care
+        # about" signal than how they voted on others' bills.
+        ocd_id = official.get("openstatesId")
+        sponsored_primary: list[dict] = []
+        sponsored_cosponsor: list[dict] = []
+        sponsored_touching: list[dict] = []
+        if ocd_id:
+            for bill_id, is_primary in sponsorships_by_person.get(ocd_id, []):
+                bill = bills_by_id.get(bill_id)
+                if bill is None:
+                    continue
+                review = reviews.get(bill_id)
+                alignment = resolve_alignment(bill, review)
+                touches = bool(bill.get("matches")) or review is not None
+                entry = {
+                    "billId": bill_id,
+                    "billTitle": bill["title"],
+                    "alignment": alignment,
+                    "status": bill.get("status", ""),
+                    "lastAction": bill.get("lastAction", ""),
+                    "primary": is_primary,
+                }
+                if is_primary:
+                    sponsored_primary.append(entry)
+                else:
+                    sponsored_cosponsor.append(entry)
+                if touches:
+                    sponsored_touching.append(entry)
+                    for match in bill.get("matches", []):
+                        pillar_id = pillar_by_position.get(match["positionId"])
+                        if pillar_id:
+                            key = "primarySponsor" if is_primary else "cosponsor"
+                            by_pillar[pillar_id][key] += 1
 
         for vote in votes:
             bill = bills_by_id.get(vote["billId"])
@@ -188,8 +234,20 @@ def main() -> int:
         scorable = with_count + against_count
         alignment_rate = round(with_count / scorable, 3) if scorable else None
 
+        # Sort sponsored bills by primary first, then most-recent action.
+        sponsored_primary.sort(key=lambda b: b.get("lastAction", ""), reverse=True)
+        sponsored_cosponsor.sort(key=lambda b: b.get("lastAction", ""), reverse=True)
+
         scorecards.append({
             "officialId": official_id,
+            # Sponsorship — primary signal of what this official prioritizes.
+            "billsSponsored": {
+                "primary": len(sponsored_primary),
+                "cosponsor": len(sponsored_cosponsor),
+                "touchingPlatform": len(sponsored_touching),
+            },
+            "topSponsoredBills": sponsored_primary[:5],  # for the detail page later
+            # Voting — secondary signal, how they responded to others' bills.
             "totalVotes": len(votes),
             "scorableVotes": scorable,
             "withPlatform": with_count,
@@ -203,6 +261,8 @@ def main() -> int:
                     "withPlatform": counts["with"],
                     "againstPlatform": counts["against"],
                     "noted": counts["noted"],
+                    "primarySponsor": counts["primarySponsor"],
+                    "cosponsor": counts["cosponsor"],
                 }
                 for pid, counts in sorted(by_pillar.items())
             ],
@@ -217,9 +277,10 @@ def main() -> int:
     SCORECARDS_PATH.write_text(json.dumps(output, indent=2) + "\n")
 
     rated = sum(1 for s in scorecards if s["alignmentRate"] is not None)
+    sponsoring = sum(1 for s in scorecards if s["billsSponsored"]["primary"] + s["billsSponsored"]["cosponsor"] > 0)
     print(
         f"Computed scorecards for {len(scorecards)} officials "
-        f"({rated} with at least one scorable vote). Wrote {SCORECARDS_PATH}"
+        f"({rated} with scorable votes; {sponsoring} sponsoring at least 1 bill). Wrote {SCORECARDS_PATH}"
     )
     return 0
 
