@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 /**
- * Generate the social-share OG image for the budget dashboard.
- * Pulls the current deficit from data/projections.json so the
- * image stays in sync with what the dashboard shows.
+ * Generate social-share OG images (1200 × 630) for each dashboard.
+ * Each card pulls its own headline number from the relevant data file
+ * so the share previews stay in sync with what the dashboard shows.
  *
  * Run: `node scripts/generate-og.mjs`
  *
- * Output: public/og-image.png  (1200 × 630)
+ * Outputs:
+ *   public/og-image.png         — Budget Watch ($X.XB structural deficit)
+ *   public/og-legislation.png   — Legislation Watch (N bills monitored)
  */
 
 import satori from "satori";
@@ -18,20 +20,17 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 
-async function main() {
-  const projections = JSON.parse(
-    await readFile(resolve(repoRoot, "data/projections.json"), "utf-8"),
-  );
-  const currentFY = projections.projections.find((p) => p.fiscalYear === "2025-26");
-  const annualB = (currentFY.structuralDeficitUSD / 1e9).toFixed(1);
+const COLORS = {
+  page: "#08091F",
+  navy: "#15184E",
+  sky: "#7EC7DA",
+  cream: "#F5F2E8",
+  red: "#C8262C",
+  white: "#ffffff",
+};
 
-  // Fonts committed in scripts/fonts/ to keep the script offline-friendly.
-  const [boldFont, regularFont] = await Promise.all([
-    readFile(resolve(__dirname, "fonts/Poppins-Bold.ttf")),
-    readFile(resolve(__dirname, "fonts/Poppins-Regular.ttf")),
-  ]);
-
-  const tree = {
+function card({ kicker, headlineNumber, headlineNumberColor, headlineLabel, footer }) {
+  return {
     type: "div",
     props: {
       style: {
@@ -39,8 +38,8 @@ async function main() {
         flexDirection: "column",
         width: "100%",
         height: "100%",
-        backgroundColor: "#08091F",
-        backgroundImage: "linear-gradient(135deg, #08091F 0%, #15184E 100%)",
+        backgroundColor: COLORS.page,
+        backgroundImage: `linear-gradient(135deg, ${COLORS.page} 0%, ${COLORS.navy} 100%)`,
         color: "white",
         padding: "70px 80px",
         fontFamily: "Poppins",
@@ -53,20 +52,17 @@ async function main() {
             style: {
               display: "flex",
               fontSize: 26,
-              color: "#7EC7DA",
+              color: COLORS.sky,
               letterSpacing: 4,
               textTransform: "uppercase",
               fontWeight: 700,
             },
-            children: "WTP-PA · Pennsylvania Budget Watch",
+            children: kicker,
           },
         },
         {
           type: "div",
-          props: {
-            style: { display: "flex", flex: 1 },
-            children: " ",
-          },
+          props: { style: { display: "flex", flex: 1 }, children: " " },
         },
         {
           type: "div",
@@ -75,11 +71,11 @@ async function main() {
               display: "flex",
               fontSize: 240,
               fontWeight: 700,
-              color: "#C8262C",
+              color: headlineNumberColor,
               letterSpacing: -8,
               lineHeight: 1,
             },
-            children: `$${annualB}B`,
+            children: headlineNumber,
           },
         },
         {
@@ -89,11 +85,11 @@ async function main() {
               display: "flex",
               fontSize: 44,
               fontWeight: 700,
-              color: "white",
+              color: COLORS.white,
               marginTop: 14,
               lineHeight: 1.1,
             },
-            children: "Pennsylvania's structural deficit",
+            children: headlineLabel,
           },
         },
         {
@@ -102,32 +98,81 @@ async function main() {
             style: {
               display: "flex",
               fontSize: 22,
-              color: "#F5F2E8",
+              color: COLORS.cream,
               opacity: 0.7,
               marginTop: 16,
               fontWeight: 400,
             },
-            children: "FY 2025-26 · Source: PA IFO · dashboards.wtpppa.org",
+            children: footer,
           },
         },
       ],
     },
   };
+}
 
-  const svg = await satori(tree, {
-    width: 1200,
-    height: 630,
-    fonts: [
-      { name: "Poppins", data: boldFont, weight: 700, style: "normal" },
-      { name: "Poppins", data: regularFont, weight: 400, style: "normal" },
-    ],
-  });
-
+async function renderCard(tree, fonts, outRelPath) {
+  const svg = await satori(tree, { width: 1200, height: 630, fonts });
   const png = new Resvg(svg).render().asPng();
-  const outPath = resolve(repoRoot, "public/og-image.png");
+  const outPath = resolve(repoRoot, outRelPath);
   await writeFile(outPath, png);
-  console.log(`✓ OG image generated (${png.length} bytes) → public/og-image.png`);
-  console.log(`  Deficit: $${annualB}B (FY 2025-26)`);
+  console.log(`✓ ${outRelPath} (${png.length} bytes)`);
+}
+
+async function main() {
+  const [boldFont, regularFont] = await Promise.all([
+    readFile(resolve(__dirname, "fonts/Poppins-Bold.ttf")),
+    readFile(resolve(__dirname, "fonts/Poppins-Regular.ttf")),
+  ]);
+  const fonts = [
+    { name: "Poppins", data: boldFont, weight: 700, style: "normal" },
+    { name: "Poppins", data: regularFont, weight: 400, style: "normal" },
+  ];
+
+  // Budget Watch
+  const projections = JSON.parse(
+    await readFile(resolve(repoRoot, "data/projections.json"), "utf-8"),
+  );
+  const currentFY = projections.projections.find((p) => p.fiscalYear === "2025-26");
+  const annualB = (currentFY.structuralDeficitUSD / 1e9).toFixed(1);
+
+  await renderCard(
+    card({
+      kicker: "WTPPPA · Pennsylvania Budget Watch",
+      headlineNumber: `$${annualB}B`,
+      headlineNumberColor: COLORS.red,
+      headlineLabel: "Pennsylvania's structural deficit",
+      footer: "FY 2025-26 · Source: PA IFO · dashboards.wtpppa.org",
+    }),
+    fonts,
+    "public/og-image.png",
+  );
+
+  // Legislation Watch
+  const bills = JSON.parse(
+    await readFile(resolve(repoRoot, "data/legislation/bills.json"), "utf-8"),
+  );
+  const manualReview = JSON.parse(
+    await readFile(resolve(repoRoot, "data/legislation/manual_review.json"), "utf-8"),
+  );
+  const reviewIds = new Set(Object.keys(manualReview.reviews ?? {}));
+  const monitoredCount = bills.bills.filter(
+    (b) => (b.matches?.length ?? 0) > 0 || reviewIds.has(b.id),
+  ).length;
+
+  await renderCard(
+    card({
+      kicker: "WTPPPA · Pennsylvania Legislation Watch",
+      headlineNumber: String(monitoredCount),
+      headlineNumberColor: COLORS.sky,
+      headlineLabel: "PA bills scored against our platform",
+      footer: "Source: OpenStates · dashboards.wtpppa.org/legislation",
+    }),
+    fonts,
+    "public/og-legislation.png",
+  );
+
+  console.log(`  Deficit: $${annualB}B · Bills monitored: ${monitoredCount}`);
 }
 
 main().catch((err) => {
