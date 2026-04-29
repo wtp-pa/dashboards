@@ -48,6 +48,14 @@ export const config = {
     license: "MIT",
     dashboardUrl: "https://dashboards.wtpppa.org/budget",
   },
+  electedOfficials: {
+    // The DEMO banner on /elected-officials shows when EITHER of these
+    // is true. `votes.json:demoData` flips to false automatically once
+    // fetch_votes.py finds real votes; `officersApprovedData` is a
+    // manual gate — flip it to true here once officers have reviewed
+    // the real-data dashboard and signed off on it being public.
+    officersApprovedData: false,
+  },
   portfolio: {
     // The umbrella that holds all WTPPPA dashboards. Used by the / landing page.
     name: "WTPPPA Dashboards",

@@ -1,130 +1,50 @@
 {
   "$comment": "Computed by pipeline/elected-officials/score_officials.py as a JOIN of data/elected-officials/votes.json against data/legislation/bills.json + manual_review.json. Refreshed by GitHub Actions whenever votes or bills change. Do not hand-edit \u2014 your changes will be overwritten on the next pipeline run.",
-  "lastComputed": "2026-04-29T17:44:03.301361+00:00",
+  "lastComputed": "2026-04-29T18:04:07.726180+00:00",
   "scorecards": [
     {
       "officialId": "sen-rosemary-brown",
-      "totalVotes": 3,
-      "scorableVotes": 1,
-      "withPlatform": 1,
+      "totalVotes": 63,
+      "scorableVotes": 0,
+      "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
-      "alignmentRate": 1.0,
-      "byPillar": [
-        {
-          "pillarId": "honest-government",
-          "pillarName": "Honest Government",
-          "withPlatform": 1,
-          "againstPlatform": 0
-        }
-      ],
-      "keyVotes": [
-        {
-          "billId": "SR276",
-          "billTitle": "A Resolution urging the Congress of the United States to ban insider stock trading and betting in prediction markets.",
-          "vote": "yea",
-          "billAlignment": "aligned",
-          "directionRelativeToPlatform": "with",
-          "date": "2026-04-15",
-          "stage": "Senate Final Passage",
-          "matchedPositions": [
-            "no-stock-trading"
-          ]
-        }
-      ]
+      "alignmentRate": null,
+      "byPillar": [],
+      "keyVotes": []
     },
     {
       "officialId": "sen-lisa-boscola",
-      "totalVotes": 3,
-      "scorableVotes": 1,
-      "withPlatform": 1,
+      "totalVotes": 28,
+      "scorableVotes": 0,
+      "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
-      "alignmentRate": 1.0,
-      "byPillar": [
-        {
-          "pillarId": "honest-government",
-          "pillarName": "Honest Government",
-          "withPlatform": 1,
-          "againstPlatform": 0
-        }
-      ],
-      "keyVotes": [
-        {
-          "billId": "SR276",
-          "billTitle": "A Resolution urging the Congress of the United States to ban insider stock trading and betting in prediction markets.",
-          "vote": "yea",
-          "billAlignment": "aligned",
-          "directionRelativeToPlatform": "with",
-          "date": "2026-04-15",
-          "stage": "Senate Final Passage",
-          "matchedPositions": [
-            "no-stock-trading"
-          ]
-        }
-      ]
+      "alignmentRate": null,
+      "byPillar": [],
+      "keyVotes": []
     },
     {
       "officialId": "sen-camera-bartolotta",
-      "totalVotes": 3,
-      "scorableVotes": 1,
-      "withPlatform": 1,
+      "totalVotes": 41,
+      "scorableVotes": 0,
+      "withPlatform": 0,
       "againstPlatform": 0,
       "noted": 0,
-      "alignmentRate": 1.0,
-      "byPillar": [
-        {
-          "pillarId": "honest-government",
-          "pillarName": "Honest Government",
-          "withPlatform": 1,
-          "againstPlatform": 0
-        }
-      ],
-      "keyVotes": [
-        {
-          "billId": "SR276",
-          "billTitle": "A Resolution urging the Congress of the United States to ban insider stock trading and betting in prediction markets.",
-          "vote": "yea",
-          "billAlignment": "aligned",
-          "directionRelativeToPlatform": "with",
-          "date": "2026-04-15",
-          "stage": "Senate Final Passage",
-          "matchedPositions": [
-            "no-stock-trading"
-          ]
-        }
-      ]
+      "alignmentRate": null,
+      "byPillar": [],
+      "keyVotes": []
     },
     {
       "officialId": "sen-vincent-hughes",
-      "totalVotes": 3,
-      "scorableVotes": 1,
+      "totalVotes": 32,
+      "scorableVotes": 0,
       "withPlatform": 0,
-      "againstPlatform": 1,
+      "againstPlatform": 0,
       "noted": 0,
-      "alignmentRate": 0.0,
-      "byPillar": [
-        {
-          "pillarId": "honest-government",
-          "pillarName": "Honest Government",
-          "withPlatform": 0,
-          "againstPlatform": 1
-        }
-      ],
-      "keyVotes": [
-        {
-          "billId": "SR276",
-          "billTitle": "A Resolution urging the Congress of the United States to ban insider stock trading and betting in prediction markets.",
-          "vote": "nay",
-          "billAlignment": "aligned",
-          "directionRelativeToPlatform": "against",
-          "date": "2026-04-15",
-          "stage": "Senate Final Passage",
-          "matchedPositions": [
-            "no-stock-trading"
-          ]
-        }
-      ]
+      "alignmentRate": null,
+      "byPillar": [],
+      "keyVotes": []
     }
   ]
 }

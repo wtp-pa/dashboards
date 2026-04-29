@@ -123,7 +123,7 @@ def main() -> int:
         with_count = 0
         against_count = 0
         noted_count = 0  # vote on a bill that touches us but can't be scored
-        by_pillar: dict[str, dict[str, int]] = defaultdict(lambda: {"with": 0, "against": 0})
+        by_pillar: dict[str, dict[str, int]] = defaultdict(lambda: {"with": 0, "against": 0, "noted": 0})
         key_votes: list[dict] = []
 
         for vote in votes:
@@ -135,10 +135,23 @@ def main() -> int:
 
             review = reviews.get(vote["billId"])
             alignment = resolve_alignment(bill, review)
+
+            # Bills that don't touch our platform at all aren't part of the
+            # accountability story — silently skip rather than inflate the
+            # "noted" bucket with off-topic legislation.
+            if alignment == "under-review" and not bill.get("matches"):
+                continue
+
             direction = WITH_PLATFORM_RULES.get((alignment, vote["vote"]))
 
             if direction is None:
                 noted_count += 1
+                # Still credit pillar engagement so the dashboard can show
+                # "what this person votes on" even when alignment is unclear.
+                for match in bill.get("matches", []):
+                    pillar_id = pillar_by_position.get(match["positionId"])
+                    if pillar_id:
+                        by_pillar[pillar_id]["noted"] += 1
                 key_votes.append({
                     "billId": vote["billId"],
                     "billTitle": bill["title"],
@@ -189,6 +202,7 @@ def main() -> int:
                     "pillarName": pillar_names.get(pid, pid),
                     "withPlatform": counts["with"],
                     "againstPlatform": counts["against"],
+                    "noted": counts["noted"],
                 }
                 for pid, counts in sorted(by_pillar.items())
             ],

@@ -1,12 +1,28 @@
 ---
+import { config } from '../../config';
 import votesDoc from '../../../data/elected-officials/votes.json';
 
-const showBanner = (votesDoc as { demoData?: boolean }).demoData === true;
+const isDemo = (votesDoc as { demoData?: boolean }).demoData === true;
+const officersApproved = config.electedOfficials.officersApprovedData;
+
+// Show the banner when either:
+//   - votes.json is still hand-seeded demo data, or
+//   - officers haven't signed off on the real-data dashboard going public.
+const showBanner = isDemo || !officersApproved;
+
+let bannerLabel: string;
+let bannerBody: string;
+if (isDemo) {
+  bannerLabel = 'DEMO DATA';
+  bannerBody = 'Voting records below are illustrative seed data, not real PA Senate roll calls. Real votes will populate via OpenStates API in the next pipeline step.';
+} else {
+  bannerLabel = 'PRE-RELEASE';
+  bannerBody = 'Real voting data is loaded, but the dashboard is awaiting WTPPPA officer review before going public. Numbers shown are accurate to OpenStates as of the last pipeline run.';
+}
 ---
 
 {showBanner && (
   <div class="border-b border-wtp-gold/40 bg-wtp-gold/10 px-6 py-3 text-center text-xs text-wtp-gold">
-    <strong>DEMO DATA</strong> — Voting records below are illustrative seed data, not real PA Senate roll calls.
-    Real votes will populate via OpenStates API in the next pipeline step.
+    <strong>{bannerLabel}</strong> — {bannerBody}
   </div>
 )}

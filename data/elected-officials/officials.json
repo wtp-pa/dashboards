@@ -1,9 +1,8 @@
 {
-  "$comment": "PA elected officials roster. Hand-seeded with 4 real PA state senators for the first scaffold of /elected-officials. Real public roster data (name/chamber/district/party/counties); votes attached to these officials in votes.json are DEMO and must be replaced by fetch_votes.py output before the dashboard goes public. Schema mirrors what fetch_officials.py will eventually emit from OpenStates.",
-  "lastFetched": "2026-04-28T20:30:00Z",
-  "lastFetchedNote": "Hand-seeded — fetch_officials.py is a stub.",
+  "$comment": "PA elected officials roster. Hand-seeded with 4 real PA state senators for the first scaffold of /elected-officials. OpenStates-derived fields (openstatesId, photoUrl, currentTermStart/End) are populated/refreshed by pipeline/elected-officials/fetch_officials.py. Editor-curated fields (counties, region) are preserved across re-fetches. Schema mirrors what fetch_officials.py emits from OpenStates plus a few hand-curated extras.",
+  "lastFetched": "2026-04-29T17:58:42.845409+00:00",
   "session": "2025-2026 Regular Session",
-  "source": "https://openstates.org/api (placeholder — currently hand-seeded from public PA Senate roster)",
+  "source": "https://openstates.org/api (OpenStates-derived fields), public PA Senate roster (counties/region/term dates seed)",
   "officials": [
     {
       "id": "sen-rosemary-brown",
@@ -12,11 +11,17 @@
       "chamber": "Senate",
       "district": "SD-40",
       "party": "R",
-      "openstatesId": null,
+      "openstatesId": "ocd-person/3e2840e6-f904-43be-911e-235b906458a5",
       "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=1655",
-      "photoUrl": null,
-      "counties": ["Monroe", "Pike", "Wayne"],
-      "region": "Northeast PA"
+      "photoUrl": "https://www.legis.state.pa.us/images/members/200/1200.jpg?1703415645672",
+      "counties": [
+        "Monroe",
+        "Pike",
+        "Wayne"
+      ],
+      "region": "Northeast PA",
+      "currentTermStart": 2025,
+      "currentTermEnd": 2028
     },
     {
       "id": "sen-lisa-boscola",
@@ -25,11 +30,16 @@
       "chamber": "Senate",
       "district": "SD-18",
       "party": "D",
-      "openstatesId": null,
+      "openstatesId": "ocd-person/de81d407-bc84-48e6-9796-4a56be984cbd",
       "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=655",
-      "photoUrl": null,
-      "counties": ["Northampton", "Lehigh"],
-      "region": "Lehigh Valley"
+      "photoUrl": "https://www.legis.state.pa.us/images/members/200/179.jpg?1703415645672",
+      "counties": [
+        "Northampton",
+        "Lehigh"
+      ],
+      "region": "Lehigh Valley",
+      "currentTermStart": 2025,
+      "currentTermEnd": 2028
     },
     {
       "id": "sen-camera-bartolotta",
@@ -38,11 +48,17 @@
       "chamber": "Senate",
       "district": "SD-46",
       "party": "R",
-      "openstatesId": null,
+      "openstatesId": "ocd-person/66b8c0a7-f8be-4acd-aafb-29ca02fcde65",
       "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=1493",
-      "photoUrl": null,
-      "counties": ["Washington", "Greene", "Beaver"],
-      "region": "Southwest PA"
+      "photoUrl": "https://www.legis.state.pa.us/images/members/200/1698.jpg?1703415645672",
+      "counties": [
+        "Washington",
+        "Greene",
+        "Beaver"
+      ],
+      "region": "Southwest PA",
+      "currentTermStart": 2025,
+      "currentTermEnd": 2028
     },
     {
       "id": "sen-vincent-hughes",
@@ -51,11 +67,16 @@
       "chamber": "Senate",
       "district": "SD-7",
       "party": "D",
-      "openstatesId": null,
+      "openstatesId": "ocd-person/53a598e0-3595-4b19-8f65-4a538bdc7a74",
       "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=485",
-      "photoUrl": null,
-      "counties": ["Philadelphia", "Montgomery"],
-      "region": "Philadelphia"
+      "photoUrl": "https://www.legis.state.pa.us/images/members/200/152.jpg?1703415645672",
+      "counties": [
+        "Philadelphia",
+        "Montgomery"
+      ],
+      "region": "Philadelphia",
+      "currentTermStart": 2023,
+      "currentTermEnd": 2026
     }
   ]
 }

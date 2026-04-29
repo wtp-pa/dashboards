@@ -46,6 +46,12 @@ jobs:
       - name: Match bills against WTPPPA platform
         run: python pipeline/legislation/match_bills.py
 
+      - name: Refresh PA legislator roster from OpenStates
+        env:
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+        run: python pipeline/elected-officials/fetch_officials.py
+        continue-on-error: true  # don't block scoring if rate-limited
+
       - name: Fetch PA roll-call votes from OpenStates
         env:
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}

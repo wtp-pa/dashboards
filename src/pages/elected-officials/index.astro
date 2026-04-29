@@ -7,6 +7,12 @@ import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
 import zipDoc from '../../../data/elected-officials/zip-districts.json';
 
+type PillarBreakdown = {
+  pillarId: string;
+  pillarName: string;
+  withPlatform: number;
+  againstPlatform: number;
+};
 type Scorecard = {
   officialId: string;
   totalVotes: number;
@@ -14,6 +20,7 @@ type Scorecard = {
   withPlatform: number;
   againstPlatform: number;
   alignmentRate: number | null;
+  byPillar?: PillarBreakdown[];
 };
 
 const scorecards = scorecardsDoc.scorecards as Scorecard[];
@@ -26,6 +33,7 @@ const officials = officialsDoc.officials.map((o) => {
     alignmentRate: sc?.alignmentRate ?? null,
     scorableVotes: sc?.scorableVotes ?? 0,
     totalVotes: sc?.totalVotes ?? 0,
+    byPillar: sc?.byPillar ?? [],
   };
 });
 
@@ -107,6 +115,54 @@ const districtPayload = JSON.stringify(districtToOfficial);
         </p>
       </section>
 
+      <details open class="group mt-10 rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 transition hover:border-wtp-sky/50">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
+          <div class="min-w-0">
+            <h2 class="text-base font-semibold text-white">Wait — who are these people, exactly?</h2>
+            <p class="mt-1 text-xs text-wtp-cream/70">A 60-second civics primer on the state legislature, separate from Congress, with much more impact on your daily life.</p>
+          </div>
+          <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
+            <span class="group-open:hidden">Show</span>
+            <span class="hidden group-open:inline">Hide</span>
+            <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+          </div>
+        </summary>
+        <div class="space-y-4 border-t border-wtp-sky/20 px-5 pb-5 pt-4 text-sm leading-relaxed text-wtp-cream/85 md:px-6 md:pb-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">State legislature ≠ Congress</h3>
+              <p class="mt-1">
+                The U.S. Congress (Senate + House) makes <em>federal</em> law in Washington D.C. — same laws for all 50 states.
+                The <strong class="text-white">Pennsylvania General Assembly</strong> is separate. It makes laws that apply only to PA — schools, roads, taxes, courts, prisons, healthcare programs, voting rules. Most laws that touch your day-to-day life are state laws, not federal.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">PA's two chambers</h3>
+              <ul class="mt-1 space-y-1.5">
+                <li><strong class="text-white">Senate:</strong> 50 members · 4-year terms · staggered (half elected every 2 years)</li>
+                <li><strong class="text-white">House of Representatives:</strong> 203 members · 2-year terms (all elected every 2 years)</li>
+                <li>Total: <strong class="text-white">253 state legislators</strong>, all in Harrisburg.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">How they get there</h3>
+              <p class="mt-1">
+                Each PA voter is in one Senate district (SD-1 through SD-50) and one House district (HD-1 through HD-203). On election day you vote for the candidate in your district — not statewide. Senators and Reps are elected by their district only. <strong class="text-white">Use the ZIP / county lookup above to find yours.</strong>
+              </p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-wider text-wtp-sky">What they do</h3>
+              <p class="mt-1">
+                They write, debate, amend, and vote on bills. Most bills die in committee and never get a floor vote — see <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>. The bills that <em>do</em> get a recorded floor vote are what we score legislators on here.
+              </p>
+            </div>
+          </div>
+          <div class="rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-3 text-xs text-wtp-cream/75">
+            <strong class="text-wtp-gold">A note on what's empty:</strong> Most bills that get to a floor vote are procedural amendments — naming bridges, technical Title 75 vehicle code updates, insurance regulation. Bills that touch our platform (criminal-justice reform, election integrity, monopoly busting) often die in committee and never reach a roll call. So a card showing "no platform-touching votes yet" doesn't mean a legislator is silent — it means the platform-relevant bills haven't reached the floor on their watch yet.
+          </div>
+        </div>
+      </details>
+
       <section class="mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 p-6 md:p-8">
         <h2 class="text-xl font-bold md:text-2xl">Find your representatives</h2>
         <p class="mt-2 text-sm text-wtp-cream/70">Enter your ZIP code or pick your county. We'll show you who represents you and how they voted.</p>
@@ -164,6 +220,10 @@ const districtPayload = JSON.stringify(districtToOfficial);
                 alignmentRate={o.alignmentRate}
                 scorableVotes={o.scorableVotes}
                 totalVotes={o.totalVotes}
+                byPillar={o.byPillar}
+                chamber={o.chamber}
+                currentTermStart={(o as { currentTermStart?: number | null }).currentTermStart}
+                currentTermEnd={(o as { currentTermEnd?: number | null }).currentTermEnd}
               />
             </div>
           ))}

@@ -26,7 +26,6 @@ Pipeline ordering (in .github/workflows/data-pipeline.yml):
 from __future__ import annotations
 
 import json
-import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,6 +34,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from pipeline._shared.openstates import OpenStatesClient, OpenStatesError  # noqa: E402
+from pipeline._shared.names import normalize_name  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 OFFICIALS_PATH = REPO_ROOT / "data" / "elected-officials" / "officials.json"
@@ -63,14 +63,6 @@ def _normalize_id(identifier: str) -> str:
     return identifier.replace(" ", "").upper()
 
 
-def _normalize_name(name: str) -> str:
-    # Strip honorifics and middle initials, lowercase, collapse whitespace.
-    n = re.sub(r"\b(senator|sen\.|representative|rep\.|hon\.|the honorable)\b", "", name, flags=re.IGNORECASE)
-    n = re.sub(r"\b[A-Z]\.\b", "", n)  # strip "M." middle initials
-    n = re.sub(r"\s+", " ", n).strip().lower()
-    return n
-
-
 def _normalize_option(opt: str) -> str | None:
     return _OPTION_MAP.get((opt or "").strip().lower())
 
@@ -86,7 +78,7 @@ def _build_official_index(officials: list[dict]) -> dict[str, str]:
         if o.get("openstatesId"):
             idx[o["openstatesId"]] = oid
         if o.get("name"):
-            idx[_normalize_name(o["name"])] = oid
+            idx[normalize_name(o["name"])] = oid
     return idx
 
 
@@ -136,7 +128,7 @@ def main() -> int:
             for v in (event.get("votes") or []):
                 voter_id = v.get("voter_id") or ""
                 voter_name = v.get("voter_name") or ""
-                official_id = official_idx.get(voter_id) or official_idx.get(_normalize_name(voter_name))
+                official_id = official_idx.get(voter_id) or official_idx.get(normalize_name(voter_name))
                 if not official_id:
                     continue
                 option = _normalize_option(v.get("option") or "")
