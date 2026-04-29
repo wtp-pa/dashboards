@@ -430,30 +430,34 @@ const topPillars = Object.entries(pillarById)
         </form>
 
         <details class="mt-3">
-          <summary class="cursor-pointer text-xs text-wtp-cream/50 hover:text-wtp-cream/80">Don't have an address handy? Try by county centroid or ZIP (less accurate)</summary>
-          <div class="mt-3 flex flex-col gap-2 text-xs text-wtp-cream/60 sm:flex-row sm:items-center">
-            <select
-              id="county-select"
-              aria-label="County"
-              class="min-w-0 rounded-md border border-white/15 bg-page px-3 py-2 text-sm text-white focus:border-wtp-sky focus:outline-none sm:w-56"
-            >
-              <option value="">Pick a county…</option>
-              {countyOptions.map((c) => <option value={c}>{c} County</option>)}
-            </select>
-            <form id="zip-form" class="flex gap-2" novalidate>
+          <summary class="cursor-pointer text-xs text-wtp-cream/50 hover:text-wtp-cream/80">Don't have an address handy? Try by county or ZIP instead</summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <span class="w-24 flex-shrink-0 text-xs uppercase tracking-wider text-wtp-cream/50">By county</span>
+              <select
+                id="county-select"
+                aria-label="County"
+                class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-3 py-2 text-sm text-white focus:border-wtp-sky focus:outline-none sm:max-w-xs"
+              >
+                <option value="">Pick a county…</option>
+                {countyOptions.map((c) => <option value={c}>{c} County</option>)}
+              </select>
+            </div>
+            <form id="zip-form" class="flex flex-col gap-2 sm:flex-row sm:items-center" novalidate>
+              <span class="w-24 flex-shrink-0 text-xs uppercase tracking-wider text-wtp-cream/50">By ZIP</span>
               <input
                 type="text"
                 id="zip-input"
                 inputmode="numeric"
                 pattern="[0-9]{5}"
                 maxlength="5"
-                placeholder="ZIP code"
+                placeholder="e.g., 17109"
                 aria-label="ZIP code"
-                class="w-28 rounded-md border border-white/15 bg-page px-3 py-2 text-center font-mono text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+                class="w-32 rounded-md border border-white/15 bg-page px-3 py-2 text-center font-mono text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
               />
-              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky/40 px-3 py-2 text-xs font-semibold text-wtp-navy transition hover:bg-wtp-sky/60">Find</button>
+              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-4 py-2 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">Find</button>
             </form>
-            <span class="text-[11px] text-wtp-cream/40">County lookups return only the reps at the geographic center — not the whole county.</span>
+            <p class="text-[11px] text-wtp-cream/40">Either lookup samples multiple points to catch every overlapping district. Address input above gives the most precise pair.</p>
           </div>
         </details>
 
@@ -685,6 +689,12 @@ const topPillars = Object.entries(pillarById)
         const footer = opts.footerNote
           ? `<div class="mt-2 text-[11px] leading-snug italic text-wtp-cream/50">${opts.footerNote}</div>`
           : '';
+        // Federal-reps reminder so users don't think we're hiding their U.S.
+        // Senators / Reps. Only show when we actually returned PA state reps —
+        // would be confusing on empty/error cards.
+        const federal = opts.reps && opts.reps.length
+          ? `<div class="mt-2 text-[11px] text-wtp-cream/50">You're also represented federally by 2 U.S. Senators and 1 U.S. Representative — see <a href="https://www.congress.gov/members" target="_blank" rel="noopener" class="text-wtp-sky underline">congress.gov/members</a> for those.</div>`
+          : '';
         showResult(`
           <div class="flex flex-wrap items-baseline gap-x-2 text-sm">
             <span class="text-[10px] uppercase tracking-wider text-wtp-sky">${opts.areaLabel}</span>
@@ -694,6 +704,7 @@ const topPillars = Object.entries(pillarById)
           </div>
           ${repsHtml}
           ${footer}
+          ${federal}
         `);
       }
 
