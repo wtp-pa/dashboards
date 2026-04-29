@@ -416,7 +416,7 @@ const topPillars = Object.entries(pillarById)
           <input
             type="text"
             id="address-input"
-            placeholder="Type an address (e.g., 123 Main St, Stroudsburg, PA)"
+            placeholder="Street + town (e.g., 24 Main Ave, Berwyn)"
             aria-label="Street address"
             class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
           />
@@ -802,6 +802,29 @@ const topPillars = Object.entries(pillarById)
       }
 
       // Browser geolocation → /people.geo
+      // Browser-reported coordinates are often imprecise (especially on
+      // desktop where positioning is Wi-Fi-based, not GPS). To avoid a
+      // boundary-edge case where the imprecise lat/lng falls just over
+      // the line into a neighboring district, we sample a small radius
+      // around the reported point and present every distinct legislator
+      // pair found.
+      async function findReps_loose(lat, lng, accuracy) {
+        // Convert reported accuracy (meters) into a coordinate radius;
+        // clamp to ~500m–2km so even very accurate readings still get
+        // a small boundary-tolerance buffer, and very imprecise ones
+        // don't sample across an entire county.
+        const meters = Math.min(2000, Math.max(500, accuracy || 1500));
+        // ~1 degree latitude ≈ 111km
+        const radiusDeg = meters / 111000;
+        const bbox = {
+          south: lat - radiusDeg,
+          north: lat + radiusDeg,
+          west: lng - radiusDeg / Math.cos(lat * Math.PI / 180),
+          east: lng + radiusDeg / Math.cos(lat * Math.PI / 180),
+        };
+        return findRepsAcrossBbox(bbox, lat, lng);
+      }
+
       document.getElementById('geo-button').addEventListener('click', () => {
         if (!navigator.geolocation) {
           renderAreaCard({
@@ -811,8 +834,6 @@ const topPillars = Object.entries(pillarById)
           });
           return;
         }
-        // Geolocation requires a secure context (HTTPS or localhost). On a
-        // plain http:// origin the call rejects silently.
         if (typeof window !== 'undefined' && !window.isSecureContext) {
           renderAreaCard({
             areaLabel: 'Location blocked on insecure connection',
@@ -823,14 +844,41 @@ const topPillars = Object.entries(pillarById)
         }
         showResult('<p class="text-wtp-cream/70">Asking your browser for location…</p>');
         navigator.geolocation.getCurrentPosition(
-          (pos) => {
+          async (pos) => {
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
-            findByLatLng(lat, lng, {
-              label: 'Your location',
-              detail: `${lat.toFixed(3)}, ${lng.toFixed(3)}`,
-              footerNote: 'Location stays in your browser; only an anonymous lat/lng is sent to OpenStates.',
-            });
+            const acc = pos.coords.accuracy;
+            showResult('<p class="text-wtp-cream/70">Looking up your reps (sampling for accuracy)…</p>');
+            try {
+              const reps = await findReps_loose(lat, lng, acc);
+              if (!reps.length) {
+                renderAreaCard({
+                  areaLabel: 'Your location',
+                  areaDetail: `${lat.toFixed(3)}, ${lng.toFixed(3)}`,
+                  noRepsMessage: 'OpenStates returned no PA legislators for nearby points. Are you in PA? Try the address input.',
+                });
+                highlightOfficials([]);
+                return;
+              }
+              const districts = Array.from(new Set(reps.map((r) => r.district).filter(Boolean))).sort();
+              const isApprox = reps.length > 2; // multiple reps = boundary area
+              renderAreaCard({
+                areaLabel: isApprox ? 'Near your location' : 'Your location',
+                areaDetail: `${lat.toFixed(3)}, ${lng.toFixed(3)}${acc ? ` · ±${Math.round(acc)}m` : ''}`,
+                districts,
+                reps,
+                footerNote: isApprox
+                  ? `Browser location is approximate so we sampled a small radius — found ${reps.length} legislators across nearby districts. Type your address for the exact pair.`
+                  : 'Browser location stays in your browser; only an anonymous lat/lng is sent to OpenStates.',
+              });
+              highlightOfficials(reps.map((r) => r.id));
+            } catch (err) {
+              renderAreaCard({
+                areaLabel: 'Lookup failed',
+                areaDetail: `${lat.toFixed(3)}, ${lng.toFixed(3)}`,
+                footerNote: 'Could not reach OpenStates. Try the address input. (' + (err && err.message ? err.message : 'unknown') + ')',
+              });
+            }
           },
           (err) => {
             // PositionError codes: 1=denied, 2=unavailable, 3=timeout
@@ -857,19 +905,37 @@ const topPillars = Object.entries(pillarById)
         );
       });
 
-      // Address → Census geocoder → /people.geo
-      // Census Geocoder is free, no API key, but only handles street
-      // addresses — for place-name queries (county, city) we fall back
-      // to OpenStreetMap Nominatim.
+      // Auto-append ", Pennsylvania" if the user just typed street + town.
+      // Saves them from having to know the format.
+      function normalizeAddress(input) {
+        const s = (input || '').trim();
+        if (!s) return s;
+        if (/\b(pa|pennsylvania)\b/i.test(s)) return s;
+        return `${s}, Pennsylvania`;
+      }
+
+      // Address geocoder with two-stage fallback: Census first (most
+      // accurate for street addresses), then Nominatim (more forgiving
+      // about typos and partial inputs). Both are free and CORS-enabled.
       async function geocodeAddress(address) {
-        const url = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${encodeURIComponent(address)}&benchmark=Public_AR_Current&format=json`;
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error(`Census geocoder ${resp.status}`);
-        const data = await resp.json();
-        const matches = (data.result && data.result.addressMatches) || [];
-        if (!matches.length) return null;
-        const c = matches[0].coordinates || {};
-        return { lat: c.y, lng: c.x, matched: matches[0].matchedAddress };
+        const normalized = normalizeAddress(address);
+        // Stage 1: Census
+        try {
+          const url = `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${encodeURIComponent(normalized)}&benchmark=Public_AR_Current&format=json`;
+          const resp = await fetch(url);
+          if (resp.ok) {
+            const data = await resp.json();
+            const matches = (data.result && data.result.addressMatches) || [];
+            if (matches.length) {
+              const c = matches[0].coordinates || {};
+              return { lat: c.y, lng: c.x, matched: matches[0].matchedAddress, source: 'Census' };
+            }
+          }
+        } catch (_) { /* fall through to Nominatim */ }
+        // Stage 2: Nominatim (forgiving — handles typos, partial inputs)
+        const place = await geocodePlace(normalized);
+        if (place) return { ...place, source: 'OpenStreetMap' };
+        return null;
       }
 
       // Place-name geocoder for county / city queries (Census's onelineaddress
@@ -877,13 +943,54 @@ const topPillars = Object.entries(pillarById)
       // CORS-enabled; usage policy asks for ≤1 req/sec which civic
       // dashboard traffic easily fits inside.
       async function geocodePlace(query) {
-        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=us`;
+        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=us&polygon_geojson=0&extratags=0`;
         const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
         if (!resp.ok) throw new Error(`Nominatim ${resp.status}`);
         const arr = await resp.json();
         if (!Array.isArray(arr) || arr.length === 0) return null;
         const r = arr[0];
-        return { lat: parseFloat(r.lat), lng: parseFloat(r.lon), matched: r.display_name };
+        const bbox = Array.isArray(r.boundingbox) && r.boundingbox.length === 4
+          ? { south: parseFloat(r.boundingbox[0]), north: parseFloat(r.boundingbox[1]), west: parseFloat(r.boundingbox[2]), east: parseFloat(r.boundingbox[3]) }
+          : null;
+        return { lat: parseFloat(r.lat), lng: parseFloat(r.lon), matched: r.display_name, bbox };
+      }
+
+      // Sample N points across a bounding box and call /people.geo at each.
+      // Dedupe results by ocd-person ID so a multi-district county returns
+      // every overlapping legislator. Trades 5x API calls for accurate
+      // county coverage.
+      async function findRepsAcrossBbox(bbox, centerLat, centerLng) {
+        const span = 0.85; // pull 5 points slightly inset from edges
+        const dy = (bbox.north - bbox.south) * span * 0.5;
+        const dx = (bbox.east - bbox.west) * span * 0.5;
+        const points = [
+          { lat: centerLat, lng: centerLng },
+          { lat: centerLat + dy, lng: centerLng + dx },
+          { lat: centerLat + dy, lng: centerLng - dx },
+          { lat: centerLat - dy, lng: centerLng + dx },
+          { lat: centerLat - dy, lng: centerLng - dx },
+        ];
+        const seen = new Set();
+        const out = [];
+        const responses = await Promise.all(points.map(async (p) => {
+          try {
+            const url = `https://v3.openstates.org/people.geo?lat=${p.lat}&lng=${p.lng}&apikey=${encodeURIComponent(openstatesApiKey)}`;
+            const r = await fetch(url);
+            if (!r.ok) return [];
+            const d = await r.json();
+            return d.results || [];
+          } catch (_) { return []; }
+        }));
+        for (const arr of responses) {
+          for (const person of arr) {
+            if (!seen.has(person.id)) {
+              seen.add(person.id);
+              const cardMeta = officialsByOcd[person.id];
+              if (cardMeta) out.push(cardMeta);
+            }
+          }
+        }
+        return out;
       }
 
       document.getElementById('address-form').addEventListener('submit', async (e) => {
@@ -948,34 +1055,52 @@ const topPillars = Object.entries(pillarById)
         }
 
         // Path B: no hand-tagged officials — geocode the county
-        // centroid via Nominatim (Census geocoder only handles street
-        // addresses), then hit OpenStates /people.geo. Works for all
-        // 67 PA counties without a hand-curated mapping.
-        showResult(`<p class="text-wtp-cream/70">Looking up ${county} County reps…</p>`);
+        // boundary via Nominatim, then sample 5 points across it to
+        // catch all overlapping districts (a single centroid only finds
+        // one Senator + one Rep, which misleads for multi-district
+        // counties like Chester or Allegheny).
+        showResult(`<p class="text-wtp-cream/70">Sampling ${county} County's districts…</p>`);
         try {
           const geo = await geocodePlace(`${county} County, Pennsylvania, USA`);
-          if (!geo) {
+          if (!geo || !geo.bbox) {
             renderAreaCard({
               areaLabel: 'Your county',
               areaDetail: `${county} County`,
               populationLine: popLine,
-              noRepsMessage: 'Census geocoder could not pinpoint this county. Try the address input with a specific street address.',
+              noRepsMessage: 'Could not pinpoint this county boundary. Try the address input with a specific street address.',
             });
             highlightOfficials([]);
             return;
           }
-          findByLatLng(geo.lat, geo.lng, {
-            label: 'Reps at the center of',
-            detail: `${county} County`,
+          const reps = await findRepsAcrossBbox(geo.bbox, geo.lat, geo.lng);
+          if (!reps.length) {
+            renderAreaCard({
+              areaLabel: 'Your county',
+              areaDetail: `${county} County`,
+              populationLine: popLine,
+              noRepsMessage: 'OpenStates returned no legislators for the points sampled across this county. Try the address input above.',
+            });
+            highlightOfficials([]);
+            return;
+          }
+          const districts = Array.from(new Set(reps.map((r) => r.district).filter(Boolean))).sort();
+          const senateCount = reps.filter((r) => r.chamber === 'Senate').length;
+          const houseCount = reps.filter((r) => r.chamber === 'House').length;
+          renderAreaCard({
+            areaLabel: 'Districts overlapping',
+            areaDetail: `${county} County`,
+            districts,
             populationLine: popLine,
-            footerNote: '⚠️ This is the legislator pair representing the geographic center of the county only. A PA Senate district covers ~260,000 people and a House district ~64,000, so most counties span multiple districts. Type your specific street address above to see your actual reps.',
+            reps,
+            footerNote: `Sampled across the county boundary; found ${senateCount} Senate district${senateCount === 1 ? '' : 's'} and ${houseCount} House district${houseCount === 1 ? '' : 's'}. For your exact pair, type your street address above.`,
           });
+          highlightOfficials(reps.map((r) => r.id));
         } catch (err) {
           renderAreaCard({
             areaLabel: 'Lookup failed',
             areaDetail: `${county} County`,
             populationLine: popLine,
-            footerNote: 'Could not reach the geocoder. Try the address input or "Use my location".',
+            footerNote: 'Could not reach the geocoder. Try the address input or "Use my location". (' + (err && err.message ? err.message : 'unknown') + ')',
           });
         }
       });
