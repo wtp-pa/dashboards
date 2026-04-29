@@ -43,8 +43,17 @@ jobs:
         run: python pipeline/legislation/fetch_bills.py
         continue-on-error: true  # don't block other fetchers if rate-limited
 
-      - name: Match bills against WTP-PA platform
+      - name: Match bills against WTPPPA platform
         run: python pipeline/legislation/match_bills.py
+
+      - name: Fetch PA roll-call votes from OpenStates
+        env:
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+        run: python pipeline/elected-officials/fetch_votes.py
+        continue-on-error: true  # don't block scoring if rate-limited
+
+      - name: Score officials against platform
+        run: python pipeline/elected-officials/score_officials.py
 
       - name: Commit updated data
         run: |

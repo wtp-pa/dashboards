@@ -1,27 +1,36 @@
 #!/usr/bin/env python3
 """
-Compute per-official platform alignment scorecards from:
+Compute per-official platform alignment scorecards.
+
+Inputs:
   - data/elected-officials/votes.json     — roll-call votes (officialId × billId)
   - data/elected-officials/officials.json — roster
-  - data/legislation/bills.json           — bills with matchedPositions
-  - data/legislation/manual_review.json   — editor's alignment call per bill
+  - data/legislation/bills.json           — bills + matches + autoAlignment
+  - data/legislation/manual_review.json   — editor's alignment overrides
   - data/legislation/platform.json        — pillars, for byPillar grouping
 
-A vote counts toward platform alignment as follows:
-    bill alignment = aligned + vote = yea  →  withPlatform
-    bill alignment = aligned + vote = nay  →  againstPlatform
-    bill alignment = opposed + vote = nay  →  withPlatform
-    bill alignment = opposed + vote = yea  →  againstPlatform
-    bill alignment = mixed                 →  unscorable
-    bill alignment = under-review          →  unscorable
-    vote in {abstain, absent}              →  unscorable
+This is a JOIN, not a re-match. We never re-evaluate keyword matches here;
+we trust whatever the legislation pipeline (match_bills.py) wrote into
+bills.json. That single source of truth keeps /legislation and
+/elected-officials from disagreeing about a bill.
 
-Output: data/elected-officials/scorecards.json (overwritten in place).
+Alignment resolution mirrors src/lib/bills.ts `resolveAlignment` priority:
+  1. manual review (highest authority)
+  2. autoAlignment with confidence ≥ AUTO_ALIGNMENT_THRESHOLD
+  3. "topic-only" if any platform plank matched
+  4. "under-review" otherwise
 
-Run locally:
-    python pipeline/elected-officials/score_officials.py
+Vote scoring:
+    bill = aligned + vote = yea  →  withPlatform
+    bill = aligned + vote = nay  →  againstPlatform
+    bill = opposed + vote = nay  →  withPlatform
+    bill = opposed + vote = yea  →  againstPlatform
+    bill = mixed                  →  noted (shown for transparency, not scored)
+    bill = topic-only             →  noted
+    bill = under-review           →  noted
+    vote ∈ {abstain, absent}      →  noted
 
-Run via GitHub Actions: see .github/workflows/data-pipeline.yml (eventually).
+Output: data/elected-officials/scorecards.json
 """
 
 from __future__ import annotations
@@ -43,6 +52,9 @@ BILLS_PATH = LEG_DIR / "bills.json"
 MANUAL_REVIEW_PATH = LEG_DIR / "manual_review.json"
 PLATFORM_PATH = LEG_DIR / "platform.json"
 
+# Mirror src/lib/bills.ts AUTO_ALIGNMENT_THRESHOLD. Keep in sync.
+AUTO_ALIGNMENT_THRESHOLD = 0.65
+
 WITH_PLATFORM_RULES = {
     ("aligned", "yea"): "with",
     ("aligned", "nay"): "against",
@@ -50,12 +62,37 @@ WITH_PLATFORM_RULES = {
     ("opposed", "nay"): "with",
 }
 
+OUTPUT_COMMENT = (
+    "Computed by pipeline/elected-officials/score_officials.py as a JOIN of "
+    "data/elected-officials/votes.json against data/legislation/bills.json + "
+    "manual_review.json. Refreshed by GitHub Actions whenever votes or bills "
+    "change. Do not hand-edit — your changes will be overwritten on the next "
+    "pipeline run."
+)
+
 
 def load_json(path: Path) -> dict:
     if not path.exists():
         print(f"Missing input file: {path}", file=sys.stderr)
         sys.exit(1)
     return json.loads(path.read_text())
+
+
+def resolve_alignment(bill: dict, review: dict | None) -> str:
+    """Mirror of resolveAlignment() in src/lib/bills.ts."""
+    if review:
+        return review["alignment"]
+    auto = bill.get("autoAlignment")
+    conf = bill.get("autoConfidence")
+    if (
+        auto in ("likely-aligned", "likely-opposed")
+        and isinstance(conf, (int, float))
+        and conf >= AUTO_ALIGNMENT_THRESHOLD
+    ):
+        return "aligned" if auto == "likely-aligned" else "opposed"
+    if bill.get("matches"):
+        return "topic-only"
+    return "under-review"
 
 
 def main() -> int:
@@ -66,7 +103,7 @@ def main() -> int:
     platform_doc = load_json(PLATFORM_PATH)
 
     bills_by_id = {b["id"]: b for b in bills_doc["bills"]}
-    reviews = manual_review_doc["reviews"]
+    reviews = manual_review_doc.get("reviews", {})
     pillar_by_position = {
         position["id"]: pillar["id"]
         for pillar in platform_doc["pillars"]
@@ -85,22 +122,33 @@ def main() -> int:
 
         with_count = 0
         against_count = 0
-        unscorable_count = 0
+        noted_count = 0  # vote on a bill that touches us but can't be scored
         by_pillar: dict[str, dict[str, int]] = defaultdict(lambda: {"with": 0, "against": 0})
         key_votes: list[dict] = []
 
         for vote in votes:
             bill = bills_by_id.get(vote["billId"])
             if bill is None:
-                unscorable_count += 1
+                # Vote on a bill outside the current legislation tracking
+                # window — skip silently, don't penalize the legislator.
                 continue
 
             review = reviews.get(vote["billId"])
-            alignment = review["alignment"] if review else "under-review"
+            alignment = resolve_alignment(bill, review)
             direction = WITH_PLATFORM_RULES.get((alignment, vote["vote"]))
 
             if direction is None:
-                unscorable_count += 1
+                noted_count += 1
+                key_votes.append({
+                    "billId": vote["billId"],
+                    "billTitle": bill["title"],
+                    "vote": vote["vote"],
+                    "billAlignment": alignment,
+                    "directionRelativeToPlatform": "noted",
+                    "date": vote["date"],
+                    "stage": vote.get("stage", ""),
+                    "matchedPositions": [m["positionId"] for m in bill.get("matches", [])],
+                })
                 continue
 
             if direction == "with":
@@ -108,8 +156,8 @@ def main() -> int:
             else:
                 against_count += 1
 
-            for position_id in bill.get("matchedPositions", []):
-                pillar_id = pillar_by_position.get(position_id)
+            for match in bill.get("matches", []):
+                pillar_id = pillar_by_position.get(match["positionId"])
                 if pillar_id:
                     by_pillar[pillar_id][direction] += 1
 
@@ -120,7 +168,8 @@ def main() -> int:
                 "billAlignment": alignment,
                 "directionRelativeToPlatform": direction,
                 "date": vote["date"],
-                "matchedPositions": bill.get("matchedPositions", []),
+                "stage": vote.get("stage", ""),
+                "matchedPositions": [m["positionId"] for m in bill.get("matches", [])],
             })
 
         scorable = with_count + against_count
@@ -132,7 +181,7 @@ def main() -> int:
             "scorableVotes": scorable,
             "withPlatform": with_count,
             "againstPlatform": against_count,
-            "unscorable": unscorable_count,
+            "noted": noted_count,
             "alignmentRate": alignment_rate,
             "byPillar": [
                 {
@@ -147,7 +196,7 @@ def main() -> int:
         })
 
     output = {
-        "$comment": SCORECARDS_PATH.read_text().split('"$comment":', 1)[1].split('"', 2)[1] if SCORECARDS_PATH.exists() else "",
+        "$comment": OUTPUT_COMMENT,
         "lastComputed": datetime.now(timezone.utc).isoformat(),
         "scorecards": scorecards,
     }

@@ -7,6 +7,9 @@ Auth: requires the OPENSTATES_API_KEY environment variable. Get a free key
 at https://openstates.org/accounts/profile/. Locally, export the var; in
 GitHub Actions, set the OPENSTATES_API_KEY repo secret.
 
+HTTP/auth/retry/pagination plumbing lives in pipeline/_shared/openstates.py
+so EO fetchers and any future candidate dashboard can share the same client.
+
 Output schema (per bill in bills.json):
     id, chamber, title, sponsor, status, lastAction, url, summary
 
@@ -20,24 +23,22 @@ Run them in order:
 from __future__ import annotations
 
 import json
-import os
 import sys
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-import requests
+# Allow running this file directly (python pipeline/legislation/fetch_bills.py)
+# even though pipeline/_shared isn't on sys.path by default.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
+from pipeline._shared.openstates import OpenStatesClient, OpenStatesError  # noqa: E402
 
 OUTPUT_PATH = Path(__file__).parent.parent.parent / "data" / "legislation" / "bills.json"
-API_BASE = "https://v3.openstates.org/bills"
 JURISDICTION = "pa"
 SESSION = "2025-2026"  # OpenStates session identifier for PA
 SESSION_LABEL = "2025-2026 Regular Session"  # human-readable; used in bills.json for the dashboard
-PER_PAGE = 20  # OpenStates v3 caps at 20 with non-default sort
 MAX_PAGES = 25  # cap to ~500 bills per run; tune as needed
-REQUEST_DELAY_SEC = 6.0  # OpenStates free tier — empirically requires generous spacing
 
-# Bill prefixes whose chamber we infer (PA pattern).
 _CHAMBER_BY_PREFIX = {
     "HB": "House", "HR": "House", "HCO": "House", "HCR": "House",
     "SB": "Senate", "SR": "Senate", "SCR": "Senate", "SCO": "Senate",
@@ -61,7 +62,6 @@ def _primary_sponsor(bill: dict) -> str:
     if not person:
         return "Unknown"
     name = person.get("name") or "Unknown"
-    classification = person.get("classification", "")
     party_hint = ""
     entity = person.get("entity_type")
     if entity == "person" and person.get("person") and person["person"].get("party"):
@@ -100,76 +100,37 @@ def _bill_url(bill: dict) -> str:
     return bill.get("openstates_url") or ""
 
 
-def fetch_page(api_key: str, page: int) -> dict:
-    params = [
-        ("jurisdiction", JURISDICTION),
-        ("session", SESSION),
-        ("sort", "latest_action_desc"),
-        ("per_page", str(PER_PAGE)),
-        ("page", str(page)),
-        # OpenStates v3 requires `include` to be repeated, not comma-joined.
-        ("include", "sponsorships"),
-        ("include", "abstracts"),
-        ("include", "sources"),
-    ]
-    headers = {"X-API-KEY": api_key, "User-Agent": "wtp-pa-legislation-watch/1.0"}
-    last_err: Exception | None = None
-    for attempt in range(4):
-        try:
-            resp = requests.get(API_BASE, params=params, headers=headers, timeout=60)
-            if resp.status_code == 429:
-                # Honor server-suggested cooldown if present, else escalate.
-                wait = int(resp.headers.get("Retry-After", "")) if resp.headers.get("Retry-After", "").isdigit() else 10 * (attempt + 1)
-                print(f"  rate-limited, sleeping {wait}s before retry...", file=sys.stderr)
-                time.sleep(wait)
-                continue
-            resp.raise_for_status()
-            return resp.json()
-        except (requests.Timeout, requests.HTTPError) as e:
-            last_err = e
-            time.sleep(3 * (attempt + 1))
-    raise last_err  # type: ignore[misc]
-
-
 def main() -> int:
-    api_key = os.environ.get("OPENSTATES_API_KEY")
-    if not api_key:
-        print("OPENSTATES_API_KEY env var is required.", file=sys.stderr)
-        print("Get a free key at https://openstates.org/accounts/profile/.", file=sys.stderr)
+    try:
+        client = OpenStatesClient.from_env()
+    except OpenStatesError as e:
+        print(str(e), file=sys.stderr)
         return 2
 
     bills: list[dict] = []
     seen_ids: set[str] = set()
-    pages_fetched = 0
 
-    for page in range(1, MAX_PAGES + 1):
-        data = fetch_page(api_key, page)
-        results = data.get("results", []) or []
-        if not results:
-            break
-
-        for raw in results:
-            bid = _normalize_id(raw.get("identifier", ""))
-            if not bid or bid in seen_ids:
-                continue
-            seen_ids.add(bid)
-            status, last_action = _latest_action(raw)
-            bills.append({
-                "id": bid,
-                "chamber": _chamber_from_id(bid),
-                "title": (raw.get("title") or "").strip(),
-                "sponsor": _primary_sponsor(raw),
-                "status": status,
-                "lastAction": last_action,
-                "url": _bill_url(raw),
-                "summary": _summary(raw),
-            })
-
-        pages_fetched += 1
-        pagination = data.get("pagination") or {}
-        if pagination.get("page", page) >= pagination.get("max_page", page):
-            break
-        time.sleep(REQUEST_DELAY_SEC)
+    for raw in client.paginate(
+        "/bills",
+        params={"jurisdiction": JURISDICTION, "session": SESSION, "sort": "latest_action_desc"},
+        include=("sponsorships", "abstracts", "sources"),
+        max_pages=MAX_PAGES,
+    ):
+        bid = _normalize_id(raw.get("identifier", ""))
+        if not bid or bid in seen_ids:
+            continue
+        seen_ids.add(bid)
+        status, last_action = _latest_action(raw)
+        bills.append({
+            "id": bid,
+            "chamber": _chamber_from_id(bid),
+            "title": (raw.get("title") or "").strip(),
+            "sponsor": _primary_sponsor(raw),
+            "status": status,
+            "lastAction": last_action,
+            "url": _bill_url(raw),
+            "summary": _summary(raw),
+        })
 
     if not bills:
         print("Fetched 0 bills — refusing to overwrite bills.json.", file=sys.stderr)
@@ -199,7 +160,7 @@ def main() -> int:
         "bills": bills,
     }
     OUTPUT_PATH.write_text(json.dumps(output, indent=2) + "\n")
-    print(f"Fetched {len(bills)} bills across {pages_fetched} page(s). Wrote {OUTPUT_PATH}")
+    print(f"Fetched {len(bills)} bills. Wrote {OUTPUT_PATH}")
     return 0
 
 
