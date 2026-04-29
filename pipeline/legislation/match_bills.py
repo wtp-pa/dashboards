@@ -1,27 +1,34 @@
 #!/usr/bin/env python3
 """
 Score each PA bill in data/legislation/bills.json against the WTP-PA platform
-positions in data/legislation/platform.json using two complementary signals:
+positions in data/legislation/platform.json.
 
-  1. Keyword matching — word-boundary regex against curated keywords per
-     position. Precise; produces a "matched keyword" explanation.
-  2. TF-IDF cosine similarity — semantic catch-all that handles paraphrasing
-     and synonyms. Produces a similarity score + the highest-contributing
-     overlapping terms.
+Two stages per bill:
 
-A position is recorded for a bill if EITHER signal fires. Each match in the
-output records the mechanism (keyword | tfidf) and a human-readable evidence
-string for the dashboard drill-down.
+  1. Topic detection — does this bill *touch* a platform plank?
+     Combines keyword regex (precise) with TF-IDF cosine similarity (catches
+     paraphrasing). Produces a list of `matches`, each with a score and an
+     evidence string for the drill-down.
 
-This is intentionally NOT an LLM-based scorer. The math is open and the
-keyword list is checked into git. Direction calls (aligned vs. opposed) are
-not something either signal can infer — those still come from
-manual_review.json.
+  2. Auto-alignment — for each topic match, does the bill move *with* WTP-PA
+     or *against* it? Counts hits of `stanceVerbs.aligned` and
+     `stanceVerbs.opposed` (defined per-position in platform.json) in the
+     bill text. The dominant direction wins; clean wins get high confidence,
+     mixed signals get low.
+
+The bill-level `autoAlignment` is the alignment of its strongest match. UI
+maps this to a badge:
+
+    likely-aligned   — clear stance verbs in the supported direction
+    likely-opposed   — clear stance verbs in the opposed direction
+    topic-only       — bill touches a plank but no stance signal
+    (manual override from manual_review.json beats all of the above)
+
+Direction calls are still a heuristic, not truth. Confidence < 0.6 means
+"go read the bill." Manual reviews override automation.
 
 Run locally:
     python pipeline/legislation/match_bills.py
-
-Run via GitHub Actions: see .github/workflows/data-pipeline.yml
 """
 
 from __future__ import annotations
@@ -69,6 +76,46 @@ def keyword_hit(text: str, position: dict) -> str | None:
         if keyword_pattern(keyword).search(text):
             return keyword
     return None
+
+
+def stance_hits(text: str, verbs: list[str]) -> list[str]:
+    """Return the list of stance verbs from `verbs` that appear in `text`."""
+    return [v for v in verbs if keyword_pattern(v).search(text)]
+
+
+def detect_alignment(text: str, position: dict) -> tuple[str, float, dict]:
+    """Decide if a bill is moving with or against this position.
+
+    Returns (alignment, confidence, evidence) where:
+      alignment  - 'likely-aligned' | 'likely-opposed' | 'topic-only'
+      confidence - 0.0..1.0
+      evidence   - {'aligned': [...verbs...], 'opposed': [...verbs...]}
+    """
+    verbs = position.get("stanceVerbs") or {}
+    aligned_hits = stance_hits(text, verbs.get("aligned", []))
+    opposed_hits = stance_hits(text, verbs.get("opposed", []))
+
+    if not aligned_hits and not opposed_hits:
+        return "topic-only", 0.0, {"aligned": [], "opposed": []}
+
+    if aligned_hits and not opposed_hits:
+        # 1 verb hit → 0.7 conf; 2+ → 0.85; 3+ → 0.95
+        confidence = min(0.95, 0.55 + 0.15 * len(aligned_hits))
+        return "likely-aligned", confidence, {"aligned": aligned_hits, "opposed": []}
+
+    if opposed_hits and not aligned_hits:
+        confidence = min(0.95, 0.55 + 0.15 * len(opposed_hits))
+        return "likely-opposed", confidence, {"aligned": [], "opposed": opposed_hits}
+
+    # Mixed signals — bill mentions both directions. Decide by majority but
+    # at low confidence; UI should treat these as "needs review".
+    diff = len(aligned_hits) - len(opposed_hits)
+    if diff > 0:
+        return "likely-aligned", 0.4, {"aligned": aligned_hits, "opposed": opposed_hits}
+    if diff < 0:
+        return "likely-opposed", 0.4, {"aligned": aligned_hits, "opposed": opposed_hits}
+    # Equal hits in both directions.
+    return "topic-only", 0.3, {"aligned": aligned_hits, "opposed": opposed_hits}
 
 
 # --- TF-IDF matcher (semantic) -------------------------------------------------
@@ -169,6 +216,8 @@ def main() -> int:
     bill_vectors = vectorizer.transform(bill_corpora)
     sim_matrix = cosine_similarity(bill_vectors, position_vectors)
 
+    positions_by_id = {p["id"]: p for p in positions}
+
     for bi, bill in enumerate(bills):
         haystack = bill_corpus(bill)
         match_by_position: dict[str, dict] = {}
@@ -204,9 +253,29 @@ def main() -> int:
                 "overlappingTerms": terms,
             }
 
+        # Stance detection — for each topic match, decide alignment.
+        for match in match_by_position.values():
+            position = positions_by_id[match["positionId"]]
+            alignment, confidence, evidence = detect_alignment(haystack, position)
+            match["autoAlignment"] = alignment
+            match["autoConfidence"] = round(confidence, 2)
+            match["alignedVerbs"] = evidence["aligned"]
+            match["opposedVerbs"] = evidence["opposed"]
+
         ranked = sorted(match_by_position.values(), key=lambda m: m["score"], reverse=True)
         bill["matches"] = ranked[:MAX_MATCHES_PER_BILL]
         bill["matchedPositions"] = [m["positionId"] for m in bill["matches"]]
+
+        # Bill-level auto-alignment = the strongest signal across its matches.
+        # Pick the match with the highest autoConfidence; ties broken by topic
+        # match score.
+        if bill["matches"]:
+            best = max(bill["matches"], key=lambda m: (m["autoConfidence"], m["score"]))
+            bill["autoAlignment"] = best["autoAlignment"]
+            bill["autoConfidence"] = best["autoConfidence"]
+        else:
+            bill["autoAlignment"] = None
+            bill["autoConfidence"] = 0.0
 
     bills_doc["lastMatched"] = datetime.now(timezone.utc).isoformat()
     bills_doc["tfidfThreshold"] = TFIDF_THRESHOLD
@@ -215,10 +284,14 @@ def main() -> int:
     matched_count = sum(1 for b in bills if b["matches"])
     keyword_count = sum(1 for b in bills for m in b["matches"] if m["mechanism"] == "keyword")
     tfidf_count = sum(1 for b in bills for m in b["matches"] if m["mechanism"] == "tfidf")
+    aligned_auto = sum(1 for b in bills if b.get("autoAlignment") == "likely-aligned")
+    opposed_auto = sum(1 for b in bills if b.get("autoAlignment") == "likely-opposed")
+    topic_only = sum(1 for b in bills if b.get("autoAlignment") == "topic-only")
     print(
         f"Scored {len(bills)} bills against {len(positions)} platform positions. "
         f"{matched_count} matched at least one plank "
         f"({keyword_count} keyword hits, {tfidf_count} TF-IDF hits). "
+        f"Auto-alignment: {aligned_auto} likely-aligned, {opposed_auto} likely-opposed, {topic_only} topic-only. "
         f"Wrote {BILLS_PATH}"
     )
     return 0

@@ -1,8 +1,8 @@
 {
-  "$comment": "WTP-PA platform pillars + positions, encoded for keyword matching against PA bills. Source: https://www.wtpppa.org/platform — keep in sync when the website changes. Each position has 'keywords' (lowercase substrings matched against bill title + summary) and a 'stance' indicating the direction WTP-PA takes (support / oppose) on legislation that matches.",
-  "version": "1.0.0",
+  "$comment": "WTP-PA platform pillars + positions, encoded for matching against PA bills. Source: https://www.wtpppa.org/platform \u2014 keep in sync when the website changes. Each position has 'keywords' (matched against bill title+summary), a 'stance' (WTP-PA's direction on the topic), and 'stanceVerbs' (verb phrases that, when they appear in a bill on this topic, suggest the bill is moving in that direction). Edit stanceVerbs freely \u2014 they're the lever for tuning auto-alignment accuracy.",
+  "version": "2.0.0",
   "source": "https://www.wtpppa.org/platform",
-  "lastUpdated": "2026-04-28",
+  "lastUpdated": "2026-04-29",
   "pillars": [
     {
       "id": "community",
@@ -15,28 +15,129 @@
           "title": "School choice and parental voice in curriculum",
           "summary": "School choice in struggling districts; stronger parental voice in curriculum decisions.",
           "stance": "support",
-          "keywords": ["school choice", "charter school", "education savings account", "voucher", "parental rights", "curriculum transparency", "homeschool"]
+          "keywords": [
+            "school choice",
+            "charter school",
+            "education savings account",
+            "voucher",
+            "parental rights",
+            "curriculum transparency",
+            "homeschool"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "expand",
+              "authorize",
+              "allow",
+              "establish",
+              "create",
+              "voucher",
+              "tax credit",
+              "scholarship"
+            ],
+            "opposed": [
+              "restrict",
+              "prohibit",
+              "eliminate",
+              "defund",
+              "cap enrollment"
+            ]
+          }
         },
         {
           "id": "addiction-recovery",
           "title": "Community-led addiction recovery over punishment",
           "summary": "Legalization and recovery programs over punishment.",
           "stance": "support",
-          "keywords": ["addiction", "recovery program", "drug treatment", "harm reduction", "opioid", "decriminaliz", "rehabilitation"]
+          "keywords": [
+            "addiction",
+            "recovery program",
+            "drug treatment",
+            "harm reduction",
+            "opioid",
+            "decriminaliz",
+            "rehabilitation"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "decriminalize",
+              "legalize",
+              "treatment",
+              "harm reduction",
+              "divert",
+              "fund recovery",
+              "expand access"
+            ],
+            "opposed": [
+              "criminalize",
+              "mandatory minimum",
+              "increase penalty",
+              "ban treatment"
+            ]
+          }
         },
         {
           "id": "criminal-justice",
           "title": "Justice system reform and community policing",
           "summary": "Mental health support, skills training, reintegration programs, community policing that builds trust, youth intervention.",
           "stance": "support",
-          "keywords": ["reentry", "reintegration", "community policing", "youth diversion", "mental health court", "juvenile justice", "expungement", "second chance"]
+          "keywords": [
+            "reentry",
+            "reintegration",
+            "community policing",
+            "youth diversion",
+            "mental health court",
+            "juvenile justice",
+            "expungement",
+            "second chance"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "expunge",
+              "reform",
+              "divert",
+              "reduce sentence",
+              "rehabilitation",
+              "second chance",
+              "community policing",
+              "treatment"
+            ],
+            "opposed": [
+              "mandatory minimum",
+              "three strikes",
+              "increase penalty",
+              "life sentence"
+            ]
+          }
         },
         {
           "id": "elder-care",
           "title": "Elder care and volunteer-driven community programs",
           "summary": "Elder care initiatives with community volunteer efforts; volunteer programs for before/after-school support.",
           "stance": "support",
-          "keywords": ["elder care", "senior services", "after-school", "volunteer program", "aging in place", "long-term care"]
+          "keywords": [
+            "elder care",
+            "senior services",
+            "after-school",
+            "volunteer program",
+            "aging in place",
+            "long-term care"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "fund",
+              "expand",
+              "support",
+              "establish program",
+              "increase benefit"
+            ],
+            "opposed": [
+              "cut",
+              "reduce",
+              "eliminate",
+              "defund"
+            ]
+          }
         }
       ]
     },
@@ -51,42 +152,188 @@
           "title": "Medical freedom and bodily autonomy",
           "summary": "Individual liberty in personal health choices; opposition to vaccine mandates and water fluoridation.",
           "stance": "support",
-          "keywords": ["medical freedom", "vaccine mandate", "informed consent", "bodily autonomy", "fluoridation", "religious exemption", "medical exemption"]
+          "keywords": [
+            "medical freedom",
+            "vaccine mandate",
+            "informed consent",
+            "bodily autonomy",
+            "fluoridation",
+            "religious exemption",
+            "medical exemption"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "exempt",
+              "voluntary",
+              "informed consent",
+              "religious exemption",
+              "opt-out",
+              "protect",
+              "right to refuse"
+            ],
+            "opposed": [
+              "mandate",
+              "require vaccination",
+              "compel",
+              "force"
+            ]
+          }
         },
         {
           "id": "pharma-liability",
           "title": "Remove pharma/chemical industry liability shields",
           "summary": "Remove liability protections for pharmaceutical, biological, and chemical industries.",
           "stance": "support",
-          "keywords": ["pharmaceutical liability", "vaccine injury", "chemical industry liability", "product liability"]
+          "keywords": [
+            "pharmaceutical liability",
+            "vaccine injury",
+            "chemical industry liability",
+            "product liability"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "hold liable",
+              "remove immunity",
+              "allow lawsuit",
+              "compensate",
+              "right to sue"
+            ],
+            "opposed": [
+              "shield",
+              "immunity",
+              "preempt",
+              "protect from liability"
+            ]
+          }
         },
         {
           "id": "alternative-medicine",
           "title": "Access to alternative medicine and practitioners",
           "summary": "Access to alternative medicine and health practices; address conflicts of interest in biomedical publishing.",
           "stance": "support",
-          "keywords": ["alternative medicine", "naturopath", "midwif", "raw milk", "supplement", "right to try"]
+          "keywords": [
+            "alternative medicine",
+            "naturopath",
+            "midwif",
+            "raw milk",
+            "supplement",
+            "right to try"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "authorize",
+              "license",
+              "expand access",
+              "recognize",
+              "scope of practice",
+              "right to try"
+            ],
+            "opposed": [
+              "ban",
+              "restrict",
+              "prohibit",
+              "criminalize"
+            ]
+          }
         },
         {
           "id": "polluter-accountability",
           "title": "Hold polluters accountable",
           "summary": "Corporations bear costs of pollution and environmental damage; cleanup of contaminated sites.",
           "stance": "support",
-          "keywords": ["polluter pays", "superfund", "brownfield", "environmental remediation", "PFAS", "mine drainage", "fracking waste", "industrial waste"]
+          "keywords": [
+            "polluter pays",
+            "superfund",
+            "brownfield",
+            "environmental remediation",
+            "PFAS",
+            "mine drainage",
+            "fracking waste",
+            "industrial waste"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "hold accountable",
+              "fine",
+              "remediation",
+              "cleanup",
+              "polluter pays",
+              "enforce",
+              "penalty"
+            ],
+            "opposed": [
+              "exempt",
+              "shield",
+              "rollback",
+              "weaken",
+              "deregulate"
+            ]
+          }
         },
         {
           "id": "regenerative-farming",
           "title": "Regenerative farming and food sovereignty",
           "summary": "Support regenerative farming practices; oppose toxic chemicals and industrial farming practices.",
           "stance": "support",
-          "keywords": ["regenerative agriculture", "soil health", "small farm", "pesticide", "glyphosate", "GMO label", "food sovereignty", "raw milk", "farm to table"]
+          "keywords": [
+            "regenerative agriculture",
+            "soil health",
+            "small farm",
+            "pesticide",
+            "glyphosate",
+            "GMO label",
+            "food sovereignty",
+            "raw milk",
+            "farm to table"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "organic",
+              "regenerative",
+              "grant",
+              "fund",
+              "support small farm",
+              "encourage"
+            ],
+            "opposed": [
+              "ban small farm",
+              "mandate industrial",
+              "restrict farming"
+            ]
+          }
         },
         {
           "id": "land-preservation",
           "title": "Preserve parks, rivers, lakes, forests, and open lands",
           "summary": "Preservation of natural lands and waterways.",
           "stance": "support",
-          "keywords": ["state park", "state forest", "open space", "land conservation", "watershed", "wetland", "trail"]
+          "keywords": [
+            "state park",
+            "state forest",
+            "open space",
+            "land conservation",
+            "watershed",
+            "wetland",
+            "trail"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "preserve",
+              "protect",
+              "conserve",
+              "designate",
+              "expand park",
+              "establish"
+            ],
+            "opposed": [
+              "develop",
+              "sell",
+              "lease",
+              "extract",
+              "drill",
+              "open for development"
+            ]
+          }
         }
       ]
     },
@@ -101,63 +348,260 @@
           "title": "Free speech and freedom of association",
           "summary": "Defense of rights to free speech, free association, freedom of religion.",
           "stance": "support",
-          "keywords": ["free speech", "first amendment", "freedom of association", "freedom of religion", "religious liberty", "anti-SLAPP"]
+          "keywords": [
+            "free speech",
+            "first amendment",
+            "freedom of association",
+            "freedom of religion",
+            "religious liberty",
+            "anti-SLAPP"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "protect",
+              "anti-slapp",
+              "shield",
+              "defend",
+              "expand"
+            ],
+            "opposed": [
+              "restrict",
+              "ban speech",
+              "censor",
+              "criminalize speech",
+              "compel"
+            ]
+          }
         },
         {
           "id": "second-amendment",
           "title": "Right to keep and bear arms",
           "summary": "Defense of the right to keep and bear arms.",
           "stance": "support",
-          "keywords": ["second amendment", "firearm", "concealed carry", "right to bear arms", "constitutional carry"]
+          "keywords": [
+            "second amendment",
+            "firearm",
+            "concealed carry",
+            "right to bear arms",
+            "constitutional carry"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "constitutional carry",
+              "preempt",
+              "expand",
+              "protect right",
+              "concealed carry"
+            ],
+            "opposed": [
+              "ban",
+              "restrict",
+              "prohibit firearm",
+              "registration",
+              "confiscate",
+              "red flag"
+            ]
+          }
         },
         {
           "id": "fourth-amendment",
           "title": "Protection from unreasonable search and seizure",
           "summary": "Fourth Amendment protections; civil asset forfeiture reform implied.",
           "stance": "support",
-          "keywords": ["fourth amendment", "search and seizure", "civil asset forfeiture", "warrant requirement", "surveillance"]
+          "keywords": [
+            "fourth amendment",
+            "search and seizure",
+            "civil asset forfeiture",
+            "warrant requirement",
+            "surveillance"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "require warrant",
+              "limit surveillance",
+              "abolish forfeiture",
+              "protect privacy"
+            ],
+            "opposed": [
+              "warrantless",
+              "expand surveillance",
+              "broaden",
+              "weaken protection"
+            ]
+          }
         },
         {
           "id": "judicial-reform",
           "title": "Nonpartisan judiciary, jury nullification, open courts",
           "summary": "Judicial reform to remove partisanship; support for jury nullification; open recording of court proceedings.",
           "stance": "support",
-          "keywords": ["judicial elections", "merit selection", "jury", "open court", "court records", "recording proceedings"]
+          "keywords": [
+            "judicial elections",
+            "merit selection",
+            "jury",
+            "open court",
+            "court records",
+            "recording proceedings"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "nonpartisan",
+              "merit selection",
+              "transparency",
+              "open court",
+              "accountability"
+            ],
+            "opposed": [
+              "partisan",
+              "expand jurisdiction",
+              "shield judge",
+              "immunity"
+            ]
+          }
         },
         {
           "id": "transparency-blockchain",
           "title": "Government transparency, including blockchain pilots",
           "summary": "Transparency via independent review boards and blockchain technology.",
           "stance": "support",
-          "keywords": ["transparency", "open records", "right to know", "blockchain", "public meeting", "sunshine law", "FOIA"]
+          "keywords": [
+            "transparency",
+            "open records",
+            "right to know",
+            "blockchain",
+            "public meeting",
+            "sunshine law",
+            "FOIA"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "disclose",
+              "publish",
+              "post online",
+              "open record",
+              "public access",
+              "transparency"
+            ],
+            "opposed": [
+              "exempt",
+              "classify",
+              "conceal",
+              "seal",
+              "restrict access"
+            ]
+          }
         },
         {
           "id": "civics-education",
           "title": "Civics education and youth government internships",
           "summary": "Civics education emphasis and government internships for youth.",
           "stance": "support",
-          "keywords": ["civics education", "civics curriculum", "youth internship", "page program"]
+          "keywords": [
+            "civics education",
+            "civics curriculum",
+            "youth internship",
+            "page program"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "require",
+              "fund",
+              "expand",
+              "teach civics",
+              "establish curriculum"
+            ],
+            "opposed": [
+              "cut civics",
+              "eliminate",
+              "reduce funding"
+            ]
+          }
         },
         {
           "id": "foreign-ownership",
           "title": "Prevent foreign ownership of land and critical assets",
           "summary": "Prevent foreign ownership of U.S. land and critical assets.",
           "stance": "support",
-          "keywords": ["foreign ownership", "foreign land ownership", "national security", "critical infrastructure", "CCP", "China", "foreign adversary"]
+          "keywords": [
+            "foreign ownership",
+            "foreign land ownership",
+            "national security",
+            "critical infrastructure",
+            "CCP",
+            "China",
+            "foreign adversary"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "prohibit foreign",
+              "ban foreign",
+              "restrict foreign",
+              "divest",
+              "screen",
+              "block foreign"
+            ],
+            "opposed": [
+              "allow foreign",
+              "permit foreign",
+              "exempt foreign"
+            ]
+          }
         },
         {
           "id": "no-foreign-wars",
           "title": "End foreign entanglements; protect PA soldiers",
           "summary": "End foreign entanglements; state protection of soldiers from undeclared wars.",
           "stance": "support",
-          "keywords": ["national guard", "deployment", "war powers", "undeclared war", "foreign aid"]
+          "keywords": [
+            "national guard",
+            "deployment",
+            "war powers",
+            "undeclared war",
+            "foreign aid"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "restrict deployment",
+              "limit war powers",
+              "require congressional",
+              "withdraw"
+            ],
+            "opposed": [
+              "expand authority",
+              "increase aid",
+              "deploy",
+              "authorize use"
+            ]
+          }
         },
         {
           "id": "secure-borders",
           "title": "Secure borders, humane immigration",
           "summary": "Tall fences, wide gates: secure borders and fair, humane immigration policy.",
           "stance": "support",
-          "keywords": ["immigration", "border security", "sanctuary", "E-Verify", "asylum", "refugee resettlement"]
+          "keywords": [
+            "immigration",
+            "border security",
+            "sanctuary",
+            "E-Verify",
+            "asylum",
+            "refugee resettlement"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "secure",
+              "enforce immigration",
+              "e-verify",
+              "verify status",
+              "deport"
+            ],
+            "opposed": [
+              "sanctuary",
+              "prohibit cooperation",
+              "expand asylum",
+              "limit enforcement"
+            ]
+          }
         }
       ]
     },
@@ -172,70 +616,270 @@
           "title": "Overturn Citizens United; campaign finance reform",
           "summary": "Stop money influx corrupting electoral processes.",
           "stance": "support",
-          "keywords": ["campaign finance", "citizens united", "dark money", "PAC", "super PAC", "political donation", "disclosure"]
+          "keywords": [
+            "campaign finance",
+            "citizens united",
+            "dark money",
+            "PAC",
+            "super PAC",
+            "political donation",
+            "disclosure"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "disclose",
+              "limit donation",
+              "ban dark money",
+              "reform",
+              "cap contribution"
+            ],
+            "opposed": [
+              "expand",
+              "exempt",
+              "raise limit",
+              "anonymous"
+            ]
+          }
         },
         {
           "id": "ballot-access",
           "title": "Ballot access reform; oppose lawfare",
           "summary": "Make it easier for third parties and independents on the ballot; prevent politically-motivated prosecutions.",
           "stance": "support",
-          "keywords": ["ballot access", "third party", "independent candidate", "minor party", "petition signature", "ballot petition"]
+          "keywords": [
+            "ballot access",
+            "third party",
+            "independent candidate",
+            "minor party",
+            "petition signature",
+            "ballot petition"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "lower threshold",
+              "expand access",
+              "simplify",
+              "reduce signature"
+            ],
+            "opposed": [
+              "raise threshold",
+              "restrict",
+              "increase signature",
+              "ban from ballot"
+            ]
+          }
         },
         {
           "id": "voter-id",
           "title": "Voter identification for electoral integrity",
           "summary": "Require voter ID at the polls.",
           "stance": "support",
-          "keywords": ["voter ID", "voter identification", "voter integrity", "election integrity", "voter roll"]
+          "keywords": [
+            "voter ID",
+            "voter identification",
+            "voter integrity",
+            "election integrity",
+            "voter roll"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "require id",
+              "photo id",
+              "verify identity",
+              "validate",
+              "audit"
+            ],
+            "opposed": [
+              "eliminate id",
+              "weaken",
+              "repeal id",
+              "remove requirement"
+            ]
+          }
         },
         {
           "id": "anti-gerrymander",
           "title": "End gerrymandering",
           "summary": "Eliminate partisan redistricting.",
           "stance": "support",
-          "keywords": ["gerrymander", "redistricting", "district map", "independent commission", "fair districts"]
+          "keywords": [
+            "gerrymander",
+            "redistricting",
+            "district map",
+            "independent commission",
+            "fair districts"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "independent commission",
+              "fair district",
+              "prohibit partisan",
+              "ban gerrymander",
+              "redistricting reform"
+            ],
+            "opposed": [
+              "legislative draw",
+              "partisan map"
+            ]
+          }
         },
         {
           "id": "open-primaries",
-          "title": "Open primaries — all eligible voters in all elections",
+          "title": "Open primaries \u2014 all eligible voters in all elections",
           "summary": "Allow all eligible voters in primary elections regardless of party registration.",
           "stance": "support",
-          "keywords": ["open primary", "closed primary", "primary election", "independent voter", "unaffiliated voter"]
+          "keywords": [
+            "open primary",
+            "closed primary",
+            "primary election",
+            "independent voter",
+            "unaffiliated voter"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "open primary",
+              "allow unaffiliated",
+              "expand primary",
+              "independent voter access"
+            ],
+            "opposed": [
+              "closed primary",
+              "restrict to party",
+              "party-only"
+            ]
+          }
         },
         {
           "id": "majority-vote",
           "title": "Majority-vote winner selection",
-          "summary": "Winners must achieve a majority — implies ranked-choice or runoff.",
+          "summary": "Winners must achieve a majority \u2014 implies ranked-choice or runoff.",
           "stance": "support",
-          "keywords": ["ranked choice", "instant runoff", "RCV", "majority winner", "runoff election"]
+          "keywords": [
+            "ranked choice",
+            "instant runoff",
+            "RCV",
+            "majority winner",
+            "runoff election"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "ranked choice",
+              "instant runoff",
+              "runoff election",
+              "majority winner"
+            ],
+            "opposed": [
+              "plurality",
+              "first past the post",
+              "repeal ranked"
+            ]
+          }
         },
         {
           "id": "term-limits",
           "title": "Term and employment limits for officials",
           "summary": "Term limits and employment limits across all government members.",
           "stance": "support",
-          "keywords": ["term limit", "term limits"]
+          "keywords": [
+            "term limit",
+            "term limits"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "limit term",
+              "cap term",
+              "establish term limit",
+              "shorten term"
+            ],
+            "opposed": [
+              "extend term",
+              "remove limit",
+              "abolish term limit",
+              "lengthen term"
+            ]
+          }
         },
         {
           "id": "no-stock-trading",
           "title": "Ban securities trading by officials in office",
           "summary": "Prohibit securities trading while in office.",
           "stance": "support",
-          "keywords": ["stock trading", "securities trading", "insider trading", "STOCK Act", "blind trust"]
+          "keywords": [
+            "stock trading",
+            "securities trading",
+            "insider trading",
+            "STOCK Act",
+            "blind trust"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "ban",
+              "prohibit",
+              "restrict trading",
+              "bar",
+              "divest",
+              "blind trust"
+            ],
+            "opposed": [
+              "allow",
+              "permit trading",
+              "exempt",
+              "expand permission"
+            ]
+          }
         },
         {
           "id": "no-pensions",
           "title": "End pensions and special privileges for officials",
           "summary": "End pensions and special privileges for elected officials.",
           "stance": "support",
-          "keywords": ["legislative pension", "official pension", "elected official benefits", "per diem"]
+          "keywords": [
+            "legislative pension",
+            "official pension",
+            "elected official benefits",
+            "per diem"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "eliminate pension",
+              "repeal pension",
+              "abolish pension",
+              "reduce pension",
+              "cut benefit"
+            ],
+            "opposed": [
+              "expand pension",
+              "enhance benefit",
+              "increase pension",
+              "restore"
+            ]
+          }
         },
         {
           "id": "lobbying-ban",
           "title": "Five-year lobbying ban after leaving office",
           "summary": "Five-year revolving-door ban for former officials.",
           "stance": "support",
-          "keywords": ["lobbying ban", "revolving door", "lobbyist registration", "cooling off period"]
+          "keywords": [
+            "lobbying ban",
+            "revolving door",
+            "lobbyist registration",
+            "cooling off period"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "ban lobbying",
+              "prohibit lobby",
+              "cooling off",
+              "register",
+              "disclose lobbying"
+            ],
+            "opposed": [
+              "allow lobby",
+              "exempt lobby",
+              "weaken disclosure"
+            ]
+          }
         }
       ]
     },
@@ -250,56 +894,220 @@
           "title": "Affordable housing and accessible homeownership",
           "summary": "Affordable housing initiatives for accessible homeownership.",
           "stance": "support",
-          "keywords": ["affordable housing", "first-time homebuyer", "housing trust fund", "rent control", "low-income housing"]
+          "keywords": [
+            "affordable housing",
+            "first-time homebuyer",
+            "housing trust fund",
+            "rent control",
+            "low-income housing"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "fund housing",
+              "increase supply",
+              "build",
+              "tax credit",
+              "voucher",
+              "subsidy"
+            ],
+            "opposed": [
+              "restrict supply",
+              "exclusionary",
+              "downzone"
+            ]
+          }
         },
         {
           "id": "zoning-reform",
           "title": "Eliminate restrictive zoning and land-use laws",
           "summary": "Eliminate unconstitutional zoning and land-use laws.",
           "stance": "support",
-          "keywords": ["zoning reform", "land use", "single-family zoning", "ADU", "accessory dwelling", "density"]
+          "keywords": [
+            "zoning reform",
+            "land use",
+            "single-family zoning",
+            "ADU",
+            "accessory dwelling",
+            "density"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "reform zoning",
+              "by-right",
+              "allow adu",
+              "density",
+              "abolish single-family"
+            ],
+            "opposed": [
+              "downzone",
+              "restrict",
+              "exclusionary",
+              "ban density"
+            ]
+          }
         },
         {
           "id": "property-tax-reform",
           "title": "Property tax reform; lower working-class burden",
           "summary": "Property tax reform and reduced working-class tax burden.",
           "stance": "support",
-          "keywords": ["property tax", "school property tax", "homestead exemption", "millage", "assessment"]
+          "keywords": [
+            "property tax",
+            "school property tax",
+            "homestead exemption",
+            "millage",
+            "assessment"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "reduce property tax",
+              "eliminate property tax",
+              "cap millage",
+              "homestead exemption",
+              "lower"
+            ],
+            "opposed": [
+              "increase property tax",
+              "raise millage",
+              "expand assessment"
+            ]
+          }
         },
         {
           "id": "tax-simplification",
           "title": "Simplify income and corporate tax codes",
           "summary": "Simplified income and corporate tax codes.",
           "stance": "support",
-          "keywords": ["tax code", "tax simplification", "income tax", "corporate tax", "tax bracket", "flat tax"]
+          "keywords": [
+            "tax code",
+            "tax simplification",
+            "income tax",
+            "corporate tax",
+            "tax bracket",
+            "flat tax"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "simplify",
+              "flat tax",
+              "consolidate",
+              "eliminate bracket",
+              "reduce rate"
+            ],
+            "opposed": [
+              "add bracket",
+              "increase complexity",
+              "raise rate"
+            ]
+          }
         },
         {
           "id": "antimonopoly",
           "title": "Break up corporate monopolies; reform licensure",
           "summary": "Break up corporate monopolies; re-evaluate licensure regulations.",
           "stance": "support",
-          "keywords": ["monopoly", "antitrust", "occupational licensing", "licensure reform", "anticompetitive", "small business"]
+          "keywords": [
+            "monopoly",
+            "antitrust",
+            "occupational licensing",
+            "licensure reform",
+            "anticompetitive",
+            "small business"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "break up",
+              "antitrust",
+              "prohibit merger",
+              "license reform",
+              "reduce barrier"
+            ],
+            "opposed": [
+              "allow merger",
+              "consolidate",
+              "expand licensing"
+            ]
+          }
         },
         {
           "id": "free-market",
           "title": "Free-market economy with minimal intervention",
           "summary": "Free-market economy minimizing government intervention.",
           "stance": "support",
-          "keywords": ["deregulation", "regulatory reform", "free market", "right to work"]
+          "keywords": [
+            "deregulation",
+            "regulatory reform",
+            "free market",
+            "right to work"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "deregulate",
+              "repeal regulation",
+              "free market",
+              "reduce burden",
+              "right to work"
+            ],
+            "opposed": [
+              "mandate",
+              "expand regulation",
+              "increase requirement",
+              "compel"
+            ]
+          }
         },
         {
           "id": "child-care-credit",
           "title": "Increased child and dependent care tax credit",
           "summary": "Increased child and dependent care tax credit.",
           "stance": "support",
-          "keywords": ["child tax credit", "dependent care", "child care credit", "CTC"]
+          "keywords": [
+            "child tax credit",
+            "dependent care",
+            "child care credit",
+            "CTC"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "increase credit",
+              "expand credit",
+              "raise credit",
+              "enhance credit"
+            ],
+            "opposed": [
+              "cut credit",
+              "reduce credit",
+              "eliminate credit"
+            ]
+          }
         },
         {
           "id": "vocational-training",
           "title": "Vocational training and apprenticeships",
           "summary": "Support vocational training and apprenticeships as viable paths.",
           "stance": "support",
-          "keywords": ["apprenticeship", "vocational training", "career and technical education", "CTE", "trade school", "skilled trades"]
+          "keywords": [
+            "apprenticeship",
+            "vocational training",
+            "career and technical education",
+            "CTE",
+            "trade school",
+            "skilled trades"
+          ],
+          "stanceVerbs": {
+            "aligned": [
+              "fund apprenticeship",
+              "expand cte",
+              "establish training",
+              "support trade",
+              "scholarship"
+            ],
+            "opposed": [
+              "cut training",
+              "eliminate apprenticeship",
+              "defund cte"
+            ]
+          }
         }
       ]
     }

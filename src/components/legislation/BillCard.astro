@@ -1,13 +1,18 @@
 ---
 import platform from '../../../data/legislation/platform.json';
 
-type Alignment = 'aligned' | 'mixed' | 'opposed' | 'under-review';
+type Alignment = 'aligned' | 'mixed' | 'opposed' | 'topic-only' | 'under-review';
+type Source = 'manual' | 'auto' | 'none';
 
 interface Match {
   positionId: string;
   score: number;
   evidence: string;
   mechanism: 'keyword' | 'tfidf';
+  autoAlignment?: 'likely-aligned' | 'likely-opposed' | 'topic-only';
+  autoConfidence?: number;
+  alignedVerbs?: string[];
+  opposedVerbs?: string[];
 }
 
 export interface Props {
@@ -21,6 +26,8 @@ export interface Props {
   summary: string;
   matches: Match[];
   alignment: Alignment;
+  alignmentSource: Source;
+  alignmentConfidence?: number;
   reviewNote?: string;
   reviewedBy?: string;
   reviewedAt?: string;
@@ -28,33 +35,45 @@ export interface Props {
 
 const {
   id, chamber, title, sponsor, status, lastAction, url, summary,
-  matches, alignment, reviewNote, reviewedBy, reviewedAt,
+  matches, alignment, alignmentSource, alignmentConfidence,
+  reviewNote, reviewedBy, reviewedAt,
 } = Astro.props;
 
-const alignmentMeta: Record<Alignment, { label: string; cls: string; dot: string }> = {
+const alignmentMeta: Record<Alignment, { label: string; autoLabel: string; cls: string; dot: string }> = {
   aligned: {
     label: 'Aligned with platform',
+    autoLabel: 'Likely aligned',
     cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky',
     dot: 'bg-wtp-sky',
   },
   mixed: {
     label: 'Mixed alignment',
+    autoLabel: 'Mixed alignment',
     cls: 'border-wtp-gold/40 bg-wtp-gold/10 text-wtp-gold',
     dot: 'bg-wtp-gold',
   },
   opposed: {
     label: 'Opposed to platform',
+    autoLabel: 'Likely opposed',
     cls: 'border-wtp-red/40 bg-wtp-red/10 text-wtp-red',
     dot: 'bg-wtp-red',
   },
+  'topic-only': {
+    label: 'Touches our platform',
+    autoLabel: 'Touches our platform',
+    cls: 'border-white/15 bg-white/5 text-wtp-cream/70',
+    dot: 'bg-wtp-cream/50',
+  },
   'under-review': {
     label: 'Under review',
+    autoLabel: 'Under review',
     cls: 'border-white/15 bg-white/5 text-wtp-cream/60',
     dot: 'bg-wtp-cream/40',
   },
 };
 
 const meta = alignmentMeta[alignment];
+const badgeLabel = alignmentSource === 'auto' ? meta.autoLabel : meta.label;
 
 // Look up the full position object for each match, attaching pillar info and
 // the evidence string from the matcher.
@@ -69,6 +88,10 @@ const matchDetails = matches.map((m) => {
         score: m.score,
         evidence: m.evidence,
         mechanism: m.mechanism,
+        autoAlignment: m.autoAlignment,
+        autoConfidence: m.autoConfidence,
+        alignedVerbs: m.alignedVerbs ?? [],
+        opposedVerbs: m.opposedVerbs ?? [],
       };
     }
   }
@@ -82,9 +105,16 @@ const formatDate = (iso: string) =>
 
 <details class="group rounded-lg border border-white/10 bg-surface/40 transition hover:border-white/20">
   <summary class="flex cursor-pointer list-none flex-col gap-3 p-5 md:flex-row md:items-start md:gap-5">
-    <div class={`flex flex-shrink-0 items-center gap-2 self-start rounded-full border px-3 py-1 text-xs font-medium ${meta.cls}`}>
-      <span class={`inline-block h-1.5 w-1.5 rounded-full ${meta.dot}`}></span>
-      <span>{meta.label}</span>
+    <div class="flex flex-shrink-0 flex-col items-start gap-1 self-start">
+      <div class={`flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium ${meta.cls}`}>
+        <span class={`inline-block h-1.5 w-1.5 rounded-full ${meta.dot}`}></span>
+        <span>{badgeLabel}</span>
+      </div>
+      <div class="pl-1 text-[10px] uppercase tracking-wider text-wtp-cream/40">
+        {alignmentSource === 'manual' && 'Editor reviewed'}
+        {alignmentSource === 'auto' && alignmentConfidence !== undefined && `Auto · ${Math.round(alignmentConfidence * 100)}% confidence`}
+        {alignmentSource === 'none' && 'No clear signal'}
+      </div>
     </div>
     <div class="min-w-0 flex-1">
       <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs text-wtp-cream/50">
@@ -121,6 +151,20 @@ const formatDate = (iso: string) =>
               </div>
               <div class="mt-1 text-sm font-medium text-white">{p.title}</div>
               <div class="mt-1 text-xs italic text-wtp-cream/50">{p.evidence}</div>
+              {(p.alignedVerbs.length > 0 || p.opposedVerbs.length > 0) && (
+                <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+                  {p.alignedVerbs.length > 0 && (
+                    <span class="text-wtp-sky/80">
+                      Aligned-direction verbs: <span class="font-mono text-wtp-sky">{p.alignedVerbs.join(', ')}</span>
+                    </span>
+                  )}
+                  {p.opposedVerbs.length > 0 && (
+                    <span class="text-wtp-red/80">
+                      Opposed-direction verbs: <span class="font-mono text-wtp-red">{p.opposedVerbs.join(', ')}</span>
+                    </span>
+                  )}
+                </div>
+              )}
               <div class="mt-2 text-xs text-wtp-cream/60">{p.summary}</div>
             </li>
           ))}
