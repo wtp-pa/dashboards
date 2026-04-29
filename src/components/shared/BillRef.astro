@@ -1,0 +1,63 @@
+---
+/**
+ * Compact bill reference. Use on Elected Officials pages or anywhere a
+ * legislator's vote needs to point at a specific bill — keeps the visual
+ * vocabulary identical to BillCard's badges so a reader doesn't have to
+ * relearn what "aligned" means between dashboards.
+ *
+ * Links to /legislation/#bill-<id> so the reader can see the full
+ * scoring breakdown without leaving the dashboard portfolio.
+ */
+import type { Alignment } from '../../lib/bills';
+
+export interface Props {
+  id: string;
+  title: string;
+  alignment: Alignment;
+  href?: string;
+}
+
+const { id, title, alignment, href } = Astro.props;
+
+const meta: Record<Alignment, { label: string; cls: string; dot: string }> = {
+  aligned: {
+    label: 'Aligned',
+    cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky',
+    dot: 'bg-wtp-sky',
+  },
+  mixed: {
+    label: 'Mixed',
+    cls: 'border-wtp-gold/40 bg-wtp-gold/10 text-wtp-gold',
+    dot: 'bg-wtp-gold',
+  },
+  opposed: {
+    label: 'Opposed',
+    cls: 'border-wtp-red/40 bg-wtp-red/10 text-wtp-red',
+    dot: 'bg-wtp-red',
+  },
+  'topic-only': {
+    label: 'Touches platform',
+    cls: 'border-white/15 bg-white/5 text-wtp-cream/70',
+    dot: 'bg-wtp-cream/50',
+  },
+  'under-review': {
+    label: 'Under review',
+    cls: 'border-white/15 bg-white/5 text-wtp-cream/60',
+    dot: 'bg-wtp-cream/40',
+  },
+};
+
+const m = meta[alignment];
+const linkHref = href ?? `/legislation/#bill-${id}`;
+---
+
+<a href={linkHref} class="group flex items-center gap-3 rounded-md border border-white/10 bg-white/5 px-3 py-2 no-underline transition hover:border-white/25 hover:bg-white/10">
+  <span class={`flex flex-shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${m.cls}`}>
+    <span class={`inline-block h-1.5 w-1.5 rounded-full ${m.dot}`}></span>
+    {m.label}
+  </span>
+  <span class="min-w-0 flex-1">
+    <span class="font-mono text-xs font-semibold text-wtp-cream/70">{id}</span>
+    <span class="ml-2 text-sm text-wtp-cream/80 group-hover:text-white">{title}</span>
+  </span>
+</a>

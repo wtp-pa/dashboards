@@ -6,64 +6,16 @@ import BrandShortName from '../../components/BrandShortName.astro';
 import billsData from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import manualReviewDoc from '../../../data/legislation/manual_review.json';
-
-type Alignment = 'aligned' | 'mixed' | 'opposed' | 'topic-only' | 'under-review';
-type Source = 'manual' | 'auto' | 'none';
-type Stage = 'introduced' | 'committee' | 'on-floor' | 'passed' | 'signed';
-type ManualReview = { alignment: 'aligned' | 'mixed' | 'opposed'; note: string; reviewedBy?: string; reviewedAt?: string };
-
-// Confidence threshold above which an auto-alignment is presented as the
-// bill's alignment. Below this, the bill renders as "Touches our platform".
-const AUTO_ALIGNMENT_THRESHOLD = 0.65;
-
-// Map a status string from OpenStates to a stage in the legislative
-// process. PA-specific phrases — extend as new ones show up.
-function stageOf(status: string): Stage {
-  const s = status.toLowerCase();
-  if (s.includes('signed') || s.includes('act of') || s.includes('became law')) return 'signed';
-  if (s.includes('passed both') || s.includes('to governor') || s.includes('enacted')) return 'passed';
-  if (s.includes('third consideration') || s.includes('passed house') || s.includes('passed senate') || s.includes('on floor') || s.includes('adopted')) return 'on-floor';
-  if (s.includes('appropriations')) return 'committee'; // Re-referred to Appropriations = past initial committee
-  return 'introduced';
-}
-
-const STAGE_LABELS: Record<Stage, string> = {
-  introduced: 'Introduced',
-  committee: 'In committee',
-  'on-floor': 'On floor',
-  passed: 'Passed legislature',
-  signed: 'Signed into law',
-};
-
-const STAGE_ORDER: Record<Stage, number> = {
-  signed: 0,
-  passed: 1,
-  'on-floor': 2,
-  committee: 3,
-  introduced: 4,
-};
-
-// Strip the boilerplate "An Act amending the act of ... known as the X, in Y,
-// providing for Z" preamble down to the bill's actual subject. Falls back to
-// the raw title if no clean extraction is possible.
-function cleanTitle(title: string): string {
-  let t = title.trim().replace(/\s+/g, ' ');
-  // Try "providing for X" — usually the actual subject of the bill.
-  const provMatch = t.match(/(?:further\s+)?providing for (.+?)\.?$/i);
-  if (provMatch && provMatch[1].length >= 8) {
-    return provMatch[1].trim().replace(/^the\s+/i, '').replace(/^["']|["']$/g, '').replace(/\.$/, '');
-  }
-  // Try "known as the LAW, in SECTION" — return the law name.
-  const knownMatch = t.match(/known as the (.+?)(?:,|\.|$)/i);
-  if (knownMatch && knownMatch[1].length >= 8) {
-    return knownMatch[1].trim();
-  }
-  // Strip leading "An Act" and any leading boilerplate.
-  t = t.replace(/^an act\s+/i, '');
-  // Trim long titles.
-  if (t.length > 120) return t.slice(0, 117).trim() + '…';
-  return t;
-}
+import {
+  AUTO_ALIGNMENT_THRESHOLD,
+  STAGE_LABELS,
+  cleanTitle,
+  compareByRelevance,
+  resolveAlignment,
+  stageOf,
+  type Alignment,
+  type ManualReview,
+} from '../../lib/bills';
 
 const reviews = manualReviewDoc.reviews as Record<string, ManualReview>;
 
@@ -71,28 +23,7 @@ const enriched = billsData.bills
   .filter((bill) => bill.matches.length > 0 || reviews[bill.id])
   .map((bill) => {
     const review = reviews[bill.id];
-
-    let alignment: Alignment;
-    let alignmentSource: Source;
-    let alignmentConfidence: number | undefined;
-
-    if (review) {
-      alignment = review.alignment;
-      alignmentSource = 'manual';
-    } else if (
-      (bill.autoAlignment === 'likely-aligned' || bill.autoAlignment === 'likely-opposed') &&
-      bill.autoConfidence >= AUTO_ALIGNMENT_THRESHOLD
-    ) {
-      alignment = bill.autoAlignment === 'likely-aligned' ? 'aligned' : 'opposed';
-      alignmentSource = 'auto';
-      alignmentConfidence = bill.autoConfidence;
-    } else if (bill.matches.length > 0) {
-      alignment = 'topic-only';
-      alignmentSource = 'none';
-    } else {
-      alignment = 'under-review';
-      alignmentSource = 'none';
-    }
+    const resolved = resolveAlignment(bill, review);
 
     // Find the primary pillar — the pillar of the strongest match.
     let primaryPillarId = 'unmatched';
@@ -111,9 +42,9 @@ const enriched = billsData.bills
     return {
       ...bill,
       cleanTitle: cleanTitle(bill.title),
-      alignment,
-      alignmentSource,
-      alignmentConfidence,
+      alignment: resolved.alignment,
+      alignmentSource: resolved.source,
+      alignmentConfidence: resolved.confidence,
       stage,
       primaryPillarId,
       reviewNote: review?.note,
@@ -125,24 +56,26 @@ const enriched = billsData.bills
 const totalFetched = billsData.bills.length;
 const filteredOut = totalFetched - enriched.length;
 
-const alignmentOrder: Record<Alignment, number> = {
-  aligned: 0, opposed: 1, mixed: 2, 'topic-only': 3, 'under-review': 4,
-};
-
 function sortBills<T extends typeof enriched[number]>(bills: T[]): T[] {
-  return [...bills].sort((a, b) => {
-    const stageDiff = STAGE_ORDER[a.stage] - STAGE_ORDER[b.stage];
-    if (stageDiff !== 0) return stageDiff;
-    const alignDiff = alignmentOrder[a.alignment] - alignmentOrder[b.alignment];
-    if (alignDiff !== 0) return alignDiff;
-    return b.lastAction.localeCompare(a.lastAction);
-  });
+  return [...bills].sort(compareByRelevance);
 }
 
 const counts = enriched.reduce((acc, b) => {
   acc[b.alignment] = (acc[b.alignment] ?? 0) + 1;
   return acc;
 }, {} as Record<Alignment, number>);
+
+// Pre-compute the bill list for each alignment bucket so the stat tiles
+// can expand to show *which* bills are in each. Bills already inherit
+// their stage-then-recency order from sortBills; reuse it here.
+const billsByAlignment: Record<Alignment, typeof enriched> = {
+  aligned: sortBills(enriched.filter((b) => b.alignment === 'aligned')),
+  mixed: sortBills(enriched.filter((b) => b.alignment === 'mixed')),
+  opposed: sortBills(enriched.filter((b) => b.alignment === 'opposed')),
+  'topic-only': sortBills(enriched.filter((b) => b.alignment === 'topic-only')),
+  'under-review': sortBills(enriched.filter((b) => b.alignment === 'under-review')),
+};
+const touchesPlatform = sortBills([...billsByAlignment['topic-only'], ...billsByAlignment['under-review']]);
 
 // Featured row: bills that have moved beyond initial committee referral. Most
 // PA bills die in introduction — a bill on the floor or signed is a much
@@ -222,37 +155,120 @@ const projectName = 'PA Legislation Watch';
         </p>
 
         <div class="mt-10 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
-          <div class="rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 px-4 py-3">
-            <div class="text-2xl font-bold text-wtp-sky">{counts.aligned ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Aligned</div>
-          </div>
-          <div class="rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 px-4 py-3">
-            <div class="text-2xl font-bold text-wtp-gold">{counts.mixed ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Mixed</div>
-          </div>
-          <div class="rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-4 py-3">
-            <div class="text-2xl font-bold text-wtp-red">{counts.opposed ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Opposed</div>
-          </div>
-          <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-3">
-            <div class="text-2xl font-bold text-wtp-cream/70">{(counts['topic-only'] ?? 0) + (counts['under-review'] ?? 0)}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touches platform</div>
-          </div>
+          <details class="alignment-tile group rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 transition open:bg-wtp-sky/10">
+            <summary class="block cursor-pointer list-none px-4 py-3">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="text-2xl font-bold text-wtp-sky">{counts.aligned ?? 0}</div>
+                <span class="text-base text-wtp-sky/60 transition group-open:rotate-180" aria-hidden="true">▾</span>
+              </div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Aligned</div>
+              <div class="mt-1 text-[11px] text-wtp-sky/70 group-open:hidden">Tap to see which</div>
+            </summary>
+            {(counts.aligned ?? 0) > 0 ? (
+              <ul class="border-t border-wtp-sky/20 px-4 py-3 space-y-1.5 text-xs">
+                {billsByAlignment.aligned.map((b) => (
+                  <li>
+                    <a href={`#bill-${b.id}`} class="block text-wtp-cream/80 hover:text-white">
+                      <span class="font-mono text-wtp-sky">{b.id}</span> — {b.cleanTitle}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="border-t border-wtp-sky/20 px-4 py-3 text-xs italic text-wtp-cream/40">No aligned bills yet.</div>
+            )}
+          </details>
+
+          <details class="alignment-tile group rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 transition open:bg-wtp-gold/10">
+            <summary class="block cursor-pointer list-none px-4 py-3">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="text-2xl font-bold text-wtp-gold">{counts.mixed ?? 0}</div>
+                <span class="text-base text-wtp-gold/60 transition group-open:rotate-180" aria-hidden="true">▾</span>
+              </div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Mixed</div>
+              <div class="mt-1 text-[11px] text-wtp-gold/70 group-open:hidden">Tap to see which</div>
+            </summary>
+            {(counts.mixed ?? 0) > 0 ? (
+              <ul class="border-t border-wtp-gold/20 px-4 py-3 space-y-1.5 text-xs">
+                {billsByAlignment.mixed.map((b) => (
+                  <li>
+                    <a href={`#bill-${b.id}`} class="block text-wtp-cream/80 hover:text-white">
+                      <span class="font-mono text-wtp-gold">{b.id}</span> — {b.cleanTitle}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="border-t border-wtp-gold/20 px-4 py-3 text-xs italic text-wtp-cream/40">No mixed bills yet.</div>
+            )}
+          </details>
+
+          <details class="alignment-tile group rounded-lg border border-wtp-red/30 bg-wtp-red/5 transition open:bg-wtp-red/10">
+            <summary class="block cursor-pointer list-none px-4 py-3">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="text-2xl font-bold text-wtp-red">{counts.opposed ?? 0}</div>
+                <span class="text-base text-wtp-red/60 transition group-open:rotate-180" aria-hidden="true">▾</span>
+              </div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Opposed</div>
+              <div class="mt-1 text-[11px] text-wtp-red/70 group-open:hidden">Tap to see which</div>
+            </summary>
+            {(counts.opposed ?? 0) > 0 ? (
+              <ul class="border-t border-wtp-red/20 px-4 py-3 space-y-1.5 text-xs">
+                {billsByAlignment.opposed.map((b) => (
+                  <li>
+                    <a href={`#bill-${b.id}`} class="block text-wtp-cream/80 hover:text-white">
+                      <span class="font-mono text-wtp-red">{b.id}</span> — {b.cleanTitle}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="border-t border-wtp-red/20 px-4 py-3 text-xs italic text-wtp-cream/40">No opposed bills yet.</div>
+            )}
+          </details>
+
+          <details class="alignment-tile group rounded-lg border border-white/10 bg-white/5 transition open:bg-white/10">
+            <summary class="block cursor-pointer list-none px-4 py-3">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="text-2xl font-bold text-wtp-cream/70">{(counts['topic-only'] ?? 0) + (counts['under-review'] ?? 0)}</div>
+                <span class="text-base text-wtp-cream/40 transition group-open:rotate-180" aria-hidden="true">▾</span>
+              </div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touches platform</div>
+              <div class="mt-1 text-[11px] text-wtp-cream/50 group-open:hidden">Tap to see which</div>
+            </summary>
+            {touchesPlatform.length > 0 ? (
+              <ul class="border-t border-white/10 px-4 py-3 space-y-1.5 text-xs">
+                {touchesPlatform.map((b) => (
+                  <li>
+                    <a href={`#bill-${b.id}`} class="block text-wtp-cream/80 hover:text-white">
+                      <span class="font-mono text-wtp-cream/60">{b.id}</span> — {b.cleanTitle}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div class="border-t border-white/10 px-4 py-3 text-xs italic text-wtp-cream/40">No bills in this bucket.</div>
+            )}
+          </details>
         </div>
         <p class="mt-3 text-xs text-wtp-cream/50">
-          "Aligned" and "Opposed" combine editor reviews with auto-detected calls (≥{Math.round(AUTO_ALIGNMENT_THRESHOLD * 100)}% confidence). "Touches platform" means the topic matched but the bill's direction needs a human read.
+          Tap any tile to see exactly which bills are in that bucket — each link jumps you to the bill's full breakdown below. "Aligned" and "Opposed" combine editor reviews with auto-detected calls (≥{Math.round(AUTO_ALIGNMENT_THRESHOLD * 100)}% confidence). "Touches platform" means the topic matched but direction needs a human read.
         </p>
       </section>
 
       <details id="how-bill-becomes-law" open class="group mt-12 rounded-lg border border-white/10 bg-surface/40 transition hover:border-white/20">
-        <summary class="flex cursor-pointer list-none items-baseline justify-between gap-3 p-6 md:p-8">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-6 md:p-8">
           <div class="min-w-0">
             <h2 class="text-base font-semibold text-white">How a bill becomes a law in Pennsylvania</h2>
             <p class="mt-1 text-xs text-wtp-cream/60">
               5 steps from introduction to law. Of the 4,000+ bills filed each session, only a few hundred make it past committee.
             </p>
           </div>
-          <span class="flex-shrink-0 text-xs text-wtp-cream/40 transition group-open:rotate-90 inline-block w-3" aria-hidden="true">▸</span>
+          <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
+            <span class="group-open:hidden">Show</span>
+            <span class="hidden group-open:inline">Hide</span>
+            <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+          </div>
         </summary>
         <div class="px-6 pb-6 md:px-8 md:pb-8">
           <ol class="grid grid-cols-1 gap-3 text-xs text-wtp-cream/70 md:grid-cols-5 md:gap-2">
@@ -292,6 +308,29 @@ const projectName = 'PA Legislation Watch';
             el.removeAttribute('open');
           }
         })();
+
+        // When a stat-tile link jumps to a bill anchor, the bill is usually
+        // inside a collapsed <details> for its pillar. Walk up and open every
+        // ancestor <details>, then re-scroll into view since opening shifts
+        // the layout.
+        function expandToHash() {
+          if (!location.hash || !location.hash.startsWith('#bill-')) return;
+          const target = document.querySelector(location.hash);
+          if (!target) return;
+          let p = target.parentElement;
+          while (p) {
+            if (p.tagName === 'DETAILS') p.open = true;
+            p = p.parentElement;
+          }
+          // Defer scroll so the details transition has applied layout.
+          requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const card = target.querySelector('details');
+            if (card) card.open = true;
+          });
+        }
+        window.addEventListener('hashchange', expandToHash);
+        window.addEventListener('load', expandToHash);
       </script>
 
       {featured.length > 0 && (
@@ -305,7 +344,7 @@ const projectName = 'PA Legislation Watch';
           </p>
           <div class="mt-6 space-y-3">
             {featured.map((bill) => (
-              <div class="bill-row" data-alignment={bill.alignment}>
+              <div id={`bill-${bill.id}`} class="bill-row scroll-mt-24" data-alignment={bill.alignment}>
                 <BillCard
                   id={bill.id}
                   chamber={bill.chamber}
@@ -345,18 +384,20 @@ const projectName = 'PA Legislation Watch';
           {billsByPillar.map(({ pillar, bills }, idx) => (
             bills.length === 0 ? null : (
               <details class="bill-section group rounded-lg border border-white/10 bg-surface/30 transition hover:border-white/20" data-section-name={pillar.id}>
-                <summary class="flex cursor-pointer list-none items-baseline justify-between gap-3 px-5 py-4">
-                  <div class="flex items-baseline gap-3">
-                    <span class="text-xs text-wtp-cream/40 transition group-open:rotate-90 inline-block w-3" aria-hidden="true">▸</span>
-                    <h3 class="text-xl font-bold text-white">{pillar.name}</h3>
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4">
+                  <h3 class="text-xl font-bold text-white">{pillar.name}</h3>
+                  <div class="flex flex-shrink-0 items-center gap-3 text-xs">
+                    <span class="text-wtp-cream/50">{bills.length} {bills.length === 1 ? 'bill' : 'bills'}</span>
+                    <span class="font-semibold uppercase tracking-wider text-wtp-sky group-open:hidden">Show</span>
+                    <span class="hidden font-semibold uppercase tracking-wider text-wtp-sky group-open:inline">Hide</span>
+                    <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold text-wtp-sky transition group-open:rotate-180" aria-hidden="true">▾</span>
                   </div>
-                  <div class="text-xs text-wtp-cream/50">{bills.length} {bills.length === 1 ? 'bill' : 'bills'}</div>
                 </summary>
                 <div class="border-t border-white/5 px-5 pb-5 pt-4">
                   <p class="mb-5 text-sm text-wtp-cream/70">{PILLAR_BLURBS[pillar.id] ?? pillar.tagline}</p>
                   <div class="space-y-3">
                     {bills.map((bill) => (
-                      <div class="bill-row" data-alignment={bill.alignment}>
+                      <div id={`bill-${bill.id}`} class="bill-row scroll-mt-24" data-alignment={bill.alignment}>
                         <BillCard
                           id={bill.id}
                           chamber={bill.chamber}
