@@ -6,6 +6,7 @@ import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
 import zipDoc from '../../../data/elected-officials/zip-districts.json';
+import countyPopDoc from '../../../data/elected-officials/county-populations.json';
 import billsDoc from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import { stageOf, STAGE_LABELS } from '../../lib/bills';
@@ -80,6 +81,16 @@ const projectName = 'PA Elected Officials Watch';
 // Inline payloads for the client-side lookup. Tiny JSON, no extra fetch.
 const zipPayload = JSON.stringify(zipDoc.zips);
 const districtPayload = JSON.stringify(districtToOfficial);
+const countyPopPayload = JSON.stringify(countyPopDoc.populations);
+// Build a county → list of officials map (server-side; client uses it for
+// county area explainer). Mirrors the lookup logic but keyed by county.
+const countyToOfficial: Record<string, { id: string; name: string; chamber: string; district: string; party: string }[]> = {};
+for (const o of officials) {
+  for (const c of o.counties ?? []) {
+    (countyToOfficial[c] ||= []).push({ id: o.id, name: o.name, chamber: o.chamber, district: o.district, party: o.party });
+  }
+}
+const countyOfficialPayload = JSON.stringify(countyToOfficial);
 
 // Aggregate "what the General Assembly has actually been doing" stats —
 // derived from bills.json so they auto-update with every cron run.
@@ -172,14 +183,14 @@ const topPillars = Object.entries(pillarById)
         </p>
       </section>
 
-      <details open class="group mt-10 rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 transition hover:border-wtp-sky/50">
+      <details class="group mt-10 rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 transition hover:border-wtp-sky/50">
         <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
           <div class="min-w-0">
-            <h2 class="text-base font-semibold text-white">Wait — who are these people, exactly?</h2>
-            <p class="mt-1 text-xs text-wtp-cream/70">A 90-second civics primer: who they are, what they decide, and what's <em>not</em> their job (it goes to Congress or your local government instead).</p>
+            <h2 class="text-base font-semibold text-white">New here? Tap to read a 90-second primer on PA government</h2>
+            <p class="mt-1 text-xs text-wtp-cream/70">Who these people are, what they decide, what's <em>not</em> their job (Congress and local government handle those instead), and the difference between a state senator and a state rep.</p>
           </div>
           <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
-            <span class="group-open:hidden">Show</span>
+            <span class="group-open:hidden">Read</span>
             <span class="hidden group-open:inline">Hide</span>
             <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
           </div>
@@ -201,6 +212,36 @@ const topPillars = Object.entries(pillarById)
                 <li>Total: <strong class="text-white">253 state legislators</strong>, all in Harrisburg.</li>
               </ul>
             </div>
+          </div>
+
+          <div>
+            <h3 class="text-xs uppercase tracking-wider text-wtp-sky">Senator vs Representative — what's the difference?</h3>
+            <p class="mt-1 text-xs text-wtp-cream/60">PA has both because the General Assembly is <em>bicameral</em> — every bill must pass both chambers to become law, designed as a check against either house acting alone.</p>
+            <div class="mt-3 grid gap-3 md:grid-cols-2">
+              <div class="rounded-md border border-white/10 bg-white/5 p-3">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-wtp-sky">State Senator</div>
+                <ul class="mt-2 space-y-1 text-xs text-wtp-cream/85">
+                  <li><strong class="text-white">50 senators total</strong> — one per Senate district (SD-1 to SD-50)</li>
+                  <li><strong class="text-white">4-year terms</strong>, staggered (half elected every 2 years)</li>
+                  <li><strong class="text-white">Larger districts</strong> — each represents ~260,000 people</li>
+                  <li>Vote on confirmations of governor's appointments (judges, cabinet)</li>
+                  <li>Often more deliberative; longer institutional memory</li>
+                </ul>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/5 p-3">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-wtp-sky">State Representative</div>
+                <ul class="mt-2 space-y-1 text-xs text-wtp-cream/85">
+                  <li><strong class="text-white">203 reps total</strong> — one per House district (HD-1 to HD-203)</li>
+                  <li><strong class="text-white">2-year terms</strong>, all elected together every 2 years</li>
+                  <li><strong class="text-white">Smaller districts</strong> — each represents ~64,000 people</li>
+                  <li>Bills involving raising state revenue must originate in the House</li>
+                  <li>Often closer to constituent issues; more turnover</li>
+                </ul>
+              </div>
+            </div>
+            <p class="mt-2 text-xs text-wtp-cream/60">
+              You're represented by <strong class="text-white">one senator and one rep at the state level</strong>, plus your federal U.S. Senator and U.S. House Rep — four different elected officials.
+            </p>
           </div>
 
           <div>
@@ -361,6 +402,33 @@ const topPillars = Object.entries(pillarById)
         </div>
         <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform-touching sponsorship activity. Click a card for the full vote-by-vote and bill-by-bill detail.</p>
 
+        <div class="mt-6 rounded-lg border border-white/10 bg-surface/30 p-4 md:p-5">
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+            <input
+              type="search"
+              id="name-filter"
+              placeholder="Search by name…"
+              aria-label="Search by name"
+              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+            />
+            <div class="flex flex-wrap gap-2" role="group" aria-label="Chamber filter">
+              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All chambers</button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate</button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House</button>
+            </div>
+            <div class="flex flex-wrap gap-2" role="group" aria-label="Party filter">
+              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All parties</button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D</button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R</button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="I">I</button>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-wtp-cream/60">
+            <div><span id="visible-count">{officials.length}</span> visible</div>
+            <button type="button" id="reset-filters" class="text-wtp-sky underline-offset-2 hover:underline">Reset filters</button>
+          </div>
+        </div>
+
         <details class="group mt-5 rounded-md border border-white/10 bg-white/5 transition hover:border-white/20">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
             <span class="text-sm font-semibold text-white">How to read a legislator's card</span>
@@ -384,7 +452,14 @@ const topPillars = Object.entries(pillarById)
 
         <div id="roster" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {sortedOfficials.map((o) => (
-            <div data-official-id={o.id} data-counties={(o.counties ?? []).join(',')} data-district={o.district}>
+            <div
+              data-official-id={o.id}
+              data-counties={(o.counties ?? []).join(',')}
+              data-district={o.district}
+              data-chamber={o.chamber}
+              data-party={o.party}
+              data-name={o.name.toLowerCase()}
+            >
               <OfficialCard
                 id={o.id}
                 name={o.name}
@@ -433,11 +508,79 @@ const topPillars = Object.entries(pillarById)
       </div>
     </footer>
 
-    <script is:inline define:vars={{ zipPayload, districtPayload }}>
+    <script is:inline define:vars={{ zipPayload, districtPayload, countyPopPayload, countyOfficialPayload }}>
       const zips = JSON.parse(zipPayload);
       const districtMap = JSON.parse(districtPayload);
+      const countyPop = JSON.parse(countyPopPayload);
+      const countyOfficials = JSON.parse(countyOfficialPayload);
+      const fmtNum = (n) => Number(n).toLocaleString();
       const resultEl = document.getElementById('lookup-result');
       const roster = document.getElementById('roster');
+      const visibleCountEl = document.getElementById('visible-count');
+
+      const filters = { name: '', chamber: 'all', party: 'all', highlightIds: null };
+
+      function applyFilters() {
+        const cards = roster.querySelectorAll('[data-official-id]');
+        let visible = 0;
+        cards.forEach((card) => {
+          const matchesName = !filters.name || (card.dataset.name || '').includes(filters.name);
+          const matchesChamber = filters.chamber === 'all' || card.dataset.chamber === filters.chamber;
+          const matchesParty = filters.party === 'all' || card.dataset.party === filters.party;
+          const matchesLookup = !filters.highlightIds || filters.highlightIds.includes(card.dataset.officialId);
+          const isVisible = matchesName && matchesChamber && matchesParty && matchesLookup;
+          card.classList.toggle('hidden', !isVisible);
+          if (isVisible) visible++;
+        });
+        if (visibleCountEl) visibleCountEl.textContent = String(visible);
+      }
+
+      function setActivePill(pillClass, value) {
+        document.querySelectorAll('.' + pillClass).forEach((btn) => {
+          const isActive = btn.dataset[pillClass === 'chamber-pill' ? 'chamber' : 'party'] === value;
+          btn.dataset.active = isActive ? 'true' : 'false';
+          btn.classList.toggle('bg-wtp-sky', isActive);
+          btn.classList.toggle('border-wtp-sky', isActive);
+          btn.classList.toggle('text-wtp-navy', isActive);
+          btn.classList.toggle('border-white/20', !isActive);
+          btn.classList.toggle('text-wtp-cream/70', !isActive);
+        });
+      }
+
+      document.getElementById('name-filter').addEventListener('input', (e) => {
+        filters.name = (e.target.value || '').toLowerCase().trim();
+        applyFilters();
+      });
+
+      document.querySelectorAll('.chamber-pill').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filters.chamber = btn.dataset.chamber;
+          setActivePill('chamber-pill', filters.chamber);
+          applyFilters();
+        });
+      });
+
+      document.querySelectorAll('.party-pill').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filters.party = btn.dataset.party;
+          setActivePill('party-pill', filters.party);
+          applyFilters();
+        });
+      });
+
+      document.getElementById('reset-filters').addEventListener('click', () => {
+        filters.name = '';
+        filters.chamber = 'all';
+        filters.party = 'all';
+        filters.highlightIds = null;
+        document.getElementById('name-filter').value = '';
+        document.getElementById('zip-input').value = '';
+        document.getElementById('county-select').value = '';
+        setActivePill('chamber-pill', 'all');
+        setActivePill('party-pill', 'all');
+        resultEl.classList.add('hidden');
+        applyFilters();
+      });
 
       function showResult(html) {
         resultEl.innerHTML = html;
@@ -445,34 +588,65 @@ const topPillars = Object.entries(pillarById)
       }
 
       function highlightOfficials(ids) {
-        const cards = roster.querySelectorAll('[data-official-id]');
-        cards.forEach((card) => {
-          const isMatch = ids.includes(card.dataset.officialId);
-          card.classList.toggle('ring-2', isMatch);
-          card.classList.toggle('ring-wtp-sky', isMatch);
-          card.classList.toggle('rounded-lg', isMatch);
-          if (!ids.length) {
-            card.classList.remove('opacity-30');
-            return;
-          }
-          card.classList.toggle('opacity-30', !isMatch);
-        });
+        // Lookup highlight — narrow the visible set rather than dimming.
+        // Cleaner with 251 cards than the previous opacity ring approach.
+        filters.highlightIds = ids.length ? ids : null;
+        applyFilters();
         if (ids.length) {
           const first = roster.querySelector(`[data-official-id="${ids[0]}"]`);
           first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
 
-      function findByDistricts(districts) {
-        const ids = districts.flatMap((d) => (districtMap[d] || []).map((o) => o.id));
+      function renderAreaCard(opts) {
+        // opts: { areaLabel, areaDetail, districts, reps, populationLine, footerNote }
+        const districtsHtml = opts.districts && opts.districts.length
+          ? `<div class="mt-2 text-xs text-wtp-cream/70">Districts: ${opts.districts.map((d) => `<span class="font-mono text-white">${d}</span>`).join(', ')}</div>`
+          : '';
+        const repsHtml = opts.reps && opts.reps.length
+          ? `<div class="mt-3 flex flex-wrap gap-2">${opts.reps.map((r) =>
+              `<a href="/elected-officials/${r.id}/" class="rounded-full border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-1 text-xs text-wtp-sky no-underline transition hover:bg-wtp-sky hover:text-wtp-navy">${r.name} <span class="text-wtp-cream/60">· ${r.chamber} · ${r.district}</span></a>`
+            ).join('')}</div>`
+          : `<div class="mt-3 text-xs italic text-wtp-cream/60">${opts.noRepsMessage || 'No matching officials in our roster yet.'}</div>`;
+        const popHtml = opts.populationLine
+          ? `<div class="mt-2 text-xs text-wtp-cream/70">${opts.populationLine}</div>`
+          : '';
+        const footer = opts.footerNote
+          ? `<div class="mt-3 text-[11px] italic text-wtp-cream/40">${opts.footerNote}</div>`
+          : '';
+        showResult(`
+          <div class="text-xs uppercase tracking-wider text-wtp-sky">${opts.areaLabel}</div>
+          <div class="mt-1 text-base font-semibold text-white">${opts.areaDetail}</div>
+          ${districtsHtml}
+          ${popHtml}
+          ${repsHtml}
+          ${footer}
+        `);
+      }
+
+      function findByDistricts(districts, areaContext) {
+        const reps = districts.flatMap((d) => districtMap[d] || []);
+        const ids = reps.map((r) => r.id);
         if (!ids.length) {
-          showResult(`<p class="text-wtp-cream/70">No officials in our seeded roster cover that area yet. The roster currently includes ${Object.keys(districtMap).length} districts.</p>`);
+          renderAreaCard({
+            areaLabel: areaContext.label,
+            areaDetail: areaContext.detail,
+            districts,
+            populationLine: areaContext.populationLine,
+            noRepsMessage: `No officials in our seeded roster cover ${districts.join(', ')} yet. Use the search above to find any of the ${Object.keys(districtMap).length} districts in the roster.`,
+            footerNote: areaContext.footerNote,
+          });
           highlightOfficials([]);
           return;
         }
-        const reps = districts.flatMap((d) => districtMap[d] || []);
-        const repsHtml = reps.map((r) => `<a href="/elected-officials/${r.id}/" class="text-wtp-sky underline">${r.name}</a> (${r.chamber})`).join(' · ');
-        showResult(`<p class="text-wtp-cream/80">Your representatives: ${repsHtml}</p>`);
+        renderAreaCard({
+          areaLabel: areaContext.label,
+          areaDetail: areaContext.detail,
+          districts,
+          populationLine: areaContext.populationLine,
+          reps,
+          footerNote: areaContext.footerNote,
+        });
         highlightOfficials(ids);
       }
 
@@ -485,12 +659,21 @@ const topPillars = Object.entries(pillarById)
         }
         const entry = zips[zip];
         if (!entry) {
-          showResult(`<p class="text-wtp-cream/70">ZIP <strong>${zip}</strong> isn't in our seeded coverage yet. Try one of the demo ZIPs: 18301 (Stroudsburg), 18020 (Bethlehem), 15301 (Washington), 19131 (Philadelphia).</p>`);
+          renderAreaCard({
+            areaLabel: 'ZIP not in our coverage yet',
+            areaDetail: zip,
+            noRepsMessage: 'Demo ZIPs that work: 18301 (Stroudsburg), 18020 (Bethlehem), 15301 (Washington), 19131 (Philadelphia). Comprehensive PA-wide ZIP coverage is on the roadmap.',
+            footerNote: 'Until ZIP coverage expands, try the name search or pick your county above.',
+          });
           highlightOfficials([]);
           return;
         }
         const districts = [entry.senate, entry.house].filter(Boolean);
-        findByDistricts(districts);
+        findByDistricts(districts, {
+          label: 'Your ZIP code',
+          detail: zip,
+          footerNote: 'ZIP-to-district lookup uses approximate coverage. Verify with the PA General Assembly site for absolute certainty.',
+        });
       });
 
       document.getElementById('county-select').addEventListener('change', (e) => {
@@ -501,17 +684,31 @@ const topPillars = Object.entries(pillarById)
           highlightOfficials([]);
           return;
         }
-        const cards = Array.from(roster.querySelectorAll('[data-official-id]'));
-        const matching = cards
-          .filter((c) => (c.dataset.counties || '').split(',').includes(county))
-          .map((c) => c.dataset.officialId);
-        if (!matching.length) {
-          showResult(`<p class="text-wtp-cream/70">No officials in our seeded roster represent ${county} County yet.</p>`);
+        const reps = countyOfficials[county] || [];
+        const districts = Array.from(new Set(reps.map((r) => r.district).filter(Boolean)));
+        const pop = countyPop[county];
+        const popLine = pop
+          ? `<strong class="text-white">${fmtNum(pop)}</strong> people live in ${county} County (2020 Census). They share these state legislators.`
+          : `${county} County · population data not in our seed.`;
+        if (!reps.length) {
+          renderAreaCard({
+            areaLabel: 'Your county',
+            areaDetail: `${county} County`,
+            populationLine: popLine,
+            noRepsMessage: `No officials in our roster have ${county} County tagged yet. The roster is being expanded — try the name search above to find a specific legislator.`,
+            footerNote: 'County-to-official tagging is hand-curated; only the original 4 senators are tagged so far.',
+          });
           highlightOfficials([]);
           return;
         }
-        showResult(`<p class="text-wtp-cream/80">${matching.length} official${matching.length > 1 ? 's' : ''} represent${matching.length > 1 ? '' : 's'} <strong>${county} County</strong>.</p>`);
-        highlightOfficials(matching);
+        renderAreaCard({
+          areaLabel: 'Your county',
+          areaDetail: `${county} County`,
+          districts,
+          populationLine: popLine,
+          reps,
+        });
+        highlightOfficials(reps.map((r) => r.id));
       });
     </script>
   </body>
