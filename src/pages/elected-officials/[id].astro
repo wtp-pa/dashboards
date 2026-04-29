@@ -2,21 +2,32 @@
 import '../../styles/global.css';
 import { config } from '../../config';
 import VoteRow from '../../components/elected-officials/VoteRow.astro';
-import AlignmentMeter from '../../components/elected-officials/AlignmentMeter.astro';
 import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
 import billsDoc from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
+import manualReviewDoc from '../../../data/legislation/manual_review.json';
+import { resolveAlignment, type ManualReview } from '../../lib/bills';
 
 type KeyVote = {
   billId: string;
   billTitle: string;
   vote: 'yea' | 'nay' | 'abstain' | 'absent' | string;
-  billAlignment: 'aligned' | 'mixed' | 'opposed' | 'under-review';
-  directionRelativeToPlatform: 'with' | 'against' | null;
+  billAlignment: 'aligned' | 'mixed' | 'opposed' | 'topic-only' | 'under-review';
+  directionRelativeToPlatform: 'with' | 'against' | 'noted' | null;
   date: string;
   matchedPositions: string[];
+};
+
+type PillarBreakdown = {
+  pillarId: string;
+  pillarName: string;
+  withPlatform: number;
+  againstPlatform: number;
+  noted?: number;
+  primarySponsor?: number;
+  cosponsor?: number;
 };
 
 type Scorecard = {
@@ -25,15 +36,11 @@ type Scorecard = {
   scorableVotes: number;
   withPlatform: number;
   againstPlatform: number;
-  unscorable: number;
+  noted: number;
   alignmentRate: number | null;
-  byPillar: Array<{
-    pillarId: string;
-    pillarName: string;
-    withPlatform: number;
-    againstPlatform: number;
-  }>;
+  byPillar: PillarBreakdown[];
   keyVotes: KeyVote[];
+  billsSponsored: { primary: number; cosponsor: number; touchingPlatform: number };
 };
 
 export async function getStaticPaths() {
@@ -49,9 +56,107 @@ const scorecards = scorecardsDoc.scorecards as Scorecard[];
 const scorecard = scorecards.find((s) => s.officialId === official.id);
 
 const billsById = new Map(billsDoc.bills.map((b) => [b.id, b]));
+const reviews = manualReviewDoc.reviews as Record<string, ManualReview>;
 const positionTitles = new Map(
   platform.pillars.flatMap((p) => p.positions.map((pos) => [pos.id, pos.title])),
 );
+const positionToPillar = new Map<string, string>();
+for (const pillar of platform.pillars) {
+  for (const pos of pillar.positions) positionToPillar.set(pos.id, pillar.id);
+}
+const pillarShortNames: Record<string, string> = {
+  community: 'Community',
+  'health-environment': 'Health & env',
+  constitutional: 'Constitutional',
+  'honest-government': 'Honest gov',
+  economic: 'Economic',
+};
+
+// Sponsorship JOIN — find every bill this official is on, regardless of
+// platform alignment. Lets the page show "what they're working on" even
+// when none of their bills match a platform plank.
+type SponsoredBill = {
+  id: string;
+  title: string;
+  status: string;
+  lastAction: string;
+  url: string;
+  primary: boolean;
+  alignment: 'aligned' | 'mixed' | 'opposed' | 'topic-only' | 'under-review';
+  matchedPillars: string[];
+};
+const sponsoredBills: SponsoredBill[] = [];
+const ocdId = (official as { openstatesId?: string | null }).openstatesId;
+if (ocdId) {
+  for (const bill of billsDoc.bills) {
+    const sponsors = (bill as { sponsors?: Array<{ openstatesId?: string | null; primary?: boolean }> }).sponsors ?? [];
+    const me = sponsors.find((s) => s.openstatesId === ocdId);
+    if (!me) continue;
+    const review = reviews[bill.id];
+    const resolved = resolveAlignment(bill as any, review);
+    const pillarIds = new Set<string>();
+    for (const m of bill.matches ?? []) {
+      const pid = positionToPillar.get(m.positionId);
+      if (pid) pillarIds.add(pid);
+    }
+    sponsoredBills.push({
+      id: bill.id,
+      title: bill.title,
+      status: bill.status,
+      lastAction: bill.lastAction,
+      url: bill.url,
+      primary: !!me.primary,
+      alignment: resolved.alignment,
+      matchedPillars: Array.from(pillarIds),
+    });
+  }
+}
+sponsoredBills.sort((a, b) => {
+  if (a.primary !== b.primary) return a.primary ? -1 : 1;
+  return b.lastAction.localeCompare(a.lastAction);
+});
+const primaryBills = sponsoredBills.filter((b) => b.primary);
+const cosponsorBills = sponsoredBills.filter((b) => !b.primary);
+const platformTouchingPrimary = primaryBills.filter((b) => b.alignment !== 'under-review' || b.matchedPillars.length > 0);
+const platformTouchingCosponsor = cosponsorBills.filter((b) => b.alignment !== 'under-review' || b.matchedPillars.length > 0);
+
+// Plain-English summary — synthesized from what we know. No LLM.
+function buildSummary(): string {
+  const parts: string[] = [];
+  const honor = official.title || (official.chamber === 'Senate' ? 'Senator' : 'Representative');
+  parts.push(`${honor} ${official.name} (${official.party}, ${official.district}) `);
+  if (primaryBills.length === 0 && cosponsorBills.length === 0) {
+    parts.push('has not yet introduced or cosponsored any bills tracked in this session.');
+    return parts.join('');
+  }
+  const sponsorBits: string[] = [];
+  if (primaryBills.length > 0) sponsorBits.push(`has introduced ${primaryBills.length} bill${primaryBills.length === 1 ? '' : 's'} as primary sponsor`);
+  if (cosponsorBills.length > 0) sponsorBits.push(`cosponsored ${cosponsorBills.length} more`);
+  parts.push(sponsorBits.join(' and '));
+  parts.push(' this session.');
+  // Pillar focus
+  const pillarCounts: Record<string, number> = {};
+  for (const b of sponsoredBills) {
+    for (const pid of b.matchedPillars) pillarCounts[pid] = (pillarCounts[pid] ?? 0) + 1;
+  }
+  const topPillars = Object.entries(pillarCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 2)
+    .map(([pid]) => platform.pillars.find((p) => p.id === pid)?.name ?? pid);
+  if (topPillars.length > 0) {
+    const touching = platformTouchingPrimary.length + platformTouchingCosponsor.length;
+    parts.push(` ${touching} of those bills touch the ${config.party.shortName} platform, with the heaviest activity in `);
+    parts.push(topPillars.join(' and '));
+    parts.push('.');
+  } else {
+    parts.push(` None of those bills currently match a ${config.party.shortName} platform plank — most are procedural amendments to existing PA law (vehicle code, insurance, professional licensing, etc.).`);
+  }
+  if (scorecard && scorecard.totalVotes > 0 && scorecard.scorableVotes === 0) {
+    parts.push(` On floor votes, ${primaryBills.length === 0 ? 'they have' : 'they\'ve'} cast ${scorecard.totalVotes} vote${scorecard.totalVotes === 1 ? '' : 's'} this session, but none on bills with a clear platform alignment yet.`);
+  }
+  return parts.join('');
+}
+const summaryText = buildSummary();
 
 const partyMeta: Record<string, { label: string; cls: string }> = {
   D: { label: 'Democrat',    cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky' },
@@ -62,7 +167,7 @@ const partyTag = partyMeta[official.party] ?? { label: official.party, cls: 'bor
 
 const ratePercent = scorecard?.alignmentRate === null || scorecard?.alignmentRate === undefined
   ? null
-  : Math.round(scorecard.alignmentRate * 100);
+  : Math.round((scorecard.alignmentRate as number) * 100);
 const rateColor =
   ratePercent === null
     ? 'text-wtp-cream/40'
@@ -72,10 +177,44 @@ const rateColor =
         ? 'text-wtp-gold'
         : 'text-wtp-red';
 
+const termYears = official.chamber === 'House' ? 2 : 4;
+const hasTerm = typeof (official as any).currentTermStart === 'number' && typeof (official as any).currentTermEnd === 'number';
+
+// Sponsor pillar bars — primary (solid) + cosponsor (faded). Match the
+// index card visuals.
+type Bar = { pillarId: string; pillarName: string; primaryCount: number; cosponsorCount: number; total: number };
+const pillarOrder = platform.pillars.map((p) => p.id);
+const pillarBars: Bar[] = (scorecard?.byPillar ?? [])
+  .map((b) => ({
+    pillarId: b.pillarId,
+    pillarName: pillarShortNames[b.pillarId] ?? b.pillarName,
+    primaryCount: b.primarySponsor ?? 0,
+    cosponsorCount: b.cosponsor ?? 0,
+    total: (b.primarySponsor ?? 0) + (b.cosponsor ?? 0),
+  }))
+  .filter((b) => b.total > 0)
+  .sort((a, b) => {
+    if (b.total !== a.total) return b.total - a.total;
+    return pillarOrder.indexOf(a.pillarId) - pillarOrder.indexOf(b.pillarId);
+  });
+const maxPillarTotal = Math.max(1, ...pillarBars.map((b) => b.total));
+
+const alignmentBadge: Record<string, { label: string; cls: string }> = {
+  aligned: { label: 'Aligned', cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky' },
+  mixed: { label: 'Mixed', cls: 'border-wtp-gold/40 bg-wtp-gold/10 text-wtp-gold' },
+  opposed: { label: 'Opposed', cls: 'border-wtp-red/40 bg-wtp-red/10 text-wtp-red' },
+  'topic-only': { label: 'Touches platform', cls: 'border-white/15 bg-white/5 text-wtp-cream/70' },
+  'under-review': { label: 'Off-topic', cls: 'border-white/10 bg-white/5 text-wtp-cream/40' },
+};
+
+const formatDate = (iso: string) => {
+  if (!iso) return '';
+  return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+    .format(new Date(iso + 'T00:00:00'));
+};
+
 const pageTitle = `${official.name} — ${config.party.shortName} Elected Officials Watch`;
-const pageDescription = scorecard && ratePercent !== null
-  ? `${official.title} ${official.name} (${official.party}, ${official.district}) votes with the ${config.party.shortName} platform ${ratePercent}% of the time on scorable bills.`
-  : `Voting record for ${official.title} ${official.name} (${official.party}, ${official.district}).`;
+const pageDescription = `${official.title} ${official.name} (${official.party}, ${official.district}): ${primaryBills.length} bills introduced, ${cosponsorBills.length} cosponsored this session.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/${official.id}/`;
 const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
 ---
@@ -106,7 +245,7 @@ const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
     <header class="border-b border-white/10 px-6 py-4">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
         <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
           <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
         </a>
         <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
@@ -122,69 +261,205 @@ const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
     <main class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <a href="/elected-officials/" class="text-sm text-wtp-cream/60 no-underline hover:text-wtp-sky">← Back to all officials</a>
 
-      <section class="mt-6 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-        <div class="min-w-0">
-          <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-wtp-cream/60">
-            <span>{official.title}</span>
-            <span>·</span>
-            <span>{official.district}</span>
-            {official.region && (<><span>·</span><span>{official.region}</span></>)}
-          </div>
-          <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">{official.name}</h1>
-          <div class="mt-3 flex flex-wrap items-center gap-3">
-            <span class={`rounded-full border px-3 py-1 text-xs font-medium ${partyTag.cls}`}>{partyTag.label}</span>
-            {official.counties && official.counties.length > 0 && (
-              <span class="text-sm text-wtp-cream/60">Represents {official.counties.join(', ')}</span>
-            )}
-          </div>
-          {official.url && (
-            <a href={official.url} target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm text-wtp-sky no-underline hover:underline">
-              Official PA bio →
-            </a>
+      <!-- Hero card — visually echoes the index trading card -->
+      <section class="mt-6 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-start">
+          {(official as { photoUrl?: string | null }).photoUrl && (
+            <img
+              src={(official as { photoUrl?: string }).photoUrl}
+              alt={`${official.name} headshot`}
+              class="h-32 w-32 flex-shrink-0 rounded-md border border-white/10 object-cover md:h-40 md:w-40"
+              loading="lazy"
+            />
           )}
-        </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-wtp-cream/60">
+              <span>{official.title}</span>
+              <span>·</span>
+              <span>{official.district}</span>
+              {official.region && (<><span>·</span><span>{official.region}</span></>)}
+            </div>
+            <h1 class="mt-2 text-3xl font-extrabold leading-tight md:text-5xl">{official.name}</h1>
+            <div class="mt-3 flex flex-wrap items-center gap-3">
+              <span class={`rounded-full border px-3 py-1 text-xs font-medium ${partyTag.cls}`}>{partyTag.label}</span>
+              {hasTerm && (
+                <span class="text-xs text-wtp-cream/60">
+                  Term {(official as any).currentTermStart}–{(official as any).currentTermEnd}
+                  <span class="text-wtp-cream/30"> · {termYears}-year seat</span>
+                </span>
+              )}
+              {official.counties && official.counties.length > 0 && (
+                <span class="text-xs text-wtp-cream/60">Represents {official.counties.join(', ')}</span>
+              )}
+            </div>
 
-        {scorecard && (
-          <div class="flex-shrink-0 rounded-lg border border-white/10 bg-surface/40 p-6 text-center md:min-w-[200px]">
-            <div class="text-xs uppercase tracking-wider text-wtp-cream/40">Aligns with WTP-PA</div>
-            <div class={`mt-2 text-5xl font-extrabold ${rateColor}`}>
-              {ratePercent === null ? '—' : `${ratePercent}%`}
+            <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
+              <div class="rounded-md border border-white/10 bg-white/5 p-3">
+                <div class="text-2xl font-bold text-wtp-sky">{primaryBills.length}</div>
+                <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Bills introduced</div>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/5 p-3">
+                <div class="text-2xl font-bold text-wtp-sky/70">{cosponsorBills.length}</div>
+                <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Cosponsored</div>
+              </div>
+              <div class="rounded-md border border-white/10 bg-white/5 p-3 col-span-2 md:col-span-1">
+                <div class="text-2xl font-bold text-white">
+                  {platformTouchingPrimary.length + platformTouchingCosponsor.length}
+                </div>
+                <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Touch our platform</div>
+              </div>
             </div>
-            <div class="mt-2 text-xs text-wtp-cream/50">
-              {scorecard.withPlatform} of {scorecard.scorableVotes} scorable {scorecard.scorableVotes === 1 ? 'vote' : 'votes'}
-            </div>
-            {scorecard.unscorable > 0 && (
-              <div class="mt-1 text-xs text-wtp-cream/40">{scorecard.unscorable} not scorable</div>
+
+            {official.url && (
+              <a href={official.url} target="_blank" rel="noopener noreferrer" class="mt-5 inline-block text-sm text-wtp-sky no-underline hover:underline">
+                Official PA bio →
+              </a>
             )}
           </div>
-        )}
+        </div>
       </section>
 
-      {scorecard && scorecard.byPillar.length > 0 && (
+      <!-- Plain-English summary -->
+      <section class="mt-8 rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 p-6 md:p-8">
+        <div class="text-xs uppercase tracking-wider text-wtp-sky">In plain English</div>
+        <p class="mt-2 text-base leading-relaxed text-wtp-cream/90 md:text-lg">{summaryText}</p>
+      </section>
+
+      <!-- Pillar engagement bars (sponsorship, not voting) -->
+      {pillarBars.length > 0 && (
         <section class="mt-12">
-          <h2 class="text-2xl font-bold">By platform pillar</h2>
-          <p class="mt-2 text-sm text-wtp-cream/60">Each scorable vote is grouped by which platform pillar the bill touches. A vote can count toward more than one pillar if the bill matches multiple positions.</p>
-          <div class="mt-5 rounded-lg border border-white/10 bg-surface/30 p-6">
-            <AlignmentMeter byPillar={scorecard.byPillar} />
+          <h2 class="text-2xl font-bold">Where they sponsor — by platform pillar</h2>
+          <p class="mt-2 text-sm text-wtp-cream/60">
+            Each bar counts the bills this {(official.title || '').toLowerCase()} is named on (as primary sponsor or cosponsor) that touch a {config.party.shortName} platform pillar. Solid sky = primary sponsor; faded sky = cosponsor.
+          </p>
+          <div class="mt-5 space-y-2 rounded-lg border border-white/10 bg-surface/30 p-6">
+            {pillarBars.map((bar) => {
+              const widthPct = Math.round((bar.total / maxPillarTotal) * 100);
+              const primaryPct = bar.total ? (bar.primaryCount / bar.total) * 100 : 0;
+              const cosponsorPct = bar.total ? (bar.cosponsorCount / bar.total) * 100 : 0;
+              return (
+                <div class="flex items-center gap-3 text-sm">
+                  <span class="w-32 flex-shrink-0 truncate font-medium text-white">{bar.pillarName}</span>
+                  <span class="relative h-2.5 flex-1 overflow-hidden rounded-full bg-white/5">
+                    <span class="absolute inset-y-0 left-0 flex h-full" style={`width: ${widthPct}%`}>
+                      <span class="bg-wtp-sky" style={`width: ${primaryPct}%`}></span>
+                      <span class="bg-wtp-sky/40" style={`width: ${cosponsorPct}%`}></span>
+                    </span>
+                  </span>
+                  <span class="w-32 flex-shrink-0 text-right text-xs text-wtp-cream/70">
+                    {bar.primaryCount > 0 && <><span class="font-mono text-white">{bar.primaryCount}</span> introduced</>}
+                    {bar.primaryCount > 0 && bar.cosponsorCount > 0 && <span class="text-wtp-cream/30"> · </span>}
+                    {bar.cosponsorCount > 0 && <><span class="font-mono text-wtp-sky/70">{bar.cosponsorCount}</span> co</>}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
 
+      <!-- Bills introduced -->
+      {primaryBills.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-2xl font-bold">Bills they introduced</h2>
+          <p class="mt-2 text-sm text-wtp-cream/60">{primaryBills.length} bill{primaryBills.length === 1 ? '' : 's'} where they're the primary sponsor — the strongest signal of priorities.</p>
+          <div class="mt-5 space-y-3">
+            {primaryBills.map((b) => {
+              const badge = alignmentBadge[b.alignment];
+              return (
+                <div class="rounded-md border border-white/10 bg-surface/40 p-4">
+                  <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs text-wtp-cream/60">
+                    <span class="font-mono font-semibold text-wtp-cream/80">{b.id}</span>
+                    <span>·</span>
+                    <span>{b.status}</span>
+                    {b.lastAction && <><span>·</span><span>Last action {formatDate(b.lastAction)}</span></>}
+                    <span class="ml-auto rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider {badge.cls}">{badge.label}</span>
+                  </div>
+                  <div class="mt-2 text-sm text-wtp-cream/90 md:text-base">
+                    {b.url ? (
+                      <a href={b.url} target="_blank" rel="noopener noreferrer" class="text-wtp-cream/90 no-underline hover:text-wtp-sky">
+                        {b.title}
+                      </a>
+                    ) : b.title}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      <!-- Cosponsorships (collapsible) -->
+      {cosponsorBills.length > 0 && (
+        <details class="group mt-8 rounded-lg border border-white/10 bg-surface/30 transition hover:border-white/20">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4">
+            <div>
+              <h2 class="text-base font-semibold text-white">Bills they cosponsored</h2>
+              <p class="mt-1 text-xs text-wtp-cream/60">{cosponsorBills.length} bill{cosponsorBills.length === 1 ? '' : 's'} they signed onto. Weaker priority signal than introduction.</p>
+            </div>
+            <span class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
+              <span class="group-open:hidden">Show</span>
+              <span class="hidden group-open:inline">Hide</span>
+              <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+            </span>
+          </summary>
+          <div class="border-t border-white/10 px-5 pb-5 pt-4 space-y-2">
+            {cosponsorBills.map((b) => {
+              const badge = alignmentBadge[b.alignment];
+              return (
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-md border border-white/5 bg-white/5 px-3 py-2 text-xs">
+                  <span class="font-mono font-semibold text-wtp-cream/80">{b.id}</span>
+                  <span class={`rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider ${badge.cls}`}>{badge.label}</span>
+                  <span class="text-wtp-cream/85">{b.title.slice(0, 140)}{b.title.length > 140 ? '…' : ''}</span>
+                </div>
+              );
+            })}
+          </div>
+        </details>
+      )}
+
+      {/* Voting record — secondary section */}
       <section class="mt-12">
         <div class="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 class="text-2xl font-bold">Vote history</h2>
-          {scorecard && (
+          <h2 class="text-2xl font-bold">Voting record</h2>
+          {scorecard && scorecard.totalVotes > 0 && (
             <span class="text-xs text-wtp-cream/50">
-              {scorecard.totalVotes} {scorecard.totalVotes === 1 ? 'vote' : 'votes'} on tracked bills
+              {scorecard.totalVotes} {scorecard.totalVotes === 1 ? 'vote' : 'votes'} on platform-touching bills
             </span>
           )}
         </div>
+        <p class="mt-2 text-sm text-wtp-cream/60">
+          How they voted on others' bills that reached a recorded floor vote. Often along party lines — a weaker priority signal than what they sponsor above.
+        </p>
 
-        {!scorecard || scorecard.keyVotes.length === 0 ? (
-          <p class="mt-4 text-sm italic text-wtp-cream/50">No tracked votes recorded for this official yet.</p>
+        {!scorecard || scorecard.totalVotes === 0 ? (
+          <p class="mt-5 rounded-md border border-white/10 bg-surface/30 p-5 text-sm italic text-wtp-cream/60">
+            No tracked floor votes for this {(official.title || '').toLowerCase()} yet on bills that touch the {config.party.shortName} platform.
+          </p>
+        ) : scorecard.scorableVotes === 0 ? (
+          <div class="mt-5 rounded-md border border-wtp-gold/30 bg-wtp-gold/5 p-5 text-sm leading-relaxed text-wtp-cream/80">
+            <strong class="text-wtp-gold">{scorecard.totalVotes} platform-touching floor vote{scorecard.totalVotes === 1 ? '' : 's'}, none scorable yet.</strong>
+            <p class="mt-2">
+              The bills they voted on touch our platform topics but haven't been editorially reviewed for clear "aligned" or "opposed" calls. Once <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> reviews accumulate, the votes below will resolve into with-platform / against-platform tallies.
+            </p>
+          </div>
         ) : (
-          <div class="mt-5 space-y-3">
-            {scorecard.keyVotes.map((kv) => {
+          <div class="mt-5">
+            <div class="rounded-md border border-white/10 bg-surface/40 p-4 text-center">
+              <div class="text-xs uppercase tracking-wider text-wtp-cream/40">Aligns with platform on scorable votes</div>
+              <div class={`mt-1 text-3xl font-extrabold ${rateColor}`}>
+                {ratePercent === null ? '—' : `${ratePercent}%`}
+              </div>
+              <div class="mt-1 text-xs text-wtp-cream/50">
+                {scorecard.withPlatform} of {scorecard.scorableVotes} scorable {scorecard.scorableVotes === 1 ? 'vote' : 'votes'}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {scorecard && scorecard.keyVotes.length > 0 && (
+          <div class="mt-6 space-y-3">
+            {scorecard.keyVotes.slice(0, 25).map((kv) => {
               const bill = billsById.get(kv.billId);
               return (
                 <div>
@@ -194,8 +469,8 @@ const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
                     billUrl={bill?.url}
                     vote={kv.vote}
                     date={kv.date}
-                    billAlignment={kv.billAlignment}
-                    directionRelativeToPlatform={kv.directionRelativeToPlatform}
+                    billAlignment={(kv.billAlignment === 'topic-only' ? 'under-review' : kv.billAlignment) as 'aligned' | 'mixed' | 'opposed' | 'under-review'}
+                    directionRelativeToPlatform={kv.directionRelativeToPlatform === 'noted' ? null : kv.directionRelativeToPlatform}
                   />
                   {kv.matchedPositions.length > 0 && (
                     <div class="ml-0 mt-2 flex flex-wrap gap-2 px-1 text-xs text-wtp-cream/50 md:ml-24">
@@ -210,22 +485,21 @@ const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
                 </div>
               );
             })}
+            {scorecard.keyVotes.length > 25 && (
+              <p class="text-xs italic text-wtp-cream/40">+{scorecard.keyVotes.length - 25} more votes (showing 25 most recent)</p>
+            )}
           </div>
         )}
       </section>
 
       <section class="mt-12 rounded-lg border border-white/10 bg-surface/30 p-6 text-sm text-wtp-cream/70 md:p-8">
-        <h2 class="text-base font-semibold text-white">How this score is computed</h2>
+        <h2 class="text-base font-semibold text-white">How this page is built</h2>
         <p class="mt-2 leading-relaxed">
-          We start with bills already screened by <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>. A WTP-PA editor reads each bill and records whether it's <strong>aligned</strong> with our platform, <strong>opposed</strong>, or <strong>mixed</strong>. We then look up how each official voted on those reviewed bills.
+          <strong class="text-white">Sponsorship</strong> data comes from the <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> bill feed — every bill's primary sponsor and cosponsors are fetched from OpenStates and matched to this {(official.title || '').toLowerCase()} by ID. <strong class="text-white">Voting</strong> data comes from the same OpenStates feed, joined to bills already screened by Legislation Watch.
         </p>
-        <ul class="mt-3 list-disc space-y-1 pl-5 leading-relaxed">
-          <li>Voted <strong>yea</strong> on an aligned bill → counts <em>with</em> the platform</li>
-          <li>Voted <strong>nay</strong> on an aligned bill → counts <em>against</em></li>
-          <li>Voted <strong>nay</strong> on an opposed bill → counts <em>with</em></li>
-          <li>Voted <strong>yea</strong> on an opposed bill → counts <em>against</em></li>
-          <li>Mixed-alignment bills, abstain votes, and absences don't count toward the score</li>
-        </ul>
+        <p class="mt-3 leading-relaxed">
+          A vote scores <em>with the platform</em> when they voted yea on an aligned bill (or nay on an opposed bill); <em>against</em> when the inverse. Mixed-alignment bills, abstain votes, and absences don't count toward the headline rate. Bills that don't touch any {config.party.shortName} platform plank are filtered out entirely.
+        </p>
       </section>
     </main>
 
