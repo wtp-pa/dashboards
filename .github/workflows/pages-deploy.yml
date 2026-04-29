@@ -31,6 +31,13 @@ jobs:
         run: npm ci
 
       - name: Build Astro
+        env:
+          # Embedded into client-side JS at build time so the "Use my
+          # location" lookup on /elected-officials can call OpenStates
+          # /people.geo. Will be visible in the deployed source — same
+          # key as the pipeline secret since OpenStates rate-limits per
+          # key, not per environment.
+          PUBLIC_OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: npm run build
 
       - name: Upload Pages artifact
