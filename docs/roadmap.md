@@ -2,7 +2,7 @@
 
 A living document of what's live, what's in progress, and what's planned across the dashboard portfolio. Updated as projects ship.
 
-Last updated: 2026-04-28
+Last updated: 2026-04-29
 
 ---
 
@@ -10,9 +10,9 @@ Last updated: 2026-04-28
 
 | Project | Slug / URL | Status | Notes |
 |---|---|---|---|
-| **PA Budget Watch** | `/budget` (live at https://dashboards.wtpppa.org/budget) | Phase 1+2 partial live | Live deficit clock, breakdowns, federal context, calculator, IFO publications, methodology |
-| **Legislation Tracker** | `/legislation` | Coming soon | Scoring PA bills against WTP-PA platform with Claude API |
-| **Elected Officials Watch** | `/elected-officials` | Coming soon | Voting records, scorecards, district-level accountability (renamed from "Legislator Scorecards") |
+| **PA Budget Watch** | `/budget` (live) | Phase 1+2 partial live | Live deficit clock, breakdowns, federal context, calculator, IFO publications, methodology |
+| **PA Legislation Watch** | `/legislation` (live) | Live | OpenStates feed, keyword+TF-IDF matcher, editorial alignment. No LLM. |
+| **PA Elected Officials Watch** | `/elected-officials` | Scaffolded, DEMO data | Pages render with 4 demo senators + synthetic votes. DEMO banner visible. Real OpenStates votes pending; landing card stays `coming-soon` until real data lands. |
 | **Local Impact** | `/local` | Coming soon | County-level / district-level fiscal impact |
 
 ---
@@ -88,17 +88,26 @@ Blockers:
 
 Hosting note: when this ships a UI, the static dashboard pages live on GitHub Pages alongside `/budget`. The serverless API endpoint (calling Claude API) needs Cloudflare Workers free tier or similar — GH Pages doesn't run server code.
 
-## Elected Officials Watch — planned
+## Elected Officials Watch — scaffolded with DEMO data
 
-(Renamed from "Legislator Scorecards.") Tracks PA elected officials' voting records, sponsorships, and platform alignment.
+Pages, components, and scoring pipeline all built. Landing page (`/elected-officials/`) has roster, ZIP/county lookup, and per-pillar alignment summary; per-legislator pages (`/elected-officials/[id]/`) show the score, pillar breakdown, and vote history with bill links.
 
-Likely scope:
-- Pull voting records from PA General Assembly site
-- Score each legislator against WTP-PA platform using the legislation scoring pipeline
-- District-level breakdown ("Senator X votes against fiscal accountability Y% of the time")
-- Profile pages per legislator with key votes called out
+**Live now (in build):**
+- ✅ Roster with 4 real PA senators (public roster data only)
+- ✅ Synthetic DEMO votes — visible gold banner on every page warns the data is fabricated
+- ✅ `pipeline/elected-officials/score_officials.py` — joins votes × bills.matchedPositions × manual_review.alignment → per-pillar scorecards
+- ✅ ZIP/county lookup — ~10 demo PA ZIPs covering the 4 senate districts in the seed roster
+- ✅ `noindex` meta on all routes; `src/config.ts` portfolio entry pinned to `coming-soon`
 
-Overlaps with Legislation Tracker — share the platform-scoring infrastructure.
+**Pending (in order):**
+- 🟡 Lift OpenStates client to `pipeline/_shared/openstates.py` (currently lives in `pipeline/legislation/fetch_bills.py:103-172`)
+- 🟡 Wire `fetch_officials.py` to OpenStates `/people?jurisdiction=pa`
+- 🟡 Wire `fetch_votes.py` to OpenStates `/bills?jurisdiction=pa&include=votes`
+- 🟡 Replace `votes.json` with real data; flip `demoData: false`
+- 🟡 Expand `zip-districts.json` to all PA ZIPs
+- 🟡 Flip `src/config.ts` to `live`, drop `noindex`
+
+**Reuses (do not duplicate):** `data/legislation/platform.json`, `data/legislation/manual_review.json`, `data/legislation/bills.json` are read directly. The legislation matcher's outputs (`bill.matchedPositions`) drive per-pillar attribution.
 
 ## Local Impact — planned
 

@@ -9,31 +9,45 @@
 - **Live site**: <https://dashboards.wtpppa.org>
 - **Memory dir**: `/Users/xtina/.claude/projects/-Users-xtina-Projects-WTP/memory/` — read this on startup. It contains user profile, GitHub identities, brand info, project history, and behavioral feedback from prior sessions. Critical context lives there.
 
-## Current state (April 28, 2026)
+## Current state (April 29, 2026)
 
 **Live** at `https://dashboards.wtpppa.org/`:
-- `/` — portfolio landing with project cards
-- `/budget` — full PA Budget Watch dashboard (live deficit ticker, revenue/spending breakdowns, federal context, cliff scenarios, personal impact calculator with multi-year projector, Rainy Day countdown, latest IFO publications, methodology page)
-- `/budget/about` — methodology / how-this-works
-- `/budget/widget` — compact embed widget for Squarespace
+- `/` — portfolio landing
+- `/budget` (+ `/budget/about`, `/budget/widget`) — full PA Budget Watch dashboard
+- `/legislation` (+ `/legislation/about`) — PA Legislation Watch. Live OpenStates feed (374 PA bills/session), keyword + TF-IDF matcher with per-match evidence, editorial alignment in `manual_review.json`. **No Claude API in the loop.**
 
-**Coming soon** (placeholder cards on the landing page, no routes yet):
-- `/legislation` — Legislation Tracker
-- `/elected-officials` — Elected Officials Watch (renamed from "Legislator Scorecards")
+**Scaffolded but not live** — pages render in build but landing-page card stays `coming-soon` and `noindex` is set:
+- `/elected-officials` — PA Elected Officials Watch. 4 demo senators, fabricated DEMO votes (visible gold banner on every page warns "DEMO DATA"). Scoring pipeline is real and runs end-to-end. ZIP/county lookup works for ~10 demo PA ZIPs. **Do not promote to "live" in `src/config.ts` until real OpenStates votes replace the demo data — fabricated voting attributions on real legislators would be a credibility disaster.**
+
+**Coming soon** (placeholder card, no routes):
 - `/local` — Local Impact
 
 See `docs/roadmap.md` for detailed phase status.
 
-## Your immediate task (most likely)
+## Open work — pick this up next
 
-Christina is opening a new Claude Code window to start work on **Legislation Tracker** and **Elected Officials Watch**. Both projects slot into this monorepo at `/legislation` and `/elected-officials` following the same pattern as `/budget`.
+The highest-ROI move is **lifting the OpenStates HTTP client to a shared module** before wiring up Elected Officials' fetchers. Right now:
+- `pipeline/legislation/fetch_bills.py:103-172` has a complete OpenStates client (auth, rate-limit, backoff, paginate)
+- `pipeline/elected-officials/fetch_officials.py` and `fetch_votes.py` are documented stubs that will need the same logic
+- A future candidate-tracking dashboard will hit OpenStates too
 
-Before scaffolding either:
+**Recommended sequence:**
+1. Extract `OpenStatesClient` to `pipeline/_shared/openstates.py` (auth, retry, paginate, generic `get`/`paginate`). ~30 min refactor.
+2. Refactor `fetch_bills.py` to use it; verify the weekly cron still produces 374 bills.
+3. Wire `fetch_officials.py` against `/people?jurisdiction=pa` — paginate ~252 PA legislators.
+4. Wire `fetch_votes.py` against `/bills?jurisdiction=pa&include=votes`. Normalize OpenStates options (`yes`/`no`/`not voting`/`absent`) → `{yea, nay, abstain, absent}`.
+5. Replace synthetic `votes.json`; flip `demoData: false`. The DemoBanner disappears automatically.
+6. Expand `data/elected-officials/zip-districts.json` beyond the 10 demo ZIPs (PASDA boundaries → ZIP overlay, or use a precomputed source).
+7. Flip `src/config.ts` portfolio entry to `"live"`, drop `noindex` meta from both elected-officials pages.
 
-1. **Read `docs/roadmap.md`** for the planned scope of each project
-2. **Confirm the WTP-PA platform document** exists somewhere accessible — both projects depend on it as the basis for scoring. Christina mentioned having one but may need to share it. Ask if you don't see it in `shared-docs/` (private sibling repo at `~/Projects/WTP/shared-docs/`) or in this repo's `docs/`.
-3. **Confirm the WTP-PA Anthropic API billing account exists** (NOT personal billing). The legislation/officials projects fundamentally need Claude API for platform-alignment scoring. This is a hard block — see `feedback_no_personal_funded_apis.md` in memory. If billing isn't ready, the pipeline can be built with stub responses for now, but no actual API calls until billing exists.
-4. **Pick one bill or one official** to test the scoring on first. Score one well end-to-end before scaling.
+**Defer (don't pre-extract):**
+- The TF-IDF/keyword matcher in `match_bills.py` — likely useful for a future candidate tool, but premature extraction is harder to undo than late extraction.
+- Editorial-review generalization beyond bills — EO scoring is mechanical (yea/nay × aligned/opposed); only add `data/elected-officials/manual_review.json` when an editor actually wants to override a vote interpretation.
+- A self-service editorial admin (Decap CMS, custom CLI, etc.) — Christina is sole editor; JSON-via-PR is fine until that changes.
+
+## Cross-window git hygiene — important
+
+Christina sometimes runs **two Claude Code windows in parallel** on this repo (one per dashboard). On 2026-04-28, the legislation window committed with `git add -A` and accidentally pulled untracked elected-officials files into a "Legislation: live OpenStates feed" commit (93f842d). Files survived but the EO work is misattributed. **The `feedback_no_git_add_all.md` memory rule must be honored** — stage specific paths only. If you see untracked files in another dashboard's directory, those belong to the other window.
 
 ## File-structure conventions for new projects
 

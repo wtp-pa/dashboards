@@ -76,6 +76,20 @@ const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
           ))}
         </ul>
 
+        <h2 class="text-2xl font-bold text-white">Why we only show bill titles</h2>
+        <p>
+          You'll notice every bill on this page is described by its legal title — usually something like "An Act amending the act of June 28, 1995, in section 12, further providing for ...". That isn't because we're being lazy. It's because Pennsylvania does not publish a plain-English summary of bills in any structured, machine-readable place.
+        </p>
+        <p>
+          We checked. <a href="https://openstates.org/" class="text-wtp-sky underline" target="_blank" rel="noopener">OpenStates</a> — the national clearinghouse that aggregates legislative data from all 50 states — has an "abstracts" field for exactly this purpose. For Pennsylvania bills, it's empty. The state doesn't supply it. The official <a href="https://www.palegis.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">palegis.us</a> bill pages link to "Co-Sponsorship Memos" that <em>do</em> contain plain-English explanations, but those are PDF documents behind a JavaScript-only interface that returns 403 errors to anyone who isn't browsing with a normal web browser. They are technically public and practically inaccessible.
+        </p>
+        <p>
+          So a citizen who wants to know what a Pennsylvania bill actually does has to: find the bill on a site that doesn't work without JavaScript, click through to a PDF, and read several pages of cross-references to other laws. The information is "public," but the path to understanding it is hostile.
+        </p>
+        <p>
+          That's a transparency problem, not a software problem. Other states — Texas and California, for example — publish plain-English bill summaries as part of the legislative record itself. Pennsylvania could too, with one rule change. Until then, we work with what's available.
+        </p>
+
         <h2 class="text-2xl font-bold text-white">Update cadence</h2>
         <p>
           The bill list is refreshed weekly via a GitHub Actions cron. Editorial reviews are added as bills move through committee. Both the bill data and the platform definitions live in this repo's git history, so you can see exactly when each call was made.
