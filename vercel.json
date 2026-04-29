@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://dashboards.wtpppa.org/:path*",
+      "permanent": true
+    }
+  ]
+}
