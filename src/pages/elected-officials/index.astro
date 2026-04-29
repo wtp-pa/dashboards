@@ -67,6 +67,18 @@ const sortedOfficials = [...officials].sort((a, b) => {
 // Census API and hitting OpenStates /people.geo at the centroid.
 const countyOptions = Object.keys(countyPopDoc.populations).sort();
 
+// Filter pill counts — shown in the button labels so users can see at a
+// glance how many of each chamber / party we track.
+const chamberCounts = {
+  all: officials.length,
+  Senate: officials.filter((o) => o.chamber === 'Senate').length,
+  House: officials.filter((o) => o.chamber === 'House').length,
+};
+const partyCounts: Record<string, number> = { all: officials.length };
+for (const o of officials) {
+  partyCounts[o.party] = (partyCounts[o.party] ?? 0) + 1;
+}
+
 const districtToOfficial: Record<string, { id: string; name: string; chamber: string }[]> = {};
 for (const o of officials) {
   if (!o.district) continue;
@@ -226,6 +238,22 @@ const topPillars = Object.entries(pillarById)
           </div>
 
           <div>
+            <h3 class="text-xs uppercase tracking-wider text-wtp-sky">Important: you're represented by district, not county</h3>
+            <p class="mt-1 text-xs text-wtp-cream/85">
+              Your county doesn't elect your reps — your <strong class="text-white">district</strong> does. PA Senate districts cover ~260,000 people each; House districts ~64,000. Most counties span multiple districts:
+            </p>
+            <ul class="mt-2 space-y-1 text-xs text-wtp-cream/75">
+              <li><strong class="text-white">Chester County (534k people)</strong> → ~2 Senators + ~8 Reps overlap it (different streets get different reps)</li>
+              <li><strong class="text-white">Allegheny (1.25M)</strong> → ~5 Senators + ~20 Reps</li>
+              <li><strong class="text-white">Philadelphia (1.6M)</strong> → ~6 Senators + ~25 Reps</li>
+              <li><strong class="text-white">Sullivan (5,840)</strong> → 1 Senator + 1 Rep (only here is "the county's reps" a clean concept)</li>
+            </ul>
+            <p class="mt-2 text-xs text-wtp-cream/85">
+              That's why the address input is the most accurate way to find your reps — same exact 1 Senator + 1 Rep that any address-level lookup gives, just for <em>your</em> address. Picking a county returns only the reps at the geographic center, which may be a different pair than yours.
+            </p>
+          </div>
+
+          <div>
             <h3 class="text-xs uppercase tracking-wider text-wtp-sky">Senator vs Representative — what's the difference?</h3>
             <p class="mt-1 text-xs text-wtp-cream/60">PA has both because the General Assembly is <em>bicameral</em> — every bill must pass both chambers to become law, designed as a check against either house acting alone.</p>
             <div class="mt-3 grid gap-3 md:grid-cols-2">
@@ -370,13 +398,21 @@ const topPillars = Object.entries(pillarById)
         </p>
       </section>
 
-      <section class="mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 p-5 md:p-6">
-        <div class="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 class="text-lg font-bold md:text-xl">Find your representatives</h2>
-          <p class="text-xs text-wtp-cream/60">Pick any of the three methods below.</p>
-        </div>
+      <details open class="group mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 transition hover:border-wtp-sky/40">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
+          <div class="min-w-0">
+            <h2 class="text-lg font-bold md:text-xl">Find your representatives</h2>
+            <p class="mt-0.5 text-xs text-wtp-cream/60">Reps are elected by district, not county — type your address for the most accurate match.</p>
+          </div>
+          <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
+            <span class="group-open:hidden">Show</span>
+            <span class="hidden group-open:inline">Hide</span>
+            <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
+          </div>
+        </summary>
+        <div class="border-t border-wtp-sky/20 px-5 pb-5 pt-4 md:px-6 md:pb-6">
 
-        <form id="address-form" class="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center" novalidate>
+        <form id="address-form" class="flex flex-col gap-2 sm:flex-row sm:items-center" novalidate>
           <input
             type="text"
             id="address-input"
@@ -393,35 +429,39 @@ const topPillars = Object.entries(pillarById)
           </div>
         </form>
 
-        <div class="mt-3 flex flex-col gap-2 text-xs text-wtp-cream/60 sm:flex-row sm:items-center">
-          <span class="text-wtp-cream/40 sm:w-6">or</span>
-          <select
-            id="county-select"
-            aria-label="County"
-            class="min-w-0 rounded-md border border-white/15 bg-page px-3 py-2 text-sm text-white focus:border-wtp-sky focus:outline-none sm:w-56"
-          >
-            <option value="">Pick your county…</option>
-            {countyOptions.map((c) => <option value={c}>{c} County</option>)}
-          </select>
-          <form id="zip-form" class="flex gap-2" novalidate>
-            <input
-              type="text"
-              id="zip-input"
-              inputmode="numeric"
-              pattern="[0-9]{5}"
-              maxlength="5"
-              placeholder="ZIP code"
-              aria-label="ZIP code"
-              class="w-28 rounded-md border border-white/15 bg-page px-3 py-2 text-center font-mono text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-            />
-            <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky/40 px-3 py-2 text-xs font-semibold text-wtp-navy transition hover:bg-wtp-sky/60">Find</button>
-          </form>
-        </div>
+        <details class="mt-3">
+          <summary class="cursor-pointer text-xs text-wtp-cream/50 hover:text-wtp-cream/80">Don't have an address handy? Try by county centroid or ZIP (less accurate)</summary>
+          <div class="mt-3 flex flex-col gap-2 text-xs text-wtp-cream/60 sm:flex-row sm:items-center">
+            <select
+              id="county-select"
+              aria-label="County"
+              class="min-w-0 rounded-md border border-white/15 bg-page px-3 py-2 text-sm text-white focus:border-wtp-sky focus:outline-none sm:w-56"
+            >
+              <option value="">Pick a county…</option>
+              {countyOptions.map((c) => <option value={c}>{c} County</option>)}
+            </select>
+            <form id="zip-form" class="flex gap-2" novalidate>
+              <input
+                type="text"
+                id="zip-input"
+                inputmode="numeric"
+                pattern="[0-9]{5}"
+                maxlength="5"
+                placeholder="ZIP code"
+                aria-label="ZIP code"
+                class="w-28 rounded-md border border-white/15 bg-page px-3 py-2 text-center font-mono text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+              />
+              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky/40 px-3 py-2 text-xs font-semibold text-wtp-navy transition hover:bg-wtp-sky/60">Find</button>
+            </form>
+            <span class="text-[11px] text-wtp-cream/40">County lookups return only the reps at the geographic center — not the whole county.</span>
+          </div>
+        </details>
 
         <p class="mt-3 text-[11px] text-wtp-cream/40">Address & location lookups geocode you privately (U.S. Census or OpenStreetMap), then OpenStates returns your reps. Nothing is logged.</p>
 
-        <div id="lookup-result" class="mt-4 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-4 text-sm"></div>
-      </section>
+        <div id="lookup-result" class="mt-4 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-3 text-sm"></div>
+        </div>
+      </details>
 
       <section class="mt-14">
         <div class="flex flex-wrap items-baseline justify-between gap-3">
@@ -440,15 +480,17 @@ const topPillars = Object.entries(pillarById)
               class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
             />
             <div class="flex flex-wrap gap-2" role="group" aria-label="Chamber filter">
-              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All chambers</button>
-              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate</button>
-              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House</button>
+              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All chambers <span class="opacity-70">{chamberCounts.all}</span></button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate <span class="opacity-70">{chamberCounts.Senate}</span></button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House <span class="opacity-70">{chamberCounts.House}</span></button>
             </div>
             <div class="flex flex-wrap gap-2" role="group" aria-label="Party filter">
-              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All parties</button>
-              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D</button>
-              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R</button>
-              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="I">I</button>
+              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All parties <span class="opacity-70">{partyCounts.all}</span></button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D <span class="opacity-70">{partyCounts.D ?? 0}</span></button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R <span class="opacity-70">{partyCounts.R ?? 0}</span></button>
+              {(partyCounts.I ?? 0) > 0 && (
+                <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="I">I <span class="opacity-70">{partyCounts.I}</span></button>
+              )}
             </div>
           </div>
           <div class="mt-3 flex items-center justify-between text-xs text-wtp-cream/60">
@@ -629,25 +671,27 @@ const topPillars = Object.entries(pillarById)
 
       function renderAreaCard(opts) {
         // opts: { areaLabel, areaDetail, districts, reps, populationLine, footerNote }
-        const districtsHtml = opts.districts && opts.districts.length
-          ? `<div class="mt-2 text-xs text-wtp-cream/70">Districts: ${opts.districts.map((d) => `<span class="font-mono text-white">${d}</span>`).join(', ')}</div>`
+        const districtsInline = opts.districts && opts.districts.length
+          ? `<span class="text-xs text-wtp-cream/60"> · ${opts.districts.map((d) => `<span class="font-mono text-white">${d}</span>`).join(', ')}</span>`
           : '';
         const repsHtml = opts.reps && opts.reps.length
-          ? `<div class="mt-3 flex flex-wrap gap-2">${opts.reps.map((r) =>
-              `<a href="/elected-officials/${r.id}/" class="rounded-full border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-1 text-xs text-wtp-sky no-underline transition hover:bg-wtp-sky hover:text-wtp-navy">${r.name} <span class="text-wtp-cream/60">· ${r.chamber} · ${r.district}</span></a>`
+          ? `<div class="mt-2 flex flex-wrap gap-1.5">${opts.reps.map((r) =>
+              `<a href="/elected-officials/${r.id}/" class="rounded-full border border-wtp-sky/40 bg-wtp-sky/10 px-2.5 py-0.5 text-xs text-wtp-sky no-underline transition hover:bg-wtp-sky hover:text-wtp-navy">${r.name} <span class="text-wtp-cream/60">· ${r.chamber} · ${r.district}</span></a>`
             ).join('')}</div>`
-          : `<div class="mt-3 text-xs italic text-wtp-cream/60">${opts.noRepsMessage || 'No matching officials in our roster yet.'}</div>`;
+          : `<div class="mt-2 text-xs italic text-wtp-cream/60">${opts.noRepsMessage || 'No matching officials in our roster yet.'}</div>`;
         const popHtml = opts.populationLine
-          ? `<div class="mt-2 text-xs text-wtp-cream/70">${opts.populationLine}</div>`
+          ? ` <span class="text-xs text-wtp-cream/60">· ${opts.populationLine}</span>`
           : '';
         const footer = opts.footerNote
-          ? `<div class="mt-3 text-[11px] italic text-wtp-cream/40">${opts.footerNote}</div>`
+          ? `<div class="mt-2 text-[11px] leading-snug italic text-wtp-cream/50">${opts.footerNote}</div>`
           : '';
         showResult(`
-          <div class="text-xs uppercase tracking-wider text-wtp-sky">${opts.areaLabel}</div>
-          <div class="mt-1 text-base font-semibold text-white">${opts.areaDetail}</div>
-          ${districtsHtml}
-          ${popHtml}
+          <div class="flex flex-wrap items-baseline gap-x-2 text-sm">
+            <span class="text-[10px] uppercase tracking-wider text-wtp-sky">${opts.areaLabel}</span>
+            <span class="font-semibold text-white">${opts.areaDetail}</span>
+            ${districtsInline}
+            ${popHtml}
+          </div>
           ${repsHtml}
           ${footer}
         `);
@@ -882,8 +926,8 @@ const topPillars = Object.entries(pillarById)
         }
         const pop = countyPop[county];
         const popLine = pop
-          ? `<strong class="text-white">${fmtNum(pop)}</strong> people live in ${county} County (2020 Census). They share these state legislators.`
-          : `${county} County · population data not in our seed.`;
+          ? `<strong class="text-white">${fmtNum(pop)}</strong> residents (2020)`
+          : '';
 
         // Path A: counties[] is hand-tagged on at least one official —
         // use the direct mapping. Currently only the 4 seed senators
