@@ -1,0 +1,41 @@
+---
+export interface Props {
+  byPillar: Array<{
+    pillarId: string;
+    pillarName: string;
+    withPlatform: number;
+    againstPlatform: number;
+  }>;
+}
+
+const { byPillar } = Astro.props;
+---
+
+{byPillar.length === 0 ? (
+  <p class="text-sm italic text-wtp-cream/40">
+    No pillar-level votes recorded yet — this official's scorable votes don't map to any platform pillar via the legislation matcher.
+  </p>
+) : (
+  <ul class="space-y-3">
+    {byPillar.map((p) => {
+      const total = p.withPlatform + p.againstPlatform;
+      const withPct = total > 0 ? (p.withPlatform / total) * 100 : 0;
+      return (
+        <li>
+          <div class="flex items-baseline justify-between gap-3 text-sm">
+            <span class="font-medium text-white">{p.pillarName}</span>
+            <span class="text-xs text-wtp-cream/50">
+              <span class="text-wtp-sky">{p.withPlatform} with</span>
+              <span class="mx-1.5">·</span>
+              <span class="text-wtp-red">{p.againstPlatform} against</span>
+            </span>
+          </div>
+          <div class="mt-1.5 flex h-2 overflow-hidden rounded-full bg-white/10">
+            <div class="bg-wtp-sky" style={`width: ${withPct}%`}></div>
+            <div class="bg-wtp-red" style={`width: ${100 - withPct}%`}></div>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+)}

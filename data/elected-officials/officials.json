@@ -1,0 +1,61 @@
+{
+  "$comment": "PA elected officials roster. Hand-seeded with 4 real PA state senators for the first scaffold of /elected-officials. Real public roster data (name/chamber/district/party/counties); votes attached to these officials in votes.json are DEMO and must be replaced by fetch_votes.py output before the dashboard goes public. Schema mirrors what fetch_officials.py will eventually emit from OpenStates.",
+  "lastFetched": "2026-04-28T20:30:00Z",
+  "lastFetchedNote": "Hand-seeded — fetch_officials.py is a stub.",
+  "session": "2025-2026 Regular Session",
+  "source": "https://openstates.org/api (placeholder — currently hand-seeded from public PA Senate roster)",
+  "officials": [
+    {
+      "id": "sen-rosemary-brown",
+      "name": "Rosemary M. Brown",
+      "title": "Senator",
+      "chamber": "Senate",
+      "district": "SD-40",
+      "party": "R",
+      "openstatesId": null,
+      "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=1655",
+      "photoUrl": null,
+      "counties": ["Monroe", "Pike", "Wayne"],
+      "region": "Northeast PA"
+    },
+    {
+      "id": "sen-lisa-boscola",
+      "name": "Lisa M. Boscola",
+      "title": "Senator",
+      "chamber": "Senate",
+      "district": "SD-18",
+      "party": "D",
+      "openstatesId": null,
+      "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=655",
+      "photoUrl": null,
+      "counties": ["Northampton", "Lehigh"],
+      "region": "Lehigh Valley"
+    },
+    {
+      "id": "sen-camera-bartolotta",
+      "name": "Camera Bartolotta",
+      "title": "Senator",
+      "chamber": "Senate",
+      "district": "SD-46",
+      "party": "R",
+      "openstatesId": null,
+      "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=1493",
+      "photoUrl": null,
+      "counties": ["Washington", "Greene", "Beaver"],
+      "region": "Southwest PA"
+    },
+    {
+      "id": "sen-vincent-hughes",
+      "name": "Vincent J. Hughes",
+      "title": "Senator",
+      "chamber": "Senate",
+      "district": "SD-7",
+      "party": "D",
+      "openstatesId": null,
+      "url": "https://www.legis.state.pa.us/cfdocs/legis/home/member_information/senate_bio.cfm?id=485",
+      "photoUrl": null,
+      "counties": ["Philadelphia", "Montgomery"],
+      "region": "Philadelphia"
+    }
+  ]
+}

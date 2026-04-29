@@ -1,0 +1,243 @@
+---
+import '../../styles/global.css';
+import { config } from '../../config';
+import VoteRow from '../../components/elected-officials/VoteRow.astro';
+import AlignmentMeter from '../../components/elected-officials/AlignmentMeter.astro';
+import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
+import officialsDoc from '../../../data/elected-officials/officials.json';
+import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
+import billsDoc from '../../../data/legislation/bills.json';
+import platform from '../../../data/legislation/platform.json';
+
+type KeyVote = {
+  billId: string;
+  billTitle: string;
+  vote: 'yea' | 'nay' | 'abstain' | 'absent' | string;
+  billAlignment: 'aligned' | 'mixed' | 'opposed' | 'under-review';
+  directionRelativeToPlatform: 'with' | 'against' | null;
+  date: string;
+  matchedPositions: string[];
+};
+
+type Scorecard = {
+  officialId: string;
+  totalVotes: number;
+  scorableVotes: number;
+  withPlatform: number;
+  againstPlatform: number;
+  unscorable: number;
+  alignmentRate: number | null;
+  byPillar: Array<{
+    pillarId: string;
+    pillarName: string;
+    withPlatform: number;
+    againstPlatform: number;
+  }>;
+  keyVotes: KeyVote[];
+};
+
+export async function getStaticPaths() {
+  const officials = officialsDoc.officials;
+  return officials.map((o) => ({
+    params: { id: o.id },
+    props: { official: o },
+  }));
+}
+
+const { official } = Astro.props;
+const scorecards = scorecardsDoc.scorecards as Scorecard[];
+const scorecard = scorecards.find((s) => s.officialId === official.id);
+
+const billsById = new Map(billsDoc.bills.map((b) => [b.id, b]));
+const positionTitles = new Map(
+  platform.pillars.flatMap((p) => p.positions.map((pos) => [pos.id, pos.title])),
+);
+
+const partyMeta: Record<string, { label: string; cls: string }> = {
+  D: { label: 'Democrat',    cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky' },
+  R: { label: 'Republican',  cls: 'border-wtp-red/40 bg-wtp-red/10 text-wtp-red' },
+  I: { label: 'Independent', cls: 'border-wtp-gold/40 bg-wtp-gold/10 text-wtp-gold' },
+};
+const partyTag = partyMeta[official.party] ?? { label: official.party, cls: 'border-white/20 bg-white/5 text-wtp-cream/70' };
+
+const ratePercent = scorecard?.alignmentRate === null || scorecard?.alignmentRate === undefined
+  ? null
+  : Math.round(scorecard.alignmentRate * 100);
+const rateColor =
+  ratePercent === null
+    ? 'text-wtp-cream/40'
+    : ratePercent >= 67
+      ? 'text-wtp-sky'
+      : ratePercent >= 34
+        ? 'text-wtp-gold'
+        : 'text-wtp-red';
+
+const pageTitle = `${official.name} — ${config.party.shortName} Elected Officials Watch`;
+const pageDescription = scorecard && ratePercent !== null
+  ? `${official.title} ${official.name} (${official.party}, ${official.district}) votes with the ${config.party.shortName} platform ${ratePercent}% of the time on scorable bills.`
+  : `Voting record for ${official.title} ${official.name} (${official.party}, ${official.district}).`;
+const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/${official.id}/`;
+const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/wtp-logo.png" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <DemoBanner />
+
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
+        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
+        </a>
+        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
+          {config.party.name}
+        </a>
+        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
+          <a href="/elected-officials/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">All officials</a>
+          <a href="/legislation/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Bills</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <a href="/elected-officials/" class="text-sm text-wtp-cream/60 no-underline hover:text-wtp-sky">← Back to all officials</a>
+
+      <section class="mt-6 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wider text-wtp-cream/60">
+            <span>{official.title}</span>
+            <span>·</span>
+            <span>{official.district}</span>
+            {official.region && (<><span>·</span><span>{official.region}</span></>)}
+          </div>
+          <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">{official.name}</h1>
+          <div class="mt-3 flex flex-wrap items-center gap-3">
+            <span class={`rounded-full border px-3 py-1 text-xs font-medium ${partyTag.cls}`}>{partyTag.label}</span>
+            {official.counties && official.counties.length > 0 && (
+              <span class="text-sm text-wtp-cream/60">Represents {official.counties.join(', ')}</span>
+            )}
+          </div>
+          {official.url && (
+            <a href={official.url} target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm text-wtp-sky no-underline hover:underline">
+              Official PA bio →
+            </a>
+          )}
+        </div>
+
+        {scorecard && (
+          <div class="flex-shrink-0 rounded-lg border border-white/10 bg-surface/40 p-6 text-center md:min-w-[200px]">
+            <div class="text-xs uppercase tracking-wider text-wtp-cream/40">Aligns with WTP-PA</div>
+            <div class={`mt-2 text-5xl font-extrabold ${rateColor}`}>
+              {ratePercent === null ? '—' : `${ratePercent}%`}
+            </div>
+            <div class="mt-2 text-xs text-wtp-cream/50">
+              {scorecard.withPlatform} of {scorecard.scorableVotes} scorable {scorecard.scorableVotes === 1 ? 'vote' : 'votes'}
+            </div>
+            {scorecard.unscorable > 0 && (
+              <div class="mt-1 text-xs text-wtp-cream/40">{scorecard.unscorable} not scorable</div>
+            )}
+          </div>
+        )}
+      </section>
+
+      {scorecard && scorecard.byPillar.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-2xl font-bold">By platform pillar</h2>
+          <p class="mt-2 text-sm text-wtp-cream/60">Each scorable vote is grouped by which platform pillar the bill touches. A vote can count toward more than one pillar if the bill matches multiple positions.</p>
+          <div class="mt-5 rounded-lg border border-white/10 bg-surface/30 p-6">
+            <AlignmentMeter byPillar={scorecard.byPillar} />
+          </div>
+        </section>
+      )}
+
+      <section class="mt-12">
+        <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 class="text-2xl font-bold">Vote history</h2>
+          {scorecard && (
+            <span class="text-xs text-wtp-cream/50">
+              {scorecard.totalVotes} {scorecard.totalVotes === 1 ? 'vote' : 'votes'} on tracked bills
+            </span>
+          )}
+        </div>
+
+        {!scorecard || scorecard.keyVotes.length === 0 ? (
+          <p class="mt-4 text-sm italic text-wtp-cream/50">No tracked votes recorded for this official yet.</p>
+        ) : (
+          <div class="mt-5 space-y-3">
+            {scorecard.keyVotes.map((kv) => {
+              const bill = billsById.get(kv.billId);
+              return (
+                <div>
+                  <VoteRow
+                    billId={kv.billId}
+                    billTitle={kv.billTitle}
+                    billUrl={bill?.url}
+                    vote={kv.vote}
+                    date={kv.date}
+                    billAlignment={kv.billAlignment}
+                    directionRelativeToPlatform={kv.directionRelativeToPlatform}
+                  />
+                  {kv.matchedPositions.length > 0 && (
+                    <div class="ml-0 mt-2 flex flex-wrap gap-2 px-1 text-xs text-wtp-cream/50 md:ml-24">
+                      <span class="text-wtp-cream/40">Touches:</span>
+                      {kv.matchedPositions.map((pid) => (
+                        <span class="rounded-full border border-white/10 bg-white/5 px-2 py-0.5">
+                          {positionTitles.get(pid) ?? pid}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      <section class="mt-12 rounded-lg border border-white/10 bg-surface/30 p-6 text-sm text-wtp-cream/70 md:p-8">
+        <h2 class="text-base font-semibold text-white">How this score is computed</h2>
+        <p class="mt-2 leading-relaxed">
+          We start with bills already screened by <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>. A WTP-PA editor reads each bill and records whether it's <strong>aligned</strong> with our platform, <strong>opposed</strong>, or <strong>mixed</strong>. We then look up how each official voted on those reviewed bills.
+        </p>
+        <ul class="mt-3 list-disc space-y-1 pl-5 leading-relaxed">
+          <li>Voted <strong>yea</strong> on an aligned bill → counts <em>with</em> the platform</li>
+          <li>Voted <strong>nay</strong> on an aligned bill → counts <em>against</em></li>
+          <li>Voted <strong>nay</strong> on an opposed bill → counts <em>with</em></li>
+          <li>Voted <strong>yea</strong> on an opposed bill → counts <em>against</em></li>
+          <li>Mixed-alignment bills, abstain votes, and absences don't count toward the score</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href="/legislation/about/" class="hover:text-white">Methodology</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

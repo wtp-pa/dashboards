@@ -1,0 +1,281 @@
+---
+import '../../styles/global.css';
+import { config } from '../../config';
+import OfficialCard from '../../components/elected-officials/OfficialCard.astro';
+import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
+import officialsDoc from '../../../data/elected-officials/officials.json';
+import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
+import zipDoc from '../../../data/elected-officials/zip-districts.json';
+
+type Scorecard = {
+  officialId: string;
+  totalVotes: number;
+  scorableVotes: number;
+  withPlatform: number;
+  againstPlatform: number;
+  alignmentRate: number | null;
+};
+
+const scorecards = scorecardsDoc.scorecards as Scorecard[];
+const scorecardById = new Map(scorecards.map((s) => [s.officialId, s]));
+
+const officials = officialsDoc.officials.map((o) => {
+  const sc = scorecardById.get(o.id);
+  return {
+    ...o,
+    alignmentRate: sc?.alignmentRate ?? null,
+    scorableVotes: sc?.scorableVotes ?? 0,
+    totalVotes: sc?.totalVotes ?? 0,
+  };
+});
+
+// Sorted by alignment descending, with un-rated officials at the end.
+const sortedOfficials = [...officials].sort((a, b) => {
+  if (a.alignmentRate === null && b.alignmentRate === null) return 0;
+  if (a.alignmentRate === null) return 1;
+  if (b.alignmentRate === null) return -1;
+  return b.alignmentRate - a.alignmentRate;
+});
+
+// Aggregate counties for the dropdown — dedupe across the seeded roster.
+const countyOptions = Array.from(
+  new Set(officials.flatMap((o) => o.counties ?? [])),
+).sort();
+
+const districtToOfficial: Record<string, { id: string; name: string; chamber: string }[]> = {};
+for (const o of officials) {
+  if (!o.district) continue;
+  (districtToOfficial[o.district] ||= []).push({ id: o.id, name: o.name, chamber: o.chamber });
+}
+
+const pageTitle = `PA Elected Officials Watch — ${config.party.shortName}`;
+const pageDescription = `How Pennsylvania legislators vote — and how their votes line up with the WTP-PA platform. Search by ZIP code or county.`;
+const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/`;
+const ogImageUrl = `${config.portfolio.baseUrl}${config.brand.ogImagePath}`;
+const projectName = 'PA Elected Officials Watch';
+
+// Inline payloads for the client-side lookup. Tiny JSON, no extra fetch.
+const zipPayload = JSON.stringify(zipDoc.zips);
+const districtPayload = JSON.stringify(districtToOfficial);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/wtp-logo.png" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <DemoBanner />
+
+    <header class="border-b border-white/10 px-6 py-4">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
+        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
+          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
+        </a>
+        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
+          {config.party.name}
+        </a>
+        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
+          <a href="/legislation/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Bills</a>
+          <a href="/legislation/about/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Methodology</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-12 md:py-16">
+      <section>
+        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Accountability for the people we voted for</p>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-6xl">PA Elected Officials Watch</h1>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80 md:text-lg">
+          Every vote on a {config.party.shortName}-reviewed bill is scored against our <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">platform</a>. We show you who votes <em>with</em> the platform, who votes <em>against</em>, and which pillar each vote touches. Powered by the same matcher behind <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>.
+        </p>
+      </section>
+
+      <section class="mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 p-6 md:p-8">
+        <h2 class="text-xl font-bold md:text-2xl">Find your representatives</h2>
+        <p class="mt-2 text-sm text-wtp-cream/70">Enter your ZIP code or pick your county. We'll show you who represents you and how they voted.</p>
+
+        <div class="mt-6 grid gap-4 md:grid-cols-2">
+          <form id="zip-form" class="flex gap-2" novalidate>
+            <input
+              type="text"
+              id="zip-input"
+              inputmode="numeric"
+              pattern="[0-9]{5}"
+              maxlength="5"
+              placeholder="PA ZIP code (e.g., 18301)"
+              aria-label="ZIP code"
+              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-3 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+            />
+            <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-5 py-3 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">
+              Find
+            </button>
+          </form>
+
+          <div class="flex gap-2">
+            <select
+              id="county-select"
+              aria-label="County"
+              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-3 text-base text-white focus:border-wtp-sky focus:outline-none"
+            >
+              <option value="">— Or pick your county —</option>
+              {countyOptions.map((c) => <option value={c}>{c} County</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div id="lookup-result" class="mt-5 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-4 text-sm"></div>
+      </section>
+
+      <section class="mt-14">
+        <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 class="text-2xl font-bold md:text-3xl">{officials.length} officials tracked</h2>
+          <div class="text-xs text-wtp-cream/50">{officialsDoc.session}</div>
+        </div>
+        <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform alignment. Click a card for vote-by-vote detail.</p>
+
+        <div id="roster" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {sortedOfficials.map((o) => (
+            <div data-official-id={o.id} data-counties={(o.counties ?? []).join(',')} data-district={o.district}>
+              <OfficialCard
+                id={o.id}
+                name={o.name}
+                title={o.title}
+                district={o.district}
+                party={o.party}
+                region={o.region}
+                counties={o.counties}
+                alignmentRate={o.alignmentRate}
+                scorableVotes={o.scorableVotes}
+                totalVotes={o.totalVotes}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-20 rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 md:p-12">
+        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">{config.party.tagline}</p>
+        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">Want a state party that reads the votes?</h2>
+        <p class="mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
+          Most Pennsylvanians never see how their representatives actually voted on the bills that matter. We score every reviewed roll call against {config.party.shortName}'s platform so you can hold them accountable.
+        </p>
+        <div class="mt-6">
+          <a href={config.party.website} class="inline-block rounded-md bg-wtp-sky px-6 py-3 text-sm font-semibold text-wtp-navy no-underline transition hover:bg-wtp-sky/90">
+            Join {config.party.shortName} →
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
+          <a href="/legislation/about/" class="hover:text-white">Methodology</a>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline define:vars={{ zipPayload, districtPayload }}>
+      const zips = JSON.parse(zipPayload);
+      const districtMap = JSON.parse(districtPayload);
+      const resultEl = document.getElementById('lookup-result');
+      const roster = document.getElementById('roster');
+
+      function showResult(html) {
+        resultEl.innerHTML = html;
+        resultEl.classList.remove('hidden');
+      }
+
+      function highlightOfficials(ids) {
+        const cards = roster.querySelectorAll('[data-official-id]');
+        cards.forEach((card) => {
+          const isMatch = ids.includes(card.dataset.officialId);
+          card.classList.toggle('ring-2', isMatch);
+          card.classList.toggle('ring-wtp-sky', isMatch);
+          card.classList.toggle('rounded-lg', isMatch);
+          if (!ids.length) {
+            card.classList.remove('opacity-30');
+            return;
+          }
+          card.classList.toggle('opacity-30', !isMatch);
+        });
+        if (ids.length) {
+          const first = roster.querySelector(`[data-official-id="${ids[0]}"]`);
+          first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      function findByDistricts(districts) {
+        const ids = districts.flatMap((d) => (districtMap[d] || []).map((o) => o.id));
+        if (!ids.length) {
+          showResult(`<p class="text-wtp-cream/70">No officials in our seeded roster cover that area yet. The roster currently includes ${Object.keys(districtMap).length} districts.</p>`);
+          highlightOfficials([]);
+          return;
+        }
+        const reps = districts.flatMap((d) => districtMap[d] || []);
+        const repsHtml = reps.map((r) => `<a href="/elected-officials/${r.id}/" class="text-wtp-sky underline">${r.name}</a> (${r.chamber})`).join(' · ');
+        showResult(`<p class="text-wtp-cream/80">Your representatives: ${repsHtml}</p>`);
+        highlightOfficials(ids);
+      }
+
+      document.getElementById('zip-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const zip = (document.getElementById('zip-input').value || '').trim();
+        if (!/^\d{5}$/.test(zip)) {
+          showResult(`<p class="text-wtp-cream/70">Please enter a 5-digit ZIP code.</p>`);
+          return;
+        }
+        const entry = zips[zip];
+        if (!entry) {
+          showResult(`<p class="text-wtp-cream/70">ZIP <strong>${zip}</strong> isn't in our seeded coverage yet. Try one of the demo ZIPs: 18301 (Stroudsburg), 18020 (Bethlehem), 15301 (Washington), 19131 (Philadelphia).</p>`);
+          highlightOfficials([]);
+          return;
+        }
+        const districts = [entry.senate, entry.house].filter(Boolean);
+        findByDistricts(districts);
+      });
+
+      document.getElementById('county-select').addEventListener('change', (e) => {
+        const county = e.target.value;
+        if (!county) {
+          showResult('');
+          resultEl.classList.add('hidden');
+          highlightOfficials([]);
+          return;
+        }
+        const cards = Array.from(roster.querySelectorAll('[data-official-id]'));
+        const matching = cards
+          .filter((c) => (c.dataset.counties || '').split(',').includes(county))
+          .map((c) => c.dataset.officialId);
+        if (!matching.length) {
+          showResult(`<p class="text-wtp-cream/70">No officials in our seeded roster represent ${county} County yet.</p>`);
+          highlightOfficials([]);
+          return;
+        }
+        showResult(`<p class="text-wtp-cream/80">${matching.length} official${matching.length > 1 ? 's' : ''} represent${matching.length > 1 ? '' : 's'} <strong>${county} County</strong>.</p>`);
+        highlightOfficials(matching);
+      });
+    </script>
+  </body>
+</html>

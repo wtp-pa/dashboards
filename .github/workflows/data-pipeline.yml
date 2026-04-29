@@ -37,6 +37,15 @@ jobs:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
         run: python pipeline/fetch_census.py
 
+      - name: Fetch PA bills from OpenStates
+        env:
+          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+        run: python pipeline/legislation/fetch_bills.py
+        continue-on-error: true  # don't block other fetchers if rate-limited
+
+      - name: Match bills against WTP-PA platform
+        run: python pipeline/legislation/match_bills.py
+
       - name: Commit updated data
         run: |
           git config user.name "wtp-budget-watch-bot"

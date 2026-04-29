@@ -1,0 +1,23 @@
+{
+  "$comment": "PA roll-call votes per official. CURRENTLY DEMO DATA — not sourced from real PA Senate roll-call records. Fabricated vote records here exist only to exercise the scorecard rendering layer end-to-end. Replace via fetch_votes.py once OpenStates integration is wired up. The dashboard surfaces a visible DEMO banner until demoData=false. Schema: votes[].billId references data/legislation/bills.json[].id; votes[].officialId references officials.json[].id; vote ∈ {yea, nay, abstain, absent}.",
+  "demoData": true,
+  "lastFetched": "2026-04-28T20:30:00Z",
+  "source": "DEMO — fabricated for layout testing. Not from OpenStates.",
+  "votes": [
+    { "billId": "SR276",  "officialId": "sen-rosemary-brown",   "vote": "yea",     "date": "2026-04-15", "stage": "Senate Final Passage" },
+    { "billId": "SB1313", "officialId": "sen-rosemary-brown",   "vote": "yea",     "date": "2026-04-10", "stage": "Senate Final Passage" },
+    { "billId": "SB507",  "officialId": "sen-rosemary-brown",   "vote": "yea",     "date": "2026-04-22", "stage": "Senate Third Consideration" },
+
+    { "billId": "SR276",  "officialId": "sen-lisa-boscola",     "vote": "yea",     "date": "2026-04-15", "stage": "Senate Final Passage" },
+    { "billId": "SB1313", "officialId": "sen-lisa-boscola",     "vote": "nay",     "date": "2026-04-10", "stage": "Senate Final Passage" },
+    { "billId": "SB507",  "officialId": "sen-lisa-boscola",     "vote": "yea",     "date": "2026-04-22", "stage": "Senate Third Consideration" },
+
+    { "billId": "SR276",  "officialId": "sen-camera-bartolotta","vote": "yea",     "date": "2026-04-15", "stage": "Senate Final Passage" },
+    { "billId": "SB1313", "officialId": "sen-camera-bartolotta","vote": "yea",     "date": "2026-04-10", "stage": "Senate Final Passage" },
+    { "billId": "SB507",  "officialId": "sen-camera-bartolotta","vote": "abstain", "date": "2026-04-22", "stage": "Senate Third Consideration" },
+
+    { "billId": "SR276",  "officialId": "sen-vincent-hughes",   "vote": "nay",     "date": "2026-04-15", "stage": "Senate Final Passage" },
+    { "billId": "SB1313", "officialId": "sen-vincent-hughes",   "vote": "nay",     "date": "2026-04-10", "stage": "Senate Final Passage" },
+    { "billId": "SB507",  "officialId": "sen-vincent-hughes",   "vote": "nay",     "date": "2026-04-22", "stage": "Senate Third Consideration" }
+  ]
+}

@@ -1,0 +1,72 @@
+---
+export interface Props {
+  id: string;
+  name: string;
+  title: string;
+  district: string;
+  party: 'D' | 'R' | 'I' | string;
+  region?: string;
+  counties?: string[];
+  alignmentRate: number | null;
+  scorableVotes: number;
+  totalVotes: number;
+}
+
+const { id, name, title, district, party, region, counties, alignmentRate, scorableVotes, totalVotes } = Astro.props;
+
+const partyMeta: Record<string, { label: string; cls: string }> = {
+  D: { label: 'Democrat', cls: 'border-wtp-sky/40 bg-wtp-sky/10 text-wtp-sky' },
+  R: { label: 'Republican', cls: 'border-wtp-red/40 bg-wtp-red/10 text-wtp-red' },
+  I: { label: 'Independent', cls: 'border-wtp-gold/40 bg-wtp-gold/10 text-wtp-gold' },
+};
+const partyTag = partyMeta[party] ?? { label: party, cls: 'border-white/20 bg-white/5 text-wtp-cream/70' };
+
+const ratePercent = alignmentRate === null ? null : Math.round(alignmentRate * 100);
+const rateColor =
+  ratePercent === null
+    ? 'text-wtp-cream/40'
+    : ratePercent >= 67
+      ? 'text-wtp-sky'
+      : ratePercent >= 34
+        ? 'text-wtp-gold'
+        : 'text-wtp-red';
+
+const subtitle = counties && counties.length > 0
+  ? `${district} · ${counties.slice(0, 2).join(', ')}${counties.length > 2 ? ' +' : ''}`
+  : district;
+---
+
+<a
+  href={`/elected-officials/${id}/`}
+  class="group flex flex-col gap-3 rounded-lg border border-white/10 bg-surface/40 p-5 no-underline transition hover:border-wtp-sky/40 hover:bg-surface/60"
+>
+  <div class="flex items-start justify-between gap-3">
+    <div class="min-w-0">
+      <div class="flex flex-wrap items-center gap-2 text-xs text-wtp-cream/50">
+        <span>{title}</span>
+        <span>·</span>
+        <span>{subtitle}</span>
+      </div>
+      <h3 class="mt-1 truncate text-lg font-semibold text-white group-hover:text-wtp-sky">{name}</h3>
+      {region && <div class="mt-0.5 text-xs text-wtp-cream/40">{region}</div>}
+    </div>
+    <span class={`flex-shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-medium ${partyTag.cls}`}>
+      {party}
+    </span>
+  </div>
+
+  <div class="mt-1 flex items-baseline justify-between gap-3 border-t border-white/5 pt-3">
+    <div class="min-w-0">
+      <div class="text-xs uppercase tracking-wider text-wtp-cream/40">Aligns with platform</div>
+      <div class="mt-1 flex items-baseline gap-2">
+        <span class={`text-2xl font-bold ${rateColor}`}>
+          {ratePercent === null ? '—' : `${ratePercent}%`}
+        </span>
+        <span class="text-xs text-wtp-cream/50">
+          {scorableVotes} of {totalVotes} scorable
+        </span>
+      </div>
+    </div>
+    <span class="text-sm text-wtp-sky opacity-0 transition group-hover:opacity-100">View →</span>
+  </div>
+</a>

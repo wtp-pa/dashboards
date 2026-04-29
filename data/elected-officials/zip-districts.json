@@ -1,0 +1,17 @@
+{
+  "$comment": "PA ZIP → legislative district lookup powering the 'Find my reps' input on /elected-officials. DEMO coverage only — currently maps a handful of ZIPs to the four PA Senate districts in the seed roster (SD-40, SD-18, SD-46, SD-7). House district mapping is intentionally null in this scaffold; will be populated when fetch_officials.py covers the House. Real coverage source candidates: PA Department of State district lookup, ProPublica Congress API derivatives, or geocoded boundaries from PASDA. Each entry: { senate: 'SD-XX' | null, house: 'HD-XXX' | null }.",
+  "demoData": true,
+  "lastUpdated": "2026-04-28",
+  "zips": {
+    "18301": { "senate": "SD-40", "house": null },
+    "18337": { "senate": "SD-40", "house": null },
+    "18428": { "senate": "SD-40", "house": null },
+    "18020": { "senate": "SD-18", "house": null },
+    "18042": { "senate": "SD-18", "house": null },
+    "15301": { "senate": "SD-46", "house": null },
+    "15370": { "senate": "SD-46", "house": null },
+    "19131": { "senate": "SD-7",  "house": null },
+    "19139": { "senate": "SD-7",  "house": null },
+    "19143": { "senate": "SD-7",  "house": null }
+  }
+}

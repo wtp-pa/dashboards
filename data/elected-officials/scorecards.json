@@ -1,0 +1,189 @@
+{
+  "$comment": "Per-official platform alignment scorecards. GENERATED FILE \u2014 do not edit by hand. Run pipeline/elected-officials/score_officials.py to refresh. Joins votes.json \u00d7 bills.json (matched positions) \u00d7 manual_review.json (editor alignment call). 'withPlatform' counts increment when an official voted yea on an aligned bill, nay on an opposed bill, etc. Mixed-alignment bills and abstain/absent votes are excluded from scoring. byPillar aggregates the same logic per platform pillar.",
+  "lastComputed": "2026-04-29T01:13:39.798216+00:00",
+  "scorecards": [
+    {
+      "officialId": "sen-rosemary-brown",
+      "totalVotes": 3,
+      "scorableVotes": 3,
+      "withPlatform": 3,
+      "againstPlatform": 0,
+      "unscorable": 0,
+      "alignmentRate": 1.0,
+      "byPillar": [
+        {
+          "pillarId": "honest-government",
+          "pillarName": "Honest Government",
+          "withPlatform": 1,
+          "againstPlatform": 0
+        }
+      ],
+      "keyVotes": [
+        {
+          "billId": "SB507",
+          "billTitle": "Midwifery Modernization in Pennsylvania",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-22",
+          "matchedPositions": []
+        },
+        {
+          "billId": "SR276",
+          "billTitle": "Congressional action on insider trading",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-15",
+          "matchedPositions": [
+            "no-stock-trading"
+          ]
+        },
+        {
+          "billId": "SB1313",
+          "billTitle": "Coming Home to Hunt",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-10",
+          "matchedPositions": []
+        }
+      ]
+    },
+    {
+      "officialId": "sen-lisa-boscola",
+      "totalVotes": 3,
+      "scorableVotes": 3,
+      "withPlatform": 2,
+      "againstPlatform": 1,
+      "unscorable": 0,
+      "alignmentRate": 0.667,
+      "byPillar": [
+        {
+          "pillarId": "honest-government",
+          "pillarName": "Honest Government",
+          "withPlatform": 1,
+          "againstPlatform": 0
+        }
+      ],
+      "keyVotes": [
+        {
+          "billId": "SB507",
+          "billTitle": "Midwifery Modernization in Pennsylvania",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-22",
+          "matchedPositions": []
+        },
+        {
+          "billId": "SR276",
+          "billTitle": "Congressional action on insider trading",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-15",
+          "matchedPositions": [
+            "no-stock-trading"
+          ]
+        },
+        {
+          "billId": "SB1313",
+          "billTitle": "Coming Home to Hunt",
+          "vote": "nay",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "against",
+          "date": "2026-04-10",
+          "matchedPositions": []
+        }
+      ]
+    },
+    {
+      "officialId": "sen-camera-bartolotta",
+      "totalVotes": 3,
+      "scorableVotes": 2,
+      "withPlatform": 2,
+      "againstPlatform": 0,
+      "unscorable": 1,
+      "alignmentRate": 1.0,
+      "byPillar": [
+        {
+          "pillarId": "honest-government",
+          "pillarName": "Honest Government",
+          "withPlatform": 1,
+          "againstPlatform": 0
+        }
+      ],
+      "keyVotes": [
+        {
+          "billId": "SR276",
+          "billTitle": "Congressional action on insider trading",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-15",
+          "matchedPositions": [
+            "no-stock-trading"
+          ]
+        },
+        {
+          "billId": "SB1313",
+          "billTitle": "Coming Home to Hunt",
+          "vote": "yea",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "with",
+          "date": "2026-04-10",
+          "matchedPositions": []
+        }
+      ]
+    },
+    {
+      "officialId": "sen-vincent-hughes",
+      "totalVotes": 3,
+      "scorableVotes": 3,
+      "withPlatform": 0,
+      "againstPlatform": 3,
+      "unscorable": 0,
+      "alignmentRate": 0.0,
+      "byPillar": [
+        {
+          "pillarId": "honest-government",
+          "pillarName": "Honest Government",
+          "withPlatform": 0,
+          "againstPlatform": 1
+        }
+      ],
+      "keyVotes": [
+        {
+          "billId": "SB507",
+          "billTitle": "Midwifery Modernization in Pennsylvania",
+          "vote": "nay",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "against",
+          "date": "2026-04-22",
+          "matchedPositions": []
+        },
+        {
+          "billId": "SR276",
+          "billTitle": "Congressional action on insider trading",
+          "vote": "nay",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "against",
+          "date": "2026-04-15",
+          "matchedPositions": [
+            "no-stock-trading"
+          ]
+        },
+        {
+          "billId": "SB1313",
+          "billTitle": "Coming Home to Hunt",
+          "vote": "nay",
+          "billAlignment": "aligned",
+          "directionRelativeToPlatform": "against",
+          "date": "2026-04-10",
+          "matchedPositions": []
+        }
+      ]
+    }
+  ]
+}

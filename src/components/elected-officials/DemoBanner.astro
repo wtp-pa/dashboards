@@ -1,0 +1,12 @@
+---
+import votesDoc from '../../../data/elected-officials/votes.json';
+
+const showBanner = (votesDoc as { demoData?: boolean }).demoData === true;
+---
+
+{showBanner && (
+  <div class="border-b border-wtp-gold/40 bg-wtp-gold/10 px-6 py-3 text-center text-xs text-wtp-gold">
+    <strong>DEMO DATA</strong> — Voting records below are illustrative seed data, not real PA Senate roll calls.
+    Real votes will populate via OpenStates API in the next pipeline step.
+  </div>
+)}

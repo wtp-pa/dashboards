@@ -11,16 +11,23 @@ type ManualReview = { alignment: Exclude<Alignment, 'under-review'>; note: strin
 
 const reviews = manualReviewDoc.reviews as Record<string, ManualReview>;
 
-const enriched = billsData.bills.map((bill) => {
-  const review = reviews[bill.id];
-  return {
-    ...bill,
-    alignment: (review?.alignment ?? 'under-review') as Alignment,
-    reviewNote: review?.note,
-    reviewedBy: review?.reviewedBy,
-    reviewedAt: review?.reviewedAt,
-  };
-});
+// Only display bills that touch the platform: either auto-matched or
+// flagged by an editor.
+const enriched = billsData.bills
+  .filter((bill) => bill.matches.length > 0 || reviews[bill.id])
+  .map((bill) => {
+    const review = reviews[bill.id];
+    return {
+      ...bill,
+      alignment: (review?.alignment ?? 'under-review') as Alignment,
+      reviewNote: review?.note,
+      reviewedBy: review?.reviewedBy,
+      reviewedAt: review?.reviewedAt,
+    };
+  });
+
+const totalFetched = billsData.bills.length;
+const filteredOut = totalFetched - enriched.length;
 
 const alignmentOrder: Record<Alignment, number> = {
   aligned: 0,
@@ -118,9 +125,12 @@ const projectName = 'PA Legislation Watch';
 
       <section class="mt-16">
         <div class="flex flex-wrap items-baseline justify-between gap-3">
-          <h2 class="text-2xl font-bold md:text-3xl">{enriched.length} bills tracked · {billsData.session}</h2>
+          <h2 class="text-2xl font-bold md:text-3xl">{enriched.length} bills touch the platform · {billsData.session}</h2>
           <div class="text-xs text-wtp-cream/50">Updated {lastFetched}</div>
         </div>
+        <p class="mt-2 text-xs text-wtp-cream/50">
+          {totalFetched.toLocaleString()} bills fetched from <a href="https://openstates.org/pa/" class="text-wtp-cream/70 underline hover:text-wtp-sky" target="_blank" rel="noopener">OpenStates</a>; {filteredOut.toLocaleString()} hidden because they don't touch any of our planks.
+        </p>
 
         <div class="mt-8 space-y-3">
           {sortedBills.map((bill) => (
