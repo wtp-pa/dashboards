@@ -244,34 +244,55 @@ const projectName = 'PA Legislation Watch';
         </p>
       </section>
 
-      <section class="mt-12 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
-        <h2 class="text-base font-semibold text-white">How a bill becomes a law in Pennsylvania</h2>
-        <ol class="mt-4 grid grid-cols-1 gap-3 text-xs text-wtp-cream/70 md:grid-cols-5 md:gap-2">
-          <li class="rounded-md border border-white/10 bg-white/5 p-3">
-            <div class="font-semibold text-wtp-cream/90">1. Introduced</div>
-            <div class="mt-1">A legislator files the bill. Most stop here.</div>
-          </li>
-          <li class="rounded-md border border-white/10 bg-white/5 p-3">
-            <div class="font-semibold text-wtp-cream/90">2. In committee</div>
-            <div class="mt-1">A subject-matter committee reviews it. It can be amended, voted out, or shelved.</div>
-          </li>
-          <li class="rounded-md border border-white/10 bg-white/5 p-3">
-            <div class="font-semibold text-wtp-cream/90">3. On floor</div>
-            <div class="mt-1">The full chamber debates and votes (House and Senate each do this).</div>
-          </li>
-          <li class="rounded-md border border-white/10 bg-white/5 p-3">
-            <div class="font-semibold text-wtp-cream/90">4. Passed legislature</div>
-            <div class="mt-1">Both chambers agreed on the same text. Goes to the Governor.</div>
-          </li>
-          <li class="rounded-md border border-white/10 bg-white/5 p-3">
-            <div class="font-semibold text-wtp-cream/90">5. Signed into law</div>
-            <div class="mt-1">The Governor signs it (or it becomes law without signature after 10 days).</div>
-          </li>
-        </ol>
-        <p class="mt-4 text-xs text-wtp-cream/50">
-          Of the 4,000+ bills filed each session, only a few hundred make it past committee. We sort each pillar's list with the most-advanced bills first.
-        </p>
-      </section>
+      <details id="how-bill-becomes-law" open class="group mt-12 rounded-lg border border-white/10 bg-surface/40 transition hover:border-white/20">
+        <summary class="flex cursor-pointer list-none items-baseline justify-between gap-3 p-6 md:p-8">
+          <div class="min-w-0">
+            <h2 class="text-base font-semibold text-white">How a bill becomes a law in Pennsylvania</h2>
+            <p class="mt-1 text-xs text-wtp-cream/60">
+              5 steps from introduction to law. Of the 4,000+ bills filed each session, only a few hundred make it past committee.
+            </p>
+          </div>
+          <span class="flex-shrink-0 text-xs text-wtp-cream/40 transition group-open:rotate-90 inline-block w-3" aria-hidden="true">▸</span>
+        </summary>
+        <div class="px-6 pb-6 md:px-8 md:pb-8">
+          <ol class="grid grid-cols-1 gap-3 text-xs text-wtp-cream/70 md:grid-cols-5 md:gap-2">
+            <li class="rounded-md border border-white/10 bg-white/5 p-3">
+              <div class="font-semibold text-wtp-cream/90">1. Introduced</div>
+              <div class="mt-1">A legislator files the bill. Most stop here.</div>
+            </li>
+            <li class="rounded-md border border-white/10 bg-white/5 p-3">
+              <div class="font-semibold text-wtp-cream/90">2. In committee</div>
+              <div class="mt-1">A subject-matter committee reviews it. It can be amended, voted out, or shelved.</div>
+            </li>
+            <li class="rounded-md border border-white/10 bg-white/5 p-3">
+              <div class="font-semibold text-wtp-cream/90">3. On floor</div>
+              <div class="mt-1">The full chamber debates and votes (House and Senate each do this).</div>
+            </li>
+            <li class="rounded-md border border-white/10 bg-white/5 p-3">
+              <div class="font-semibold text-wtp-cream/90">4. Passed legislature</div>
+              <div class="mt-1">Both chambers agreed on the same text. Goes to the Governor.</div>
+            </li>
+            <li class="rounded-md border border-white/10 bg-white/5 p-3">
+              <div class="font-semibold text-wtp-cream/90">5. Signed into law</div>
+              <div class="mt-1">The Governor signs it (or it becomes law without signature after 10 days).</div>
+            </li>
+          </ol>
+          <p class="mt-4 text-xs text-wtp-cream/50">
+            We sort each pillar's list with the most-advanced bills first.
+          </p>
+        </div>
+      </details>
+      <script is:inline>
+        // Default the "How a bill becomes a law" section to collapsed on
+        // mobile so the steps grid doesn't push the bill list far below the
+        // fold. Desktop keeps it open since it fits horizontally as 5 cards.
+        (() => {
+          const el = document.getElementById('how-bill-becomes-law');
+          if (el && window.matchMedia('(max-width: 767px)').matches) {
+            el.removeAttribute('open');
+          }
+        })();
+      </script>
 
       {featured.length > 0 && (
         <section class="mt-16 bill-section" data-section-name="featured">
