@@ -220,39 +220,27 @@ const projectName = 'PA Legislation Watch';
           Pennsylvania's General Assembly considers thousands of bills every two years. We pull all of them, screen each one against {config.party.shortName}'s <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">5 platform pillars</a>, and surface only the bills that actually touch what we stand for. Click any bill to see why we flagged it.
         </p>
 
-        <div class="mt-10 grid grid-cols-2 gap-3 text-sm md:grid-cols-4" role="group" aria-label="Filter bills by alignment">
-          <button type="button" data-filter="aligned"
-            class="filter-btn group rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 px-4 py-3 text-left transition hover:border-wtp-sky/60 hover:bg-wtp-sky/10 cursor-pointer">
+        <div class="mt-10 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
+          <div class="rounded-lg border border-wtp-sky/30 bg-wtp-sky/5 px-4 py-3">
             <div class="text-2xl font-bold text-wtp-sky">{counts.aligned ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60 group-hover:text-wtp-sky">Aligned</div>
-          </button>
-          <button type="button" data-filter="mixed"
-            class="filter-btn group rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 px-4 py-3 text-left transition hover:border-wtp-gold/60 hover:bg-wtp-gold/10 cursor-pointer">
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Aligned</div>
+          </div>
+          <div class="rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 px-4 py-3">
             <div class="text-2xl font-bold text-wtp-gold">{counts.mixed ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60 group-hover:text-wtp-gold">Mixed</div>
-          </button>
-          <button type="button" data-filter="opposed"
-            class="filter-btn group rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-4 py-3 text-left transition hover:border-wtp-red/60 hover:bg-wtp-red/10 cursor-pointer">
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Mixed</div>
+          </div>
+          <div class="rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-4 py-3">
             <div class="text-2xl font-bold text-wtp-red">{counts.opposed ?? 0}</div>
-            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60 group-hover:text-wtp-red">Opposed</div>
-          </button>
-          <button type="button" data-filter="topic-only"
-            class="filter-btn group rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-white/30 hover:bg-white/10 cursor-pointer">
+            <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Opposed</div>
+          </div>
+          <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-3">
             <div class="text-2xl font-bold text-wtp-cream/70">{(counts['topic-only'] ?? 0) + (counts['under-review'] ?? 0)}</div>
             <div class="mt-1 text-xs uppercase tracking-wider text-wtp-cream/60">Touches platform</div>
-          </button>
+          </div>
         </div>
         <p class="mt-3 text-xs text-wtp-cream/50">
-          Click any box to filter the lists below. "Aligned" and "Opposed" combine editor reviews with auto-detected calls (≥{Math.round(AUTO_ALIGNMENT_THRESHOLD * 100)}% confidence). "Touches platform" means the topic matched but the bill's direction needs a human read.
+          "Aligned" and "Opposed" combine editor reviews with auto-detected calls (≥{Math.round(AUTO_ALIGNMENT_THRESHOLD * 100)}% confidence). "Touches platform" means the topic matched but the bill's direction needs a human read.
         </p>
-        <div id="filter-status" class="mt-3 hidden">
-          <button type="button" data-clear-filter
-            class="inline-flex items-center gap-2 rounded-full border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-1 text-xs text-wtp-sky transition hover:bg-wtp-sky/20 cursor-pointer">
-            <span>Filtering by <strong id="filter-label"></strong></span>
-            <span aria-hidden="true">✕</span>
-            <span class="sr-only">Clear filter</span>
-          </button>
-        </div>
       </section>
 
       <section class="mt-12 rounded-lg border border-white/10 bg-surface/40 p-6 md:p-8">
@@ -334,13 +322,13 @@ const projectName = 'PA Legislation Watch';
         <div class="mt-8 space-y-4">
           {billsByPillar.map(({ pillar, bills }, idx) => (
             bills.length === 0 ? null : (
-              <details class="bill-section group rounded-lg border border-white/10 bg-surface/30 transition hover:border-white/20" open={idx < 2} data-section-name={pillar.id}>
+              <details class="bill-section group rounded-lg border border-white/10 bg-surface/30 transition hover:border-white/20" data-section-name={pillar.id}>
                 <summary class="flex cursor-pointer list-none items-baseline justify-between gap-3 px-5 py-4">
                   <div class="flex items-baseline gap-3">
                     <span class="text-xs text-wtp-cream/40 transition group-open:rotate-90 inline-block w-3" aria-hidden="true">▸</span>
                     <h3 class="text-xl font-bold text-white">{pillar.name}</h3>
                   </div>
-                  <div class="text-xs text-wtp-cream/50"><span class="visible-count">{bills.length}</span> of {bills.length} {bills.length === 1 ? 'bill' : 'bills'}</div>
+                  <div class="text-xs text-wtp-cream/50">{bills.length} {bills.length === 1 ? 'bill' : 'bills'}</div>
                 </summary>
                 <div class="border-t border-white/5 px-5 pb-5 pt-4">
                   <p class="mb-5 text-sm text-wtp-cream/70">{PILLAR_BLURBS[pillar.id] ?? pillar.tagline}</p>
@@ -390,80 +378,6 @@ const projectName = 'PA Legislation Watch';
         </div>
       </section>
     </main>
-
-    <script is:inline>
-      // Filter bill list by alignment when a stat box is clicked.
-      // Topic-only filter also includes 'under-review' since they share the
-      // "needs a human read" UI tier.
-      (() => {
-        const FILTER_LABELS = {
-          aligned: 'Aligned',
-          mixed: 'Mixed alignment',
-          opposed: 'Opposed',
-          'topic-only': 'Touches platform',
-        };
-        const TOPIC_ONLY_TIER = new Set(['topic-only', 'under-review']);
-
-        const filterButtons = document.querySelectorAll('[data-filter]');
-        const clearBtn = document.querySelector('[data-clear-filter]');
-        const statusEl = document.getElementById('filter-status');
-        const labelEl = document.getElementById('filter-label');
-        let activeFilter = null;
-
-        function matchesFilter(rowAlignment, filter) {
-          if (filter === 'topic-only') return TOPIC_ONLY_TIER.has(rowAlignment);
-          return rowAlignment === filter;
-        }
-
-        function applyFilter(filter) {
-          activeFilter = filter;
-          document.querySelectorAll('.bill-row').forEach((row) => {
-            const a = row.dataset.alignment;
-            row.style.display = (filter === null || matchesFilter(a, filter)) ? '' : 'none';
-          });
-
-          // Update per-section visible count + auto-open sections that have
-          // visible content. Sections with no visible bills get collapsed and
-          // marked so empty-msg can show.
-          document.querySelectorAll('.bill-section').forEach((section) => {
-            const visible = section.querySelectorAll('.bill-row:not([style*="display: none"])').length;
-            const total = section.querySelectorAll('.bill-row').length;
-            const countEl = section.querySelector('.visible-count');
-            if (countEl) countEl.textContent = visible;
-            const empty = section.querySelector('.empty-msg');
-            if (empty) empty.classList.toggle('hidden', visible !== 0);
-            // For <details> sections: auto-open when filter is active and there are matches.
-            if (section.tagName === 'DETAILS' && filter !== null && visible > 0) {
-              section.open = true;
-            }
-            section.style.opacity = visible === 0 && filter !== null ? '0.5' : '';
-          });
-
-          if (filter === null) {
-            statusEl.classList.add('hidden');
-          } else {
-            statusEl.classList.remove('hidden');
-            labelEl.textContent = FILTER_LABELS[filter] ?? filter;
-          }
-
-          filterButtons.forEach((b) => {
-            const isActive = b.dataset.filter === filter;
-            b.setAttribute('aria-pressed', String(isActive));
-            b.classList.toggle('ring-2', isActive);
-            b.classList.toggle('ring-offset-2', isActive);
-            b.classList.toggle('ring-offset-page', isActive);
-          });
-        }
-
-        filterButtons.forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const f = btn.dataset.filter;
-            applyFilter(activeFilter === f ? null : f);
-          });
-        });
-        clearBtn?.addEventListener('click', () => applyFilter(null));
-      })();
-    </script>
 
     <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
