@@ -56,6 +56,13 @@ export const config = {
     // the real-data dashboard and signed off on it being public.
     officersApprovedData: false,
   },
+  legislation: {
+    // Same officer-approval gate for /legislation. Real OpenStates data
+    // flows in but auto-alignment + editorial reviews still need officer
+    // sign-off before the dashboard is presented as authoritative. Flip
+    // to true once officers approve.
+    officersApprovedData: false,
+  },
   portfolio: {
     // The umbrella that holds all WTPPPA dashboards. Used by the / landing page.
     name: "WTPPPA Dashboards",
@@ -72,13 +79,13 @@ export const config = {
         name: "PA Legislation Watch",
         slug: "legislation",
         tagline: "Scoring PA bills against the WTPPPA platform",
-        status: "live" as const,
+        status: "pre-release" as const,
       },
       {
         name: "Elected Officials Watch",
         slug: "elected-officials",
-        tagline: "How your representatives vote and how they align with the WTPPPA platform",
-        status: "coming-soon" as const,
+        tagline: "Track all 251 PA legislators — what they sponsor, how they vote, and where they line up with our platform",
+        status: "pre-release" as const,
       },
       {
         name: "Local Impact",

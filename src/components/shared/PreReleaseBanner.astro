@@ -1,0 +1,27 @@
+---
+/**
+ * Shared "PRE-RELEASE" banner. Renders gold strip across the top of a
+ * dashboard until officers approve the data for public consumption.
+ *
+ * Driven by the `approved` prop, which each page reads from its own
+ * config flag (e.g., config.legislation.officersApprovedData).
+ */
+
+export interface Props {
+  approved: boolean;
+  label?: string;
+  body?: string;
+}
+
+const {
+  approved,
+  label = 'PRE-RELEASE',
+  body = 'Real PA data is loaded, but this dashboard is awaiting WTPPPA officer review before going public. Numbers are accurate to source as of the last pipeline run.',
+} = Astro.props;
+---
+
+{!approved && (
+  <div class="border-b border-wtp-gold/40 bg-wtp-gold/10 px-6 py-3 text-center text-xs text-wtp-gold">
+    <strong>{label}</strong> — {body}
+  </div>
+)}

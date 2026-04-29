@@ -3,6 +3,7 @@ import '../../styles/global.css';
 import { config } from '../../config';
 import BillCard from '../../components/legislation/BillCard.astro';
 import BrandShortName from '../../components/BrandShortName.astro';
+import PreReleaseBanner from '../../components/shared/PreReleaseBanner.astro';
 import billsData from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import manualReviewDoc from '../../../data/legislation/manual_review.json';
@@ -131,6 +132,10 @@ const projectName = 'PA Legislation Watch';
     <meta name="twitter:image" content={ogImageUrl} />
   </head>
   <body class="min-h-screen bg-page text-white">
+    <PreReleaseBanner
+      approved={config.legislation.officersApprovedData}
+      body="The auto-alignment scoring uses real OpenStates data, but editorial reviews and the matcher's confidence thresholds are still being calibrated with WTPPPA officers. Treat the dashboard as informative, not authoritative, until this banner is gone."
+    />
     <header class="border-b border-white/10 px-6 py-4">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
         <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
