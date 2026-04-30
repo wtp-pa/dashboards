@@ -1,0 +1,78 @@
+{
+  "$comment": "Best-effort revenue estimates from PA budget office, IFO analyses, and prior gubernatorial proposals. All numbers are mid-range; treat as informative, not precise. Real revenue depends on tax rate, implementation, ramp-up, and economic conditions. Sources cited per row. Most figures are 2024-25 vintage; refresh annually.",
+  "annualDeficitUSD": 3900000000,
+  "proposals": [
+    {
+      "id": "cannabis",
+      "name": "Tax recreational cannabis",
+      "description": "Pennsylvania is one of the few states without legal recreational cannabis. Both Gov. Shapiro and PA IFO have estimated tax revenue from legalization at several hundred million per year at maturity, scaling with tax rate and adoption.",
+      "revenueLowUSD": 250000000,
+      "revenueMidUSD": 500000000,
+      "revenueHighUSD": 1000000000,
+      "status": "blocked",
+      "statusDetail": "Proposed in Gov. Shapiro's FY 2024-25 budget; blocked in PA Senate",
+      "sourceDetail": "Shapiro FY 24-25 executive budget; PA IFO analyses",
+      "category": "new-revenue"
+    },
+    {
+      "id": "skill-games",
+      "name": "Tax skill games",
+      "description": "The slot-like \"skill game\" terminals in PA bars and convenience stores operate in a legal gray area with no state tax. Shapiro proposed a 42% tax rate.",
+      "revenueLowUSD": 150000000,
+      "revenueMidUSD": 250000000,
+      "revenueHighUSD": 400000000,
+      "status": "active-bill",
+      "statusDetail": "Active proposals; Shapiro's 42% rate is one of several",
+      "sourceDetail": "Gov. Shapiro FY 24-25 budget; legislative fiscal notes",
+      "category": "new-revenue"
+    },
+    {
+      "id": "gas-severance",
+      "name": "Severance tax on natural gas",
+      "description": "Pennsylvania is the only major natural gas–producing state without a traditional severance tax. We collect an \"impact fee\" instead, which brings in roughly a quarter of what a 5% severance tax would. Peer states (Texas, Oklahoma, West Virginia) all have one.",
+      "revenueLowUSD": 300000000,
+      "revenueMidUSD": 500000000,
+      "revenueHighUSD": 700000000,
+      "status": "blocked",
+      "statusDetail": "Proposed repeatedly since the Marcellus boom; blocked by industry lobby",
+      "sourceDetail": "Prior Wolf-era budget proposals; PA Dept of Revenue analyses",
+      "category": "new-revenue"
+    },
+    {
+      "id": "data-center-exemption",
+      "name": "End the data center tax exemption",
+      "description": "Act 7 of 2017 (expanded by HB 952 in 2022) waives the 6% PA sales tax on data center equipment — a corporate giveaway that has grown significantly as Amazon ($20B Salem Township), Microsoft (Three Mile Island), and others build major facilities here. Repealing or sunsetting the exemption captures revenue we're currently waiving.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 200000000,
+      "revenueHighUSD": 300000000,
+      "status": "concept",
+      "statusDetail": "No active repeal bill; would require sunsetting Act 7",
+      "sourceDetail": "Act 7 of 2017; HB 952 of 2022; PA Dept of Revenue exemption analyses",
+      "category": "close-loophole"
+    },
+    {
+      "id": "combined-reporting",
+      "name": "Close the \"Delaware loophole\"",
+      "description": "Combined corporate reporting — used by roughly half of US states — prevents multi-state corporations from shifting profits to no-tax-state subsidiaries to avoid PA corporate tax.",
+      "revenueLowUSD": 200000000,
+      "revenueMidUSD": 300000000,
+      "revenueHighUSD": 400000000,
+      "status": "blocked",
+      "statusDetail": "Repeatedly proposed; opposed by business lobby",
+      "sourceDetail": "PA Dept of Revenue analyses; multiple gubernatorial budget proposals",
+      "category": "close-loophole"
+    },
+    {
+      "id": "industrial-power-surcharge",
+      "name": "Industrial power consumption surcharge",
+      "description": "A per-MWh surcharge on industrial-scale power consumers (data centers, crypto mining, large industrial loads). Targets facilities that strain the PJM grid and drive up rates for residential customers — without raising bills for ordinary Pennsylvanians.",
+      "revenueLowUSD": 50000000,
+      "revenueMidUSD": 100000000,
+      "revenueHighUSD": 200000000,
+      "status": "concept",
+      "statusDetail": "Pre-bill stage; analogous proposals exist in OH and VA",
+      "sourceDetail": "Emerging policy area; ratepayer-advocate research",
+      "category": "new-revenue"
+    }
+  ]
+}
