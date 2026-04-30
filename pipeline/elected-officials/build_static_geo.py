@@ -192,52 +192,75 @@ def main() -> int:
     return _build_counties()
 
 
+def _nominatim_bbox(query: str) -> dict | None:
+    """Get a place's bounding box from Nominatim. Polite use: 1 req/sec."""
+    url = (
+        "https://nominatim.openstreetmap.org/search?"
+        + urllib.parse.urlencode({"q": query, "format": "json", "limit": 1, "countrycodes": "us"})
+    )
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read())
+    except Exception:
+        return None
+    if not data:
+        return None
+    bb = data[0].get("boundingbox") or []
+    if len(bb) != 4:
+        return None
+    return {
+        "south": float(bb[0]),
+        "north": float(bb[1]),
+        "west": float(bb[2]),
+        "east": float(bb[3]),
+        "lat": float(data[0].get("lat", 0)),
+        "lng": float(data[0].get("lon", 0)),
+    }
+
+
 def _build_counties() -> int:
     print("[county/1] Downloading Census 2020 county gazetteer…", file=sys.stderr)
     county_rows = parse_gazetteer_zip(fetch(GAZ_COUNTY_URL))
     pa_counties = [r for r in county_rows if r.get("USPS", "") == "PA"]
     print(f"      {len(pa_counties)} PA counties", file=sys.stderr)
 
-    print("[county/2] Sampling districts per county centroid (5x5 bbox grid)…", file=sys.stderr)
+    print("[county/2] Sampling districts per county (Nominatim-bounded 7x7 grid)…", file=sys.stderr)
     county_to_districts: dict[str, dict] = {}
     for i, row in enumerate(pa_counties):
         name = row.get("NAME", "").replace(" County", "").strip()
         if not name:
             continue
-        try:
-            lat = float(row.get("INTPTLAT", "0"))
-            lng = float(row.get("INTPTLONG", "0"))
-            # Census counties gazetteer doesn't have a bbox; use a fixed
-            # ~0.5-degree window around the centroid for sampling. Counties
-            # rarely span more than that in PA.
-            radius = 0.4
-            bbox = {
-                "south": lat - radius,
-                "north": lat + radius,
-                "west": lng - radius,
-                "east": lng + radius,
-            }
-        except Exception:
+        # Get the actual county bbox from Nominatim — Census gazetteer
+        # only gives us a centroid, and a fixed-radius square around the
+        # centroid spills into neighboring counties. Nominatim's bbox is
+        # the actual political boundary.
+        bbox = _nominatim_bbox(f"{name} County, Pennsylvania, USA")
+        if not bbox:
+            print(f"      [skip] {name}: Nominatim bbox unavailable", file=sys.stderr)
             continue
+        time.sleep(1.1)  # honor Nominatim's 1 req/sec policy
+
+        # Inset 5% (smaller than before; bbox is already accurate so we
+        # don't need to dodge the edge much). 7x7 grid for denser counties.
+        inset = 0.05
         districts: set[str] = set()
-        # 5x5 inset grid
-        inset = 0.08
-        for ix in range(5):
-            for iy in range(5):
-                fx = inset + (ix / 4) * (1 - 2 * inset)
-                fy = inset + (iy / 4) * (1 - 2 * inset)
+        for ix in range(7):
+            for iy in range(7):
+                fx = inset + (ix / 6) * (1 - 2 * inset)
+                fy = inset + (iy / 6) * (1 - 2 * inset)
                 px = bbox["west"] + (bbox["east"] - bbox["west"]) * fx
                 py = bbox["south"] + (bbox["north"] - bbox["south"]) * fy
                 for d in census_districts(py, px):
                     districts.add(d)
-                time.sleep(0.15)
+                time.sleep(0.12)
         senate = sorted(d for d in districts if d.startswith("SD-"))
         house = sorted(d for d in districts if d.startswith("HD-"))
         county_to_districts[name] = {
             "senate": senate,
             "house": house,
-            "lat": lat,
-            "lng": lng,
+            "lat": bbox["lat"],
+            "lng": bbox["lng"],
         }
         print(f"      {i+1}/{len(pa_counties)} {name}: {len(senate)} senate, {len(house)} house", file=sys.stderr)
 
