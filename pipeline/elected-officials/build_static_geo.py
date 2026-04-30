@@ -55,8 +55,22 @@ def fetch(url: str, timeout: int = 60) -> bytes:
         return r.read()
 
 
+def _parse_pa_district(item: dict, prefix: str, key: str) -> str | None:
+    """Return 'SD-N' or 'HD-N' if item is in PA and the SLD code is numeric."""
+    if not item or item.get("STATE") != PA_STATE_FIPS:
+        return None
+    raw = item.get(key)
+    if not raw:
+        return None
+    try:
+        return f"{prefix}-{int(raw)}"
+    except (ValueError, TypeError):
+        # Non-numeric SLD codes (e.g., Vermont's "02A") are not PA, skip.
+        return None
+
+
 def census_districts(lat: float, lng: float) -> list[str]:
-    """Return ['SD-N', 'HD-N'] for a coordinate, or [] on failure."""
+    """Return ['SD-N', 'HD-N'] for a coordinate (PA-state only), or []."""
     params = urllib.parse.urlencode({
         "x": str(lng),
         "y": str(lat),
@@ -72,13 +86,21 @@ def census_districts(lat: float, lng: float) -> list[str]:
     out = []
     for key in ("2024 State Legislative Districts - Upper", "2022 State Legislative Districts - Upper"):
         items = g.get(key) or []
-        if items and items[0].get("SLDU"):
-            out.append(f"SD-{int(items[0]['SLDU'])}")
+        for item in items:
+            d = _parse_pa_district(item, "SD", "SLDU")
+            if d:
+                out.append(d)
+                break
+        if out and out[-1].startswith("SD-"):
             break
     for key in ("2024 State Legislative Districts - Lower", "2022 State Legislative Districts - Lower"):
         items = g.get(key) or []
-        if items and items[0].get("SLDL"):
-            out.append(f"HD-{int(items[0]['SLDL'])}")
+        for item in items:
+            d = _parse_pa_district(item, "HD", "SLDL")
+            if d:
+                out.append(d)
+                break
+        if any(d.startswith("HD-") for d in out):
             break
     return out
 
@@ -104,6 +126,15 @@ def parse_gazetteer_zip(zip_bytes: bytes) -> list[dict]:
 
 
 def main() -> int:
+    counties_only = "--counties-only" in sys.argv
+    if counties_only and not ZIP_OUTPUT.exists():
+        print("--counties-only requires zip-districts.json to already exist.", file=sys.stderr)
+        return 2
+
+    if counties_only:
+        print("[skip] ZIP step (--counties-only)", file=sys.stderr)
+        return _build_counties()
+
     print("[1/4] Downloading Census 2020 ZCTA gazetteer…", file=sys.stderr)
     zcta_rows = parse_gazetteer_zip(fetch(GAZ_ZCTA_URL))
     print(f"      {len(zcta_rows)} ZCTAs total", file=sys.stderr)
@@ -158,12 +189,16 @@ def main() -> int:
     ZIP_OUTPUT.write_text(json.dumps(zip_doc, indent=2) + "\n")
     print(f"      Wrote {ZIP_OUTPUT}", file=sys.stderr)
 
-    print("[3/4] Downloading Census 2020 county gazetteer…", file=sys.stderr)
+    return _build_counties()
+
+
+def _build_counties() -> int:
+    print("[county/1] Downloading Census 2020 county gazetteer…", file=sys.stderr)
     county_rows = parse_gazetteer_zip(fetch(GAZ_COUNTY_URL))
     pa_counties = [r for r in county_rows if r.get("USPS", "") == "PA"]
     print(f"      {len(pa_counties)} PA counties", file=sys.stderr)
 
-    print("[4/4] Sampling districts per county centroid (5x5 bbox grid)…", file=sys.stderr)
+    print("[county/2] Sampling districts per county centroid (5x5 bbox grid)…", file=sys.stderr)
     county_to_districts: dict[str, dict] = {}
     for i, row in enumerate(pa_counties):
         name = row.get("NAME", "").replace(" County", "").strip()
