@@ -19,7 +19,9 @@ export interface Props {
 }
 
 const { activeSlug } = Astro.props;
-const dashboards = config.portfolio.projects;
+// Hide coming-soon dashboards from cross-dashboard nav — they live on the
+// portfolio landing card grid, but a non-clickable nav entry is just clutter.
+const dashboards = config.portfolio.projects.filter((d) => d.status !== 'coming-soon');
 
 const labels: Record<string, string> = {
   budget: 'Budget',

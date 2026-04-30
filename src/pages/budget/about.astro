@@ -40,10 +40,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <header>
       <div class="border-b border-white/10 px-6 py-4">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
-            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="flex min-w-0 items-center gap-3">
+            <a href="/" class="flex-shrink-0 hover:opacity-80 transition" aria-label="All dashboards">
+              <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto sm:h-12" />
+            </a>
             <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{config.project.name}</div>
-          </a>
+          </div>
           <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
             wtpppa.org →
           </a>
@@ -52,7 +54,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
       <DashboardNav activeSlug="budget" />
     </header>
 
-    <main class="mx-auto max-w-3xl px-6 py-16 md:py-24">
+    <main class="mx-auto max-w-3xl px-6 pt-8 md:pt-12 pb-16 md:pb-24">
       <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">About</p>
       <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">How PA Budget Watch works</h1>
       <p class="mt-6 text-base leading-relaxed text-wtp-cream/80 md:text-lg">

@@ -249,10 +249,12 @@ const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
     <header>
       <div class="border-b border-white/10 px-6 py-4">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
-            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="flex min-w-0 items-center gap-3">
+            <a href="/" class="flex-shrink-0 hover:opacity-80 transition" aria-label="All dashboards">
+              <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto sm:h-12" />
+            </a>
             <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
-          </a>
+          </div>
           <nav class="flex flex-shrink-0 items-center gap-4 text-sm">
             <a href="/elected-officials/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">All officials</a>
             <a href={config.party.website} class="text-wtp-cream/70 no-underline hover:text-wtp-sky">wtpppa.org →</a>

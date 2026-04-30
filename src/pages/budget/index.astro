@@ -65,10 +65,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <header>
       <div class="border-b border-white/10 px-6 py-4">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
-            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+          <div class="flex min-w-0 items-center gap-3">
+            <a href="/" class="flex-shrink-0 hover:opacity-80 transition" aria-label="All dashboards">
+              <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto sm:h-12" />
+            </a>
             <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{config.project.name}</div>
-          </a>
+          </div>
           <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
             wtpppa.org →
           </a>
@@ -77,7 +79,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
       <DashboardNav activeSlug="budget" />
     </header>
 
-    <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+    <main class="mx-auto max-w-6xl px-6 pt-8 md:pt-12 pb-16 md:pb-24">
       <section>
         <p class="text-center text-xs uppercase tracking-[0.2em] text-wtp-sky">
           Pennsylvania's structural deficit
@@ -96,7 +98,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         />
       </section>
 
-      <section class="mt-24" id="how-it-works">
+      <section class="mt-16" id="how-it-works">
         <h2 class="text-3xl font-extrabold md:text-4xl">How Pennsylvania's money works</h2>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
           The <strong class="text-white">General Fund</strong> is the state's main operating budget. Each year it collects about <strong class="text-white">$45 billion</strong> — almost entirely from income and sales taxes paid by working Pennsylvanians — and spends about <strong class="text-white">$50 billion</strong> on services, mostly Medicaid and education.
