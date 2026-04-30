@@ -4,7 +4,7 @@ import { config } from '../../config';
 import platform from '../../../data/legislation/platform.json';
 
 const projectName = 'PA Legislation Watch';
-const pageTitle = `Methodology — ${projectName}`;
+const pageTitle = `About — ${projectName}`;
 const pageDescription = `How ${projectName} screens Pennsylvania bills against the ${config.party.shortName} platform.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
 ---
@@ -36,7 +36,7 @@ const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
     </header>
 
     <main class="mx-auto max-w-3xl px-6 py-16 md:py-24">
-      <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Methodology</p>
+      <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">About</p>
       <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">How we screen bills</h1>
 
       <section class="prose prose-invert mt-10 max-w-none space-y-6 text-base leading-relaxed text-wtp-cream/80">
@@ -93,6 +93,14 @@ const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
         <h2 class="text-2xl font-bold text-white">Update cadence</h2>
         <p>
           The bill list is refreshed weekly via a GitHub Actions cron. Editorial reviews are added as bills move through committee. Both the bill data and the platform definitions live in this repo's git history, so you can see exactly when each call was made.
+        </p>
+
+        <h2 class="text-2xl font-bold text-white">A note on AI</h2>
+        <p>
+          We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA source we cite.
+        </p>
+        <p>
+          The energy used during development was small — roughly comparable to streaming a few hours of video.
         </p>
 
         <h2 class="text-2xl font-bold text-white">Open source</h2>

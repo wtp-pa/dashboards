@@ -10,7 +10,7 @@ const lastIFORefreshFormatted = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/New_York',
 }).format(lastIFORefresh);
 
-const pageTitle = `Methodology — ${config.project.name}`;
+const pageTitle = `About — ${config.project.name}`;
 const pageDescription = `How PA Budget Watch works: where the data comes from, what's auto-updated, and what to keep in mind.`;
 const siteOrigin = Astro.site ?? Astro.url;
 const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
@@ -49,7 +49,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     </header>
 
     <main class="mx-auto max-w-3xl px-6 py-16 md:py-24">
-      <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Methodology</p>
+      <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">About</p>
       <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">How PA Budget Watch works</h1>
       <p class="mt-6 text-base leading-relaxed text-wtp-cream/80 md:text-lg">
         Every number on this dashboard comes from a public source we cite. This page explains where each piece of data comes from, what's automatically refreshed, and what you should keep in mind when reading it.
@@ -119,6 +119,16 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           <li>— The personal impact calculator uses a per-capita scaling assumption that's editorial — not all households would actually pay the same share if the deficit were closed via taxes (PA's flat income tax means scaling is roughly linear, but exemptions and credits vary).</li>
           <li>— Brand colors are pulled from the {config.party.shortName} Squarespace site palette; the dashboard logo file is currently a PNG converted from the source WebP.</li>
         </ul>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">A note on AI</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA source we cite.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          The energy used during development was small — roughly comparable to streaming a few hours of video.
+        </p>
       </section>
 
       <section class="mt-12">

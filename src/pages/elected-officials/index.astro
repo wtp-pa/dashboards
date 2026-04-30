@@ -209,7 +209,7 @@ const topPillars = Object.entries(pillarById)
         </a>
         <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
           <a href="/legislation/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Bills</a>
-          <a href="/legislation/about/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Methodology</a>
+          <a href="/legislation/about/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">About</a>
         </nav>
       </div>
     </header>
@@ -581,6 +581,15 @@ const topPillars = Object.entries(pillarById)
           </a>
         </div>
       </section>
+      <section class="mx-auto mt-16 max-w-3xl rounded-md border border-white/10 bg-white/5 px-6 py-5 text-sm leading-relaxed text-wtp-cream/70">
+        <h2 class="text-base font-semibold text-white">A note on AI</h2>
+        <p class="mt-2">
+          We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA source we cite.
+        </p>
+        <p class="mt-2">
+          The energy used during development was small — roughly comparable to streaming a few hours of video.
+        </p>
+      </section>
     </main>
 
     <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
@@ -590,7 +599,7 @@ const topPillars = Object.entries(pillarById)
           <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
           <a href={config.party.socials.twitter} class="hover:text-white">X</a>
           <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
-          <a href="/legislation/about/" class="hover:text-white">Methodology</a>
+          <a href="/legislation/about/" class="hover:text-white">About</a>
         </div>
       </div>
     </footer>
