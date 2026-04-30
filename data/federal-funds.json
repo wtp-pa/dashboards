@@ -49,15 +49,15 @@
     },
     {
       "key": "expansionRepeal",
-      "label": "ACA Medicaid expansion repealed",
+      "label": "Medicaid expansion population loses federal coverage",
       "deficitImpactUSD": 4000000000,
-      "shortDescription": "PA loses the 90% federal match for ~700,000 expansion enrollees; state on hook for full coverage or has to drop the population"
+      "shortDescription": "If the 90% federal match for the ~700,000 ACA expansion enrollees ends, PA is on the hook for full coverage or has to drop the population"
     },
     {
       "key": "snapCutsTransfer",
-      "label": "Federal SNAP costs partly shifted to states",
+      "label": "SNAP cost-share shifted to states",
       "deficitImpactUSD": 700000000,
-      "shortDescription": "Recent federal proposals would transfer some SNAP benefit costs to states based on payment-error rates; PA's share would be ~$700M annually"
+      "shortDescription": "If federal SNAP funding moves toward a partial state match (a recurring proposal across administrations), PA's share would be ~$700M annually"
     }
   ]
 }
