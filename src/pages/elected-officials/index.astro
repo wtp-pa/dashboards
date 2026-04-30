@@ -205,18 +205,23 @@ const topPillars = Object.entries(pillarById)
     <header>
       <div class="border-b border-white/10 px-6 py-4">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <div class="flex min-w-0 items-center gap-3">
+          <div class="flex min-w-0 flex-shrink-0 items-center gap-3">
             <a href="/" class="flex-shrink-0 hover:opacity-80 transition" aria-label="All dashboards">
               <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto sm:h-12" />
             </a>
             <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
+          </div>
+          <div class="hidden md:flex md:flex-1 md:justify-center">
+            <DashboardNav activeSlug="elected-officials" />
           </div>
           <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
             wtpppa.org →
           </a>
         </div>
       </div>
-      <DashboardNav activeSlug="elected-officials" />
+      <div class="border-b border-white/10 bg-white/[0.02] px-6 py-2 md:hidden">
+        <DashboardNav activeSlug="elected-officials" />
+      </div>
     </header>
 
     <main class="mx-auto max-w-6xl px-6 py-12 md:py-16">

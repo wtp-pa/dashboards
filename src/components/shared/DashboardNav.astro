@@ -1,15 +1,13 @@
 ---
 /**
- * Cross-dashboard switcher rendered as a slim second row of the header.
- * Source of truth: config.portfolio.projects (slug + status).
- *
- * Pass `activeSlug` so the current dashboard is highlighted. Omit on the
- * portfolio landing page (no active dashboard).
+ * Cross-dashboard switcher. Renders just the <nav> element — the consumer
+ * decides whether to place it inline in the header (md+) or as a strip
+ * below the header (mobile). Source of truth: config.portfolio.projects.
  *
  * Status semantics:
  *   live          → plain link
- *   pre-release   → link + small "BETA" badge
- *   coming-soon   → muted, not a link, "soon" suffix
+ *   pre-release   → link + small italic "beta" trailing
+ *   coming-soon   → filtered out (lives only on the portfolio card grid)
  */
 
 import { config } from '../../config';
@@ -19,8 +17,6 @@ export interface Props {
 }
 
 const { activeSlug } = Astro.props;
-// Hide coming-soon dashboards from cross-dashboard nav — they live on the
-// portfolio landing card grid, but a non-clickable nav entry is just clutter.
 const dashboards = config.portfolio.projects.filter((d) => d.status !== 'coming-soon');
 
 const labels: Record<string, string> = {
@@ -31,37 +27,23 @@ const labels: Record<string, string> = {
 };
 ---
 
-<div class="border-b border-white/10 bg-white/[0.02] px-6 py-2.5">
-  <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm">
-    {dashboards.map((d) => {
-      const label = labels[d.slug] ?? d.name;
-      const isActive = d.slug === activeSlug;
-      const isComingSoon = d.status === 'coming-soon';
-      const isBeta = d.status === 'pre-release';
+<nav class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+  {dashboards.map((d) => {
+    const label = labels[d.slug] ?? d.name;
+    const isActive = d.slug === activeSlug;
+    const isBeta = d.status === 'pre-release';
 
-      if (isComingSoon) {
-        return (
-          <span class="text-wtp-cream/40">
-            {label}
-            <span class="ml-1 text-[10px] uppercase tracking-wide">soon</span>
-          </span>
-        );
-      }
+    const linkClass = isActive
+      ? 'text-white font-semibold no-underline'
+      : 'text-wtp-cream/70 no-underline hover:text-wtp-sky transition';
 
-      const linkClass = isActive
-        ? 'text-white font-semibold no-underline'
-        : 'text-wtp-cream/70 no-underline hover:text-wtp-sky transition';
-
-      return (
-        <a href={`/${d.slug}/`} class={linkClass} aria-current={isActive ? 'page' : undefined}>
-          {label}
-          {isBeta && (
-            <span class="ml-1.5 inline-block rounded-sm bg-wtp-gold/15 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-wtp-gold">
-              beta
-            </span>
-          )}
-        </a>
-      );
-    })}
-  </nav>
-</div>
+    return (
+      <a href={`/${d.slug}/`} class={linkClass} aria-current={isActive ? 'page' : undefined}>
+        {label}
+        {isBeta && (
+          <span class="ml-0.5 italic text-[11px] text-wtp-gold/70">beta</span>
+        )}
+      </a>
+    );
+  })}
+</nav>
