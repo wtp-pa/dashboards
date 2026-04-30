@@ -443,95 +443,72 @@ const topPillars = Object.entries(pillarById)
         </div>
         <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform-touching sponsorship activity. Click a card for the full vote-by-vote and bill-by-bill detail.</p>
 
-        <div class="mt-6 space-y-4 rounded-lg border border-white/10 bg-surface/30 p-4 md:p-5">
+        <div class="mt-4 rounded-lg border border-white/10 bg-surface/30 p-3 md:p-4">
 
-          <!-- Row 1: Name search -->
-          <div>
-            <label for="name-filter" class="block text-[11px] uppercase tracking-wider text-wtp-cream/50">Search by name</label>
+          <!-- Primary path: location lookup → fills district chips -->
+          <form id="lookup-form" class="flex gap-2" novalidate>
+            <input
+              type="text"
+              id="lookup-input"
+              autocomplete="off"
+              placeholder="Find your reps: address, ZIP, or county"
+              aria-label="Address, ZIP code, or county"
+              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-3 py-2.5 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+            />
+            <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-4 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">Find</button>
+            <button type="button" id="geo-button" class="flex-shrink-0 rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-base text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my current location" aria-label="Use my location">📍</button>
+          </form>
+          <p id="lookup-status" class="mt-1.5 hidden text-xs text-wtp-sky"></p>
+
+          <!-- District chips + add picker. Single row when only "+ Add district". -->
+          <div class="mt-2 flex flex-wrap items-center gap-1.5">
+            <div id="district-chips" class="contents"></div>
+            <div class="relative">
+              <button type="button" id="district-add-toggle" class="flex items-center gap-1 rounded-full border border-dashed border-wtp-sky/40 bg-wtp-sky/5 px-2.5 py-1 text-xs font-medium text-wtp-sky transition hover:bg-wtp-sky/10">
+                <span aria-hidden="true">+</span> Add district
+              </button>
+              <div id="district-picker" class="absolute left-0 top-full z-20 mt-1 hidden w-72 rounded-md border border-white/15 bg-page p-2 shadow-xl">
+                <input
+                  type="search"
+                  id="district-search"
+                  placeholder="Type SD- HD- or a name…"
+                  autocomplete="off"
+                  class="w-full rounded-md border border-white/15 bg-surface px-2 py-1.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+                />
+                <ul id="district-options" class="mt-1 max-h-64 overflow-y-auto text-sm"></ul>
+              </div>
+            </div>
+            <button type="button" id="district-clear" class="ml-1 hidden text-[11px] text-wtp-cream/50 underline-offset-2 hover:text-wtp-sky hover:underline">Clear</button>
+          </div>
+
+          <!-- Secondary filters: name, chamber, party. Compact one-line on desktop. -->
+          <div class="mt-3 flex flex-wrap items-center gap-2 border-t border-white/5 pt-3">
             <input
               type="search"
               id="name-filter"
-              placeholder="e.g., Boscola"
+              placeholder="Search by name…"
               autocomplete="off"
-              class="mt-1 w-full min-w-0 rounded-md border border-white/15 bg-page px-3 py-2.5 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+              class="min-w-[8rem] flex-1 rounded-md border border-white/15 bg-page px-3 py-1.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
             />
-          </div>
-
-          <!-- Row 2: Find by location → populates district chips below -->
-          <div>
-            <label for="lookup-input" class="block text-[11px] uppercase tracking-wider text-wtp-cream/50">Find by location</label>
-            <form id="lookup-form" class="mt-1 flex gap-2" novalidate>
-              <input
-                type="text"
-                id="lookup-input"
-                autocomplete="off"
-                placeholder="Address, ZIP, or county"
-                aria-label="Address, ZIP code, or county"
-                class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-3 py-2.5 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-              />
-              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-4 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">Find</button>
-              <button type="button" id="geo-button" class="flex flex-shrink-0 items-center justify-center rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-base text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my current location" aria-label="Use my location">
-                <span aria-hidden="true">📍</span>
-              </button>
-            </form>
-            <p class="mt-1 text-[11px] text-wtp-cream/40">Examples: <span class="text-wtp-cream/60">17109</span> · <span class="text-wtp-cream/60">Allegheny County</span> · <span class="text-wtp-cream/60">100 Market St, Harrisburg</span></p>
-            <p id="lookup-status" class="mt-1 hidden text-[11px] text-wtp-sky"></p>
-          </div>
-
-          <!-- Row 3: Chamber + Party pills -->
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Chamber</span>
-            <div class="flex flex-wrap gap-2" role="group" aria-label="Chamber filter">
-              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All <span class="opacity-70">{chamberCounts.all}</span></button>
-              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate <span class="opacity-70">{chamberCounts.Senate}</span></button>
-              <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House <span class="opacity-70">{chamberCounts.House}</span></button>
+            <div class="flex flex-wrap gap-1.5" role="group" aria-label="Chamber filter">
+              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-2.5 py-1 text-[11px] font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All <span class="opacity-70">{chamberCounts.all}</span></button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate <span class="opacity-70">{chamberCounts.Senate}</span></button>
+              <button type="button" class="chamber-pill rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House <span class="opacity-70">{chamberCounts.House}</span></button>
             </div>
-          </div>
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Party</span>
-            <div class="flex flex-wrap gap-2" role="group" aria-label="Party filter">
-              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All <span class="opacity-70">{partyCounts.all}</span></button>
-              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D <span class="opacity-70">{partyCounts.D ?? 0}</span></button>
-              <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R <span class="opacity-70">{partyCounts.R ?? 0}</span></button>
+            <div class="flex flex-wrap gap-1.5" role="group" aria-label="Party filter">
+              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-2.5 py-1 text-[11px] font-medium text-wtp-navy transition" data-party="all" data-active="true">All <span class="opacity-70">{partyCounts.all}</span></button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D <span class="opacity-70">{partyCounts.D ?? 0}</span></button>
+              <button type="button" class="party-pill rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R <span class="opacity-70">{partyCounts.R ?? 0}</span></button>
               {(partyCounts.I ?? 0) > 0 && (
-                <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="I">I <span class="opacity-70">{partyCounts.I}</span></button>
+                <button type="button" class="party-pill rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="I">I <span class="opacity-70">{partyCounts.I}</span></button>
               )}
             </div>
           </div>
 
-          <!-- Row 4: District chips. Populated by the location lookup OR by
-               the manual picker. When non-empty, only matching districts
-               appear in the roster. -->
-          <div>
-            <div class="flex items-baseline justify-between gap-2">
-              <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Districts</span>
-              <span class="text-[10px] text-wtp-cream/40">A location lookup adds matching districts here. <button type="button" id="district-clear" class="ml-1 hidden text-wtp-sky underline-offset-2 hover:underline">Clear all</button></span>
-            </div>
-            <div class="mt-1 flex flex-wrap items-center gap-2">
-              <div id="district-chips" class="flex flex-wrap gap-1.5"></div>
-              <div class="relative">
-                <button type="button" id="district-add-toggle" class="flex items-center gap-1 rounded-full border border-dashed border-wtp-sky/40 bg-wtp-sky/5 px-3 py-1.5 text-xs font-medium text-wtp-sky transition hover:bg-wtp-sky/10">
-                  <span aria-hidden="true">+</span> Add district
-                </button>
-                <div id="district-picker" class="absolute left-0 top-full z-20 mt-1 hidden w-72 rounded-md border border-white/15 bg-page p-2 shadow-xl">
-                  <input
-                    type="search"
-                    id="district-search"
-                    placeholder="Type SD- HD- or a name…"
-                    autocomplete="off"
-                    class="w-full rounded-md border border-white/15 bg-surface px-2 py-1.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-                  />
-                  <ul id="district-options" class="mt-1 max-h-64 overflow-y-auto text-sm"></ul>
-                </div>
-              </div>
-            </div>
-            <p id="district-empty-msg" class="mt-1 text-[11px] italic text-wtp-cream/40">No districts selected — showing all 251.</p>
-          </div>
-
-          <!-- Footer: visible count + reset -->
-          <div class="flex items-center justify-between border-t border-white/10 pt-3 text-xs text-wtp-cream/60">
-            <div><span id="visible-count">{officials.length}</span> visible of {officials.length}</div>
-            <button type="button" id="reset-filters" class="text-wtp-sky underline-offset-2 hover:underline">Reset all filters</button>
+          <!-- Empty-state hint + footer combined -->
+          <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-wtp-cream/50">
+            <span id="district-empty-msg"><span id="visible-count">{officials.length}</span> of {officials.length} legislators visible</span>
+            <button type="button" id="reset-filters" class="text-wtp-sky underline-offset-2 hover:underline">Reset</button>
           </div>
         </div>
 
@@ -646,26 +623,22 @@ const topPillars = Object.entries(pillarById)
         renderDistrictChips();
       }
 
-      // Render the district chip strip + show/hide the empty hint and the
-      // "Clear all" link. Each chip removes that district from the filter.
+      // Render the district chip strip + show/hide the "Clear" link.
       function renderDistrictChips() {
         const wrap = document.getElementById('district-chips');
-        const empty = document.getElementById('district-empty-msg');
         const clear = document.getElementById('district-clear');
         if (!wrap) return;
         wrap.innerHTML = '';
         const sel = Array.from(filters.districts).sort();
         if (sel.length === 0) {
-          empty.classList.remove('hidden');
-          clear.classList.add('hidden');
+          if (clear) clear.classList.add('hidden');
           return;
         }
-        empty.classList.add('hidden');
-        clear.classList.remove('hidden');
+        if (clear) clear.classList.remove('hidden');
         for (const code of sel) {
           const chip = document.createElement('button');
           chip.type = 'button';
-          chip.className = 'flex items-center gap-1 rounded-full border border-wtp-sky/50 bg-wtp-sky/15 px-3 py-1 text-xs font-medium text-wtp-sky hover:bg-wtp-sky/25';
+          chip.className = 'flex items-center gap-1 rounded-full border border-wtp-sky/50 bg-wtp-sky/15 px-2.5 py-1 text-xs font-medium text-wtp-sky hover:bg-wtp-sky/25';
           chip.innerHTML = `<span class="font-mono">${code}</span><span class="text-wtp-sky/60">×</span>`;
           chip.title = `Remove ${code} from filter`;
           chip.addEventListener('click', () => {
@@ -1337,7 +1310,7 @@ const topPillars = Object.entries(pillarById)
             footerNote: 'Could not reach the geocoder. Try the address input or "Use my location". (' + (err && err.message ? err.message : 'unknown') + ')',
           });
         }
-      });
+      }
     </script>
   </body>
 </html>
