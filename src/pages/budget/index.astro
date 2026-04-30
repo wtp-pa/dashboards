@@ -13,6 +13,7 @@ import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
 import FederalCliffScenarios from '../../components/FederalCliffScenarios.astro';
 import ShareRow from '../../components/ShareRow.astro';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
@@ -192,7 +193,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
       </section>
     </main>
 
-    <footer class="mt-20 border-t border-white/10 px-6 py-8 text-sm text-wtp-cream/60">
+    <SupportTipCTA />
+
+    <footer class="border-t border-white/10 px-6 py-8 text-sm text-wtp-cream/60">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
         <div>Built by {config.party.name}</div>
         <div class="flex gap-4">

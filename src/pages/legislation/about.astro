@@ -2,6 +2,7 @@
 import '../../styles/global.css';
 import { config } from '../../config';
 import platform from '../../../data/legislation/platform.json';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 
 const projectName = 'PA Legislation Watch';
 const pageTitle = `About — ${projectName}`;
@@ -109,6 +110,8 @@ const canonicalUrl = `${config.portfolio.baseUrl}/legislation/about/`;
         </p>
       </section>
     </main>
+
+    <SupportTipCTA />
 
     <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">

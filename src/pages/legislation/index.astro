@@ -4,6 +4,7 @@ import { config } from '../../config';
 import BillCard from '../../components/legislation/BillCard.astro';
 import BrandShortName from '../../components/BrandShortName.astro';
 import PreReleaseBanner from '../../components/shared/PreReleaseBanner.astro';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import billsData from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import manualReviewDoc from '../../../data/legislation/manual_review.json';
@@ -448,6 +449,8 @@ const projectName = 'PA Legislation Watch';
         </div>
       </section>
     </main>
+
+    <SupportTipCTA />
 
     <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">

@@ -3,6 +3,7 @@ import '../../styles/global.css';
 import { config } from '../../config';
 import OfficialCard from '../../components/elected-officials/OfficialCard.astro';
 import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
 import zipDoc from '../../../data/elected-officials/zip-districts.json';
@@ -591,6 +592,8 @@ const topPillars = Object.entries(pillarById)
         </p>
       </section>
     </main>
+
+    <SupportTipCTA />
 
     <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">

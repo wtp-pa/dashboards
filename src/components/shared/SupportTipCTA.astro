@@ -1,0 +1,30 @@
+---
+/**
+ * Footer-area tip CTA. Links out to wtpppa.org/contribute (Squarespace
+ * donation page) where Apple Pay / card / etc. work natively. Cross-origin
+ * embed of Squarespace donation blocks is unreliable, so the click sends
+ * users to the working flow on the party site.
+ *
+ * Drop above the existing <footer> on any dashboard page.
+ */
+---
+
+<section class="border-t border-white/10 bg-gradient-to-b from-wtp-navy/40 to-transparent px-6 py-10 md:py-12">
+  <div class="mx-auto flex max-w-4xl flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="text-lg font-bold text-white sm:text-xl">Found this useful? Tip the team.</p>
+      <p class="mt-1 text-sm leading-relaxed text-wtp-cream/70 sm:text-base">
+        These dashboards are built and maintained by volunteers. A few bucks helps keep them running and free.
+      </p>
+    </div>
+    <a
+      href="https://www.wtpppa.org/contribute"
+      target="_blank"
+      rel="noopener"
+      class="inline-flex flex-shrink-0 items-center gap-2 rounded-md bg-wtp-sky px-6 py-3 text-base font-semibold text-wtp-navy no-underline transition hover:bg-wtp-sky/90"
+    >
+      Tip the team
+      <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>

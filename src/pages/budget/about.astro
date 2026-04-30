@@ -2,6 +2,7 @@
 import { config } from '../../config';
 import projections from '../../../data/projections.json';
 import ifoData from '../../../data/ifo-publications.json';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
 
 const lastIFORefresh = new Date(ifoData.lastUpdated);
@@ -143,7 +144,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
       </p>
     </main>
 
-    <footer class="mt-20 border-t border-white/10 px-6 py-8 text-sm text-wtp-cream/60">
+    <SupportTipCTA />
+
+    <footer class="border-t border-white/10 px-6 py-8 text-sm text-wtp-cream/60">
       <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
         <div>Built by {config.party.name}</div>
         <div class="flex gap-4">
