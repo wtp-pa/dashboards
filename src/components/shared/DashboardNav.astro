@@ -1,0 +1,65 @@
+---
+/**
+ * Cross-dashboard switcher rendered as a slim second row of the header.
+ * Source of truth: config.portfolio.projects (slug + status).
+ *
+ * Pass `activeSlug` so the current dashboard is highlighted. Omit on the
+ * portfolio landing page (no active dashboard).
+ *
+ * Status semantics:
+ *   live          → plain link
+ *   pre-release   → link + small "BETA" badge
+ *   coming-soon   → muted, not a link, "soon" suffix
+ */
+
+import { config } from '../../config';
+
+export interface Props {
+  activeSlug?: string;
+}
+
+const { activeSlug } = Astro.props;
+const dashboards = config.portfolio.projects;
+
+const labels: Record<string, string> = {
+  budget: 'Budget',
+  legislation: 'Legislation',
+  'elected-officials': 'Officials',
+  local: 'Local',
+};
+---
+
+<div class="border-b border-white/10 bg-white/[0.02] px-6 py-2.5">
+  <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm">
+    {dashboards.map((d) => {
+      const label = labels[d.slug] ?? d.name;
+      const isActive = d.slug === activeSlug;
+      const isComingSoon = d.status === 'coming-soon';
+      const isBeta = d.status === 'pre-release';
+
+      if (isComingSoon) {
+        return (
+          <span class="text-wtp-cream/40">
+            {label}
+            <span class="ml-1 text-[10px] uppercase tracking-wide">soon</span>
+          </span>
+        );
+      }
+
+      const linkClass = isActive
+        ? 'text-white font-semibold no-underline'
+        : 'text-wtp-cream/70 no-underline hover:text-wtp-sky transition';
+
+      return (
+        <a href={`/${d.slug}/`} class={linkClass} aria-current={isActive ? 'page' : undefined}>
+          {label}
+          {isBeta && (
+            <span class="ml-1.5 inline-block rounded-sm bg-wtp-gold/15 px-1.5 py-0.5 align-middle text-[9px] font-bold uppercase tracking-wider text-wtp-gold">
+              beta
+            </span>
+          )}
+        </a>
+      );
+    })}
+  </nav>
+</div>

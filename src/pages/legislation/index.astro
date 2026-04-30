@@ -4,6 +4,7 @@ import { config } from '../../config';
 import BillCard from '../../components/legislation/BillCard.astro';
 import BrandShortName from '../../components/BrandShortName.astro';
 import PreReleaseBanner from '../../components/shared/PreReleaseBanner.astro';
+import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import billsData from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
@@ -137,19 +138,19 @@ const projectName = 'PA Legislation Watch';
       approved={config.legislation.officersApprovedData}
       body="The auto-alignment scoring uses real OpenStates data, but editorial reviews and the matcher's confidence thresholds are still being calibrated with WTPPPA officers. Treat the dashboard as informative, not authoritative, until this banner is gone."
     />
-    <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
-        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
-          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
-        </a>
-        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
-          {config.party.name}
-        </a>
-        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
-          <a href="/legislation/about" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">About</a>
-        </nav>
+    <header>
+      <div class="border-b border-white/10 px-6 py-4">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
+            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+            <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
+          </a>
+          <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
+            wtpppa.org →
+          </a>
+        </div>
       </div>
+      <DashboardNav activeSlug="legislation" />
     </header>
 
     <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">

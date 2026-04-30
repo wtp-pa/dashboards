@@ -3,6 +3,7 @@ import '../../styles/global.css';
 import { config } from '../../config';
 import OfficialCard from '../../components/elected-officials/OfficialCard.astro';
 import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
+import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
@@ -199,20 +200,19 @@ const topPillars = Object.entries(pillarById)
   <body class="min-h-screen bg-page text-white">
     <DemoBanner />
 
-    <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
-        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
-          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
-        </a>
-        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
-          {config.party.name}
-        </a>
-        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
-          <a href="/legislation/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Bills</a>
-          <a href="/legislation/about/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">About</a>
-        </nav>
+    <header>
+      <div class="border-b border-white/10 px-6 py-4">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
+            <img src={config.brand.logoPath} alt="WTP-PA logo" class="h-10 w-auto flex-shrink-0 sm:h-12" />
+            <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{projectName}</div>
+          </a>
+          <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
+            wtpppa.org →
+          </a>
+        </div>
       </div>
+      <DashboardNav activeSlug="elected-officials" />
     </header>
 
     <main class="mx-auto max-w-6xl px-6 py-12 md:py-16">

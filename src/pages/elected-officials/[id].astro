@@ -3,6 +3,7 @@ import '../../styles/global.css';
 import { config } from '../../config';
 import VoteRow from '../../components/elected-officials/VoteRow.astro';
 import DemoBanner from '../../components/elected-officials/DemoBanner.astro';
+import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
@@ -243,20 +244,20 @@ const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
   <body class="min-h-screen bg-page text-white">
     <DemoBanner />
 
-    <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
-        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
-          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
-        </a>
-        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
-          {config.party.name}
-        </a>
-        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
-          <a href="/elected-officials/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">All officials</a>
-          <a href="/legislation/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">Bills</a>
-        </nav>
+    <header>
+      <div class="border-b border-white/10 px-6 py-4">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
+            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+            <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
+          </a>
+          <nav class="flex flex-shrink-0 items-center gap-4 text-sm">
+            <a href="/elected-officials/" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">All officials</a>
+            <a href={config.party.website} class="text-wtp-cream/70 no-underline hover:text-wtp-sky">wtpppa.org →</a>
+          </nav>
+        </div>
       </div>
+      <DashboardNav activeSlug="elected-officials" />
     </header>
 
     <main class="mx-auto max-w-5xl px-6 py-12 md:py-16">

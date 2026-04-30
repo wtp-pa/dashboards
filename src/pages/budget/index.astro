@@ -13,6 +13,7 @@ import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
 import FederalCliffScenarios from '../../components/FederalCliffScenarios.astro';
 import ShareRow from '../../components/ShareRow.astro';
+import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
 
@@ -59,19 +60,19 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <meta name="twitter:image" content={ogImageUrl} />
   </head>
   <body class="min-h-screen bg-page text-white">
-    <header class="border-b border-white/10 px-6 py-4">
-      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 md:grid md:grid-cols-3">
-        <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition md:justify-self-start">
-          <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
-          <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{config.project.name}</div>
-        </a>
-        <a href={config.party.website} class="hidden text-center text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky md:block md:justify-self-center">
-          {config.party.name}
-        </a>
-        <nav class="flex flex-shrink-0 items-center gap-4 text-sm md:justify-self-end">
-          <a href="/budget/about" class="text-wtp-cream/70 no-underline hover:text-wtp-sky">About</a>
-        </nav>
+    <header>
+      <div class="border-b border-white/10 px-6 py-4">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <a href="/" class="flex min-w-0 items-center gap-3 hover:opacity-80 transition">
+            <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto flex-shrink-0 sm:h-12" />
+            <div class="min-w-0 truncate text-base font-semibold sm:text-lg">{config.project.name}</div>
+          </a>
+          <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
+            wtpppa.org →
+          </a>
+        </div>
       </div>
+      <DashboardNav activeSlug="budget" />
     </header>
 
     <main class="mx-auto max-w-6xl px-6 py-16 md:py-24">
