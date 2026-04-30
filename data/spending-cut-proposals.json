@@ -1,0 +1,77 @@
+{
+  "$comment": "Best-effort spending-cut estimates for PA. Same caveat as rescue-proposals.json: numbers are mid-range from cited sources; treat as informative, not precise. Real savings depend on implementation, ramp-up, and political will. Sources cited per row. Refresh annually against PA IFO publications and Auditor General reports.",
+  "proposals": [
+    {
+      "id": "pension-reform-expand",
+      "name": "Expand pension reform for new state hires",
+      "description": "Acts 120 (2010) and 5 (2017) already shifted some new hires to lower-cost benefit tiers. Further reforms — fully defined-contribution for new hires, higher retirement age, lower employer match — could save more over time. Slow ramp-up since it only affects new employees.",
+      "revenueLowUSD": 200000000,
+      "revenueMidUSD": 350000000,
+      "revenueHighUSD": 500000000,
+      "status": "concept",
+      "statusDetail": "Building on Act 120 of 2010 and Act 5 of 2017; not currently before the legislature",
+      "sourceDetail": "PA SERS and PSERS actuarial reports; pension reform commission analyses",
+      "category": "structural"
+    },
+    {
+      "id": "medicaid-optional-services",
+      "name": "Trim Medicaid optional services",
+      "description": "PA's Medicaid covers a generous list of \"optional\" services beyond federal minimums (adult dental, vision, some prescriptions, etc.). Tightening or means-testing optional benefits — as several states have done — preserves core coverage while reducing cost.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 250000000,
+      "revenueHighUSD": 500000000,
+      "status": "concept",
+      "statusDetail": "Done by other states; not currently proposed in PA",
+      "sourceDetail": "KFF state Medicaid scope-of-coverage tables; PA DHS Medicaid budget",
+      "category": "service-cut"
+    },
+    {
+      "id": "sunset-tax-credits",
+      "name": "Sunset stale tax credits and abatements",
+      "description": "PA has dozens of corporate tax credits (KOZ, KIZ, film tax credit, R&D credit, others), many of which haven't been rigorously audited in years. The IFO has flagged several as low-ROI. Sunsetting underperformers frees up revenue without raising rates.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 200000000,
+      "revenueHighUSD": 350000000,
+      "status": "active-bill",
+      "statusDetail": "Multiple sunset bills introduced over recent sessions; tax-credit reviews ongoing",
+      "sourceDetail": "PA IFO tax credit reviews; legislative committee analyses",
+      "category": "close-loophole"
+    },
+    {
+      "id": "workforce-reduction",
+      "name": "5% state workforce reduction via attrition",
+      "description": "PA employs roughly 70,000 in the executive branch. A 5% reduction over 2-3 years through attrition (not replacing departures, consolidating positions) saves hundreds of millions in salary + benefits without layoffs.",
+      "revenueLowUSD": 200000000,
+      "revenueMidUSD": 350000000,
+      "revenueHighUSD": 500000000,
+      "status": "concept",
+      "statusDetail": "Perennial proposal; never formally pursued at scale",
+      "sourceDetail": "PA Office of Administration workforce data; comparable right-sizing efforts in other states",
+      "category": "workforce"
+    },
+    {
+      "id": "mco-renegotiation",
+      "name": "Renegotiate Medicaid managed-care contracts",
+      "description": "PA pays managed care organizations (MCOs) to administer Medicaid. Squeezing administrative loadings, rate increases, and pharmacy benefit manager spreads — as several states have done — captures savings without cutting member benefits.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 200000000,
+      "revenueHighUSD": 300000000,
+      "status": "concept",
+      "statusDetail": "Active topic; PA Auditor General has flagged MCO costs repeatedly",
+      "sourceDetail": "PA Auditor General reports; KFF studies on state MCO oversight",
+      "category": "service-cut"
+    },
+    {
+      "id": "wams-discretionary",
+      "name": "Eliminate legislator discretionary spending (WAMs)",
+      "description": "\"Walking-around money\" — discretionary funds legislators direct to specific district projects outside the formal budget process — is opaque and bypasses normal oversight. Eliminating or strictly capping it has been proposed in multiple sessions.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 150000000,
+      "revenueHighUSD": 250000000,
+      "status": "blocked",
+      "statusDetail": "Proposed repeatedly; resisted by legislative leadership",
+      "sourceDetail": "PA Auditor General reports; budget transparency advocacy",
+      "category": "structural"
+    }
+  ]
+}

@@ -6,10 +6,11 @@ import population from '../../../data/population.json';
 import revenueSources from '../../../data/revenue-sources.json';
 import spendingByCategory from '../../../data/spending-by-category.json';
 import rescueDoc from '../../../data/rescue-proposals.json';
+import spendingCutsDoc from '../../../data/spending-cut-proposals.json';
 import DeficitClock from '../../components/DeficitClock';
 import PersonalImpactCalculator from '../../components/PersonalImpactCalculator';
 import RainyDayCountdown from '../../components/RainyDayCountdown';
-import RescuePlan from '../../components/RescuePlan';
+import BudgetPlan from '../../components/BudgetPlan';
 import BudgetBreakdown from '../../components/BudgetBreakdown.astro';
 import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
@@ -143,44 +144,33 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </aside>
       </section>
 
-      <section class="mt-24" id="paths-to-close-the-gap">
-        <h2 class="text-3xl font-extrabold md:text-4xl">Paths to close the gap</h2>
+      <section class="mt-20">
+        <FederalContext />
+      </section>
+
+      <section class="mt-20" id="paths-to-close-the-gap">
+        <h2 class="text-3xl font-extrabold md:text-4xl">How could we close the gap?</h2>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
-          The deficit isn't fate. There are real proposals on the table — some blocked, some pre-bill — that would generate billions in new revenue without raising taxes on working Pennsylvanians. Toggle each below to build your own plan and watch the gap close.
+          The deficit isn't fate. There are real, named proposals on both the revenue and the spending side. Toggle any combination below to build your own plan — the running total updates as you go.
         </p>
         <div class="mt-8">
-          <RescuePlan
+          <BudgetPlan
             client:load
-            proposals={rescueDoc.proposals as any}
+            revenueProposals={rescueDoc.proposals as any}
+            cutProposals={spendingCutsDoc.proposals as any}
             annualDeficitUSD={rescueDoc.annualDeficitUSD}
           />
         </div>
       </section>
 
-      <section class="mt-24">
-        <FederalContext />
-      </section>
-
-      <section class="mt-12 overflow-hidden rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 text-center md:p-14">
-        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Empowering People · Restoring Trust</p>
-        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
-          Want a state government that earns your trust?
-        </h2>
-        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
-          We The People Party of Pennsylvania believes accountability requires data, not slogans. If you want a different kind of state party — one that shows you the numbers and follows through — become a member.
+      <section class="mt-20">
+        <h2 class="text-3xl font-extrabold md:text-4xl">What could make the gap worse</h2>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
+          Closing the gap is one direction. PA's structural exposure to federal funding shifts is the other. Federal flows are volatile across every administration, every budget cycle, every recession.
         </p>
-        <a
-          href="https://www.wtpppa.org/membership"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mt-8 inline-block rounded-md bg-wtp-sky px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-wtp-navy no-underline transition hover:bg-wtp-cream"
-        >
-          Become a Member →
-        </a>
-      </section>
-
-      <section class="mt-12">
-        <FederalCliffScenarios />
+        <div class="mt-8">
+          <FederalCliffScenarios />
+        </div>
       </section>
 
       <section class="mt-20 grid gap-6 md:grid-cols-3">
@@ -219,6 +209,24 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
       <section class="mt-20">
         <IFOPublications />
+      </section>
+
+      <section class="mt-20 overflow-hidden rounded-lg border border-wtp-sky/20 bg-gradient-to-br from-wtp-navy/60 to-wtp-indigo/40 p-8 text-center md:p-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">Empowering People · Restoring Trust</p>
+        <h2 class="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
+          Want a state government that earns your trust?
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-wtp-cream/90 md:text-lg">
+          We The People Party of Pennsylvania believes accountability requires data, not slogans. If you want a different kind of state party — one that shows you the numbers and follows through — become a member.
+        </p>
+        <a
+          href="https://www.wtpppa.org/membership"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-8 inline-block rounded-md bg-wtp-sky px-8 py-4 text-sm font-bold uppercase tracking-[0.18em] text-wtp-navy no-underline transition hover:bg-wtp-cream"
+        >
+          Become a Member →
+        </a>
       </section>
     </main>
 
