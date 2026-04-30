@@ -101,6 +101,9 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           url={canonicalUrl}
           tweetText={`Pennsylvania has a $${annualB} billion structural deficit — and growing. Tracked live by ${config.party.shortName}.`}
         />
+        <p class="mt-4 text-center text-sm">
+          <a href="/budget/about" class="text-wtp-sky/80 no-underline hover:text-wtp-sky">About this dashboard →</a>
+        </p>
       </section>
 
       <section class="mt-16" id="how-it-works">
