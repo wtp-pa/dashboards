@@ -79,6 +79,19 @@ for (const o of officials) {
   partyCounts[o.party] = (partyCounts[o.party] ?? 0) + 1;
 }
 
+// Sorted district list for the autocomplete. Districts ordered Senate
+// first (SD-1..SD-50) then House (HD-1..HD-203). Each entry carries the
+// rep's name + party so users can find a district by who's in it.
+const districtOptions = officials
+  .map((o) => ({
+    district: o.district,
+    chamber: o.chamber,
+    label: `${o.district} · ${o.name} (${o.party})`,
+    sortKey: (o.chamber === 'Senate' ? '1' : '2') + (o.district.split('-')[1] || '').padStart(4, '0'),
+  }))
+  .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+const districtPickerPayload = JSON.stringify(districtOptions);
+
 const districtToOfficial: Record<string, { id: string; name: string; chamber: string }[]> = {};
 for (const o of officials) {
   if (!o.district) continue;
@@ -415,49 +428,9 @@ const topPillars = Object.entries(pillarById)
         </div>
       </details>
 
-      <details open class="group mt-10 rounded-lg border border-wtp-sky/20 bg-surface/30 transition hover:border-wtp-sky/40">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-3 p-5 md:p-6">
-          <div class="min-w-0">
-            <h2 class="text-lg font-bold md:text-xl">Find your representatives</h2>
-            <p class="mt-0.5 text-xs text-wtp-cream/60">Type an address, ZIP, or county — we'll match you to the legislators representing your area.</p>
-          </div>
-          <div class="flex flex-shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-wider text-wtp-sky">
-            <span class="group-open:hidden">Show</span>
-            <span class="hidden group-open:inline">Hide</span>
-            <span class="grid h-8 w-8 place-items-center rounded-full border border-wtp-sky/40 bg-wtp-sky/10 text-base font-bold transition group-open:rotate-180" aria-hidden="true">▾</span>
-          </div>
-        </summary>
-        <div class="border-t border-wtp-sky/20 px-5 pb-5 pt-4 md:px-6 md:pb-6">
-
-          <form id="lookup-form" class="flex flex-col gap-2 sm:flex-row sm:items-stretch" novalidate>
-            <input
-              type="text"
-              id="lookup-input"
-              autocomplete="off"
-              placeholder="Address, ZIP, or county (e.g., 100 Market St, Harrisburg)"
-              aria-label="Address, ZIP code, or county"
-              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
-            />
-            <div class="flex gap-2">
-              <button type="submit" class="flex-1 rounded-md bg-wtp-sky px-5 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90 sm:flex-none">Find</button>
-              <button type="button" id="geo-button" class="flex flex-shrink-0 items-center gap-1.5 rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-sm font-semibold text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my current location" aria-label="Use my location">
-                <span aria-hidden="true">📍</span>
-                <span class="sr-only sm:not-sr-only sm:inline">My location</span>
-              </button>
-            </div>
-          </form>
-
-          <p class="mt-2 text-[11px] text-wtp-cream/40">
-            Examples: <span class="text-wtp-cream/60">17109</span> · <span class="text-wtp-cream/60">Allegheny County</span> · <span class="text-wtp-cream/60">100 Market St, Harrisburg</span>. Privately geocoded; nothing logged.
-          </p>
-
-          <div id="lookup-result" class="mt-4 hidden rounded-md border border-wtp-sky/30 bg-wtp-sky/5 p-3 text-sm"></div>
-        </div>
-      </details>
-      {/* Hidden county dropdown kept out of the DOM; the auto-detect parser
-          handles county input directly from the lookup field. The select#county-select
-          element below is referenced by other listeners — keep it as a hidden input
-          to maintain backward compat with the earlier wiring. */}
+      {/* Hidden county select stays out of view but referenced by older
+          wiring; auto-detect parser routes county input from the lookup
+          form directly. */}
       <select id="county-select" aria-hidden="true" class="hidden">
         <option value=""></option>
         {countyOptions.map((c) => <option value={c}>{c}</option>)}
@@ -470,22 +443,54 @@ const topPillars = Object.entries(pillarById)
         </div>
         <p class="mt-2 text-sm text-wtp-cream/60">Sorted by platform-touching sponsorship activity. Click a card for the full vote-by-vote and bill-by-bill detail.</p>
 
-        <div class="mt-6 rounded-lg border border-white/10 bg-surface/30 p-4 md:p-5">
-          <div class="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+        <div class="mt-6 space-y-4 rounded-lg border border-white/10 bg-surface/30 p-4 md:p-5">
+
+          <!-- Row 1: Name search -->
+          <div>
+            <label for="name-filter" class="block text-[11px] uppercase tracking-wider text-wtp-cream/50">Search by name</label>
             <input
               type="search"
               id="name-filter"
-              placeholder="Search by name…"
-              aria-label="Search by name"
-              class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-4 py-2 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+              placeholder="e.g., Boscola"
+              autocomplete="off"
+              class="mt-1 w-full min-w-0 rounded-md border border-white/15 bg-page px-3 py-2.5 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
             />
+          </div>
+
+          <!-- Row 2: Find by location → populates district chips below -->
+          <div>
+            <label for="lookup-input" class="block text-[11px] uppercase tracking-wider text-wtp-cream/50">Find by location</label>
+            <form id="lookup-form" class="mt-1 flex gap-2" novalidate>
+              <input
+                type="text"
+                id="lookup-input"
+                autocomplete="off"
+                placeholder="Address, ZIP, or county"
+                aria-label="Address, ZIP code, or county"
+                class="min-w-0 flex-1 rounded-md border border-white/15 bg-page px-3 py-2.5 text-base text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+              />
+              <button type="submit" class="flex-shrink-0 rounded-md bg-wtp-sky px-4 py-2.5 text-sm font-semibold text-wtp-navy transition hover:bg-wtp-sky/90">Find</button>
+              <button type="button" id="geo-button" class="flex flex-shrink-0 items-center justify-center rounded-md border border-wtp-sky/40 bg-wtp-sky/10 px-3 py-2.5 text-base text-wtp-sky transition hover:bg-wtp-sky/20" title="Use my current location" aria-label="Use my location">
+                <span aria-hidden="true">📍</span>
+              </button>
+            </form>
+            <p class="mt-1 text-[11px] text-wtp-cream/40">Examples: <span class="text-wtp-cream/60">17109</span> · <span class="text-wtp-cream/60">Allegheny County</span> · <span class="text-wtp-cream/60">100 Market St, Harrisburg</span></p>
+            <p id="lookup-status" class="mt-1 hidden text-[11px] text-wtp-sky"></p>
+          </div>
+
+          <!-- Row 3: Chamber + Party pills -->
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Chamber</span>
             <div class="flex flex-wrap gap-2" role="group" aria-label="Chamber filter">
-              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All chambers <span class="opacity-70">{chamberCounts.all}</span></button>
+              <button type="button" class="chamber-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-chamber="all" data-active="true">All <span class="opacity-70">{chamberCounts.all}</span></button>
               <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="Senate">Senate <span class="opacity-70">{chamberCounts.Senate}</span></button>
               <button type="button" class="chamber-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-chamber="House">House <span class="opacity-70">{chamberCounts.House}</span></button>
             </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Party</span>
             <div class="flex flex-wrap gap-2" role="group" aria-label="Party filter">
-              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All parties <span class="opacity-70">{partyCounts.all}</span></button>
+              <button type="button" class="party-pill rounded-full border border-wtp-sky bg-wtp-sky px-3 py-1.5 text-xs font-medium text-wtp-navy transition" data-party="all" data-active="true">All <span class="opacity-70">{partyCounts.all}</span></button>
               <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="D">D <span class="opacity-70">{partyCounts.D ?? 0}</span></button>
               <button type="button" class="party-pill rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-wtp-cream/70 transition hover:border-wtp-sky hover:text-white" data-party="R">R <span class="opacity-70">{partyCounts.R ?? 0}</span></button>
               {(partyCounts.I ?? 0) > 0 && (
@@ -493,9 +498,40 @@ const topPillars = Object.entries(pillarById)
               )}
             </div>
           </div>
-          <div class="mt-3 flex items-center justify-between text-xs text-wtp-cream/60">
-            <div><span id="visible-count">{officials.length}</span> visible</div>
-            <button type="button" id="reset-filters" class="text-wtp-sky underline-offset-2 hover:underline">Reset filters</button>
+
+          <!-- Row 4: District chips. Populated by the location lookup OR by
+               the manual picker. When non-empty, only matching districts
+               appear in the roster. -->
+          <div>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="text-[11px] uppercase tracking-wider text-wtp-cream/50">Districts</span>
+              <span class="text-[10px] text-wtp-cream/40">A location lookup adds matching districts here. <button type="button" id="district-clear" class="ml-1 hidden text-wtp-sky underline-offset-2 hover:underline">Clear all</button></span>
+            </div>
+            <div class="mt-1 flex flex-wrap items-center gap-2">
+              <div id="district-chips" class="flex flex-wrap gap-1.5"></div>
+              <div class="relative">
+                <button type="button" id="district-add-toggle" class="flex items-center gap-1 rounded-full border border-dashed border-wtp-sky/40 bg-wtp-sky/5 px-3 py-1.5 text-xs font-medium text-wtp-sky transition hover:bg-wtp-sky/10">
+                  <span aria-hidden="true">+</span> Add district
+                </button>
+                <div id="district-picker" class="absolute left-0 top-full z-20 mt-1 hidden w-72 rounded-md border border-white/15 bg-page p-2 shadow-xl">
+                  <input
+                    type="search"
+                    id="district-search"
+                    placeholder="Type SD- HD- or a name…"
+                    autocomplete="off"
+                    class="w-full rounded-md border border-white/15 bg-surface px-2 py-1.5 text-sm text-white placeholder:text-wtp-cream/40 focus:border-wtp-sky focus:outline-none"
+                  />
+                  <ul id="district-options" class="mt-1 max-h-64 overflow-y-auto text-sm"></ul>
+                </div>
+              </div>
+            </div>
+            <p id="district-empty-msg" class="mt-1 text-[11px] italic text-wtp-cream/40">No districts selected — showing all 251.</p>
+          </div>
+
+          <!-- Footer: visible count + reset -->
+          <div class="flex items-center justify-between border-t border-white/10 pt-3 text-xs text-wtp-cream/60">
+            <div><span id="visible-count">{officials.length}</span> visible of {officials.length}</div>
+            <button type="button" id="reset-filters" class="text-wtp-sky underline-offset-2 hover:underline">Reset all filters</button>
           </div>
         </div>
 
@@ -578,18 +614,21 @@ const topPillars = Object.entries(pillarById)
       </div>
     </footer>
 
-    <script is:inline define:vars={{ zipPayload, districtPayload, countyPopPayload, countyOfficialPayload, officialsByOcdPayload, openstatesApiKey }}>
+    <script is:inline define:vars={{ zipPayload, districtPayload, countyPopPayload, countyOfficialPayload, officialsByOcdPayload, openstatesApiKey, districtPickerPayload }}>
       const zips = JSON.parse(zipPayload);
       const districtMap = JSON.parse(districtPayload);
       const countyPop = JSON.parse(countyPopPayload);
       const countyOfficials = JSON.parse(countyOfficialPayload);
       const officialsByOcd = JSON.parse(officialsByOcdPayload);
+      const districtList = JSON.parse(districtPickerPayload);
       const fmtNum = (n) => Number(n).toLocaleString();
       const resultEl = document.getElementById('lookup-result');
       const roster = document.getElementById('roster');
       const visibleCountEl = document.getElementById('visible-count');
 
-      const filters = { name: '', chamber: 'all', party: 'all', highlightIds: null };
+      // districts is a Set of district codes (e.g., "SD-19", "HD-157").
+      // Empty = no district filter active.
+      const filters = { name: '', chamber: 'all', party: 'all', districts: new Set() };
 
       function applyFilters() {
         const cards = roster.querySelectorAll('[data-official-id]');
@@ -598,12 +637,56 @@ const topPillars = Object.entries(pillarById)
           const matchesName = !filters.name || (card.dataset.name || '').includes(filters.name);
           const matchesChamber = filters.chamber === 'all' || card.dataset.chamber === filters.chamber;
           const matchesParty = filters.party === 'all' || card.dataset.party === filters.party;
-          const matchesLookup = !filters.highlightIds || filters.highlightIds.includes(card.dataset.officialId);
-          const isVisible = matchesName && matchesChamber && matchesParty && matchesLookup;
+          const matchesDistrict = filters.districts.size === 0 || filters.districts.has(card.dataset.district);
+          const isVisible = matchesName && matchesChamber && matchesParty && matchesDistrict;
           card.classList.toggle('hidden', !isVisible);
           if (isVisible) visible++;
         });
         if (visibleCountEl) visibleCountEl.textContent = String(visible);
+        renderDistrictChips();
+      }
+
+      // Render the district chip strip + show/hide the empty hint and the
+      // "Clear all" link. Each chip removes that district from the filter.
+      function renderDistrictChips() {
+        const wrap = document.getElementById('district-chips');
+        const empty = document.getElementById('district-empty-msg');
+        const clear = document.getElementById('district-clear');
+        if (!wrap) return;
+        wrap.innerHTML = '';
+        const sel = Array.from(filters.districts).sort();
+        if (sel.length === 0) {
+          empty.classList.remove('hidden');
+          clear.classList.add('hidden');
+          return;
+        }
+        empty.classList.add('hidden');
+        clear.classList.remove('hidden');
+        for (const code of sel) {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'flex items-center gap-1 rounded-full border border-wtp-sky/50 bg-wtp-sky/15 px-3 py-1 text-xs font-medium text-wtp-sky hover:bg-wtp-sky/25';
+          chip.innerHTML = `<span class="font-mono">${code}</span><span class="text-wtp-sky/60">×</span>`;
+          chip.title = `Remove ${code} from filter`;
+          chip.addEventListener('click', () => {
+            filters.districts.delete(code);
+            applyFilters();
+          });
+          wrap.appendChild(chip);
+        }
+      }
+
+      function addDistricts(codes) {
+        let added = 0;
+        for (const c of codes) {
+          if (!c) continue;
+          if (!filters.districts.has(c)) {
+            filters.districts.add(c);
+            added++;
+          }
+        }
+        applyFilters();
+        return added;
       }
 
       function setActivePill(pillClass, value) {
@@ -643,65 +726,143 @@ const topPillars = Object.entries(pillarById)
         filters.name = '';
         filters.chamber = 'all';
         filters.party = 'all';
-        filters.highlightIds = null;
+        filters.districts.clear();
         document.getElementById('name-filter').value = '';
-        document.getElementById('zip-input').value = '';
-        document.getElementById('county-select').value = '';
+        const li = document.getElementById('lookup-input');
+        if (li) li.value = '';
+        const cs = document.getElementById('county-select');
+        if (cs) cs.value = '';
         setActivePill('chamber-pill', 'all');
         setActivePill('party-pill', 'all');
-        resultEl.classList.add('hidden');
+        const ls = document.getElementById('lookup-status');
+        if (ls) ls.classList.add('hidden');
         applyFilters();
       });
 
+      document.getElementById('district-clear').addEventListener('click', () => {
+        filters.districts.clear();
+        applyFilters();
+      });
+
+      // District picker autocomplete — opens a small panel above the roster
+      // that filters the 251 districts as the user types. Click to add.
+      const districtToggle = document.getElementById('district-add-toggle');
+      const districtPanel = document.getElementById('district-picker');
+      const districtSearch = document.getElementById('district-search');
+      const districtOptionsList = document.getElementById('district-options');
+
+      function renderDistrictOptions(query) {
+        const q = (query || '').trim().toLowerCase();
+        const items = districtList
+          .filter((d) => !filters.districts.has(d.district))
+          .filter((d) => !q || d.label.toLowerCase().includes(q))
+          .slice(0, 50);
+        districtOptionsList.innerHTML = '';
+        if (items.length === 0) {
+          districtOptionsList.innerHTML = '<li class="px-2 py-1.5 text-xs italic text-wtp-cream/40">No matches</li>';
+          return;
+        }
+        for (const d of items) {
+          const li = document.createElement('li');
+          li.className = 'cursor-pointer rounded px-2 py-1.5 text-sm text-wtp-cream/85 hover:bg-wtp-sky/10 hover:text-white';
+          li.textContent = d.label;
+          li.addEventListener('click', () => {
+            addDistricts([d.district]);
+            districtSearch.value = '';
+            renderDistrictOptions('');
+            districtPanel.classList.add('hidden');
+          });
+          districtOptionsList.appendChild(li);
+        }
+      }
+
+      districtToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const wasOpen = !districtPanel.classList.contains('hidden');
+        districtPanel.classList.toggle('hidden');
+        if (!wasOpen) {
+          renderDistrictOptions('');
+          setTimeout(() => districtSearch.focus(), 50);
+        }
+      });
+      districtSearch.addEventListener('input', (e) => renderDistrictOptions(e.target.value));
+      // Close the panel when clicking outside.
+      document.addEventListener('click', (e) => {
+        if (!districtPanel.classList.contains('hidden')
+            && !districtPanel.contains(e.target)
+            && e.target !== districtToggle
+            && !districtToggle.contains(e.target)) {
+          districtPanel.classList.add('hidden');
+        }
+      });
+
+      // showResult is kept for in-progress messages ("Looking up…" etc).
+      // Final results now flow into the district chip filter; the result
+      // card just briefly says what we found. Lives in #lookup-status.
+      const lookupStatusEl = document.getElementById('lookup-status');
       function showResult(html) {
-        resultEl.innerHTML = html;
-        resultEl.classList.remove('hidden');
+        if (lookupStatusEl) {
+          lookupStatusEl.innerHTML = html;
+          lookupStatusEl.classList.remove('hidden');
+        } else if (resultEl) {
+          resultEl.innerHTML = html;
+          resultEl.classList.remove('hidden');
+        }
+      }
+      function clearStatus() {
+        if (lookupStatusEl) lookupStatusEl.classList.add('hidden');
       }
 
       function highlightOfficials(ids) {
-        // Lookup highlight — narrow the visible set rather than dimming.
-        // Cleaner with 251 cards than the previous opacity ring approach.
-        filters.highlightIds = ids.length ? ids : null;
-        applyFilters();
-        if (ids.length) {
+        // Convert ids → districts and add to the chip filter. The roster
+        // narrows by district; no separate result card needed.
+        if (!ids.length) return;
+        const cardsByOfficialId = new Map();
+        roster.querySelectorAll('[data-official-id]').forEach((c) => {
+          cardsByOfficialId.set(c.dataset.officialId, c);
+        });
+        const districts = [];
+        for (const id of ids) {
+          const card = cardsByOfficialId.get(id);
+          if (card && card.dataset.district) districts.push(card.dataset.district);
+        }
+        if (districts.length) {
+          addDistricts(districts);
           const first = roster.querySelector(`[data-official-id="${ids[0]}"]`);
           first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }
 
+      // After a lookup: show a brief status line. The actual results
+      // (districts, reps) are now visible as chip filters and the
+      // narrowed roster, so we don't render a separate card anymore.
       function renderAreaCard(opts) {
-        // opts: { areaLabel, areaDetail, districts, reps, populationLine, footerNote }
-        const districtsInline = opts.districts && opts.districts.length
-          ? `<span class="text-xs text-wtp-cream/60"> · ${opts.districts.map((d) => `<span class="font-mono text-white">${d}</span>`).join(', ')}</span>`
-          : '';
-        const repsHtml = opts.reps && opts.reps.length
-          ? `<div class="mt-2 flex flex-wrap gap-1.5">${opts.reps.map((r) =>
-              `<a href="/elected-officials/${r.id}/" class="rounded-full border border-wtp-sky/40 bg-wtp-sky/10 px-2.5 py-0.5 text-xs text-wtp-sky no-underline transition hover:bg-wtp-sky hover:text-wtp-navy">${r.name} <span class="text-wtp-cream/60">· ${r.chamber} · ${r.district}</span></a>`
-            ).join('')}</div>`
-          : `<div class="mt-2 text-xs italic text-wtp-cream/60">${opts.noRepsMessage || 'No matching officials in our roster yet.'}</div>`;
-        const popHtml = opts.populationLine
-          ? ` <span class="text-xs text-wtp-cream/60">· ${opts.populationLine}</span>`
-          : '';
-        const footer = opts.footerNote
-          ? `<div class="mt-2 text-[11px] leading-snug italic text-wtp-cream/50">${opts.footerNote}</div>`
-          : '';
-        // Federal-reps reminder so users don't think we're hiding their U.S.
-        // Senators / Reps. Only show when we actually returned PA state reps —
-        // would be confusing on empty/error cards.
-        const federal = opts.reps && opts.reps.length
-          ? `<div class="mt-2 text-[11px] text-wtp-cream/50">You're also represented federally by 2 U.S. Senators and 1 U.S. Representative — see <a href="https://www.congress.gov/members" target="_blank" rel="noopener" class="text-wtp-sky underline">congress.gov/members</a> for those.</div>`
-          : '';
-        showResult(`
-          <div class="flex flex-wrap items-baseline gap-x-2 text-sm">
-            <span class="text-[10px] uppercase tracking-wider text-wtp-sky">${opts.areaLabel}</span>
-            <span class="font-semibold text-white">${opts.areaDetail}</span>
-            ${districtsInline}
-            ${popHtml}
-          </div>
-          ${repsHtml}
-          ${footer}
-          ${federal}
-        `);
+        const reps = opts.reps || [];
+        if (!reps.length) {
+          // An error / empty case — show a one-liner with whatever the
+          // caller provided.
+          const msg = opts.noRepsMessage || opts.footerNote || 'No matching officials.';
+          showResult(`<span class="text-wtp-cream/70">${msg}</span>`);
+          return;
+        }
+        const districts = opts.districts && opts.districts.length
+          ? opts.districts.join(', ')
+          : Array.from(new Set(reps.map((r) => r.district))).sort().join(', ');
+        showResult(
+          `<span class="text-wtp-sky">✓</span> Found <strong class="text-white">${districts}</strong> — added to filter below. ` +
+          `<button type="button" id="lookup-undo" class="ml-1 text-wtp-sky underline-offset-2 hover:underline">Undo</button>`
+        );
+        // Wire the Undo to remove just-added districts.
+        const undo = document.getElementById('lookup-undo');
+        if (undo) {
+          undo.addEventListener('click', () => {
+            for (const r of reps) {
+              filters.districts.delete(r.district);
+            }
+            applyFilters();
+            clearStatus();
+          });
+        }
       }
 
       function findByDistricts(districts, areaContext) {
