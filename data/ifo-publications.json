@@ -1,11 +1,18 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-04-29T12:56:36+00:00",
+  "lastUpdated": "2026-05-04T12:11:56+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "April 2026 Revenue Update",
+      "date": "2026-05-01",
+      "url": "https://www.ifo.state.pa.us/releases/931/April-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_04.pdf",
+      "summary": "The Commonwealth collected $6.72 billion in General Fund revenues for April, an increase of $509 million (+8.2%) compared to April 2025. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Sports, Marketing, & Tourism Series: 2025 U.S. Open Impact Analysis",
       "date": "2026-04-23",
@@ -33,13 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/927/Big-Three-Revenue-Sources-Diverge/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Big_Three_Revenues_Diverge_BB_2026_04.pdf",
       "summary": "This brief compares the cumulative and relative growth of the two largest revenue sources for state\u00a0government (income and sales tax) to school district property tax levied by local units. Over the past decade, sales and income taxes expanded at nearly twice the rate as school di\u2026"
-    },
-    {
-      "title": "Budget and Economic Update",
-      "date": "2026-04-10",
-      "url": "https://www.ifo.state.pa.us/releases/926/Budget-and-Economic-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/EPLC_April_2026_Final.pdf",
-      "summary": "Fiscal Analyst III Jesse Bushman provided a budget and economic update to the Education Policy and Leadership Center. ... (Full Report) - opens in a new tab"
     }
   ]
 }
