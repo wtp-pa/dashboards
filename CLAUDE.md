@@ -9,36 +9,37 @@
 - **Live site**: <https://dashboards.wtpppa.org>
 - **Memory dir**: `/Users/xtina/.claude/projects/-Users-xtina-Projects-WTP/memory/` — read this on startup. It contains user profile, GitHub identities, brand info, project history, and behavioral feedback from prior sessions. Critical context lives there.
 
-## Current state (April 29, 2026)
+## Current state (May 12, 2026)
 
 **Live** at `https://dashboards.wtpppa.org/`:
 - `/` — portfolio landing
 - `/budget` (+ `/budget/about`, `/budget/widget`) — full PA Budget Watch dashboard
-- `/legislation` (+ `/legislation/about`) — PA Legislation Watch. Live OpenStates feed (374 PA bills/session), keyword + TF-IDF matcher with per-match evidence, editorial alignment in `manual_review.json`. **No Claude API in the loop.**
 
-**Scaffolded but not live** — pages render in build but landing-page card stays `coming-soon` and `noindex` is set:
-- `/elected-officials` — PA Elected Officials Watch. 4 demo senators, fabricated DEMO votes (visible gold banner on every page warns "DEMO DATA"). Scoring pipeline is real and runs end-to-end. ZIP/county lookup works for ~10 demo PA ZIPs. **Do not promote to "live" in `src/config.ts` until real OpenStates votes replace the demo data — fabricated voting attributions on real legislators would be a credibility disaster.**
+**Pre-release** — render in build, listed on the landing page with `pre-release` status, but a gold "PRE-RELEASE" banner sits on top and pages are `noindex` until officers sign off:
+- `/legislation` (+ `/legislation/about`) — Live OpenStates feed, keyword + TF-IDF matcher with per-match evidence, editorial alignment in `manual_review.json`. **No Claude API in the loop.** Gated by `config.legislation.officersApprovedData`.
+- `/elected-officials` (+ `/elected-officials/[id]`) — Real OpenStates data flowing as of 2026-04-29: **251 PA legislators, 21,999 votes across 205 officials, full scorecards.** The original demo data (4 hand-seeded senators) is gone — `votes.json:demoData` is `false` and the auto-flip portion of the banner is satisfied. What's still gating "live" is `config.electedOfficials.officersApprovedData` (manual gate, awaiting officer review). Do **not** flip it without explicit user confirmation that officers have signed off.
 
 **Coming soon** (placeholder card, no routes):
 - `/local` — Local Impact
 
 See `docs/roadmap.md` for detailed phase status.
 
+### How the gates work
+
+There are two layered flags driving the pre-release UX:
+
+1. **`votes.json:demoData`** (automatic) — set to `false` by `fetch_votes.py` once real OpenStates votes are written. Already flipped.
+2. **`config.{electedOfficials,legislation}.officersApprovedData`** in `src/config.ts` (manual) — flip to `true` only after WTPPPA officers have reviewed the live-data dashboard and approved it for public consumption.
+
+When the banner disappears, also drop the `<meta name="robots" content="noindex" />` lines on the affected pages and switch the corresponding `portfolio.projects[].status` to `"live"`.
+
 ## Open work — pick this up next
 
-The highest-ROI move is **lifting the OpenStates HTTP client to a shared module** before wiring up Elected Officials' fetchers. Right now:
-- `pipeline/legislation/fetch_bills.py:103-172` has a complete OpenStates client (auth, rate-limit, backoff, paginate)
-- `pipeline/elected-officials/fetch_officials.py` and `fetch_votes.py` are documented stubs that will need the same logic
-- A future candidate-tracking dashboard will hit OpenStates too
+Most of the foundational EO work that this file used to describe is done. What's left:
 
-**Recommended sequence:**
-1. Extract `OpenStatesClient` to `pipeline/_shared/openstates.py` (auth, retry, paginate, generic `get`/`paginate`). ~30 min refactor.
-2. Refactor `fetch_bills.py` to use it; verify the weekly cron still produces 374 bills.
-3. Wire `fetch_officials.py` against `/people?jurisdiction=pa` — paginate ~252 PA legislators.
-4. Wire `fetch_votes.py` against `/bills?jurisdiction=pa&include=votes`. Normalize OpenStates options (`yes`/`no`/`not voting`/`absent`) → `{yea, nay, abstain, absent}`.
-5. Replace synthetic `votes.json`; flip `demoData: false`. The DemoBanner disappears automatically.
-6. Expand `data/elected-officials/zip-districts.json` beyond the 10 demo ZIPs (PASDA boundaries → ZIP overlay, or use a precomputed source).
-7. Flip `src/config.ts` portfolio entry to `"live"`, drop `noindex` meta from both elected-officials pages.
+1. **Wait for officer sign-off**, then promote both `/legislation` and `/elected-officials` to live: flip both `officersApprovedData` flags in `src/config.ts`, drop `<meta name="robots" content="noindex" />` from the four affected pages, switch the corresponding `portfolio.projects[].status` to `"live"`.
+2. **Expand `data/elected-officials/zip-districts.json`** beyond the small hand-curated set toward full coverage (PASDA boundaries → ZIP overlay, or a precomputed source). The runtime fallback (OpenStates `/people.geo` at the county centroid) covers gaps, but a precomputed map is faster and more reliable.
+3. **`/local` (Local Impact)** — still a portfolio placeholder. Phase 4 candidate.
 
 **Defer (don't pre-extract):**
 - The TF-IDF/keyword matcher in `match_bills.py` — likely useful for a future candidate tool, but premature extraction is harder to undo than late extraction.
@@ -185,7 +186,8 @@ The official brand kit was matched directly from Squarespace Site Styles screens
 - `src/config.ts` — single source of truth for party metadata, brand, project list
 - `src/styles/global.css` — Tailwind theme tokens
 - `.github/workflows/pages-deploy.yml` — GH Pages build/deploy
-- `.github/workflows/data-pipeline.yml` — weekly Monday cron that runs all Python scrapers and commits JSON updates
+- `.github/workflows/data-pipeline.yml` — **weekly** Monday cron for free, rate-limit-free sources (IFO, OpenBookPA, Census)
+- `.github/workflows/data-pipeline-openstates.yml` — **monthly** (1st of month) cron for OpenStates-backed data (bills, officials, votes, scoring). Split out 2026-05 because weekly polling chronically tripped 429s on the free tier; PA roll-call activity is bursty enough that monthly matches the actual rhythm. Use `workflow_dispatch` on this workflow to refresh on demand around big floor action (budget season, end-of-session sprints).
 
 ## Scheduled agents
 

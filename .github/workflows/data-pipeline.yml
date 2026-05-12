@@ -2,8 +2,11 @@ name: Data Pipeline
 
 on:
   schedule:
-    # Weekly on Mondays at 06:00 UTC. Each fetcher decides internally if its source has new data;
-    # weekly cadence keeps the IFO publications card on the landing page reasonably fresh.
+    # Weekly on Mondays at 06:00 UTC. Refreshes free, rate-limit-free sources
+    # (IFO publications, OpenBookPA, Census). OpenStates-backed data (bills,
+    # officials, votes) is refreshed monthly by data-pipeline-openstates.yml —
+    # PA roll-call activity is bursty enough that weekly OpenStates polling
+    # was overkill and chronically tripped 429s.
     - cron: "0 6 * * MON"
   workflow_dispatch: {}
 
@@ -37,34 +40,8 @@ jobs:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
         run: python pipeline/fetch_census.py
 
-      - name: Fetch PA bills from OpenStates
-        env:
-          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
-        run: python pipeline/legislation/fetch_bills.py
-        continue-on-error: true  # don't block other fetchers if rate-limited
-
-      - name: Match bills against WTPPPA platform
-        run: python pipeline/legislation/match_bills.py
-
-      - name: Refresh PA legislator roster from OpenStates
-        env:
-          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
-        run: python pipeline/elected-officials/fetch_officials.py
-        continue-on-error: true  # don't block scoring if rate-limited
-
-      - name: Fetch PA roll-call votes from OpenStates
-        env:
-          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
-        run: python pipeline/elected-officials/fetch_votes.py
-        continue-on-error: true  # don't block scoring if rate-limited
-
-      - name: Score officials against platform
-        run: python pipeline/elected-officials/score_officials.py
-
-      - name: Run accuracy tests (data + integration)
-        env:
-          OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
-        run: python3 tests/run.py --integration
+      - name: Run data tests
+        run: python3 tests/run.py
         continue-on-error: true  # surface issues without blocking the data commit
 
       - name: Commit updated data
@@ -75,6 +52,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No data changes to commit."
           else
-            git commit -m "data: scheduled pipeline update"
+            git commit -m "data: scheduled pipeline update (weekly)"
             git push
           fi

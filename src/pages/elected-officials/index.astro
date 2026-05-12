@@ -7,6 +7,7 @@ import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
+import votesDoc from '../../../data/elected-officials/votes.json';
 import zipDoc from '../../../data/elected-officials/zip-districts.json';
 import countyDistrictsDoc from '../../../data/elected-officials/county-districts.json';
 import countyPopDoc from '../../../data/elected-officials/county-populations.json';
@@ -100,6 +101,13 @@ for (const o of officials) {
   if (!o.district) continue;
   (districtToOfficial[o.district] ||= []).push({ id: o.id, name: o.name, chamber: o.chamber });
 }
+
+// User-facing freshness — sourced from votes.json since voting records
+// are the data users care most about staying current. Refreshed monthly
+// by .github/workflows/data-pipeline-openstates.yml.
+const lastUpdated = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long', timeZone: 'America/New_York',
+}).format(new Date((votesDoc as { lastFetched: string }).lastFetched));
 
 const pageTitle = `PA Elected Officials Watch — ${config.party.shortName}`;
 const pageDescription = `How Pennsylvania legislators vote — and how their votes line up with the WTP-PA platform. Search by ZIP code or county.`;
@@ -230,6 +238,9 @@ const topPillars = Object.entries(pillarById)
         <h1 class="mt-4 text-4xl font-extrabold leading-tight md:text-6xl">PA Elected Officials Watch</h1>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80 md:text-lg">
           Every vote on a {config.party.shortName}-reviewed bill is scored against our <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">platform</a>. We show you who votes <em>with</em> the platform, who votes <em>against</em>, and which pillar each vote touches. Powered by the same matcher behind <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>.
+        </p>
+        <p class="mt-4 text-xs text-wtp-cream/50">
+          Voting data last updated <span class="text-wtp-cream/70">{lastUpdated}</span> · refreshed monthly from <a href="https://openstates.org/pa/" target="_blank" rel="noopener" class="underline hover:text-wtp-sky">OpenStates</a>
         </p>
       </section>
 

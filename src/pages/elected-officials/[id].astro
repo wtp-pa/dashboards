@@ -7,6 +7,7 @@ import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import officialsDoc from '../../../data/elected-officials/officials.json';
 import scorecardsDoc from '../../../data/elected-officials/scorecards.json';
+import votesDoc from '../../../data/elected-officials/votes.json';
 import billsDoc from '../../../data/legislation/bills.json';
 import platform from '../../../data/legislation/platform.json';
 import manualReviewDoc from '../../../data/legislation/manual_review.json';
@@ -215,6 +216,13 @@ const formatDate = (iso: string) => {
     .format(new Date(iso + 'T00:00:00'));
 };
 
+// User-facing freshness — sourced from votes.json since voting records
+// are the data users care most about staying current. Refreshed monthly
+// by .github/workflows/data-pipeline-openstates.yml.
+const lastUpdated = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long', timeZone: 'America/New_York',
+}).format(new Date((votesDoc as { lastFetched: string }).lastFetched));
+
 const pageTitle = `${official.name} — ${config.party.shortName} Elected Officials Watch`;
 const pageDescription = `${official.title} ${official.name} (${official.party}, ${official.district}): ${primaryBills.length} bills introduced, ${cosponsorBills.length} cosponsored this session.`;
 const canonicalUrl = `${config.portfolio.baseUrl}/elected-officials/${official.id}/`;
@@ -328,6 +336,9 @@ const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
                 Official PA bio →
               </a>
             )}
+            <p class="mt-5 text-xs text-wtp-cream/50">
+              Voting data last updated <span class="text-wtp-cream/70">{lastUpdated}</span> · refreshed monthly from <a href="https://openstates.org/pa/" target="_blank" rel="noopener" class="underline hover:text-wtp-sky">OpenStates</a>
+            </p>
           </div>
         </div>
       </section>
