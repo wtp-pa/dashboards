@@ -13,6 +13,9 @@ on:
 
 permissions:
   contents: write
+  # GITHUB_TOKEN pushes don't trigger downstream `on: push` workflows, so
+  # we explicitly dispatch pages-deploy.yml after a successful data commit.
+  actions: write
 
 jobs:
   fetch-and-commit:
@@ -58,13 +61,22 @@ jobs:
         continue-on-error: true  # surface issues without blocking the data commit
 
       - name: Commit updated data
+        id: commit
         run: |
           git config user.name "wtp-budget-watch-bot"
           git config user.email "noreply@wtpppa.org"
           git add data/
           if git diff --staged --quiet; then
             echo "No data changes to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "data: scheduled pipeline update (monthly OpenStates)"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Dispatch Pages deploy
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages-deploy.yml --ref main
