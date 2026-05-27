@@ -4,6 +4,7 @@ interface Segment {
   label: string;
   amountUSD: number;
   shortDescription?: string;
+  methodologyHref?: string;
 }
 
 interface Props {
@@ -71,6 +72,14 @@ const totalB = (totalUSD / 1e9).toFixed(1);
           {it.shortDescription && (
             <p class="mt-1 text-xs leading-relaxed text-wtp-cream/50">
               {it.shortDescription}
+              {it.methodologyHref && (
+                <>
+                  {' '}
+                  <a href={it.methodologyHref} class="text-wtp-sky no-underline hover:underline">
+                    See methodology →
+                  </a>
+                </>
+              )}
             </p>
           )}
         </div>
