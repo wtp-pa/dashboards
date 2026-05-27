@@ -37,7 +37,7 @@
       "key": "nonTaxRevenue",
       "label": "Non-Tax Revenue",
       "amountUSD": 3500000000,
-      "shortDescription": "Licenses, fees, fines, treasury investment earnings"
+      "shortDescription": "Licenses, fees, fines, and treasury earnings that enter the General Fund. Most PA non-tax revenue isn't here — gas tax, lottery, and dozens of dedicated fees feed restricted funds outside the General Fund (see methodology)."
     }
   ]
 }
