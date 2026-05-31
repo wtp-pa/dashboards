@@ -177,14 +177,27 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <div class="mt-8">
           <FederalCliffScenarios />
         </div>
-        <div class="mt-8">
-          <CountyFederalImpact
-            client:visible
-            fiscalYear={federalByCounty.fiscalYear}
-            totalObligationsUSD={federalByCounty.totalObligationsUSD}
-            counties={federalByCounty.counties}
-          />
-        </div>
+        <details class="group mt-8">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-white/10 bg-surface px-6 py-5 transition hover:border-wtp-sky/30 hover:bg-white/[0.02] [&::-webkit-details-marker]:hidden">
+            <div>
+              <div class="text-xs uppercase tracking-[0.2em] text-wtp-sky">By county</div>
+              <div class="mt-1 text-base font-semibold text-white md:text-lg">See your county's federal-money exposure</div>
+            </div>
+            <div class="flex-shrink-0 text-wtp-cream/60 transition group-open:rotate-180" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </summary>
+          <div class="mt-4">
+            <CountyFederalImpact
+              client:visible
+              fiscalYear={federalByCounty.fiscalYear}
+              totalObligationsUSD={federalByCounty.totalObligationsUSD}
+              counties={federalByCounty.counties}
+            />
+          </div>
+        </details>
       </section>
 
       <section class="mt-20 grid gap-6 md:grid-cols-3">
