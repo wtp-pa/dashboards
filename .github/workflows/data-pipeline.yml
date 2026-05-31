@@ -43,6 +43,9 @@ jobs:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
         run: python pipeline/fetch_census.py
 
+      - name: Run USAspending county fetcher
+        run: python pipeline/fetch_usaspending_counties.py
+
       - name: Run data tests
         run: python3 tests/run.py
         continue-on-error: true  # surface issues without blocking the data commit

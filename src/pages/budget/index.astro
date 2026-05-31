@@ -7,6 +7,7 @@ import revenueSources from '../../../data/revenue-sources.json';
 import spendingByCategory from '../../../data/spending-by-category.json';
 import rescueDoc from '../../../data/rescue-proposals.json';
 import spendingCutsDoc from '../../../data/spending-cut-proposals.json';
+import federalByCounty from '../../../data/federal-funds-by-county.json';
 import DeficitClock from '../../components/DeficitClock';
 import PersonalImpactCalculator from '../../components/PersonalImpactCalculator';
 import RainyDayCountdown from '../../components/RainyDayCountdown';
@@ -15,6 +16,7 @@ import BudgetBreakdown from '../../components/BudgetBreakdown.astro';
 import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
 import FederalCliffScenarios from '../../components/FederalCliffScenarios.astro';
+import CountyFederalImpact from '../../components/CountyFederalImpact';
 import ShareRow from '../../components/ShareRow.astro';
 import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
@@ -174,6 +176,14 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </p>
         <div class="mt-8">
           <FederalCliffScenarios />
+        </div>
+        <div class="mt-8">
+          <CountyFederalImpact
+            client:visible
+            fiscalYear={federalByCounty.fiscalYear}
+            totalObligationsUSD={federalByCounty.totalObligationsUSD}
+            counties={federalByCounty.counties}
+          />
         </div>
       </section>
 

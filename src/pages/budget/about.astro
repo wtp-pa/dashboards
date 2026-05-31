@@ -110,6 +110,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
               Compiled from <a href="https://www.usaspending.gov/state/pennsylvania" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov</a> (federal awards to PA), KFF Medicaid State Indicators (FMAP rates), and the Office of the Budget federal funds reporting. The cliff scenarios (FMAP cut, ACA expansion repeal, SNAP cost-shift) are modeled estimates based on current program sizes; actual cuts would depend on specific federal legislation.
             </dd>
           </div>
+          <div id="federal-by-county">
+            <dt class="font-semibold text-white">Federal money by county</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Pulled directly from the <a href="https://api.usaspending.gov/api/v2/search/spending_by_geography/" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov API</a> (<code class="text-wtp-cream/80">spending_by_geography</code> endpoint, place-of-performance scope) for the most recent complete federal fiscal year. All 67 PA counties are fetched in one query and stored in <code class="text-wtp-cream/80">data/federal-funds-by-county.json</code>. <strong class="text-white">Important caveat:</strong> the totals include <em>all</em> federal obligations — contracts, grants, direct payments, loans, and insurance — not just "aid." Large federal contractors and research grants (e.g., Pitt, UPMC, Penn, federal labs) significantly inflate metro-county totals; Allegheny and Philadelphia look much higher per-capita than a pure "federal aid" view would show. This widget is not a measure of state aid to your county — state-aid data is not published in clean county-aggregated form and will get its own treatment when the Local Impact dashboard ships.
+            </dd>
+          </div>
           <div>
             <dt class="font-semibold text-white">Personal impact calculator</dt>
             <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
