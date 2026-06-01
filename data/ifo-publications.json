@@ -1,11 +1,32 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-05-25T16:06:33+00:00",
+  "lastUpdated": "2026-06-01T21:03:35+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "May 2026 Revenue Update",
+      "date": "2026-06-01",
+      "url": "https://www.ifo.state.pa.us/releases/936/May-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_05.pdf",
+      "summary": "The Commonwealth collected $3.31 billion in General Fund revenues for May, an increase of $73 million compared to May 2025. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "School District Property Tax Update",
+      "date": "2026-05-28",
+      "url": "https://www.ifo.state.pa.us/releases/935/School-District-Property-Tax-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/SD_Prop_Tax_Update_05_2026.pdf",
+      "summary": "The IFO released an updated school district property tax forecast. The report projects revenues and the Act 1 index through FY 2027-28 and provides an overview of recent trends in school district funding. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Summary and Analysis of Annual PSERS Stress Test Report",
+      "date": "2026-05-28",
+      "url": "https://www.ifo.state.pa.us/releases/934/Summary-and-Analysis-of-Annual-PSERS-Stress-Test-Report/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PSERS_Stress_Test_Impact_Analysis_2026.pdf",
+      "summary": "Pursuant to Act 128 of 2020, the IFO issued a report that summarizes results from the Public School Employees Retirement System\u2019s (PSERS) recent stress test report. Based on PSERS\u2019 baseline projections, the IFO projects that from FY 2026-27 to FY 2054-55, the Commonwealth will us\u2026"
+    },
     {
       "title": "Initial Revenue Estimate FY 2026-27",
       "date": "2026-05-20",
@@ -19,27 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/932/Initial-Revenue-Estimate-Announcement/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Initial_Revenue_Estimate_Announcement_2026.pdf",
       "summary": "The IFO will release its Initial Revenue Estimate on Wednesday, May 20th at 1:30 PM. The report will contain revisions to the FY 2025-26 estimate and an initial estimate for FY 2026-27. See the announcement for a link to register for the presentation. ... (Full Report) - opens in\u2026"
-    },
-    {
-      "title": "April 2026 Revenue Update",
-      "date": "2026-05-01",
-      "url": "https://www.ifo.state.pa.us/releases/931/April-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_04.pdf",
-      "summary": "The Commonwealth collected $6.72 billion in General Fund revenues for April, an increase of $509 million (+8.2%) compared to April 2025. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Sports, Marketing, & Tourism Series: 2025 U.S. Open Impact Analysis",
-      "date": "2026-04-23",
-      "url": "https://www.ifo.state.pa.us/releases/930/Sports-Marketing-&-Tourism-Series-2025-US-Open-Impact-Analysis/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/2025_U.S._Open_Impact_Analysis_SMAT_04_2026.pdf",
-      "summary": "The IFO submitted an economic impact report for the U.S. Open in Allegheny County\u00a0(June 2025) to the General Assembly. The analysis finds that economic activity related to the event generated $152.8 million\u00a0in statewide spending and $10.2 million\u00a0in select state and local taxes. \u2026"
-    },
-    {
-      "title": "Do Sports Wager Tax Rates Affect Betting Volume?",
-      "date": "2026-04-21",
-      "url": "https://www.ifo.state.pa.us/releases/929/Do-Sports-Wager-Tax-Rates-Affect-Betting-Volume/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/2026tns15_4.pdf",
-      "summary": "Director Knittel and Robyn Toth submitted an article for publication in the April 13, 2026 edition of Tax Notes State . It ranks states based on per capita sports wagers and considers whether state tax rates impact per capita betting. For 2026, state tax rates range from 7% (Neva\u2026"
     }
   ]
 }
