@@ -1007,19 +1007,27 @@ const topPillars = Object.entries(pillarById)
           showResult('<span class="text-wtp-cream/70">No PA state districts found for that location.</span>');
           return;
         }
+        // Replace rather than accumulate — a location lookup always means
+        // "show me reps for this place", not "add to the current filter".
+        // The "+ Add district" button is the intentional accumulation path.
+        const previous = new Set(filters.districts);
+        filters.districts.clear();
         addDistricts(valid);
-        const reps = valid.map((d) => officialsByDistrict.get(d));
+        // Clear the input so the field is visually ready for the next search.
+        const inputEl = document.getElementById('lookup-input');
+        if (inputEl) inputEl.value = '';
         // Brief one-line confirmation. The chips ARE the result.
         const codes = valid.join(', ');
         showResult(
           '<span class="text-wtp-sky">✓</span> ' + (label ? label + ' ' : '') +
           (detail ? '<strong class="text-white">' + detail + '</strong> → ' : '') +
-          '<strong class="text-white">' + codes + '</strong> added to filter. ' +
+          '<strong class="text-white">' + codes + '</strong>. ' +
           '<button type="button" id="lookup-undo" class="ml-1 text-wtp-sky underline-offset-2 hover:underline">Undo</button>'
         );
         const undo = document.getElementById('lookup-undo');
         if (undo) undo.addEventListener('click', () => {
-          for (const d of valid) filters.districts.delete(d);
+          filters.districts.clear();
+          for (const d of previous) filters.districts.add(d);
           applyFilters();
           clearStatus();
         });
