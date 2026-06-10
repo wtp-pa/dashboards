@@ -451,6 +451,63 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
             </div>
           </details>
 
+          <!-- Two schools of thought -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="two-views">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Where this is headed — two schools of thought</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 space-y-6">
+
+              <p class="text-sm leading-relaxed text-wtp-cream/75">
+                Most budget analysts — left and right — largely agree on the <strong class="text-white">diagnosis</strong>: states baselined recurring programs on one-time federal COVID money, reserves are being spent at the top of the economic cycle instead of saved for the bottom, and annual "balanced budget" rules are easy to satisfy with one-time fixes that leave next year's math untouched. The disagreement is about the cure. Two composite views:
+              </p>
+
+              <div class="grid gap-4 md:grid-cols-2">
+
+                <div class="rounded-lg border border-wtp-sky/25 bg-page p-5">
+                  <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-sky">The fiscal-rules school</div>
+                  <p class="mt-2 text-sm font-semibold leading-snug text-white">"The failure is structural, so the fix must be mechanical — rules that hold in good years, when discipline is politically hardest."</p>
+                  <ul class="mt-4 space-y-2 text-sm leading-relaxed text-wtp-cream/70">
+                    <li class="flex gap-2"><span class="text-wtp-sky flex-shrink-0">·</span><span>Require budgets to balance on <em>recurring</em> revenue vs. recurring spending — not just annual cash</span></li>
+                    <li class="flex gap-2"><span class="text-wtp-sky flex-shrink-0">·</span><span>Cap spending growth to a formula (population + inflation, or personal income)</span></li>
+                    <li class="flex gap-2"><span class="text-wtp-sky flex-shrink-0">·</span><span>Automate reserve deposits; require supermajorities to withdraw</span></li>
+                    <li class="flex gap-2"><span class="text-wtp-sky flex-shrink-0">·</span><span>Set pension funding minimums that can't be skipped</span></li>
+                  </ul>
+                  <p class="mt-4 text-xs leading-relaxed text-wtp-cream/50"><strong class="text-wtp-cream/70">Evidence cited:</strong> NC, OH, GA, VA, and TX run surpluses under rules like these.</p>
+                  <p class="mt-2 text-xs leading-relaxed text-wtp-cream/50"><strong class="text-wtp-cream/70">The critique:</strong> rules are blunt and procyclical — they force cuts in recessions, and Colorado's TABOR (the strictest version) squeezed school funding until voters suspended parts of it.</p>
+                </div>
+
+                <div class="rounded-lg border border-wtp-gold/25 bg-page p-5">
+                  <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-gold">The revenue-modernization school</div>
+                  <p class="mt-2 text-sm font-semibold leading-snug text-white">"The deficit reflects an eroding tax base and rising needs, not overspending — austerity rules would lock in underinvestment."</p>
+                  <ul class="mt-4 space-y-2 text-sm leading-relaxed text-wtp-cream/70">
+                    <li class="flex gap-2"><span class="text-wtp-gold flex-shrink-0">·</span><span>Update the tax base to match the modern economy: services, retirement income (with low-income protections), gas extraction at a percentage</span></li>
+                    <li class="flex gap-2"><span class="text-wtp-gold flex-shrink-0">·</span><span>Treat education and health spending as investment with long-run returns, not just cost</span></li>
+                    <li class="flex gap-2"><span class="text-wtp-gold flex-shrink-0">·</span><span>Keep budget flexibility for recessions instead of formula straitjackets</span></li>
+                  </ul>
+                  <p class="mt-4 text-xs leading-relaxed text-wtp-cream/50"><strong class="text-wtp-cream/70">Evidence cited:</strong> MN and MA combine high service levels with mostly balanced budgets through broad, modern revenue bases.</p>
+                  <p class="mt-2 text-xs leading-relaxed text-wtp-cream/50"><strong class="text-wtp-cream/70">The critique:</strong> "trust the legislature" has a poor track record — without binding rules, new revenue tends to get absorbed into new spending and the structural gap reappears.</p>
+                </div>
+
+              </div>
+
+              <div class="rounded-md border border-white/10 bg-page px-4 py-3.5">
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">Where both schools agree</div>
+                <ul class="mt-2 space-y-1.5 text-sm leading-relaxed text-wtp-cream/70">
+                  <li class="flex gap-2"><span class="text-wtp-cream/40 flex-shrink-0">—</span><span>One-time money should be separated from recurring money on the face of the budget</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/40 flex-shrink-0">—</span><span>Reserves are for recessions, not election years</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/40 flex-shrink-0">—</span><span>Voters should be able to see the structural gap before it becomes a crisis</span></li>
+                </ul>
+              </div>
+
+              <p class="text-xs leading-relaxed text-wtp-cream/35">
+                These are composite schools of thought drawn from state fiscal policy research — not {config.party.shortName} platform positions. The overlap — honest accounting and visibility — is the part this dashboard exists to serve, whichever cure you favor.
+              </p>
+
+            </div>
+          </details>
+
         </div>
       </div>
 
