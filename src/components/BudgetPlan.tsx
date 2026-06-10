@@ -12,7 +12,19 @@ interface Proposal {
   status: Status;
   statusDetail: string;
   sourceDetail: string;
+  category: string;
 }
+
+const CATEGORY_LABELS: Record<string, string> = {
+  'new-revenue':  'New revenue streams',
+  'close-loophole': 'Close loopholes & exemptions',
+  'structural':   'Structural reform',
+  'service-cut':  'Service & benefit reform',
+  'workforce':    'Workforce & transparency',
+};
+
+// Preferred display order within each section
+const CATEGORY_ORDER = ['new-revenue', 'close-loophole', 'structural', 'service-cut', 'workforce'];
 
 interface Props {
   revenueProposals: Proposal[];
@@ -137,16 +149,33 @@ function LeverSection({
         </span>
       </button>
       {open && (
-        <ul className="space-y-3 border-t border-white/10 px-5 pb-5 pt-4">
-          {proposals.map((p) => (
-            <ProposalRow
-              key={p.id}
-              proposal={p}
-              on={!!enabled[p.id]}
-              onToggle={() => toggle(p.id)}
-            />
-          ))}
-        </ul>
+        <div className="border-t border-white/10 px-5 pb-5 pt-4 space-y-6">
+          {Array.from(
+            proposals.reduce((map, p) => {
+              if (!map.has(p.category)) map.set(p.category, []);
+              map.get(p.category)!.push(p);
+              return map;
+            }, new Map<string, Proposal[]>())
+          )
+            .sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b))
+            .map(([cat, group]) => (
+              <div key={cat}>
+                <div className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-wtp-cream/40">
+                  {CATEGORY_LABELS[cat] ?? cat}
+                </div>
+                <ul className="space-y-3">
+                  {group.map((p) => (
+                    <ProposalRow
+                      key={p.id}
+                      proposal={p}
+                      on={!!enabled[p.id]}
+                      onToggle={() => toggle(p.id)}
+                    />
+                  ))}
+                </ul>
+              </div>
+            ))}
+        </div>
       )}
     </div>
   );

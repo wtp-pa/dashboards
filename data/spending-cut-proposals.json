@@ -2,9 +2,33 @@
   "$comment": "Best-effort spending-cut estimates for PA. Same caveat as rescue-proposals.json: numbers are mid-range from cited sources; treat as informative, not precise. Real savings depend on implementation, ramp-up, and political will. Sources cited per row. Refresh annually against PA IFO publications and Auditor General reports.",
   "proposals": [
     {
+      "id": "ltc-rebalancing",
+      "name": "Shift long-term care from nursing homes to home care",
+      "description": "PA defaults elderly and disabled residents into nursing facility care, which costs 2–3× home- and community-based alternatives. Long-Term Living appropriations grew 10% last year. States like MN, OR, and WA have successfully rebalanced toward home care — saving money while improving outcomes. This is the only major spending cut that also improves quality of life.",
+      "revenueLowUSD": 200000000,
+      "revenueMidUSD": 400000000,
+      "revenueHighUSD": 700000000,
+      "status": "concept",
+      "statusDetail": "No active PA bill; HCBS rebalancing is a federal Medicaid waiver program",
+      "sourceDetail": "PA Dept of Human Services LTSS data; KFF HCBS state profiles; IFO Long-Term Living line item",
+      "category": "structural"
+    },
+    {
+      "id": "cyber-charter-reform",
+      "name": "Cyber charter school funding reform",
+      "description": "PA pays cyber charter schools using a tuition formula tied to home-district per-pupil spending — far above what online instruction actually costs. The 2025-26 budget included ~$178M in savings; a further funding cap at a statewide cost-of-instruction rate saves significantly more.",
+      "revenueLowUSD": 75000000,
+      "revenueMidUSD": 150000000,
+      "revenueHighUSD": 250000000,
+      "status": "active-bill",
+      "statusDetail": "Building on 2025-26 reforms; additional bills in current session",
+      "sourceDetail": "PA Dept of Education; PA School Boards Association; Shapiro FY 2026-27 budget",
+      "category": "structural"
+    },
+    {
       "id": "pension-reform-expand",
       "name": "Expand pension reform for new state hires",
-      "description": "Acts 120 (2010) and 5 (2017) already shifted some new hires to lower-cost benefit tiers. Further reforms — fully defined-contribution for new hires, higher retirement age, lower employer match — could save more over time. Slow ramp-up since it only affects new employees.",
+      "description": "Acts 120 (2010) and 5 (2017) already shifted some new hires to lower-cost benefit tiers. Further reforms — fully defined-contribution for new hires, higher retirement age, lower employer match — save more over time. Slow ramp-up since it only affects new employees.",
       "revenueLowUSD": 200000000,
       "revenueMidUSD": 350000000,
       "revenueHighUSD": 500000000,
@@ -12,6 +36,18 @@
       "statusDetail": "Building on Act 120 of 2010 and Act 5 of 2017; not currently before the legislature",
       "sourceDetail": "PA SERS and PSERS actuarial reports; pension reform commission analyses",
       "category": "structural"
+    },
+    {
+      "id": "medicaid-work-requirements",
+      "name": "Medicaid work requirements for able-bodied adults",
+      "description": "Requiring able-bodied, non-caregiver Medicaid recipients to work, volunteer, or participate in job training as a condition of coverage. PA Senate Republicans project ~$135M in annual state savings. Similar programs operate in GA and AR under federal waivers.",
+      "revenueLowUSD": 75000000,
+      "revenueMidUSD": 135000000,
+      "revenueHighUSD": 200000000,
+      "status": "blocked",
+      "statusDetail": "Proposed by PA Senate Republicans; opposed by House Democrats and Shapiro administration",
+      "sourceDetail": "PA Senate Republican budget framework; KFF Medicaid work requirement tracker",
+      "category": "service-cut"
     },
     {
       "id": "medicaid-optional-services",
@@ -23,6 +59,18 @@
       "status": "concept",
       "statusDetail": "Done by other states; not currently proposed in PA",
       "sourceDetail": "KFF state Medicaid scope-of-coverage tables; PA DHS Medicaid budget",
+      "category": "service-cut"
+    },
+    {
+      "id": "mco-renegotiation",
+      "name": "Renegotiate Medicaid managed-care contracts",
+      "description": "PA pays managed care organizations (MCOs) to administer Medicaid. Squeezing administrative loadings, rate increases, and pharmacy benefit manager spreads — as several states have done — captures savings without cutting member benefits.",
+      "revenueLowUSD": 100000000,
+      "revenueMidUSD": 200000000,
+      "revenueHighUSD": 300000000,
+      "status": "concept",
+      "statusDetail": "Active topic; PA Auditor General has flagged MCO costs repeatedly",
+      "sourceDetail": "PA Auditor General reports; KFF studies on state MCO oversight",
       "category": "service-cut"
     },
     {
@@ -40,7 +88,7 @@
     {
       "id": "workforce-reduction",
       "name": "5% state workforce reduction via attrition",
-      "description": "PA employs roughly 70,000 in the executive branch. A 5% reduction over 2-3 years through attrition (not replacing departures, consolidating positions) saves hundreds of millions in salary + benefits without layoffs.",
+      "description": "PA employs roughly 70,000 in the executive branch. A 5% reduction over 2–3 years through attrition (not replacing departures, consolidating positions) saves hundreds of millions in salary and benefits without layoffs.",
       "revenueLowUSD": 200000000,
       "revenueMidUSD": 350000000,
       "revenueHighUSD": 500000000,
@@ -48,18 +96,6 @@
       "statusDetail": "Perennial proposal; never formally pursued at scale",
       "sourceDetail": "PA Office of Administration workforce data; comparable right-sizing efforts in other states",
       "category": "workforce"
-    },
-    {
-      "id": "mco-renegotiation",
-      "name": "Renegotiate Medicaid managed-care contracts",
-      "description": "PA pays managed care organizations (MCOs) to administer Medicaid. Squeezing administrative loadings, rate increases, and pharmacy benefit manager spreads — as several states have done — captures savings without cutting member benefits.",
-      "revenueLowUSD": 100000000,
-      "revenueMidUSD": 200000000,
-      "revenueHighUSD": 300000000,
-      "status": "concept",
-      "statusDetail": "Active topic; PA Auditor General has flagged MCO costs repeatedly",
-      "sourceDetail": "PA Auditor General reports; KFF studies on state MCO oversight",
-      "category": "service-cut"
     },
     {
       "id": "wams-discretionary",
@@ -71,7 +107,7 @@
       "status": "blocked",
       "statusDetail": "Proposed repeatedly; resisted by legislative leadership",
       "sourceDetail": "PA Auditor General reports; budget transparency advocacy",
-      "category": "structural"
+      "category": "workforce"
     }
   ]
 }
