@@ -35,7 +35,11 @@ DEFAULT_USER_AGENT = "wtpppa-dashboards/1.0"
 DEFAULT_DELAY_SEC = 6.0
 DEFAULT_PER_PAGE = 20  # OpenStates v3 caps at 20 with non-default sort
 DEFAULT_TIMEOUT_SEC = 60
-MAX_RETRIES = 4
+MAX_RETRIES = 6
+# Exponential backoff: 30s, 60s, 120s, 240s, 300s, 300s.
+# Caps at 5 minutes — enough to outlast a typical free-tier rate-limit window.
+_BACKOFF_BASE_SEC = 30
+_BACKOFF_MAX_SEC = 300
 
 
 class OpenStatesError(RuntimeError):
@@ -88,8 +92,10 @@ class OpenStatesClient:
                 resp = requests.get(url, params=params, headers=self._headers, timeout=timeout)
                 if resp.status_code == 429:
                     retry_after = resp.headers.get("Retry-After", "")
-                    wait = int(retry_after) if retry_after.isdigit() else 10 * (attempt + 1)
-                    print(f"  rate-limited, sleeping {wait}s before retry...", file=sys.stderr)
+                    wait = int(retry_after) if retry_after.isdigit() else min(
+                        _BACKOFF_MAX_SEC, _BACKOFF_BASE_SEC * (2 ** attempt)
+                    )
+                    print(f"  rate-limited (attempt {attempt + 1}/{MAX_RETRIES}), sleeping {wait}s...", file=sys.stderr)
                     last_err = OpenStatesError(f"429 Too Many Requests after {wait}s wait")
                     time.sleep(wait)
                     continue
@@ -97,7 +103,8 @@ class OpenStatesClient:
                 return resp.json()
             except (requests.Timeout, requests.HTTPError) as e:
                 last_err = e
-                time.sleep(3 * (attempt + 1))
+                wait = min(_BACKOFF_MAX_SEC, _BACKOFF_BASE_SEC * (2 ** attempt))
+                time.sleep(wait)
         # All retries exhausted — raise a clear error rather than asserting.
         msg = f"GET {url} failed after {MAX_RETRIES} attempts"
         if last_err is not None:

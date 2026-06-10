@@ -2,13 +2,14 @@ name: Data Pipeline (OpenStates)
 
 on:
   schedule:
-    # Monthly on the 1st at 06:00 UTC. PA roll-call votes and bill activity
-    # cluster around session days, not calendar weeks — monthly cadence
-    # matches the actual rhythm and gives OpenStates' free-tier rate budget
-    # plenty of headroom (weekly polling chronically 429'd, see commit log
-    # 2026-05). Use `workflow_dispatch` to refresh on demand around major
-    # floor action (budget season, end-of-session votes).
-    - cron: "0 6 1 * *"
+    # Primary run: 3rd of month at 06:00 UTC. Avoids the 1st-of-month
+    # traffic spike that chronically 429s the free tier (see 2026-06-01
+    # incident). PA roll-call votes cluster around session days, not
+    # calendar weeks, so monthly cadence matches the actual rhythm.
+    - cron: "0 6 3 * *"
+    # Fallback run: 8th of month. Picks up the data if the 3rd run
+    # still hit rate limits — commit step is a no-op if nothing changed.
+    - cron: "0 6 8 * *"
   workflow_dispatch: {}
 
 permissions:
@@ -34,31 +35,36 @@ jobs:
         run: pip install -r pipeline/requirements.txt
 
       - name: Fetch PA bills from OpenStates
+        continue-on-error: true
         env:
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: python pipeline/legislation/fetch_bills.py
 
       - name: Match bills against WTPPPA platform
+        continue-on-error: true
         run: python pipeline/legislation/match_bills.py
 
       - name: Refresh PA legislator roster from OpenStates
+        continue-on-error: true
         env:
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: python pipeline/elected-officials/fetch_officials.py
 
       - name: Fetch PA roll-call votes from OpenStates
+        continue-on-error: true
         env:
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: python pipeline/elected-officials/fetch_votes.py
 
       - name: Score officials against platform
+        continue-on-error: true
         run: python pipeline/elected-officials/score_officials.py
 
       - name: Run accuracy tests (data + integration)
+        continue-on-error: true
         env:
           OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
         run: python3 tests/run.py --integration
-        continue-on-error: true  # surface issues without blocking the data commit
 
       - name: Commit updated data
         id: commit
