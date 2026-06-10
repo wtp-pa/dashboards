@@ -76,16 +76,16 @@ export const config = {
         status: "live" as const,
       },
       {
-        name: "PA Legislation Watch",
-        slug: "legislation",
-        tagline: "Scoring PA bills against the WTPPPA platform",
-        status: "pre-release" as const,
-      },
-      {
         name: "Elected Officials Watch",
         slug: "elected-officials",
         tagline: "Track all 251 PA legislators — what they sponsor, how they vote, and where they line up with our platform",
         status: "live" as const,
+      },
+      {
+        name: "PA Legislation Watch",
+        slug: "legislation",
+        tagline: "Scoring PA bills against the WTPPPA platform",
+        status: "pre-release" as const,
       },
       {
         name: "Local Impact",
