@@ -29,8 +29,6 @@ const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
 const stat = (key: string) => keyStats.stats.find((s) => s.key === key);
 const familyShare = stat('deficitPerFamilyOf4USD');
 const rainyDayBalance = stat('rainyDayFundBalanceUSD');
-const medicaid = stat('medicaidGrowthSince2018');
-const reserves = stat('schoolDistrictReservesUSD');
 
 const baseFamilyShareUSD = typeof familyShare?.value === 'number' ? familyShare.value : 1500;
 const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 7_000_000_000;
@@ -91,6 +89,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     </header>
 
     <main class="mx-auto max-w-6xl px-6 pt-8 md:pt-12 pb-16 md:pb-24">
+
+      <!-- ── HERO: the clock ── -->
       <section>
         <p class="text-center text-xs uppercase tracking-[0.2em] text-wtp-sky">
           Pennsylvania's structural deficit
@@ -103,18 +103,16 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             annualDeficitUSD={annualDeficit}
           />
         </div>
-        <ShareRow
-          url={canonicalUrl}
-          tweetText={`Pennsylvania has a $${annualB} billion structural deficit — and growing. Tracked live by ${config.party.shortName}.`}
-        />
-        <p class="mt-3 text-center text-xs text-wtp-cream/45">
-          Tracking FY 2025–26 — the current fiscal year, which ends June 30.
+        <p class="mt-4 text-center text-xs text-wtp-cream/45">
+          Tracking FY 2025–26 — the current fiscal year, which ends <strong class="text-wtp-cream/70">June 30</strong>.
+          The FY 2026–27 budget starts July 1 and is being negotiated right now.
         </p>
-        <p class="mt-4 text-center text-sm">
+        <p class="mt-3 text-center text-sm">
           <a href="/budget/about" class="text-wtp-sky/80 no-underline hover:text-wtp-sky">About this dashboard →</a>
         </p>
       </section>
 
+      <!-- ── ACT 1: HOW PA MONEY WORKS ── -->
       <section class="mt-16" id="how-it-works">
         <h2 class="text-3xl font-extrabold md:text-4xl">How Pennsylvania's money works</h2>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
@@ -146,28 +144,65 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           The <strong class="text-wtp-red">~${gapB} billion gap</strong> between what comes in and what goes out is the structural deficit ticking above. It's projected to grow to <strong class="text-white">$6.7 billion</strong> next year and <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes.
         </p>
 
-        <aside class="mt-10 max-w-3xl rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 p-5 text-sm leading-relaxed text-wtp-cream/80">
-          <div class="text-xs uppercase tracking-[0.18em] text-wtp-gold">Wait — what about property tax?</div>
-          <p class="mt-2">
+        <!-- Property tax flipper -->
+        <details class="group mt-6 max-w-3xl rounded-lg border border-wtp-gold/20 bg-wtp-gold/[0.04] transition hover:border-wtp-gold/40">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-3.5 [&::-webkit-details-marker]:hidden">
+            <div class="text-xs uppercase tracking-[0.18em] text-wtp-gold">Wait — what about property tax?</div>
+            <div class="flex-shrink-0 text-wtp-gold/60 transition group-open:rotate-180" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </summary>
+          <div class="border-t border-wtp-gold/15 px-5 pb-4 pt-3 text-sm leading-relaxed text-wtp-cream/80">
             Pennsylvania property taxes don't appear above because they aren't <em>state</em> revenue. PA is one of the few states where property tax is collected and spent entirely by <strong class="text-white">local government</strong> — school districts (the largest share), counties, and municipalities — and never enters the state General Fund. That's why a Pennsylvanian can pay one of the highest property tax burdens in the country and still see a state-level structural deficit. Property tax reform is in <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">our platform</a> — but the fix happens at the local and state-policy level, not in the state's revenue mix.
-          </p>
-        </aside>
+          </div>
+        </details>
+
+        <div class="mt-10">
+          <ShareRow
+            url={canonicalUrl}
+            tweetText={`Pennsylvania has a $${annualB} billion structural deficit — and growing. Tracked live by ${config.party.shortName}.`}
+          />
+        </div>
       </section>
 
+      <!-- ── ACT 2: THE WIDENING GAP ── -->
       <section class="mt-16">
         <SpendingRevenueTrend
           points={projections.growthTrend.points}
           note={projections.growthTrend.note}
         />
+
+        <div class="mt-8 max-w-3xl rounded-lg border border-white/10 bg-surface/50 p-5">
+          <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">Why this matters</div>
+          <p class="mt-3 text-sm leading-relaxed text-wtp-cream/75">
+            A structural deficit isn't just a number — it's a recurring choice. Every year the gap goes unfilled, the state either drains its savings, delays payments to school districts and healthcare providers, or kicks harder decisions to the next governor. Pennsylvania rebuilt the Rainy Day Fund over nearly a decade. On the current proposal, two-thirds of it gets spent in one budget. Once that cushion is gone — the IFO projects the fund depleted by mid-2027 on the current trajectory — the only options left are abrupt service cuts or significant tax increases. Pennsylvania's bond rating, which determines how much the state pays to borrow for roads, bridges, and schools, moves in direct response to this kind of fiscal pattern.
+          </p>
+        </div>
       </section>
 
-      <section class="mt-20">
-        <FederalContext />
-      </section>
+      <!-- ── ACT 3: THE BUDGET DEADLINE ── -->
+      <section class="mt-20" id="budget-deadline">
+        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Right now</p>
+        <h2 class="mt-2 text-3xl font-extrabold md:text-4xl">The budget deadline</h2>
 
-      <section class="mt-20" id="paths-to-close-the-gap">
-        <h2 class="text-3xl font-extrabold md:text-4xl">How could we close the gap?</h2>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
+          The deficit clock above tracks <strong class="text-white">FY 2025–26</strong> — the current fiscal year ending <strong class="text-white">June 30</strong>. The bigger fight is over <strong class="text-white">FY 2026–27</strong>, which starts July 1 and carries a projected <strong class="text-wtp-red">$6.7 billion</strong> structural gap — nearly double this year's. Gov. Shapiro's proposed budget bridges most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong>, which buys a year but leaves the underlying spending-versus-revenue mismatch intact.
+        </p>
 
+        <!-- What happens if June 30 passes -->
+        <details class="group mt-6 max-w-3xl rounded-lg border border-white/10 bg-surface/50 transition hover:border-wtp-sky/30">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-3.5 [&::-webkit-details-marker]:hidden">
+            <div class="text-sm font-semibold text-wtp-cream/80">What actually happens if June 30 passes without a budget?</div>
+            <div class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </summary>
+          <div class="border-t border-white/10 px-5 pb-4 pt-3 text-sm leading-relaxed text-wtp-cream/75">
+            PA law requires a balanced budget signed by June 30. If the deadline passes unsigned, the state doesn't shut down entirely — courts have ruled that essential services and employee pay continue — but school districts, hospitals, and nonprofits that depend on state reimbursements stop getting paid. Smaller districts and nonprofits burn through cash reserves waiting; some take emergency loans. In FY 2024–25, the budget wasn't signed until <strong class="text-white">November 2025</strong> — 130 days late.
+          </div>
+        </details>
+
+        <!-- Current status alert -->
         <div class="mt-6 max-w-3xl rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-5 py-4">
           <div class="flex items-start gap-3">
             <span class="mt-0.5 flex-shrink-0 text-wtp-red" aria-hidden="true">
@@ -175,16 +210,38 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             </span>
             <div class="text-sm leading-relaxed text-wtp-cream/80">
               <strong class="text-white">FY 2026–27 budget: not yet enacted.</strong>
-              The new fiscal year begins July 1. As of June 2026, the House has passed a spending bill but the Republican-controlled Senate has not agreed — largely over spending levels and the skill games/cannabis revenue proposals.
-              PA has blown the June 30 deadline before: last year's budget wasn't signed until <strong class="text-white">November 2025</strong>, 130 days late.
+              As of June 2026, the House has passed a spending bill but the Republican-controlled Senate has not agreed — largely over spending levels and the skill games/cannabis revenue proposals. The new fiscal year begins July 1.
             </div>
           </div>
         </div>
 
+        <!-- Political timeline cards (surfaced) -->
+        <div class="mt-8 max-w-3xl">
+          <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">The political calendar</div>
+          <div class="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
+            <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
+              <div class="text-xs uppercase tracking-wider text-wtp-sky">Now – June 30</div>
+              <div class="mt-1 text-wtp-cream/80">Budget negotiations. $4.6B Rainy Day drawdown proposed to balance the books for FY 2026–27.</div>
+            </div>
+            <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
+              <div class="text-xs uppercase tracking-wider text-wtp-gold">November 2026</div>
+              <div class="mt-1 text-wtp-cream/80">Gubernatorial election. No tax increases. No significant service cuts. The fund covers the gap.</div>
+            </div>
+            <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
+              <div class="text-xs uppercase tracking-wider text-wtp-red">January 2027</div>
+              <div class="mt-1 text-wtp-cream/80">New governor takes office. ~$2.1B left in reserves. Structural deficit intact and growing.</div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs leading-relaxed text-wtp-cream/45">
+            Using reserves to avoid hard choices in an election year is documented across both parties in multiple states. What makes this case notable is the scale — $4.6B of a $6.78B fund — and that the underlying deficit was entirely foreseeable, not the result of a shock.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── ACT 4: PATHS TO CLOSE THE GAP ── -->
+      <section class="mt-20" id="paths-to-close-the-gap">
+        <h2 class="text-3xl font-extrabold md:text-4xl">How could we close the gap?</h2>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
-          The <strong class="text-white">$6.7 billion</strong> figure is next year's projected gap — not this year's. Right now the structural deficit is roughly $4.8B, but spending is growing at ~5% per year while revenue grows at ~2%, so the gap widens automatically. By FY 2026–27 it reaches $6.7B, and the IFO projects $8.4B by 2029–30 if nothing changes. Gov. Shapiro's current budget proposes covering most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong> — which buys a year but leaves the underlying mismatch intact.
-        </p>
-        <p class="mt-4 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
           The deficit isn't fate. There are real, named proposals on both the revenue and spending sides. Toggle any combination below to build your own plan — the running total updates as you go.
         </p>
         <div class="mt-8">
@@ -197,7 +254,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </div>
       </section>
 
+      <!-- ── ACT 5: FEDERAL EXPOSURE ── -->
       <section class="mt-20">
+        <FederalContext />
+      </section>
+
+      <section class="mt-16">
         <h2 class="text-3xl font-extrabold md:text-4xl">What could make the gap worse</h2>
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
           Closing the gap is one direction. PA's structural exposure to federal funding shifts is the other. Federal flows are volatile across every administration, every budget cycle, every recession.
@@ -228,25 +290,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </details>
       </section>
 
-      <section class="mt-20 grid gap-6 md:grid-cols-3">
-        <div class="rounded-lg border border-white/10 bg-surface p-6">
-          <div class="text-3xl font-bold text-wtp-red">${familyShare?.value ?? '—'}</div>
-          <div class="mt-2 text-sm text-wtp-cream/70">{familyShare?.label}</div>
-          <div class="mt-3 text-xs text-wtp-cream/40">{familyShare?.source}</div>
-        </div>
-        <div class="rounded-lg border border-white/10 bg-surface p-6">
-          <div class="text-3xl font-bold text-wtp-red">{medicaid?.value}</div>
-          <div class="mt-2 text-sm text-wtp-cream/70">{medicaid?.label}</div>
-          <div class="mt-3 text-xs text-wtp-cream/40">{medicaid?.source}</div>
-        </div>
-        <div class="rounded-lg border border-white/10 bg-surface p-6">
-          <div class="text-3xl font-bold text-wtp-sky">$6.78B</div>
-          <div class="mt-2 text-sm text-wtp-cream/70">{reserves?.label} sitting unused</div>
-          <div class="mt-3 text-xs text-wtp-cream/40">{reserves?.source}</div>
-        </div>
-      </section>
-
-      <section class="mt-12 grid items-start gap-6 lg:grid-cols-3">
+      <!-- ── PERSONAL IMPACT ── -->
+      <section class="mt-20 grid items-start gap-6 lg:grid-cols-3">
         <div class="lg:col-span-2">
           <PersonalImpactCalculator
             client:visible
@@ -262,12 +307,13 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         />
       </section>
 
+      <!-- ── APPENDIX: RAINY DAY FUND DEEP DIVE ── -->
       <section class="mt-20">
         <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
           <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 [&::-webkit-details-marker]:hidden">
             <div>
               <div class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Appendix</div>
-              <div class="mt-1 text-base font-semibold text-white md:text-lg">The Rainy Day Fund: context, history &amp; how PA compares</div>
+              <div class="mt-1 text-base font-semibold text-white md:text-lg">The Rainy Day Fund: law, history &amp; how PA compares to other states</div>
             </div>
             <div class="flex-shrink-0 text-wtp-cream/60 transition group-open:rotate-180" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -278,7 +324,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
           <div class="space-y-10 border-t border-white/10 px-6 pb-8 pt-6">
 
-            <!-- What the law says -->
             <div>
               <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">What PA law actually says</div>
               <p class="mt-3 text-sm leading-relaxed text-wtp-cream/70">
@@ -294,31 +339,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
               </p>
             </div>
 
-            <!-- Political timing -->
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">The political timing</div>
-              <div class="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
-                <div class="rounded-md border border-white/10 bg-page px-4 py-3">
-                  <div class="text-xs uppercase tracking-wider text-wtp-sky">Now – June 30</div>
-                  <div class="mt-1 text-wtp-cream/80">Budget negotiations. $4.6B Rainy Day drawdown proposed to balance the books.</div>
-                </div>
-                <div class="rounded-md border border-white/10 bg-page px-4 py-3">
-                  <div class="text-xs uppercase tracking-wider text-wtp-gold">November 2026</div>
-                  <div class="mt-1 text-wtp-cream/80">Gubernatorial election. No tax increases. No significant service cuts. Fund covers the gap.</div>
-                </div>
-                <div class="rounded-md border border-white/10 bg-page px-4 py-3">
-                  <div class="text-xs uppercase tracking-wider text-wtp-red">January 2027</div>
-                  <div class="mt-1 text-wtp-cream/80">New governor takes office. ~$2.1B left in reserves. Structural deficit intact and growing.</div>
-                </div>
-              </div>
-              <p class="mt-3 text-xs leading-relaxed text-wtp-cream/50">
-                Using reserves to avoid hard choices in an election year is documented across both parties in multiple states.
-                What makes this case notable is the scale — $4.6B of a $6.78B fund — and that the underlying deficit
-                was entirely foreseeable, not the result of a shock.
-              </p>
-            </div>
-
-            <!-- PA history -->
             <div>
               <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">PA's history with the fund</div>
               <div class="mt-3 space-y-2.5 text-sm text-wtp-cream/70">
@@ -345,7 +365,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
               </div>
             </div>
 
-            <!-- Other states -->
             <div>
               <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">How other states protect their reserves</div>
               <p class="mt-3 text-sm leading-relaxed text-wtp-cream/70">
