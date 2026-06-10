@@ -54,7 +54,7 @@ export const config = {
     // fetch_votes.py finds real votes; `officersApprovedData` is a
     // manual gate — flip it to true here once officers have reviewed
     // the real-data dashboard and signed off on it being public.
-    officersApprovedData: false,
+    officersApprovedData: true,
   },
   legislation: {
     // Same officer-approval gate for /legislation. Real OpenStates data
@@ -85,7 +85,7 @@ export const config = {
         name: "Elected Officials Watch",
         slug: "elected-officials",
         tagline: "Track all 251 PA legislators — what they sponsor, how they vote, and where they line up with our platform",
-        status: "pre-release" as const,
+        status: "live" as const,
       },
       {
         name: "Local Impact",
