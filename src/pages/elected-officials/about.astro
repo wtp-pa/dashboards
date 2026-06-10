@@ -16,23 +16,25 @@ const officialCount = officialsDoc.officials.length;
 const senateCount = officialsDoc.officials.filter((o) => o.chamber === 'Senate').length;
 const houseCount = officialsDoc.officials.filter((o) => o.chamber === 'House').length;
 
-// Live PA bill stats for the effectiveness comparison.
-const paIntroduced = billsDoc.bills.length;
-const paEnacted = billsDoc.bills.filter((b) => stageOf((b as { status: string }).status) === 'signed').length;
-const PA_POP_MILLIONS = 13.0; // 2023 Census estimate
-const paEnactedPerMillion = Math.round(paEnacted / PA_POP_MILLIONS);
-const paEnactmentRate = paIntroduced > 0 ? Math.round((paEnacted / paIntroduced) * 100) : 0;
+// Live PA bill stats — for the "current session snapshot" line only.
+// Our bills.json is scoped to platform-tracked bills, not all PA legislation,
+// so we do NOT use it as the enacted count for cross-state comparison.
+const paTrackedIntroduced = billsDoc.bills.length;
+const paTrackedEnacted = billsDoc.bills.filter((b) => stageOf((b as { status: string }).status) === 'signed').length;
+const paTrackedEnactmentRate = paTrackedIntroduced > 0 ? Math.round((paTrackedEnacted / paTrackedIntroduced) * 100) : 0;
 
 // Cross-state comparison — approximate 2-year session totals, NCSL 2023-2024.
-// "Enacted" = bills signed into law. Populations from 2023 Census estimates.
+// All figures are approximate; populations from 2023 Census estimates.
+// PA ~250 is a conservative estimate for a full 2-year session (PA enacts
+// fewer bills than many states due to divided-government dynamics).
 const stateComparison = [
-  { state: 'California', type: 'Full-time', enacted: 1200, popM: 39.0, squire: 0.63 },
-  { state: 'New York',   type: 'Full-time', enacted: 900,  popM: 19.7, squire: 0.52 },
-  { state: 'Pennsylvania', type: 'Full-time', enacted: paEnacted, popM: PA_POP_MILLIONS, squire: 0.28, isPA: true },
-  { state: 'Ohio',       type: 'Full-time', enacted: 280,  popM: 11.8, squire: 0.19 },
-  { state: 'Colorado',   type: 'Hybrid',    enacted: 600,  popM: 5.8,  squire: 0.14 },
-  { state: 'Wyoming',    type: 'Part-time', enacted: 300,  popM: 0.58, squire: 0.06 },
-  { state: 'New Hampshire', type: 'Part-time', enacted: 500, popM: 1.4, squire: 0.04 },
+  { state: 'California',    type: 'Full-time', enacted: 1200, popM: 39.0, squire: 0.63 },
+  { state: 'New York',      type: 'Full-time', enacted: 900,  popM: 19.7, squire: 0.52 },
+  { state: 'Pennsylvania',  type: 'Full-time', enacted: 250,  popM: 13.0, squire: 0.28, isPA: true },
+  { state: 'Ohio',          type: 'Full-time', enacted: 280,  popM: 11.8, squire: 0.19 },
+  { state: 'Colorado',      type: 'Hybrid',    enacted: 600,  popM: 5.8,  squire: 0.14 },
+  { state: 'Wyoming',       type: 'Part-time', enacted: 300,  popM: 0.58, squire: 0.06 },
+  { state: 'New Hampshire', type: 'Part-time', enacted: 500,  popM: 1.4,  squire: 0.04 },
 ] as const;
 
 const pageTitle = `About — PA Elected Officials Watch — ${config.party.shortName}`;
@@ -202,7 +204,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           Raw bill counts mislead. Wyoming's legislature enacts far more bills <em>per resident</em> than Pennsylvania's — not because it's more effective, but because Wyoming has 580,000 people and correspondingly simpler governance needs. Pennsylvania has 13 million residents, a $50B budget, 500 school districts, and policy complexity that requires longer, more contested legislation. Per-capita normalizes for state size so comparisons are fairer.
         </p>
         <p class="mt-3 text-sm leading-relaxed text-wtp-cream/70">
-          PA's current session: <strong class="text-white">{paIntroduced.toLocaleString()} bills introduced · {paEnacted} enacted ({paEnactmentRate}%)</strong> · {paEnactedPerMillion} enacted per million residents.
+          PA's current session (platform-tracked bills only): <strong class="text-white">{paTrackedIntroduced.toLocaleString()} introduced · {paTrackedEnacted} enacted ({paTrackedEnactmentRate}% of tracked bills)</strong>. Note: this dashboard tracks platform-relevant bills, not all PA legislation — the comparison table uses full-legislature estimates.
         </p>
 
         <div class="mt-6 overflow-x-auto rounded-lg border border-white/10 bg-surface/30">
@@ -224,7 +226,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
                 return (
                   <tr class={(row as any).isPA ? 'bg-wtp-sky/5' : ''}>
                     <td class={`px-5 py-3 ${(row as any).isPA ? 'font-semibold text-white' : ''}`}>
-                      {row.state}{(row as any).isPA && <span class="ml-2 text-[11px] text-wtp-sky">← this session, live</span>}
+                      {row.state}{(row as any).isPA && <span class="ml-2 text-[11px] text-wtp-sky">← PA</span>}
                     </td>
                     <td class="px-5 py-3 text-wtp-cream/60">{row.type}</td>
                     <td class="px-5 py-3 text-right font-mono">{row.enacted.toLocaleString()}</td>
@@ -244,7 +246,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           </table>
         </div>
         <p class="mt-3 text-xs text-wtp-cream/40">
-          All figures except PA are approximate; sourced from NCSL "Bills Introduced and Enacted" reports and state legislature websites, 2023–2024 sessions. PA figure is live from this dashboard's bill feed. Population: 2023 US Census estimates. "Enacted" = bills signed into law by the governor.
+          All figures are approximate 2-year session estimates; sourced from NCSL "Bills Introduced and Enacted" reports and state legislature websites, 2023–2024 sessions. PA (~250) is a conservative estimate for a full session — PA enacts fewer bills than many states due to divided-government dynamics. Population: 2023 US Census estimates. "Enacted" = bills signed into law by the governor.
         </p>
         <p class="mt-2 text-xs text-wtp-cream/50">
           The small-state per-capita advantage is structural, not a sign of greater effectiveness — Wyoming's 40-day session can move faster partly because its policy space is narrower. The more meaningful question is whether a legislature has the institutional capacity to handle complex, contested policy. That's what the Squire Index below measures.
@@ -325,7 +327,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             </dd>
           </div>
           <div>
-            <dt class="font-semibold text="white">Sponsorship vs. voting</dt>
+            <dt class="font-semibold text-white">Sponsorship vs. voting</dt>
             <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
               We treat sponsorship as the stronger priority signal. A legislator can be whipped into a party-line floor vote against their preference; choosing to introduce or co-sponsor a bill is a voluntary act. The headline stats on each official card lead with sponsorship for this reason.
             </dd>

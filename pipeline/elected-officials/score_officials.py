@@ -81,7 +81,7 @@ def load_json(path: Path) -> dict:
 def stage_of(status: str) -> str:
     """Mirror of stageOf() in src/lib/bills.ts. Keep in sync."""
     s = status.lower()
-    if 'signed' in s or 'act of' in s or 'became law' in s:
+    if 'signed' in s or 'act no.' in s or 'act of' in s or 'became law' in s:
         return 'signed'
     if 'passed both' in s or 'to governor' in s or 'enacted' in s:
         return 'passed'

@@ -80,7 +80,7 @@ export const ALIGNMENT_ORDER: Record<Alignment, number> = {
 // PA-specific phrases — extend as new ones show up.
 export function stageOf(status: string): Stage {
   const s = status.toLowerCase();
-  if (s.includes('signed') || s.includes('act of') || s.includes('became law')) return 'signed';
+  if (s.includes('signed') || s.includes('act no.') || s.includes('act of') || s.includes('became law')) return 'signed';
   if (s.includes('passed both') || s.includes('to governor') || s.includes('enacted')) return 'passed';
   if (s.includes('third consideration') || s.includes('passed house') || s.includes('passed senate') || s.includes('on floor') || s.includes('adopted')) return 'on-floor';
   if (s.includes('appropriations')) return 'committee'; // Re-referred to Appropriations = past initial committee
