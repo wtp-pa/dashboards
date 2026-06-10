@@ -126,7 +126,7 @@
       "keyFactor": "No state income tax; constitutional revenue cap; migration-driven growth"
     }
   ],
-  "transferableLessons": [
+  "spendingLessons": [
     {
       "title": "Constitutional spending cap",
       "exampleStates": ["Texas", "Florida", "North Carolina", "Georgia"],
@@ -141,6 +141,110 @@
       "title": "Formula-driven reserve deposits",
       "exampleStates": ["Virginia", "California"],
       "description": "Virginia's Revenue Stabilization Fund automatically deposits money when revenues spike above forecast and withdraws only when economic conditions deteriorate. Removes the political discretion that lets structural deficits accumulate quietly in good years."
+    }
+  ],
+  "revenueLessons": [
+    {
+      "title": "Revenue-triggered tax cuts",
+      "exampleStates": ["North Carolina", "Ohio"],
+      "description": "NC and OH have both reduced income tax rates in recent years — but tied the cuts to surplus benchmarks. Rates only drop when the state hits a revenue target first. PA has debated income tax reform without the trigger mechanism that makes cuts fiscally responsible."
+    },
+    {
+      "title": "Natural resource severance tax",
+      "exampleStates": ["Texas", "Wyoming", "North Dakota"],
+      "description": "PA is the 2nd-largest natural gas producer in the US and collects only a flat 'impact fee' (~$200M/yr). Texas and Wyoming fund significant portions of their budgets from percentage-based severance taxes on oil and gas production. A PA severance tax is estimated to raise $500M–$1B annually at current production volumes, rising with natural gas prices. Source: PA Budget and Policy Center."
+    },
+    {
+      "title": "Broad tax base with fewer carve-outs",
+      "exampleStates": ["Georgia", "North Carolina"],
+      "description": "GA and NC apply moderate flat rates with fewer large exemptions. PA fully exempts all retirement income — pensions, Social Security, 401k, and IRA distributions — a growing gap as the state ages. Most peer states tax at least some retirement income. Taxing retirement income at PA's existing 3.07% flat rate (with low-income protections) is estimated to raise $2–3B annually."
+    }
+  ],
+  "incomeTaxComparisons": [
+    {
+      "abbreviation": "PA",
+      "incomeTaxType": "Flat",
+      "topRatePct": 3.07,
+      "retirementTreatment": "Fully exempt",
+      "note": "PA constitution's uniformity clause bars progressive rates without a constitutional amendment (voters rejected in 2004)",
+      "isPA": true
+    },
+    {
+      "abbreviation": "OH",
+      "incomeTaxType": "Progressive",
+      "topRatePct": 3.99,
+      "retirementTreatment": "Taxed (with credits)",
+      "note": "Rates tied to surplus benchmarks; only cut when revenue targets are met"
+    },
+    {
+      "abbreviation": "NJ",
+      "incomeTaxType": "Progressive",
+      "topRatePct": 10.75,
+      "retirementTreatment": "Partial exemption",
+      "note": "Pension and SS exempt at lower incomes; tapers off above thresholds"
+    },
+    {
+      "abbreviation": "NY",
+      "incomeTaxType": "Progressive",
+      "topRatePct": 10.9,
+      "retirementTreatment": "Taxed",
+      "note": "Federal SS exempt; all other retirement income taxed at state level"
+    },
+    {
+      "abbreviation": "MD",
+      "incomeTaxType": "Progressive",
+      "topRatePct": 5.75,
+      "retirementTreatment": "Partial exemption",
+      "note": "Up to $36K pension/retirement income exempt depending on age and income"
+    },
+    {
+      "abbreviation": "VA",
+      "incomeTaxType": "Progressive",
+      "topRatePct": 5.75,
+      "retirementTreatment": "Partial exemption",
+      "note": "Age 65+ deduction of $12K; military pension fully exempt"
+    },
+    {
+      "abbreviation": "NC",
+      "incomeTaxType": "Flat",
+      "topRatePct": 4.5,
+      "retirementTreatment": "Partial exemption",
+      "note": "Rate being phased down from 5.25%; military/federal pension and SS exempt"
+    },
+    {
+      "abbreviation": "MI",
+      "incomeTaxType": "Flat",
+      "topRatePct": 4.25,
+      "retirementTreatment": "Partial exemption",
+      "note": "Income-based retirement exemptions phased down above thresholds"
+    },
+    {
+      "abbreviation": "GA",
+      "incomeTaxType": "Flat",
+      "topRatePct": 5.49,
+      "retirementTreatment": "Partial exemption",
+      "note": "Rate being cut to 4.99% by 2026; up to $65K retirement exclusion for 65+"
+    },
+    {
+      "abbreviation": "IL",
+      "incomeTaxType": "Flat",
+      "topRatePct": 4.95,
+      "retirementTreatment": "Fully exempt",
+      "note": "Like PA, IL has a uniformity clause and fully exempts retirement income — and has a chronic structural deficit"
+    },
+    {
+      "abbreviation": "FL",
+      "incomeTaxType": "None",
+      "topRatePct": 0,
+      "retirementTreatment": "N/A",
+      "note": "No state income tax; revenue relies on sales tax, tourism, and migration-driven growth"
+    },
+    {
+      "abbreviation": "TX",
+      "incomeTaxType": "None",
+      "topRatePct": 0,
+      "retirementTreatment": "N/A",
+      "note": "No income tax; oil and gas severance taxes raise $10–15B/yr — partially substituting"
     }
   ],
   "surplusStates": [
