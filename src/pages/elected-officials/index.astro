@@ -32,7 +32,7 @@ type Scorecard = {
   againstPlatform: number;
   alignmentRate: number | null;
   byPillar?: PillarBreakdown[];
-  billsSponsored?: { primary: number; cosponsor: number; touchingPlatform: number };
+  billsSponsored?: { primary: number; cosponsor: number; touchingPlatform: number; pastCommittee: number; becameLaw?: number };
 };
 
 const scorecards = scorecardsDoc.scorecards as Scorecard[];
@@ -46,7 +46,7 @@ const officials = officialsDoc.officials.map((o) => {
     scorableVotes: sc?.scorableVotes ?? 0,
     totalVotes: sc?.totalVotes ?? 0,
     byPillar: sc?.byPillar ?? [],
-    billsSponsored: sc?.billsSponsored ?? { primary: 0, cosponsor: 0, touchingPlatform: 0 },
+    billsSponsored: sc?.billsSponsored ?? { primary: 0, cosponsor: 0, touchingPlatform: 0, pastCommittee: 0 },
   };
 });
 

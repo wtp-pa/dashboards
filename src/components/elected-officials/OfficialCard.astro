@@ -15,6 +15,8 @@ interface BillsSponsored {
   primary: number;
   cosponsor: number;
   touchingPlatform: number;
+  pastCommittee: number;
+  becameLaw?: number;
 }
 
 export interface Props {
@@ -39,7 +41,7 @@ const {
   id, name, title, district, party, region, counties,
   alignmentRate, scorableVotes, totalVotes,
   byPillar = [],
-  billsSponsored = { primary: 0, cosponsor: 0, touchingPlatform: 0 },
+  billsSponsored = { primary: 0, cosponsor: 0, touchingPlatform: 0, pastCommittee: 0 },
   currentTermStart, currentTermEnd, chamber,
 } = Astro.props;
 
@@ -136,6 +138,11 @@ const hiddenPillarCount = allBars.length - visibleBars.length;
         {totalSponsored > 0 ? (
           <div class="mt-1 text-[11px] text-wtp-cream/60">
             {billsSponsored.touchingPlatform} of {totalSponsored} touch our platform
+            {billsSponsored.primary > 0 && (
+              <span class={`ml-1 ${billsSponsored.pastCommittee > 0 ? 'text-wtp-sky/70' : 'text-wtp-cream/35'}`}>
+                · {billsSponsored.pastCommittee} past committee
+              </span>
+            )}
           </div>
         ) : (
           <div class="mt-1 text-[11px] italic text-wtp-cream/40">

@@ -43,7 +43,7 @@ type Scorecard = {
   alignmentRate: number | null;
   byPillar: PillarBreakdown[];
   keyVotes: KeyVote[];
-  billsSponsored: { primary: number; cosponsor: number; touchingPlatform: number };
+  billsSponsored: { primary: number; cosponsor: number; touchingPlatform: number; pastCommittee: number; becameLaw: number };
 };
 
 export async function getStaticPaths() {
@@ -313,7 +313,7 @@ const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
               )}
             </div>
 
-            <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
+            <div class="mt-5 grid grid-cols-2 gap-3">
               <div class="rounded-md border border-white/10 bg-white/5 p-3">
                 <div class="text-2xl font-bold text-wtp-sky">{primaryBills.length}</div>
                 <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Bills introduced</div>
@@ -322,11 +322,20 @@ const ogImageUrl = `${config.portfolio.baseUrl}/og-elected-officials.png`;
                 <div class="text-2xl font-bold text-wtp-sky/70">{cosponsorBills.length}</div>
                 <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Cosponsored</div>
               </div>
-              <div class="rounded-md border border-white/10 bg-white/5 p-3 col-span-2 md:col-span-1">
+              <div class="rounded-md border border-white/10 bg-white/5 p-3">
                 <div class="text-2xl font-bold text-white">
                   {platformTouchingPrimary.length + platformTouchingCosponsor.length}
                 </div>
                 <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Touch our platform</div>
+              </div>
+              <div class={`rounded-md border p-3 ${scorecard && scorecard.billsSponsored.pastCommittee > 0 ? 'border-wtp-sky/30 bg-wtp-sky/5' : 'border-white/10 bg-white/5'}`}>
+                <div class={`text-2xl font-bold ${scorecard && scorecard.billsSponsored.pastCommittee > 0 ? 'text-wtp-sky' : 'text-wtp-cream/40'}`}>
+                  {scorecard?.billsSponsored.pastCommittee ?? 0}
+                </div>
+                <div class="mt-0.5 text-[11px] uppercase tracking-wider text-wtp-cream/60">Past committee</div>
+                {scorecard && scorecard.billsSponsored.becameLaw > 0 && (
+                  <div class="mt-1 text-[11px] text-wtp-sky/70">{scorecard.billsSponsored.becameLaw} signed into law</div>
+                )}
               </div>
             </div>
 

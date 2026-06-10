@@ -1,13 +1,15 @@
 {
   "$comment": "Computed by pipeline/elected-officials/score_officials.py as a JOIN of data/elected-officials/votes.json against data/legislation/bills.json + manual_review.json. Refreshed by GitHub Actions whenever votes or bills change. Do not hand-edit \u2014 your changes will be overwritten on the next pipeline run.",
-  "lastComputed": "2026-05-11T16:47:03.739236+00:00",
+  "lastComputed": "2026-06-10T01:37:24.443270+00:00",
   "scorecards": [
     {
       "officialId": "sen-rosemary-brown",
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 287,
-        "touchingPlatform": 31
+        "touchingPlatform": 31,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -111,7 +113,9 @@
       "billsSponsored": {
         "primary": 53,
         "cosponsor": 122,
-        "touchingPlatform": 24
+        "touchingPlatform": 24,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -215,7 +219,9 @@
       "billsSponsored": {
         "primary": 23,
         "cosponsor": 181,
-        "touchingPlatform": 23
+        "touchingPlatform": 23,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -310,7 +316,9 @@
       "billsSponsored": {
         "primary": 70,
         "cosponsor": 306,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -414,7 +422,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 173,
-        "touchingPlatform": 18
+        "touchingPlatform": 18,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -651,7 +661,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 49,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -951,7 +963,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 148,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -1236,7 +1250,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 76,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -1581,7 +1597,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 50,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -1805,7 +1823,9 @@
       "billsSponsored": {
         "primary": 55,
         "cosponsor": 323,
-        "touchingPlatform": 52
+        "touchingPlatform": 52,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -1909,7 +1929,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 34,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -2189,7 +2211,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 0,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 80,
@@ -2343,7 +2367,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 81,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -2628,7 +2654,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 0,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 43,
@@ -2645,7 +2673,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 245,
-        "touchingPlatform": 25
+        "touchingPlatform": 25,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -2918,7 +2948,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 34,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -3125,7 +3157,9 @@
       "billsSponsored": {
         "primary": 14,
         "cosponsor": 30,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -3389,7 +3423,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 136,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -3662,7 +3698,9 @@
       "billsSponsored": {
         "primary": 20,
         "cosponsor": 485,
-        "touchingPlatform": 50
+        "touchingPlatform": 50,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -3766,7 +3804,9 @@
       "billsSponsored": {
         "primary": 19,
         "cosponsor": 475,
-        "touchingPlatform": 43
+        "touchingPlatform": 43,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4039,7 +4079,9 @@
       "billsSponsored": {
         "primary": 30,
         "cosponsor": 84,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4134,7 +4176,9 @@
       "billsSponsored": {
         "primary": 21,
         "cosponsor": 1559,
-        "touchingPlatform": 172
+        "touchingPlatform": 172,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4238,7 +4282,9 @@
       "billsSponsored": {
         "primary": 29,
         "cosponsor": 616,
-        "touchingPlatform": 69
+        "touchingPlatform": 69,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4547,7 +4593,9 @@
       "billsSponsored": {
         "primary": 25,
         "cosponsor": 643,
-        "touchingPlatform": 67
+        "touchingPlatform": 67,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4651,7 +4699,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 221,
-        "touchingPlatform": 32
+        "touchingPlatform": 32,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4755,7 +4805,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 85,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -4999,7 +5051,9 @@
       "billsSponsored": {
         "primary": 20,
         "cosponsor": 37,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -5239,7 +5293,9 @@
       "billsSponsored": {
         "primary": 22,
         "cosponsor": 124,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -5500,7 +5556,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 23,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -5716,7 +5774,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 61,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -5980,7 +6040,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 34,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -6228,7 +6290,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 220,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -6436,7 +6500,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 39,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -6513,7 +6579,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 66,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -6750,7 +6818,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 135,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -6983,7 +7053,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 23,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -7199,7 +7271,9 @@
       "billsSponsored": {
         "primary": 33,
         "cosponsor": 1438,
-        "touchingPlatform": 162
+        "touchingPlatform": 162,
+        "pastCommittee": 10,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -7436,7 +7510,9 @@
       "billsSponsored": {
         "primary": 25,
         "cosponsor": 216,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -7673,7 +7749,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 363,
-        "touchingPlatform": 44
+        "touchingPlatform": 44,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -7777,7 +7855,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 0,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 45,
@@ -7794,7 +7874,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 129,
-        "touchingPlatform": 8
+        "touchingPlatform": 8,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -8038,7 +8120,9 @@
       "billsSponsored": {
         "primary": 12,
         "cosponsor": 148,
-        "touchingPlatform": 26
+        "touchingPlatform": 26,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -8371,7 +8455,9 @@
       "billsSponsored": {
         "primary": 14,
         "cosponsor": 58,
-        "touchingPlatform": 13
+        "touchingPlatform": 13,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -8466,7 +8552,9 @@
       "billsSponsored": {
         "primary": 23,
         "cosponsor": 647,
-        "touchingPlatform": 90
+        "touchingPlatform": 90,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -8811,7 +8899,9 @@
       "billsSponsored": {
         "primary": 24,
         "cosponsor": 193,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -8915,7 +9005,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 132,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -9164,7 +9256,9 @@
       "billsSponsored": {
         "primary": 22,
         "cosponsor": 34,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -9389,7 +9483,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 182,
-        "touchingPlatform": 18
+        "touchingPlatform": 18,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -9617,7 +9713,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 21,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -9905,7 +10003,9 @@
       "billsSponsored": {
         "primary": 36,
         "cosponsor": 254,
-        "touchingPlatform": 31
+        "touchingPlatform": 31,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -10106,7 +10206,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 33,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -10370,7 +10472,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 240,
-        "touchingPlatform": 28
+        "touchingPlatform": 28,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -10466,7 +10570,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 194,
-        "touchingPlatform": 29
+        "touchingPlatform": 29,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -10715,7 +10821,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 41,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -10943,7 +11051,9 @@
       "billsSponsored": {
         "primary": 26,
         "cosponsor": 177,
-        "touchingPlatform": 19
+        "touchingPlatform": 19,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -11038,7 +11148,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 37,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -11246,7 +11358,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 539,
-        "touchingPlatform": 62
+        "touchingPlatform": 62,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -11471,7 +11585,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 120,
-        "touchingPlatform": 20
+        "touchingPlatform": 20,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -11723,7 +11839,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 456,
-        "touchingPlatform": 59
+        "touchingPlatform": 59,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -11827,7 +11945,9 @@
       "billsSponsored": {
         "primary": 25,
         "cosponsor": 245,
-        "touchingPlatform": 36
+        "touchingPlatform": 36,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12076,7 +12196,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 186,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12301,7 +12423,9 @@
       "billsSponsored": {
         "primary": 39,
         "cosponsor": 127,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12405,7 +12529,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 116,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12509,7 +12635,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 174,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12818,7 +12946,9 @@
       "billsSponsored": {
         "primary": 32,
         "cosponsor": 385,
-        "touchingPlatform": 46
+        "touchingPlatform": 46,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -12922,7 +13052,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 23,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13138,7 +13270,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 344,
-        "touchingPlatform": 46
+        "touchingPlatform": 46,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13363,7 +13497,9 @@
       "billsSponsored": {
         "primary": 20,
         "cosponsor": 62,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13462,7 +13598,9 @@
       "billsSponsored": {
         "primary": 32,
         "cosponsor": 170,
-        "touchingPlatform": 19
+        "touchingPlatform": 19,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13566,7 +13704,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 90,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13794,7 +13934,9 @@
       "billsSponsored": {
         "primary": 83,
         "cosponsor": 199,
-        "touchingPlatform": 34
+        "touchingPlatform": 34,
+        "pastCommittee": 7,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -13995,7 +14137,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 72,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -14211,7 +14355,9 @@
       "billsSponsored": {
         "primary": 26,
         "cosponsor": 606,
-        "touchingPlatform": 48
+        "touchingPlatform": 48,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -14436,7 +14582,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 168,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -14661,7 +14809,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 413,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -14778,7 +14928,9 @@
       "billsSponsored": {
         "primary": 12,
         "cosponsor": 183,
-        "touchingPlatform": 28
+        "touchingPlatform": 28,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -15027,7 +15179,9 @@
       "billsSponsored": {
         "primary": 30,
         "cosponsor": 219,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -15348,7 +15502,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 39,
-        "touchingPlatform": 8
+        "touchingPlatform": 8,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -15612,7 +15768,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 42,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -15852,7 +16010,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 32,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -16088,7 +16248,9 @@
       "billsSponsored": {
         "primary": 14,
         "cosponsor": 8,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -16304,7 +16466,9 @@
       "billsSponsored": {
         "primary": 38,
         "cosponsor": 139,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -16421,7 +16585,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 26,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -16661,7 +16827,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 48,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -16756,7 +16924,9 @@
       "billsSponsored": {
         "primary": 21,
         "cosponsor": 303,
-        "touchingPlatform": 32
+        "touchingPlatform": 32,
+        "pastCommittee": 8,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -17041,7 +17211,9 @@
       "billsSponsored": {
         "primary": 18,
         "cosponsor": 165,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -17145,7 +17317,9 @@
       "billsSponsored": {
         "primary": 38,
         "cosponsor": 148,
-        "touchingPlatform": 19
+        "touchingPlatform": 19,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -17394,7 +17568,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 160,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -17619,7 +17795,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 297,
-        "touchingPlatform": 45
+        "touchingPlatform": 45,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -17912,7 +18090,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 127,
-        "touchingPlatform": 22
+        "touchingPlatform": 22,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18016,7 +18196,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 70,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18208,7 +18390,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 71,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18469,7 +18653,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 132,
-        "touchingPlatform": 13
+        "touchingPlatform": 13,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18564,7 +18750,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 143,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18659,7 +18847,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 35,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -18927,7 +19117,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 103,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -19135,7 +19327,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 111,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -19404,7 +19598,9 @@
       "billsSponsored": {
         "primary": 32,
         "cosponsor": 95,
-        "touchingPlatform": 18
+        "touchingPlatform": 18,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -19644,7 +19840,9 @@
       "billsSponsored": {
         "primary": 27,
         "cosponsor": 54,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -19761,7 +19959,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 10,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -19977,7 +20177,9 @@
       "billsSponsored": {
         "primary": 27,
         "cosponsor": 30,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -20214,7 +20416,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 657,
-        "touchingPlatform": 83
+        "touchingPlatform": 83,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -20318,7 +20522,9 @@
       "billsSponsored": {
         "primary": 38,
         "cosponsor": 461,
-        "touchingPlatform": 55
+        "touchingPlatform": 55,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -20543,7 +20749,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 73,
-        "touchingPlatform": 8
+        "touchingPlatform": 8,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -20819,7 +21027,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 0,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 78,
@@ -20940,7 +21150,9 @@
       "billsSponsored": {
         "primary": 26,
         "cosponsor": 331,
-        "touchingPlatform": 38
+        "touchingPlatform": 38,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -21044,7 +21256,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 203,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -21288,7 +21502,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 2,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -21463,7 +21679,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 74,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -21727,7 +21945,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 188,
-        "touchingPlatform": 20
+        "touchingPlatform": 20,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -21988,7 +22208,9 @@
       "billsSponsored": {
         "primary": 14,
         "cosponsor": 393,
-        "touchingPlatform": 43
+        "touchingPlatform": 43,
+        "pastCommittee": 6,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -22261,7 +22483,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 96,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -22498,7 +22722,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 31,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -22831,7 +23057,9 @@
       "billsSponsored": {
         "primary": 20,
         "cosponsor": 14,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -22908,7 +23136,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 10,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -23091,7 +23321,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 51,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -23299,7 +23531,9 @@
       "billsSponsored": {
         "primary": 62,
         "cosponsor": 697,
-        "touchingPlatform": 97
+        "touchingPlatform": 97,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -23524,7 +23758,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 36,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -23610,7 +23846,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 15,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -23826,7 +24064,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 295,
-        "touchingPlatform": 40
+        "touchingPlatform": 40,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -24147,7 +24387,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 67,
-        "touchingPlatform": 13
+        "touchingPlatform": 13,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -24396,7 +24638,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 670,
-        "touchingPlatform": 64
+        "touchingPlatform": 64,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -24500,7 +24744,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 24,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -24797,7 +25043,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 91,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25046,7 +25294,9 @@
       "billsSponsored": {
         "primary": 19,
         "cosponsor": 103,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25145,7 +25395,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 12,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25203,7 +25455,9 @@
       "billsSponsored": {
         "primary": 80,
         "cosponsor": 343,
-        "touchingPlatform": 54
+        "touchingPlatform": 54,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25512,7 +25766,9 @@
       "billsSponsored": {
         "primary": 45,
         "cosponsor": 871,
-        "touchingPlatform": 107
+        "touchingPlatform": 107,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25749,7 +26005,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 285,
-        "touchingPlatform": 45
+        "touchingPlatform": 45,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -25853,7 +26111,9 @@
       "billsSponsored": {
         "primary": 41,
         "cosponsor": 509,
-        "touchingPlatform": 64
+        "touchingPlatform": 64,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -26054,7 +26314,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 20,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -26270,7 +26532,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 18,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -26498,7 +26762,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 39,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -26714,7 +26980,9 @@
       "billsSponsored": {
         "primary": 26,
         "cosponsor": 9,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -26978,7 +27246,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 31,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27242,7 +27512,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 21,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27296,7 +27568,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 903,
-        "touchingPlatform": 103
+        "touchingPlatform": 103,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27400,7 +27674,9 @@
       "billsSponsored": {
         "primary": 30,
         "cosponsor": 403,
-        "touchingPlatform": 57
+        "touchingPlatform": 57,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27504,7 +27780,9 @@
       "billsSponsored": {
         "primary": 33,
         "cosponsor": 302,
-        "touchingPlatform": 35
+        "touchingPlatform": 35,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27608,7 +27886,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 281,
-        "touchingPlatform": 32
+        "touchingPlatform": 32,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27893,7 +28173,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 44,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -27997,7 +28279,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 40,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -28238,7 +28522,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 60,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -28511,7 +28797,9 @@
       "billsSponsored": {
         "primary": 38,
         "cosponsor": 150,
-        "touchingPlatform": 22
+        "touchingPlatform": 22,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -28703,7 +28991,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 194,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -28911,7 +29201,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 410,
-        "touchingPlatform": 31
+        "touchingPlatform": 31,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -29120,7 +29412,9 @@
       "billsSponsored": {
         "primary": 18,
         "cosponsor": 44,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -29327,7 +29621,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 20,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -29514,7 +29810,9 @@
       "billsSponsored": {
         "primary": 21,
         "cosponsor": 168,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -29778,7 +30076,9 @@
       "billsSponsored": {
         "primary": 53,
         "cosponsor": 220,
-        "touchingPlatform": 32
+        "touchingPlatform": 32,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -29882,7 +30182,9 @@
       "billsSponsored": {
         "primary": 30,
         "cosponsor": 430,
-        "touchingPlatform": 49
+        "touchingPlatform": 49,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -30191,7 +30493,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 383,
-        "touchingPlatform": 54
+        "touchingPlatform": 54,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -30528,7 +30832,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 62,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -30816,7 +31122,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 518,
-        "touchingPlatform": 54
+        "touchingPlatform": 54,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -31185,7 +31493,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 22,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -31410,7 +31720,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 322,
-        "touchingPlatform": 34
+        "touchingPlatform": 34,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -31619,7 +31931,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 13,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 139,
@@ -31842,7 +32156,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 118,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -32091,7 +32407,9 @@
       "billsSponsored": {
         "primary": 22,
         "cosponsor": 191,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -32292,7 +32610,9 @@
       "billsSponsored": {
         "primary": 26,
         "cosponsor": 174,
-        "touchingPlatform": 22
+        "touchingPlatform": 22,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -32493,7 +32813,9 @@
       "billsSponsored": {
         "primary": 18,
         "cosponsor": 430,
-        "touchingPlatform": 54
+        "touchingPlatform": 54,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -32802,7 +33124,9 @@
       "billsSponsored": {
         "primary": 43,
         "cosponsor": 479,
-        "touchingPlatform": 70
+        "touchingPlatform": 70,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -33099,7 +33423,9 @@
       "billsSponsored": {
         "primary": 20,
         "cosponsor": 270,
-        "touchingPlatform": 27
+        "touchingPlatform": 27,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -33194,7 +33520,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 451,
-        "touchingPlatform": 66
+        "touchingPlatform": 66,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -33471,7 +33799,9 @@
       "billsSponsored": {
         "primary": 19,
         "cosponsor": 423,
-        "touchingPlatform": 53
+        "touchingPlatform": 53,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -33744,7 +34074,9 @@
       "billsSponsored": {
         "primary": 30,
         "cosponsor": 168,
-        "touchingPlatform": 18
+        "touchingPlatform": 18,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -33839,7 +34171,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 116,
-        "touchingPlatform": 19
+        "touchingPlatform": 19,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -34076,7 +34410,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 27,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -34331,7 +34667,9 @@
       "billsSponsored": {
         "primary": 24,
         "cosponsor": 243,
-        "touchingPlatform": 29
+        "touchingPlatform": 29,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -34435,7 +34773,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 423,
-        "touchingPlatform": 44
+        "touchingPlatform": 44,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -34676,7 +35016,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 71,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -34976,7 +35318,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 18,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35075,7 +35419,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 74,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35161,7 +35507,9 @@
       "billsSponsored": {
         "primary": 19,
         "cosponsor": 102,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35256,7 +35604,9 @@
       "billsSponsored": {
         "primary": 31,
         "cosponsor": 175,
-        "touchingPlatform": 24
+        "touchingPlatform": 24,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35360,7 +35710,9 @@
       "billsSponsored": {
         "primary": 21,
         "cosponsor": 237,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35585,7 +35937,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 1,
-        "touchingPlatform": 0
+        "touchingPlatform": 0,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 0,
@@ -35602,7 +35956,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 461,
-        "touchingPlatform": 47
+        "touchingPlatform": 47,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -35827,7 +36183,9 @@
       "billsSponsored": {
         "primary": 58,
         "cosponsor": 366,
-        "touchingPlatform": 65
+        "touchingPlatform": 65,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -36136,7 +36494,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 144,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -36376,7 +36736,9 @@
       "billsSponsored": {
         "primary": 58,
         "cosponsor": 146,
-        "touchingPlatform": 18
+        "touchingPlatform": 18,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -36577,7 +36939,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 97,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -36810,7 +37174,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 80,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -37006,7 +37372,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 422,
-        "touchingPlatform": 41
+        "touchingPlatform": 41,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 0,
@@ -37069,7 +37437,9 @@
       "billsSponsored": {
         "primary": 25,
         "cosponsor": 230,
-        "touchingPlatform": 35
+        "touchingPlatform": 35,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -37330,7 +37700,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 29,
-        "touchingPlatform": 1
+        "touchingPlatform": 1,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 88,
@@ -37505,7 +37877,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 566,
-        "touchingPlatform": 63
+        "touchingPlatform": 63,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -37609,7 +37983,9 @@
       "billsSponsored": {
         "primary": 16,
         "cosponsor": 50,
-        "touchingPlatform": 8
+        "touchingPlatform": 8,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -37873,7 +38249,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 475,
-        "touchingPlatform": 53
+        "touchingPlatform": 53,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -38126,7 +38504,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 35,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -38387,7 +38767,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 42,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -38651,7 +39033,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 81,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -38737,7 +39121,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 279,
-        "touchingPlatform": 32
+        "touchingPlatform": 32,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -38854,7 +39240,9 @@
       "billsSponsored": {
         "primary": 29,
         "cosponsor": 134,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -39046,7 +39434,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 306,
-        "touchingPlatform": 35
+        "touchingPlatform": 35,
+        "pastCommittee": 3,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -39163,7 +39553,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 692,
-        "touchingPlatform": 76
+        "touchingPlatform": 76,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -39400,7 +39792,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 13,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -39616,7 +40010,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 247,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -39913,7 +40309,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 233,
-        "touchingPlatform": 30
+        "touchingPlatform": 30,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -40008,7 +40406,9 @@
       "billsSponsored": {
         "primary": 19,
         "cosponsor": 455,
-        "touchingPlatform": 49
+        "touchingPlatform": 49,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -40112,7 +40512,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 114,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -40216,7 +40618,9 @@
       "billsSponsored": {
         "primary": 21,
         "cosponsor": 77,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -40525,7 +40929,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 101,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -40769,7 +41175,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 79,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -41009,7 +41417,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 268,
-        "touchingPlatform": 35
+        "touchingPlatform": 35,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -41234,7 +41644,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 62,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -41313,7 +41725,9 @@
       "billsSponsored": {
         "primary": 8,
         "cosponsor": 20,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -41589,7 +42003,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 20,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -41797,7 +42213,9 @@
       "billsSponsored": {
         "primary": 9,
         "cosponsor": 100,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -42070,7 +42488,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 332,
-        "touchingPlatform": 40
+        "touchingPlatform": 40,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -42367,7 +42787,9 @@
       "billsSponsored": {
         "primary": 27,
         "cosponsor": 38,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 18,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -42453,7 +42875,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 104,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -42710,7 +43134,9 @@
       "billsSponsored": {
         "primary": 10,
         "cosponsor": 63,
-        "touchingPlatform": 10
+        "touchingPlatform": 10,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -42950,7 +43376,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 979,
-        "touchingPlatform": 122
+        "touchingPlatform": 122,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -43211,7 +43639,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 44,
-        "touchingPlatform": 5
+        "touchingPlatform": 5,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -43439,7 +43869,9 @@
       "billsSponsored": {
         "primary": 22,
         "cosponsor": 18,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -43664,7 +44096,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 67,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -43940,7 +44374,9 @@
       "billsSponsored": {
         "primary": 5,
         "cosponsor": 63,
-        "touchingPlatform": 7
+        "touchingPlatform": 7,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44168,7 +44604,9 @@
       "billsSponsored": {
         "primary": 27,
         "cosponsor": 230,
-        "touchingPlatform": 26
+        "touchingPlatform": 26,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44393,7 +44831,9 @@
       "billsSponsored": {
         "primary": 14,
         "cosponsor": 177,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44488,7 +44928,9 @@
       "billsSponsored": {
         "primary": 38,
         "cosponsor": 145,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44592,7 +45034,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 203,
-        "touchingPlatform": 20
+        "touchingPlatform": 20,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44853,7 +45297,9 @@
       "billsSponsored": {
         "primary": 34,
         "cosponsor": 283,
-        "touchingPlatform": 33
+        "touchingPlatform": 33,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -44970,7 +45416,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 62,
-        "touchingPlatform": 9
+        "touchingPlatform": 9,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -45186,7 +45634,9 @@
       "billsSponsored": {
         "primary": 15,
         "cosponsor": 26,
-        "touchingPlatform": 4
+        "touchingPlatform": 4,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -45411,7 +45861,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 20,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -45720,7 +46172,9 @@
       "billsSponsored": {
         "primary": 29,
         "cosponsor": 415,
-        "touchingPlatform": 43
+        "touchingPlatform": 43,
+        "pastCommittee": 8,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -45824,7 +46278,9 @@
       "billsSponsored": {
         "primary": 1,
         "cosponsor": 168,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -45887,7 +46343,9 @@
       "billsSponsored": {
         "primary": 3,
         "cosponsor": 167,
-        "touchingPlatform": 22
+        "touchingPlatform": 22,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -46096,7 +46554,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 336,
-        "touchingPlatform": 46
+        "touchingPlatform": 46,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -46200,7 +46660,9 @@
       "billsSponsored": {
         "primary": 17,
         "cosponsor": 551,
-        "touchingPlatform": 81
+        "touchingPlatform": 81,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -46485,7 +46947,9 @@
       "billsSponsored": {
         "primary": 39,
         "cosponsor": 870,
-        "touchingPlatform": 116
+        "touchingPlatform": 116,
+        "pastCommittee": 4,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -46782,7 +47246,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 81,
-        "touchingPlatform": 16
+        "touchingPlatform": 16,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -47082,7 +47548,9 @@
       "billsSponsored": {
         "primary": 13,
         "cosponsor": 22,
-        "touchingPlatform": 8
+        "touchingPlatform": 8,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -47168,7 +47636,9 @@
       "billsSponsored": {
         "primary": 27,
         "cosponsor": 335,
-        "touchingPlatform": 35
+        "touchingPlatform": 35,
+        "pastCommittee": 2,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -47453,7 +47923,9 @@
       "billsSponsored": {
         "primary": 29,
         "cosponsor": 108,
-        "touchingPlatform": 15
+        "touchingPlatform": 15,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -47726,7 +48198,9 @@
       "billsSponsored": {
         "primary": 22,
         "cosponsor": 321,
-        "touchingPlatform": 39
+        "touchingPlatform": 39,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -47830,7 +48304,9 @@
       "billsSponsored": {
         "primary": 0,
         "cosponsor": 23,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [],
       "totalVotes": 0,
@@ -47866,7 +48342,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 78,
-        "touchingPlatform": 12
+        "touchingPlatform": 12,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48122,7 +48600,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 214,
-        "touchingPlatform": 24
+        "touchingPlatform": 24,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48218,7 +48698,9 @@
       "billsSponsored": {
         "primary": 7,
         "cosponsor": 268,
-        "touchingPlatform": 27
+        "touchingPlatform": 27,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48443,7 +48925,9 @@
       "billsSponsored": {
         "primary": 40,
         "cosponsor": 455,
-        "touchingPlatform": 60
+        "touchingPlatform": 60,
+        "pastCommittee": 1,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48547,7 +49031,9 @@
       "billsSponsored": {
         "primary": 4,
         "cosponsor": 83,
-        "touchingPlatform": 14
+        "touchingPlatform": 14,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48779,7 +49265,9 @@
       "billsSponsored": {
         "primary": 11,
         "cosponsor": 29,
-        "touchingPlatform": 6
+        "touchingPlatform": 6,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48874,7 +49362,9 @@
       "billsSponsored": {
         "primary": 2,
         "cosponsor": 31,
-        "touchingPlatform": 3
+        "touchingPlatform": 3,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -48936,7 +49426,9 @@
       "billsSponsored": {
         "primary": 47,
         "cosponsor": 364,
-        "touchingPlatform": 49
+        "touchingPlatform": 49,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -49040,7 +49532,9 @@
       "billsSponsored": {
         "primary": 18,
         "cosponsor": 125,
-        "touchingPlatform": 21
+        "touchingPlatform": 21,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -49256,7 +49750,9 @@
       "billsSponsored": {
         "primary": 18,
         "cosponsor": 551,
-        "touchingPlatform": 69
+        "touchingPlatform": 69,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -49373,7 +49869,9 @@
       "billsSponsored": {
         "primary": 28,
         "cosponsor": 110,
-        "touchingPlatform": 11
+        "touchingPlatform": 11,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -49574,7 +50072,9 @@
       "billsSponsored": {
         "primary": 6,
         "cosponsor": 96,
-        "touchingPlatform": 17
+        "touchingPlatform": 17,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {
@@ -49814,7 +50314,9 @@
       "billsSponsored": {
         "primary": 16,
         "cosponsor": 21,
-        "touchingPlatform": 2
+        "touchingPlatform": 2,
+        "pastCommittee": 0,
+        "becameLaw": 0
       },
       "topSponsoredBills": [
         {

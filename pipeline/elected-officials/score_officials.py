@@ -78,6 +78,20 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text())
 
 
+def stage_of(status: str) -> str:
+    """Mirror of stageOf() in src/lib/bills.ts. Keep in sync."""
+    s = status.lower()
+    if 'signed' in s or 'act of' in s or 'became law' in s:
+        return 'signed'
+    if 'passed both' in s or 'to governor' in s or 'enacted' in s:
+        return 'passed'
+    if 'third consideration' in s or 'passed house' in s or 'passed senate' in s or 'on floor' in s or 'adopted' in s:
+        return 'on-floor'
+    if 'appropriations' in s:
+        return 'committee'
+    return 'introduced'
+
+
 def resolve_alignment(bill: dict, review: dict | None) -> str:
     """Mirror of resolveAlignment() in src/lib/bills.ts."""
     if review:
@@ -144,6 +158,8 @@ def main() -> int:
         sponsored_primary: list[dict] = []
         sponsored_cosponsor: list[dict] = []
         sponsored_touching: list[dict] = []
+        primary_past_committee = 0
+        primary_became_law = 0
         if ocd_id:
             for bill_id, is_primary in sponsorships_by_person.get(ocd_id, []):
                 bill = bills_by_id.get(bill_id)
@@ -152,6 +168,7 @@ def main() -> int:
                 review = reviews.get(bill_id)
                 alignment = resolve_alignment(bill, review)
                 touches = bool(bill.get("matches")) or review is not None
+                stage = stage_of(bill.get("status", ""))
                 entry = {
                     "billId": bill_id,
                     "billTitle": bill["title"],
@@ -162,6 +179,10 @@ def main() -> int:
                 }
                 if is_primary:
                     sponsored_primary.append(entry)
+                    if stage in ("on-floor", "passed", "signed"):
+                        primary_past_committee += 1
+                    if stage == "signed":
+                        primary_became_law += 1
                 else:
                     sponsored_cosponsor.append(entry)
                 if touches:
@@ -245,6 +266,8 @@ def main() -> int:
                 "primary": len(sponsored_primary),
                 "cosponsor": len(sponsored_cosponsor),
                 "touchingPlatform": len(sponsored_touching),
+                "pastCommittee": primary_past_committee,
+                "becameLaw": primary_became_law,
             },
             "topSponsoredBills": sponsored_primary[:5],  # for the detail page later
             # Voting — secondary signal, how they responded to others' bills.
