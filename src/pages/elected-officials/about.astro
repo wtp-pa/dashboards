@@ -1,0 +1,264 @@
+---
+import { config } from '../../config';
+import votesDoc from '../../../data/elected-officials/votes.json';
+import officialsDoc from '../../../data/elected-officials/officials.json';
+import DashboardNav from '../../components/shared/DashboardNav.astro';
+import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
+import '../../styles/global.css';
+
+const lastUpdated = new Intl.DateTimeFormat('en-US', {
+  dateStyle: 'long', timeZone: 'America/New_York',
+}).format(new Date((votesDoc as { lastFetched: string }).lastFetched));
+
+const officialCount = officialsDoc.officials.length;
+const senateCount = officialsDoc.officials.filter((o) => o.chamber === 'Senate').length;
+const houseCount = officialsDoc.officials.filter((o) => o.chamber === 'House').length;
+
+const pageTitle = `About — PA Elected Officials Watch — ${config.party.shortName}`;
+const pageDescription = `How PA Elected Officials Watch works: where the data comes from, how votes are scored against the WTPPPA platform, and how Pennsylvania's full-time legislature compares to other states.`;
+const siteOrigin = Astro.site ?? Astro.url;
+const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <header>
+      <div class="border-b border-white/10 px-6 py-4">
+        <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <div class="flex min-w-0 flex-shrink-0 items-center gap-3">
+            <a href="/" class="flex-shrink-0 hover:opacity-80 transition" aria-label="All dashboards">
+              <img src={config.brand.logoPath} alt={`${config.party.shortName} logo`} class="h-10 w-auto sm:h-12" />
+            </a>
+            <div class="min-w-0 truncate text-base font-semibold sm:text-lg">PA Elected Officials Watch</div>
+          </div>
+          <div class="hidden md:flex md:flex-1 md:justify-center">
+            <DashboardNav activeSlug="elected-officials" />
+          </div>
+          <a href={config.party.website} class="flex-shrink-0 text-sm text-wtp-cream/70 no-underline hover:text-wtp-sky">
+            wtpppa.org →
+          </a>
+        </div>
+      </div>
+      <div class="border-b border-white/10 bg-white/[0.02] px-6 py-2 md:hidden">
+        <DashboardNav activeSlug="elected-officials" />
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-6 pt-8 pb-16 md:pt-12 md:pb-24">
+      <a href="/elected-officials/" class="text-sm text-wtp-cream/60 no-underline hover:text-wtp-sky">← Back to all officials</a>
+
+      <p class="mt-6 text-xs uppercase tracking-[0.25em] text-wtp-sky">About</p>
+      <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">How PA Elected Officials Watch works</h1>
+      <p class="mt-6 text-base leading-relaxed text-wtp-cream/80 md:text-lg">
+        Every number on this dashboard comes from a public source we cite. This page explains where the data comes from, how votes are scored against the {config.party.shortName} platform, and why Pennsylvania's full-time legislature produces more trackable activity than most states.
+      </p>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">What this dashboard tracks</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          We track all <strong class="text-white">{officialCount} current PA state legislators</strong> — {senateCount} senators and {houseCount} representatives — across two data dimensions:
+        </p>
+        <ul class="mt-4 space-y-3 text-base leading-relaxed text-wtp-cream/80">
+          <li>
+            <strong class="text-white">Sponsorship.</strong> Every bill a legislator introduces as primary sponsor or signs onto as cosponsor is catalogued and matched against the {config.party.shortName} platform. Sponsorship is the stronger signal of priorities — a legislator chooses which bills to put their name on.
+          </li>
+          <li>
+            <strong class="text-white">Floor votes.</strong> Roll-call votes on bills that touch a {config.party.shortName} platform position are scored. A "yea" on an aligned bill (or "nay" on an opposed bill) counts as voting with the platform; the inverse counts as against. Abstentions, absences, and votes on bills with no clear platform alignment are excluded from the headline rate.
+          </li>
+        </ul>
+        <p class="mt-4 text-sm leading-relaxed text-wtp-cream/60">
+          Data last updated <strong class="text-wtp-cream/80">{lastUpdated}</strong>, refreshed monthly from OpenStates. See <a href="#data-sources" class="text-wtp-sky underline">Data sources</a> below.
+        </p>
+      </section>
+
+      <section class="mt-12" id="full-time">
+        <h2 class="text-2xl font-extrabold">Pennsylvania's full-time legislature</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          The National Conference of State Legislatures (NCSL) classifies state legislatures into three tiers based on how much time legislators spend on their duties, how much they're paid, and the size of their professional staff. Pennsylvania sits in the <strong class="text-white">top tier — full-time</strong> — alongside California, New York, Ohio, Michigan, and a handful of others. About 10 states nationwide reach this tier.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          What that means in practice:
+        </p>
+        <ul class="mt-3 space-y-2 text-base leading-relaxed text-wtp-cream/80">
+          <li>— PA legislators work year-round with no constitutional session-day limit. They can introduce and advance legislation any time, not just during a fixed window.</li>
+          <li>— Base salary of <strong class="text-white">$106,422/year</strong> (2024) makes this their primary job, not a side income. Contrast with Wyoming's ~$150/session day.</li>
+          <li>— Large professional staff — researchers, attorneys, fiscal analysts — allows for longer, more complex legislation and deeper committee review.</li>
+          <li>— The result: PA typically introduces <strong class="text-white">3,000–5,000 bills per two-year session</strong>. A part-time state like Wyoming sees roughly 350.</li>
+        </ul>
+        <p class="mt-4 text-sm leading-relaxed text-wtp-cream/60">
+          This context matters for reading the dashboard. A PA legislator who has introduced 40 bills isn't unusually prolific — the full-time schedule, staff support, and year-round calendar make that volume normal here. In a part-time legislature the same 40 bills would be extraordinary.
+        </p>
+
+        <div class="mt-8 overflow-x-auto rounded-lg border border-white/10 bg-surface/30">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 text-left text-[11px] uppercase tracking-wider text-wtp-cream/40">
+                <th class="px-5 py-3 font-medium">State</th>
+                <th class="px-5 py-3 font-medium">NCSL type</th>
+                <th class="px-5 py-3 font-medium">Annual pay</th>
+                <th class="px-5 py-3 font-medium">Session</th>
+                <th class="px-5 py-3 font-medium">Members</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-wtp-cream/80">
+              <tr>
+                <td class="px-5 py-3">California</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/30 bg-wtp-sky/10 px-2 py-0.5 text-[11px] text-wtp-sky">Full-time</span></td>
+                <td class="px-5 py-3 font-mono">$128,341</td>
+                <td class="px-5 py-3">Year-round</td>
+                <td class="px-5 py-3">120</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3">New York</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/30 bg-wtp-sky/10 px-2 py-0.5 text-[11px] text-wtp-sky">Full-time</span></td>
+                <td class="px-5 py-3 font-mono">$142,000</td>
+                <td class="px-5 py-3">Year-round</td>
+                <td class="px-5 py-3">213</td>
+              </tr>
+              <tr class="bg-wtp-sky/5">
+                <td class="px-5 py-3 font-semibold text-white">Pennsylvania</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/40 bg-wtp-sky/15 px-2 py-0.5 text-[11px] font-medium text-wtp-sky">Full-time</span></td>
+                <td class="px-5 py-3 font-mono font-semibold text-white">$106,422</td>
+                <td class="px-5 py-3 font-semibold text-white">Year-round</td>
+                <td class="px-5 py-3 font-semibold text-white">253</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3">Ohio</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/30 bg-wtp-sky/10 px-2 py-0.5 text-[11px] text-wtp-sky">Full-time</span></td>
+                <td class="px-5 py-3 font-mono">$73,146</td>
+                <td class="px-5 py-3">Year-round</td>
+                <td class="px-5 py-3">132</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3">Colorado</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-gold/30 bg-wtp-gold/5 px-2 py-0.5 text-[11px] text-wtp-gold/80">Hybrid</span></td>
+                <td class="px-5 py-3 font-mono">$43,200</td>
+                <td class="px-5 py-3">~120 days/yr</td>
+                <td class="px-5 py-3">100</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3">Wyoming</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-cream/20 bg-white/5 px-2 py-0.5 text-[11px] text-wtp-cream/60">Part-time</span></td>
+                <td class="px-5 py-3 font-mono">~$150/day</td>
+                <td class="px-5 py-3">~40 days/yr</td>
+                <td class="px-5 py-3">90</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-3">New Hampshire</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-cream/20 bg-white/5 px-2 py-0.5 text-[11px] text-wtp-cream/60">Part-time</span></td>
+                <td class="px-5 py-3 font-mono">$100/yr</td>
+                <td class="px-5 py-3">~45 days/yr</td>
+                <td class="px-5 py-3">424</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-xs text-wtp-cream/40">
+          Source: <a href="https://www.ncsl.org/research/about-state-legislatures/full-and-part-time-legislatures.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">NCSL Full- and Part-Time Legislatures</a> · <a href="https://www.ncsl.org/research/about-state-legislatures/legislator-compensation-overview.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">Legislator Compensation</a>, 2024. Salaries are base pay; some states add per diem, mileage, or leadership stipends. NH's 424-member House is the largest state legislature body in the US.
+        </p>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">How votes are scored</h2>
+        <dl class="mt-6 space-y-6">
+          <div>
+            <dt class="font-semibold text-white">What counts as "scorable"</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              A vote is scorable when (a) the bill has been reviewed by {config.party.shortName} editors and assigned a clear "aligned" or "opposed" designation against a platform position, and (b) the legislator cast a yea or nay vote on the floor. Abstentions and absences are excluded — they don't tell us where someone stands. Mixed-alignment bills (one plank aligned, another opposed) are flagged but excluded from the headline alignment rate.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">With vs. against the platform</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Voting <em>yea</em> on an aligned bill = with the platform. Voting <em>nay</em> on an opposed bill = also with the platform. The inverse in each case = against. This is symmetric: a legislator who consistently votes against bad bills scores just as well as one who consistently votes for good ones.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">The "topic-only" category</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Some bills match a platform topic (e.g., they're about education funding) but haven't been reviewed for clear alignment. These show up in the vote history as "Touches platform" and contribute to the total vote count but not the scored alignment rate. As <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a> accumulates more editorial reviews, more votes will resolve into scored calls.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text="white">Sponsorship vs. voting</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              We treat sponsorship as the stronger priority signal. A legislator can be whipped into a party-line floor vote against their preference; choosing to introduce or co-sponsor a bill is a voluntary act. The headline stats on each official card lead with sponsorship for this reason.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="mt-12" id="data-sources">
+        <h2 class="text-2xl font-extrabold">Data sources and update schedule</h2>
+        <dl class="mt-6 space-y-6">
+          <div>
+            <dt class="font-semibold text-white">Officials and voting records</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Fetched from the <a href="https://openstates.org/pa/" class="text-wtp-sky underline" target="_blank" rel="noopener">OpenStates API</a> (PA state legislature feed) by a GitHub Actions cron job that runs on the 1st of each month. OpenStates aggregates roll-call data directly from the PA General Assembly's official records. Last pipeline run: <strong class="text-white">{lastUpdated}</strong>.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Bill data and platform matching</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              Sourced from the same OpenStates feed that powers <a href="/legislation/" class="text-wtp-sky underline">Legislation Watch</a>. Bills are matched to platform positions using a two-pass keyword + TF-IDF matcher — no AI in the matching loop. Editorial alignment calls (aligned / opposed / mixed) come from {config.party.shortName} officers reviewing matched bills and recording decisions in a version-controlled JSON file.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-semibold text-white">Geographic lookup (ZIP / address / county)</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+              ZIP-to-district lookups use a pre-built static map derived from PA legislative district shapefiles. Address lookups use the <a href="https://geocoding.geo.census.gov/" class="text-wtp-sky underline" target="_blank" rel="noopener">US Census Geocoder</a> (free, no API key, no quota). County-area sampling uses the same Census endpoint across a grid of points to catch all overlapping districts. No data leaves your browser for these lookups beyond what the Census API receives.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">Limitations and caveats</h2>
+        <ul class="mt-4 space-y-3 text-base leading-relaxed text-wtp-cream/80">
+          <li>— <strong class="text-white">Vote lag.</strong> OpenStates publishes roll-call data after the GA records it, which can take days to weeks for votes cast near the end of a session or on procedural matters. The monthly refresh catches most of this, but recent floor votes may not appear until the next cron run.</li>
+          <li>— <strong class="text-white">Alignment coverage.</strong> Only bills that {config.party.shortName} editors have reviewed and scored contribute to the headline alignment rate. Bills that touch a platform topic but haven't been reviewed yet show as "Touches platform" and don't move the rate. The more editorial reviews accumulate in Legislation Watch, the more informative this number becomes.</li>
+          <li>— <strong class="text-white">Bill count vs. impact.</strong> A high bill-introduction count isn't the same as legislative impact. Many bills die in committee without a hearing. The individual official pages show bill status so you can distinguish "introduced 40 bills" from "had 40 bills advance past committee."</li>
+          <li>— <strong class="text-white">ZIP and county coverage.</strong> The static ZIP-to-district map covers most PA ZIPs but not all. Gaps fall back to the Census geocoder, which is accurate for addresses but returns only the district at the geographic center of a county — not necessarily your district if you're in a multi-district county.</li>
+          <li>— <strong class="text-white">State comparison data.</strong> NCSL legislature classifications and salary figures are updated annually; the table on this page reflects 2024 data and will be refreshed each year. Some states add per diem, leadership stipends, or session allowances that are not reflected in the base salary column.</li>
+        </ul>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-extrabold">A note on AI</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA or federal source we cite. Bill-to-platform matching uses a keyword and TF-IDF algorithm, not an AI model. Alignment calls are made by {config.party.shortName} editors and stored in version-controlled JSON.
+        </p>
+      </section>
+    </main>
+
+    <SupportTipCTA />
+
+    <footer class="border-t border-white/10 px-6 py-8 text-xs text-wtp-cream/50">
+      <div class="mx-auto flex max-w-6xl flex-col gap-3 md:flex-row md:justify-between">
+        <div>Built by {config.party.name}</div>
+        <div class="flex gap-4">
+          <a href={config.party.website} class="hover:text-white">wtpppa.org</a>
+          <a href={config.party.socials.twitter} class="hover:text-white">X</a>
+          <a href={config.party.socials.facebook} class="hover:text-white">Facebook</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
