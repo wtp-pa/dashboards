@@ -2,6 +2,8 @@
 import { config } from '../../config';
 import votesDoc from '../../../data/elected-officials/votes.json';
 import officialsDoc from '../../../data/elected-officials/officials.json';
+import billsDoc from '../../../data/legislation/bills.json';
+import { stageOf } from '../../lib/bills';
 import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
@@ -13,6 +15,25 @@ const lastUpdated = new Intl.DateTimeFormat('en-US', {
 const officialCount = officialsDoc.officials.length;
 const senateCount = officialsDoc.officials.filter((o) => o.chamber === 'Senate').length;
 const houseCount = officialsDoc.officials.filter((o) => o.chamber === 'House').length;
+
+// Live PA bill stats for the effectiveness comparison.
+const paIntroduced = billsDoc.bills.length;
+const paEnacted = billsDoc.bills.filter((b) => stageOf((b as { status: string }).status) === 'signed').length;
+const PA_POP_MILLIONS = 13.0; // 2023 Census estimate
+const paEnactedPerMillion = Math.round(paEnacted / PA_POP_MILLIONS);
+const paEnactmentRate = paIntroduced > 0 ? Math.round((paEnacted / paIntroduced) * 100) : 0;
+
+// Cross-state comparison — approximate 2-year session totals, NCSL 2023-2024.
+// "Enacted" = bills signed into law. Populations from 2023 Census estimates.
+const stateComparison = [
+  { state: 'California', type: 'Full-time', enacted: 1200, popM: 39.0, squire: 0.63 },
+  { state: 'New York',   type: 'Full-time', enacted: 900,  popM: 19.7, squire: 0.52 },
+  { state: 'Pennsylvania', type: 'Full-time', enacted: paEnacted, popM: PA_POP_MILLIONS, squire: 0.28, isPA: true },
+  { state: 'Ohio',       type: 'Full-time', enacted: 280,  popM: 11.8, squire: 0.19 },
+  { state: 'Colorado',   type: 'Hybrid',    enacted: 600,  popM: 5.8,  squire: 0.14 },
+  { state: 'Wyoming',    type: 'Part-time', enacted: 300,  popM: 0.58, squire: 0.06 },
+  { state: 'New Hampshire', type: 'Part-time', enacted: 500, popM: 1.4, squire: 0.04 },
+] as const;
 
 const pageTitle = `About — PA Elected Officials Watch — ${config.party.shortName}`;
 const pageDescription = `How PA Elected Officials Watch works: where the data comes from, how votes are scored against the WTPPPA platform, and how Pennsylvania's full-time legislature compares to other states.`;
@@ -172,6 +193,113 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </div>
         <p class="mt-3 text-xs text-wtp-cream/40">
           Source: <a href="https://www.ncsl.org/research/about-state-legislatures/full-and-part-time-legislatures.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">NCSL Full- and Part-Time Legislatures</a> · <a href="https://www.ncsl.org/research/about-state-legislatures/legislator-compensation-overview.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">Legislator Compensation</a>, 2024. Salaries are base pay; some states add per diem, mileage, or leadership stipends. NH's 424-member House is the largest state legislature body in the US.
+        </p>
+      </section>
+
+      <section class="mt-12" id="bills-per-capita">
+        <h2 class="text-2xl font-extrabold">Bills enacted per million residents</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          Raw bill counts mislead. Wyoming's legislature enacts far more bills <em>per resident</em> than Pennsylvania's — not because it's more effective, but because Wyoming has 580,000 people and correspondingly simpler governance needs. Pennsylvania has 13 million residents, a $50B budget, 500 school districts, and policy complexity that requires longer, more contested legislation. Per-capita normalizes for state size so comparisons are fairer.
+        </p>
+        <p class="mt-3 text-sm leading-relaxed text-wtp-cream/70">
+          PA's current session: <strong class="text-white">{paIntroduced.toLocaleString()} bills introduced · {paEnacted} enacted ({paEnactmentRate}%)</strong> · {paEnactedPerMillion} enacted per million residents.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-lg border border-white/10 bg-surface/30">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 text-left text-[11px] uppercase tracking-wider text-wtp-cream/40">
+                <th class="px-5 py-3 font-medium">State</th>
+                <th class="px-5 py-3 font-medium">Type</th>
+                <th class="px-5 py-3 font-medium text-right">Enacted (2-yr)</th>
+                <th class="px-5 py-3 font-medium text-right">Population</th>
+                <th class="px-5 py-3 font-medium text-right">Per million</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-wtp-cream/80">
+              {stateComparison.map((row) => {
+                const perM = Math.round(row.enacted / row.popM);
+                const maxPerM = Math.max(...stateComparison.map((r) => Math.round(r.enacted / r.popM)));
+                const barPct = Math.round((perM / maxPerM) * 100);
+                return (
+                  <tr class={(row as any).isPA ? 'bg-wtp-sky/5' : ''}>
+                    <td class={`px-5 py-3 ${(row as any).isPA ? 'font-semibold text-white' : ''}`}>
+                      {row.state}{(row as any).isPA && <span class="ml-2 text-[11px] text-wtp-sky">← this session, live</span>}
+                    </td>
+                    <td class="px-5 py-3 text-wtp-cream/60">{row.type}</td>
+                    <td class="px-5 py-3 text-right font-mono">{row.enacted.toLocaleString()}</td>
+                    <td class="px-5 py-3 text-right font-mono text-wtp-cream/60">{row.popM.toFixed(1)}M</td>
+                    <td class="px-5 py-3 text-right">
+                      <div class="flex items-center justify-end gap-2">
+                        <span class="relative h-1.5 w-20 overflow-hidden rounded-full bg-white/5">
+                          <span class="absolute inset-y-0 left-0 rounded-full bg-wtp-sky/50" style={`width: ${barPct}%`}></span>
+                        </span>
+                        <span class={`w-10 font-mono text-right ${(row as any).isPA ? 'font-semibold text-white' : ''}`}>{perM}</span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-xs text-wtp-cream/40">
+          All figures except PA are approximate; sourced from NCSL "Bills Introduced and Enacted" reports and state legislature websites, 2023–2024 sessions. PA figure is live from this dashboard's bill feed. Population: 2023 US Census estimates. "Enacted" = bills signed into law by the governor.
+        </p>
+        <p class="mt-2 text-xs text-wtp-cream/50">
+          The small-state per-capita advantage is structural, not a sign of greater effectiveness — Wyoming's 40-day session can move faster partly because its policy space is narrower. The more meaningful question is whether a legislature has the institutional capacity to handle complex, contested policy. That's what the Squire Index below measures.
+        </p>
+      </section>
+
+      <section class="mt-12" id="squire-index">
+        <h2 class="text-2xl font-extrabold">Legislative professionalism: the Squire Index</h2>
+        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
+          Political scientist Peverill Squire developed an index that measures how professionalized each state legislature is relative to the US Congress (which scores 1.0). It combines three factors: <strong class="text-white">compensation</strong> (salary relative to median household income), <strong class="text-white">staff</strong> (per-member professional staff), and <strong class="text-white">session length</strong> (days in session). A higher score means legislators can work more like full-time professionals — deeper expertise, better-staffed offices, more time on complex policy.
+        </p>
+        <p class="mt-3 text-sm leading-relaxed text-wtp-cream/70">
+          Pennsylvania scores <strong class="text-white">~0.28</strong> — roughly 28% as professionalized as Congress, and among the top 8–10 states nationally. That's what the $106k salary, year-round schedule, and large legislative staff buy you.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-lg border border-white/10 bg-surface/30">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/10 text-left text-[11px] uppercase tracking-wider text-wtp-cream/40">
+                <th class="px-5 py-3 font-medium">State</th>
+                <th class="px-5 py-3 font-medium">NCSL type</th>
+                <th class="px-5 py-3 font-medium text-right">Squire score</th>
+                <th class="px-5 py-3 font-medium">Relative to Congress</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-wtp-cream/80">
+              {stateComparison.map((row) => {
+                const barPct = Math.round(row.squire * 100);
+                return (
+                  <tr class={(row as any).isPA ? 'bg-wtp-sky/5' : ''}>
+                    <td class={`px-5 py-3 ${(row as any).isPA ? 'font-semibold text-white' : ''}`}>{row.state}</td>
+                    <td class="px-5 py-3 text-wtp-cream/60">{row.type}</td>
+                    <td class="px-5 py-3 text-right font-mono">{row.squire.toFixed(2)}</td>
+                    <td class="px-5 py-3">
+                      <div class="flex items-center gap-2">
+                        <span class="relative h-2 w-32 overflow-hidden rounded-full bg-white/5">
+                          <span
+                            class={(row as any).isPA ? 'absolute inset-y-0 left-0 rounded-full bg-wtp-sky' : 'absolute inset-y-0 left-0 rounded-full bg-wtp-sky/40'}
+                            style={`width: ${barPct}%`}
+                          ></span>
+                        </span>
+                        <span class="text-xs text-wtp-cream/50">{barPct}% of Congress</span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-xs text-wtp-cream/40">
+          Source: Squire, Peverill. "A Squire Index Update." <em>State Politics &amp; Policy Quarterly</em> 17(4):361–371, 2017. Scores are approximate and rounded; the index has been updated periodically since its original 2007 publication. Congress = 1.0 benchmark.
+        </p>
+        <p class="mt-2 text-xs text-wtp-cream/50">
+          High Squire scores correlate with more complex legislation, larger staff capacity, and longer bill-drafting cycles — not necessarily more bills enacted per year. CA and NY both score high and enact relatively few bills per capita because their legislatures are doing harder work on larger policy problems.
         </p>
       </section>
 
