@@ -41,7 +41,7 @@ export default function CountyFederalImpact({
       : `${(1 / vsStateAvg).toFixed(2)}× below the state average`;
 
   return (
-    <div className="rounded-lg border border-white/10 bg-surface p-6 md:p-8">
+    <div>
       <div className="text-xs uppercase tracking-[0.2em] text-wtp-sky">
         Federal money flowing to your county
       </div>

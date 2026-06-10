@@ -185,8 +185,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <div class="mt-8">
           <FederalCliffScenarios />
         </div>
-        <details class="group mt-8">
-          <summary class="flex cursor-pointer items-center justify-between gap-4 rounded-lg border border-white/10 bg-surface px-6 py-5 transition hover:border-wtp-sky/30 hover:bg-white/[0.02] [&::-webkit-details-marker]:hidden">
+        <details class="group mt-8 rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 px-6 py-5 [&::-webkit-details-marker]:hidden">
             <div>
               <div class="text-xs uppercase tracking-[0.2em] text-wtp-sky">By county</div>
               <div class="mt-1 text-base font-semibold text-white md:text-lg">See your county's federal-money exposure</div>
@@ -197,7 +197,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
               </svg>
             </div>
           </summary>
-          <div class="mt-4">
+          <div class="border-t border-white/10 px-6 pb-6 pt-6">
             <CountyFederalImpact
               client:visible
               fiscalYear={federalByCounty.fiscalYear}
