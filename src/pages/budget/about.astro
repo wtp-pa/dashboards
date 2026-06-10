@@ -373,6 +373,179 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
             </div>
           </details>
 
+          <!-- Data centers -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="data-centers">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Data centers in PA: scale, power, and who captures the value</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 space-y-8">
+
+              <p class="text-sm leading-relaxed text-wtp-cream/75">
+                Pennsylvania leads all states in planned data center growth — a 188% increase in announced facilities. That's not a trend; it's an industrial transformation happening right now, concentrated in specific counties, with real fiscal consequences that aren't fully visible in press releases or public debate.
+              </p>
+
+              <!-- Scale: what's being built -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">What's being built and where</div>
+                <div class="mt-3 space-y-2">
+                  <div class="grid gap-2 sm:grid-cols-2">
+                    <div class="rounded-md border border-white/10 bg-page px-4 py-3 text-sm">
+                      <div class="font-semibold text-white">Amazon — Luzerne + Bucks Counties</div>
+                      <div class="mt-1 font-mono text-lg font-bold text-wtp-sky">$20B</div>
+                      <p class="mt-1 text-xs text-wtp-cream/60">Salem Township (1,200 acres rezoned as Special Data Center Overlay District, May 2024) + Falls Township near Morrisville. 15 data center buildings over 10 years. 1,250 jobs projected.</p>
+                    </div>
+                    <div class="rounded-md border border-white/10 bg-page px-4 py-3 text-sm">
+                      <div class="font-semibold text-white">PAX Campus — Cumberland County</div>
+                      <div class="mt-1 font-mono text-lg font-bold text-wtp-sky">$15B</div>
+                      <p class="mt-1 text-xs text-wtp-cream/60">Carlisle. 1.35 GW capacity across three 700-acre campuses. Joint venture: Pennsylvania Data Center Partners + PowerHouse Data Centers. Direct fiber peering to Ashburn, VA. First 300 MW by Q2 2027.</p>
+                    </div>
+                    <div class="rounded-md border border-white/10 bg-page px-4 py-3 text-sm">
+                      <div class="font-semibold text-white">Homer City Energy Campus — Indiana County</div>
+                      <div class="mt-1 font-mono text-lg font-bold text-wtp-sky">$10B+</div>
+                      <p class="mt-1 text-xs text-wtp-cream/60">3,200 acres on a decommissioned coal plant site. 4.5 GW natural gas plant with seven hydrogen-enabled turbines. Built specifically to power data centers. 10,000 construction jobs; 1,000 permanent. First power 2028.</p>
+                    </div>
+                    <div class="rounded-md border border-white/10 bg-page px-4 py-3 text-sm">
+                      <div class="font-semibold text-white">Air Products Campus — Lehigh Valley</div>
+                      <div class="mt-1 font-mono text-lg font-bold text-wtp-sky/60">In process</div>
+                      <p class="mt-1 text-xs text-wtp-cream/60">Upper Macungie Township. 2.6M sq ft across three buildings on 194 acres. Zoning approvals in progress (2026). Part of the I-78 corridor overflow from Northern Virginia.</p>
+                    </div>
+                  </div>
+                  <p class="text-xs text-wtp-cream/35 pt-1">Why PA? Northern Virginia (the world's largest data center concentration) is running out of power connections — Dominion Energy has a multi-year backlog. The I-78/I-81 corridor offers cheap Marcellus gas for power, proximity to the Northeast fiber backbone, and low-latency connections to Ashburn. PA isn't being chosen despite its costs; it's being chosen because of its gas.</p>
+                </div>
+              </div>
+
+              <!-- The power cost nobody advertises -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">The grid cost that doesn't show up in press releases</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/75">
+                  Data centers are projected to drive <strong class="text-white">30 GW of new peak load in PJM by 2030</strong> — the regional grid that covers PA and 12 other states. PA is expected to supply <strong class="text-white">80% of the new generation</strong> needed to meet that demand. The consequences are already showing up in electricity prices:
+                </p>
+                <div class="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
+                  <div class="rounded-md border border-wtp-red/20 bg-page px-4 py-3">
+                    <div class="font-mono text-xl font-bold text-wtp-red">833%</div>
+                    <div class="mt-1 text-xs text-wtp-cream/60">PJM capacity price increase, 2024–25 to 2025–26. Data centers drove 63% of the price rise.</div>
+                  </div>
+                  <div class="rounded-md border border-wtp-red/20 bg-page px-4 py-3">
+                    <div class="font-mono text-xl font-bold text-wtp-red">$9.3B</div>
+                    <div class="mt-1 text-xs text-wtp-cream/60">Additional annual customer costs across the PJM grid — borne by every electricity ratepayer in the region, not just data center operators.</div>
+                  </div>
+                  <div class="rounded-md border border-white/10 bg-page px-4 py-3">
+                    <div class="font-mono text-xl font-bold text-wtp-sky">4% → 12%</div>
+                    <div class="mt-1 text-xs text-wtp-cream/60">Data centers' share of US electricity: 4% today, projected 6–12% by 2028 (DOE/Lawrence Berkeley). Goldman Sachs projects US demand doubles to 66 GW by 2027.</div>
+                  </div>
+                </div>
+                <p class="mt-3 text-xs leading-relaxed text-wtp-cream/45">
+                  The capacity price spike is effectively a regional electricity surcharge on households and businesses to build generation that serves data centers. PA ratepayers pay this whether or not data centers are located in PA. What PA does control is whether the state captures fiscal value from hosting the facilities and producing the gas.
+                </p>
+              </div>
+
+              <!-- The fiscal split -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">The fiscal picture: who captures what</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/75">
+                  Data centers create a distinctive fiscal split between state and local government — one that's rarely discussed clearly:
+                </p>
+                <div class="mt-3 grid gap-4 md:grid-cols-2">
+                  <div>
+                    <div class="text-xs font-semibold text-wtp-red/80 uppercase tracking-wider mb-2">State gives up</div>
+                    <div class="space-y-2 text-sm text-wtp-cream/70">
+                      <div class="flex gap-2"><span class="text-wtp-red/60 flex-shrink-0">—</span><span>Sales tax on equipment (Act 25, 2021): cost rising from $41M (FY 2024) to <strong class="text-wtp-cream/90">$517M/yr by 2031</strong> — ~$2B total by mid-2031</span></div>
+                      <div class="flex gap-2"><span class="text-wtp-red/60 flex-shrink-0">—</span><span>Act 25 has no mandatory reporting requirement — the actual cost is not fully trackable</span></div>
+                      <div class="flex gap-2"><span class="text-wtp-red/60 flex-shrink-0">—</span><span>Virginia's equivalent program costs $1B/yr and has since 2010 — PA is on the same trajectory</span></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-wtp-sky/80 uppercase tracking-wider mb-2">Localities capture</div>
+                    <div class="space-y-2 text-sm text-wtp-cream/70">
+                      <div class="flex gap-2"><span class="text-wtp-sky/60 flex-shrink-0">—</span><span>Property taxes: the PAX Carlisle campus alone projects <strong class="text-wtp-cream/90">$65M in direct tax revenue</strong> — $45M+ to Cumberland Valley School District, $10M+ each to Middlesex Township and Cumberland County</span></div>
+                      <div class="flex gap-2"><span class="text-wtp-sky/60 flex-shrink-0">—</span><span>Data centers typically double a township's operating budget or cover 20–25% of a school district's annual budget</span></div>
+                      <div class="flex gap-2"><span class="text-wtp-sky/60 flex-shrink-0">—</span><span>These are long-duration assets: 20–30 years of property tax with minimal ongoing service demands</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-4 rounded-md border border-wtp-gold/20 bg-page px-4 py-3 text-sm">
+                  <span class="text-xs font-semibold uppercase tracking-wider text-wtp-gold">The core policy question</span>
+                  <p class="mt-1 text-wtp-cream/70">The state is forgoing $517M/yr in sales tax to generate property tax revenue that flows entirely to local school districts and municipalities. Whether that's a good trade depends on whether you think data centers would come to PA without the incentive — and whether PA's competitive position vs. Virginia and Georgia requires matching their packages. The incentive has no mandatory reporting, so the answer isn't currently knowable from public data.</p>
+                </div>
+              </div>
+
+              <!-- Natural gas connection -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">The natural gas connection</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/75">
+                  PA produces <strong class="text-white">19% of US natural gas</strong> from the Marcellus Shale — roughly one-third of all US shale gas output at ~26.6 billion cubic feet per day. Data centers require 24/7 dispatchable power; natural gas is the default backstop even for operations claiming renewable energy targets. Homer City is the clearest illustration: a purpose-built 4.5 GW gas plant being constructed specifically to power data centers.
+                </p>
+                <p class="mt-3 text-sm leading-relaxed text-wtp-cream/75">
+                  More data center investment in PA — and more data center investment nationally running on gas — means more demand for Marcellus production. PA captures <strong class="text-white">~$200M/yr</strong> from that production via the flat impact fee. Texas captures <strong class="text-white">$10–15B/yr</strong> from comparable extraction via percentage-based severance taxes. The data center boom is accelerating the underlying demand that makes the severance tax gap larger each year.
+                </p>
+              </div>
+
+              <!-- Jobs reality -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">Jobs: construction vs. permanent operations</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/75">
+                  Data centers are among the least labor-intensive structures in the economy per dollar invested. The distinction between construction employment and permanent operations employment matters and is frequently blurred in economic development announcements:
+                </p>
+                <div class="mt-3 grid gap-3 sm:grid-cols-2 text-sm">
+                  <div class="rounded-md border border-wtp-sky/20 bg-page px-4 py-3">
+                    <div class="text-xs uppercase tracking-wider text-wtp-sky font-semibold">Construction phase</div>
+                    <div class="mt-1 font-mono text-2xl font-bold text-wtp-cream">2,000–6,400</div>
+                    <p class="mt-1 text-xs text-wtp-cream/60">Workers for a 1 GW facility over ~18 months. Homer City projects 10,000 construction jobs for its combined gas + data center build. These are real jobs — but temporary.</p>
+                  </div>
+                  <div class="rounded-md border border-white/10 bg-page px-4 py-3">
+                    <div class="text-xs uppercase tracking-wider text-wtp-cream/50 font-semibold">Permanent operations</div>
+                    <div class="mt-1 font-mono text-2xl font-bold text-wtp-cream/70">20–30</div>
+                    <p class="mt-1 text-xs text-wtp-cream/60">Per 100 MW of capacity. A 1 GW hyperscale facility typically employs 200–300 people permanently. Amazon's $20B investment projects 1,250 "high-skilled" permanent jobs across multiple facilities over a decade. (Source: Brookings Institution)</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-xs text-wtp-cream/45">Brookings (2024) found county employment rises 11% during construction, then settles at a 4–5% permanent increase — real economic activity, but concentrated in the construction and information sectors, not broadly distributed across the labor market.</p>
+              </div>
+
+              <!-- What's being decided now -->
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">What's being decided in Harrisburg right now</div>
+                <div class="mt-3 space-y-3 text-sm">
+                  <div class="flex gap-3">
+                    <div class="mt-0.5 flex-shrink-0 w-16 text-xs font-mono text-wtp-cream/35">SB 939</div>
+                    <div>
+                      <span class="font-semibold text-white">Commonwealth Opportunity Zone framework</span> — streamlines data center permitting, limits local governments from imposing conditions stricter than other industrial uses, mandates 30–120 day review windows. Passed Senate Communications &amp; Technology Committee 10–0, February 2026.
+                    </div>
+                  </div>
+                  <div class="flex gap-3">
+                    <div class="mt-0.5 flex-shrink-0 w-16 text-xs font-mono text-wtp-cream/35">GRID</div>
+                    <div>
+                      <span class="font-semibold text-white">Shapiro's Responsible Infrastructure Development proposal</span> — ties the sales tax exemption to clean energy requirements (32% by 2035), minimum 200 construction jobs, $1.5M annual payroll after 4 years. Structured as voluntary — non-compliant operators aren't blocked from operating, just ineligible for the tax exemption.
+                    </div>
+                  </div>
+                  <div class="flex gap-3">
+                    <div class="mt-0.5 flex-shrink-0 w-16 text-xs font-mono text-wtp-cream/35">Repeal</div>
+                    <div>
+                      <span class="font-semibold text-white">Rep. Vitali (D) repeal bill</span> — would eliminate Act 25 entirely, citing $2B cost and environmental impacts. Acknowledged by its sponsor as unlikely to pass. Represents the floor of the debate.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Questions that deserve public answers -->
+              <div class="rounded-md border border-white/10 bg-page px-4 py-4">
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45 mb-3">Questions that don't have public answers yet</div>
+                <ul class="space-y-2 text-sm text-wtp-cream/65">
+                  <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>Act 25 has no mandatory reporting. How much has the exemption actually cost, and which companies have claimed it?</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>Would the Amazon and PAX investments have come to PA without the incentive, given the natural gas advantage already exists?</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>PJM projects PA supplying 80% of new regional generation. What does that mean for PA electricity rates specifically, and who is modeling it?</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>Homer City's 4.5 GW gas plant is sized to power data centers. How does that fit with PA's clean energy commitments, and who approved it?</span></li>
+                  <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>Water withdrawal permits for hyperscale cooling (1–5M gallons/day per facility) — what is PA's permitting process, and are cumulative impacts being tracked?</span></li>
+                </ul>
+              </div>
+
+              <p class="text-xs text-wtp-cream/35">
+                Sources: Spotlight PA · Data Center Dynamics · PJM Interconnection 2025 Long-Term Load Forecast · Brookings Institution · PA General Assembly (SB 939) · PowerHouse Data Centers / Pennsylvania Data Center Partners · Goldman Sachs · DOE/Lawrence Berkeley National Laboratory · Marcellus Coalition
+              </p>
+
+            </div>
+          </details>
+
           <!-- All states at a glance -->
           <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="all-states">
             <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
