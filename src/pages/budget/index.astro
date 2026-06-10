@@ -13,6 +13,7 @@ import PersonalImpactCalculator from '../../components/PersonalImpactCalculator'
 import RainyDayCountdown from '../../components/RainyDayCountdown';
 import BudgetPlan from '../../components/BudgetPlan';
 import BudgetBreakdown from '../../components/BudgetBreakdown.astro';
+import SpendingRevenueTrend from '../../components/SpendingRevenueTrend.astro';
 import IFOPublications from '../../components/IFOPublications.astro';
 import FederalContext from '../../components/FederalContext.astro';
 import FederalCliffScenarios from '../../components/FederalCliffScenarios.astro';
@@ -148,6 +149,13 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             Pennsylvania property taxes don't appear above because they aren't <em>state</em> revenue. PA is one of the few states where property tax is collected and spent entirely by <strong class="text-white">local government</strong> — school districts (the largest share), counties, and municipalities — and never enters the state General Fund. That's why a Pennsylvanian can pay one of the highest property tax burdens in the country and still see a state-level structural deficit. Property tax reform is in <a href={`${config.party.website}/platform`} class="text-wtp-sky underline">our platform</a> — but the fix happens at the local and state-policy level, not in the state's revenue mix.
           </p>
         </aside>
+      </section>
+
+      <section class="mt-16">
+        <SpendingRevenueTrend
+          points={projections.growthTrend.points}
+          note={projections.growthTrend.note}
+        />
       </section>
 
       <section class="mt-20">

@@ -24,5 +24,18 @@
       "structuralDeficitUSD": 8400000000,
       "notes": "IFO 5-year Fiscal Outlook"
     }
-  ]
+  ],
+  "growthTrend": {
+    "note": "Historical figures are IFO-consistent estimates at reported growth rates (~2%/yr revenue, ~5%/yr spending). FY 2025-26 matches enacted budget. Projections per IFO 5-year Fiscal Outlook.",
+    "points": [
+      { "fiscalYear": "2022-23", "revenueB": 43.5, "spendingB": 44.8, "status": "actual" },
+      { "fiscalYear": "2023-24", "revenueB": 44.0, "spendingB": 47.6, "status": "actual" },
+      { "fiscalYear": "2024-25", "revenueB": 44.8, "spendingB": 49.2, "status": "preliminary" },
+      { "fiscalYear": "2025-26", "revenueB": 45.3, "spendingB": 50.1, "status": "enacted" },
+      { "fiscalYear": "2026-27", "revenueB": 46.2, "spendingB": 52.9, "status": "projected" },
+      { "fiscalYear": "2027-28", "revenueB": 47.1, "spendingB": 54.4, "status": "projected" },
+      { "fiscalYear": "2028-29", "revenueB": 48.1, "spendingB": 55.9, "status": "projected" },
+      { "fiscalYear": "2029-30", "revenueB": 49.0, "spendingB": 57.4, "status": "projected" }
+    ]
+  }
 }
