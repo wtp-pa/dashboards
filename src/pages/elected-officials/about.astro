@@ -28,13 +28,13 @@ const paTrackedEnactmentRate = paTrackedIntroduced > 0 ? Math.round((paTrackedEn
 // PA ~250 is a conservative estimate for a full 2-year session (PA enacts
 // fewer bills than many states due to divided-government dynamics).
 const stateComparison = [
-  { state: 'California',    type: 'Full-time', enacted: 1200, popM: 39.0, squire: 0.63 },
-  { state: 'New York',      type: 'Full-time', enacted: 900,  popM: 19.7, squire: 0.52 },
-  { state: 'Pennsylvania',  type: 'Full-time', enacted: 250,  popM: 13.0, squire: 0.28, isPA: true },
-  { state: 'Ohio',          type: 'Full-time', enacted: 280,  popM: 11.8, squire: 0.19 },
-  { state: 'Colorado',      type: 'Hybrid',    enacted: 600,  popM: 5.8,  squire: 0.14 },
-  { state: 'Wyoming',       type: 'Part-time', enacted: 300,  popM: 0.58, squire: 0.06 },
-  { state: 'New Hampshire', type: 'Part-time', enacted: 500,  popM: 1.4,  squire: 0.04 },
+  { state: 'California',   type: 'Full-time', enacted: 1200, popM: 39.0, squire: 0.63 },
+  { state: 'New York',     type: 'Full-time', enacted: 900,  popM: 19.7, squire: 0.52 },
+  { state: 'Pennsylvania', type: 'Full-time', enacted: 250,  popM: 13.0, squire: 0.28, isPA: true },
+  { state: 'New Jersey',   type: 'Full-time', enacted: 500,  popM: 9.3,  squire: 0.24 },
+  { state: 'Ohio',         type: 'Full-time', enacted: 280,  popM: 11.8, squire: 0.19 },
+  { state: 'Texas',        type: 'Part-time', enacted: 1400, popM: 30.0, squire: 0.09 },
+  { state: 'Wyoming',      type: 'Part-time', enacted: 300,  popM: 0.58, squire: 0.06 },
 ] as const;
 
 const pageTitle = `About — PA Elected Officials Watch — ${config.party.shortName}`;
@@ -163,6 +163,13 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
                 <td class="px-5 py-3 font-semibold text-white">253</td>
               </tr>
               <tr>
+                <td class="px-5 py-3">New Jersey</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/30 bg-wtp-sky/10 px-2 py-0.5 text-[11px] text-wtp-sky">Full-time</span></td>
+                <td class="px-5 py-3 font-mono">$49,000</td>
+                <td class="px-5 py-3">Year-round</td>
+                <td class="px-5 py-3">120</td>
+              </tr>
+              <tr>
                 <td class="px-5 py-3">Ohio</td>
                 <td class="px-5 py-3"><span class="rounded-full border border-wtp-sky/30 bg-wtp-sky/10 px-2 py-0.5 text-[11px] text-wtp-sky">Full-time</span></td>
                 <td class="px-5 py-3 font-mono">$73,146</td>
@@ -170,11 +177,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
                 <td class="px-5 py-3">132</td>
               </tr>
               <tr>
-                <td class="px-5 py-3">Colorado</td>
-                <td class="px-5 py-3"><span class="rounded-full border border-wtp-gold/30 bg-wtp-gold/5 px-2 py-0.5 text-[11px] text-wtp-gold/80">Hybrid</span></td>
-                <td class="px-5 py-3 font-mono">$43,200</td>
-                <td class="px-5 py-3">~120 days/yr</td>
-                <td class="px-5 py-3">100</td>
+                <td class="px-5 py-3">Texas</td>
+                <td class="px-5 py-3"><span class="rounded-full border border-wtp-cream/20 bg-white/5 px-2 py-0.5 text-[11px] text-wtp-cream/60">Part-time</span></td>
+                <td class="px-5 py-3 font-mono">$7,200/yr</td>
+                <td class="px-5 py-3">140 days/2 yrs</td>
+                <td class="px-5 py-3">181</td>
               </tr>
               <tr>
                 <td class="px-5 py-3">Wyoming</td>
@@ -183,18 +190,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
                 <td class="px-5 py-3">~40 days/yr</td>
                 <td class="px-5 py-3">90</td>
               </tr>
-              <tr>
-                <td class="px-5 py-3">New Hampshire</td>
-                <td class="px-5 py-3"><span class="rounded-full border border-wtp-cream/20 bg-white/5 px-2 py-0.5 text-[11px] text-wtp-cream/60">Part-time</span></td>
-                <td class="px-5 py-3 font-mono">$100/yr</td>
-                <td class="px-5 py-3">~45 days/yr</td>
-                <td class="px-5 py-3">424</td>
-              </tr>
             </tbody>
           </table>
         </div>
         <p class="mt-3 text-xs text-wtp-cream/40">
-          Source: <a href="https://www.ncsl.org/research/about-state-legislatures/full-and-part-time-legislatures.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">NCSL Full- and Part-Time Legislatures</a> · NCSL Legislator Compensation, 2024. Salaries are base pay; some states add per diem, mileage, or leadership stipends. NH's 424-member House is the largest state legislature body in the US.
+          Source: <a href="https://www.ncsl.org/research/about-state-legislatures/full-and-part-time-legislatures.aspx" class="text-wtp-sky underline" target="_blank" rel="noopener">NCSL Full- and Part-Time Legislatures</a> · NCSL Legislator Compensation, 2024. Salaries are base pay; some states add per diem, mileage, or leadership stipends. TX legislators meet for 140 days every two years (biennial session) and are compensated primarily via per diem.
         </p>
       </section>
 
