@@ -2,6 +2,7 @@
 import { config } from '../../config';
 import projections from '../../../data/projections.json';
 import ifoData from '../../../data/ifo-publications.json';
+import stateData from '../../../data/state-comparisons.json';
 import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
@@ -13,10 +14,12 @@ const lastIFORefreshFormatted = new Intl.DateTimeFormat('en-US', {
 }).format(lastIFORefresh);
 
 const pageTitle = `About — ${config.project.name}`;
-const pageDescription = `How PA Budget Watch works: where the data comes from, what's auto-updated, and what to keep in mind.`;
+const pageDescription = `Context and methodology for PA Budget Watch: what the numbers mean, where they come from, and how Pennsylvania compares to peer states.`;
 const siteOrigin = Astro.site ?? Astro.url;
 const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+
+const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 ---
 
 <html lang="en">
@@ -29,7 +32,6 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
-
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={ogImageUrl} />
@@ -61,118 +63,394 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
     <main class="mx-auto max-w-3xl px-6 pt-8 md:pt-12 pb-16 md:pb-24">
       <p class="text-xs uppercase tracking-[0.25em] text-wtp-sky">About</p>
-      <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">How PA Budget Watch works</h1>
-      <p class="mt-6 text-base leading-relaxed text-wtp-cream/80 md:text-lg">
-        Every number on this dashboard comes from a public source we cite. This page explains where each piece of data comes from, what's automatically refreshed, and what you should keep in mind when reading it.
+      <h1 class="mt-3 text-4xl font-extrabold leading-tight md:text-5xl">Context &amp; sources</h1>
+      <p class="mt-5 text-base leading-relaxed text-wtp-cream/70">
+        Two things on this page: <strong class="text-white">background context</strong> for understanding Pennsylvania's fiscal situation, and <strong class="text-white">methodology</strong> for how the dashboard works and where the numbers come from.
       </p>
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">What "structural deficit" means</h2>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          Pennsylvania's General Fund — the state's main operating budget — is on track to spend roughly $50 billion this fiscal year while collecting about $45 billion in revenue. The gap between the two is the operating deficit; the portion that's <em>permanent and recurring</em> rather than papered over with one-time funds is what economists call the <strong class="text-white">structural deficit</strong>. The PA Independent Fiscal Office (IFO) currently puts that figure at <strong class="text-wtp-red">$3.9 billion</strong> for FY 2025-26, projected to grow to $6.7 billion next year and $8.4 billion by FY 2029-30 if nothing changes.
-        </p>
-      </section>
+      <!-- ── SECTION 1: CONTEXT ── -->
+      <div class="mt-12">
+        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-wtp-sky">Understanding the numbers</div>
 
-      <section class="mt-12" id="restricted-funds">
-        <h2 class="text-2xl font-extrabold">Restricted funds and the "shadow budget"</h2>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          The <strong class="text-white">$3.5B "Non-Tax Revenue"</strong> line on the revenue chart is the narrow slice of fees, licenses, fines, and treasury earnings that actually enter the General Fund. It's <em>not</em> the whole picture of non-tax money the state collects. Alongside the General Fund sit <strong class="text-white">150+ "special funds"</strong> — dedicated pools of fees and earmarked taxes that flow directly to specific purposes by statute (or, for the Motor License Fund, by the state constitution) and never appear in the revenue chart. Together they handle billions of dollars a year in their own right.
-        </p>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          Examples: the Motor License Fund (gas tax + vehicle fees → highways and bridges), the Lottery Fund (proceeds → senior programs), the Public Transportation Trust Fund (→ transit), and the Tobacco Settlement, Environmental Stewardship, Oil &amp; Gas Lease, and Race Horse Development funds, among many others.
-        </p>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          Because this money is dedicated, it can't legally be used to close a General Fund deficit. But the legislature periodically rewrites statutes to authorize <strong class="text-white">fund transfers or "fund sweeps"</strong> — moving surplus balances out of restricted funds and into the General Fund. That's part of what "papered over with one-time funds" means in the structural-deficit definition above: a fund sweep closes this year's gap without changing next year's math. This dashboard scopes to the General Fund because that's where the structural deficit lives, but the shadow budget is where a lot of the political fights actually happen.
-        </p>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          A few specific examples ground this. For decades the state funded the <strong class="text-white">State Police out of the Motor License Fund</strong> — gas-tax and registration money intended for highways and bridges; <a href="https://whyy.org/articles/pennsylvania-state-police-gas-tax-transfers-josh-shapiro-budget/" class="text-wtp-sky underline" target="_blank" rel="noopener">Act 85 of 2016</a> capped the diversion at $800M and began a phase-down toward $500M by 2026, with further acceleration since. <a href="https://www.haponline.org/Resource-Center?resourceid=38" class="text-wtp-sky underline" target="_blank" rel="noopener">Act 43 of 2017</a> <strong class="text-white">securitized the Tobacco Settlement Fund</strong> — selling roughly $1.5 billion in future Master Settlement Agreement payments as bonds for one-time General Fund cash, locking in ~$115M/year in lost health-program revenue going forward. The same year, Act 44 directed <strong class="text-white">$200M from the Joint Underwriting Association</strong> (the state's medical-malpractice insurer of last resort) into the General Fund; after seven years of litigation the Third Circuit ruled in 2024 that the transfer was lawful and the money was <a href="https://www.attorneygeneral.gov/taking-action/ag-sunday-announces-200-million-deposited-into-the-commonwealths-general-fund-as-a-result-of-the-joint-underwriting-association-litigation/" class="text-wtp-sky underline" target="_blank" rel="noopener">deposited in 2025</a>. And in <a href="https://law.justia.com/cases/pennsylvania/supreme-court/2022/65-map-2020.html" class="text-wtp-sky underline" target="_blank" rel="noopener"><strong class="text-white">PEDF v. Commonwealth</strong></a> (2017, reaffirmed 2021), the PA Supreme Court held that royalties from oil-and-gas leases on state forest land are public natural resources held in trust under Article I §27 — the leading legal precedent limiting how far these transfers can go.
-        </p>
-      </section>
+        <div class="mt-4 space-y-2">
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">Where each number comes from</h2>
-        <dl class="mt-6 space-y-6">
-          <div>
-            <dt class="font-semibold text-white">Live deficit ticker</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Calculated from IFO's $3.9B annual structural deficit projection, ticked up second by second based on fraction of the fiscal year elapsed (PA's fiscal year runs July 1 – June 30). The number you see is "deficit accrued so far this fiscal year." Source: <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">PA IFO</a>.
-            </dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-white">Revenue and spending breakdowns</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              FY 2025-26 General Fund totals (~$45B revenue, ~$50B spending) approximated from the PA IFO Monthly Revenue Update categories and the FY 2025-26 Enacted Budget published by the Office of the Budget. Per-category percentages are stable year over year; the dollar splits shown are good approximations and will be replaced with live monthly actuals in Phase 2.
-            </dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-white">Federal funding context + cliff scenarios</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Compiled from <a href="https://www.usaspending.gov/state/pennsylvania" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov</a> (federal awards to PA), KFF Medicaid State Indicators (FMAP rates), and the Office of the Budget federal funds reporting. The cliff scenarios (FMAP cut, ACA expansion repeal, SNAP cost-shift) are modeled estimates based on current program sizes; actual cuts would depend on specific federal legislation.
-            </dd>
-          </div>
-          <div id="federal-by-county">
-            <dt class="font-semibold text-white">Federal money by county</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Pulled directly from the <a href="https://api.usaspending.gov/api/v2/search/spending_by_geography/" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov API</a> (<code class="text-wtp-cream/80">spending_by_geography</code> endpoint, place-of-performance scope) for the most recent complete federal fiscal year. All 67 PA counties are fetched in one query and stored in <code class="text-wtp-cream/80">data/federal-funds-by-county.json</code>. <strong class="text-white">Important caveat:</strong> the totals include <em>all</em> federal obligations — contracts, grants, direct payments, loans, and insurance — not just "aid." Large federal contractors and research grants (e.g., Pitt, UPMC, Penn, federal labs) significantly inflate metro-county totals; Allegheny and Philadelphia look much higher per-capita than a pure "federal aid" view would show. This widget is not a measure of state aid to your county — state-aid data is not published in clean county-aggregated form and will get its own treatment when the Local Impact dashboard ships.
-            </dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-white">Personal impact calculator</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Anchored on IFO's own "$1,500 per family of 4" figure for closing the FY 2025-26 deficit. We scale per capita by household size, then for the time-horizon view we sum projected annual shares using IFO's growth curve ($3.9B → $6.7B → $8.4B), extrapolated linearly beyond FY 2029-30.
-            </dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-white">Rainy Day Fund countdown</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Counts down to the IFO-projected end of the Rainy Day Fund's depletion window (FY 2026-27). Based on the current ~$7B balance and the projected drawdown rate.
-            </dd>
-          </div>
-          <div>
-            <dt class="font-semibold text-white">Latest from PA IFO</dt>
-            <dd class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
-              Scraped automatically from <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">ifo.state.pa.us</a> by a GitHub Actions cron job that runs every Monday at 06:00 UTC. The five most recent publications are pulled and committed to the repo as a JSON file. New publications appear here within ~7 days of being released. Last refreshed: <strong class="text-white">{lastIFORefreshFormatted}</strong>.
-            </dd>
-          </div>
-        </dl>
-      </section>
+          <!-- What structural deficit means -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="structural-deficit">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">What "structural deficit" means</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 text-sm leading-relaxed text-wtp-cream/75">
+              <p>
+                Pennsylvania's General Fund — the state's main operating budget — is on track to spend roughly <strong class="text-white">$50 billion</strong> this fiscal year while collecting about <strong class="text-white">$45 billion</strong> in revenue. The gap between the two is the operating deficit; the portion that's <em>permanent and recurring</em> rather than papered over with one-time funds is what economists call the <strong class="text-white">structural deficit</strong>.
+              </p>
+              <p class="mt-3">
+                The PA Independent Fiscal Office (IFO) currently puts that figure at <strong class="text-wtp-red">$3.9 billion</strong> for FY 2025-26, projected to grow to $6.7 billion next year and $8.4 billion by FY 2029-30 if nothing changes. The key word is <em>structural</em>: it persists even in good economic years because spending is growing at ~5%/yr while revenue grows at ~2%/yr — a mismatch that compounds annually.
+              </p>
+            </div>
+          </details>
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">What's auto-updated vs. seed data</h2>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          The IFO publications card is the only fully-live data source on this dashboard right now. Every other number was compiled from official PA sources and committed manually to the repository as JSON. Phase 2 of this project (planned) will add automated fetchers for monthly revenue, department-level spending, and federal funding flows.
-        </p>
-      </section>
+          <!-- Restricted funds -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="restricted-funds">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Restricted funds and the "shadow budget"</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 text-sm leading-relaxed text-wtp-cream/75 space-y-3">
+              <p>
+                The <strong class="text-white">$3.5B "Non-Tax Revenue"</strong> line on the revenue chart is the narrow slice of fees, licenses, fines, and treasury earnings that actually enter the General Fund. Alongside the General Fund sit <strong class="text-white">150+ "special funds"</strong> — dedicated pools of fees and earmarked taxes that flow directly to specific purposes by statute and never appear in the revenue chart.
+              </p>
+              <p>
+                Examples: the Motor License Fund (gas tax + vehicle fees → highways and bridges), the Lottery Fund (proceeds → senior programs), the Public Transportation Trust Fund (→ transit), and the Tobacco Settlement, Environmental Stewardship, Oil &amp; Gas Lease, and Race Horse Development funds, among many others.
+              </p>
+              <p>
+                Because this money is dedicated, it can't legally be used to close a General Fund deficit. But the legislature periodically rewrites statutes to authorize <strong class="text-white">fund transfers or "fund sweeps"</strong> — moving surplus balances out of restricted funds into the General Fund. That's part of what "papered over with one-time funds" means: a fund sweep closes this year's gap without changing next year's math.
+              </p>
+              <p>
+                A few specific examples. For decades the state funded the <strong class="text-white">State Police out of the Motor License Fund</strong> — gas-tax money intended for highways; <a href="https://whyy.org/articles/pennsylvania-state-police-gas-tax-transfers-josh-shapiro-budget/" class="text-wtp-sky underline" target="_blank" rel="noopener">Act 85 of 2016</a> began a phase-down. <a href="https://www.haponline.org/Resource-Center?resourceid=38" class="text-wtp-sky underline" target="_blank" rel="noopener">Act 43 of 2017</a> securitized the Tobacco Settlement Fund — selling ~$1.5B in future payments as bonds for one-time cash, locking in ~$115M/yr in lost health revenue going forward. In <a href="https://law.justia.com/cases/pennsylvania/supreme-court/2022/65-map-2020.html" class="text-wtp-sky underline" target="_blank" rel="noopener"><strong class="text-white">PEDF v. Commonwealth</strong></a> (2017, reaffirmed 2021), the PA Supreme Court held that royalties from oil-and-gas leases on state forest land are held in public trust under Article I §27 — the leading legal limit on how far these transfers can go.
+              </p>
+            </div>
+          </details>
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">Limitations and caveats</h2>
-        <ul class="mt-4 space-y-3 text-base leading-relaxed text-wtp-cream/80">
-          <li>— This dashboard scopes to the General Fund — the state's main operating budget — because that's where the structural deficit lives. Pennsylvania also operates 150+ restricted special funds outside the GF that don't appear in the revenue/spending charts; see <a href="#restricted-funds" class="text-wtp-sky underline">Restricted funds and the "shadow budget"</a> above for context.</li>
-          <li>— Per-category dollar splits are approximate; absolute totals reconcile with IFO and Office of the Budget figures, but per-line splits will refine as live fetchers come online.</li>
-          <li>— "Cliff scenarios" are modeled estimates, not predictions. Their purpose is to show order-of-magnitude impact, not to forecast specific federal cuts.</li>
-          <li>— The personal impact calculator uses a per-capita scaling assumption that's editorial — not all households would actually pay the same share if the deficit were closed via taxes (PA's flat income tax means scaling is roughly linear, but exemptions and credits vary).</li>
-          <li>— Brand colors are pulled from the {config.party.shortName} Squarespace site palette; the dashboard logo file is currently a PNG converted from the source WebP.</li>
-        </ul>
-      </section>
+          <!-- Rainy Day Fund -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="rainy-day">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">The Rainy Day Fund: law, history &amp; how PA compares</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 space-y-8">
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">A note on AI</h2>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA source we cite.
-        </p>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          The energy used during development was small — roughly comparable to streaming a few hours of video.
-        </p>
-      </section>
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">What PA law actually says</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/75">
+                  Pennsylvania's Budget Stabilization Reserve Fund is legally restricted to
+                  <strong class="text-white">"emergencies and downturns in the economy that result in unexpected revenue shortfalls
+                  that cannot be dealt with through the normal budget process."</strong>
+                  The operative word is <em>unexpected</em>. The FY 2026–27 structural deficit is neither unexpected
+                  nor caused by an economic downturn — the IFO has been projecting this gap for years. Using the fund to cover it arguably violates the spirit of the restriction, even if a simple legislative majority makes it technically legal. The Commonwealth Foundation argues the statute also requires a two-thirds supermajority to withdraw — that interpretation is contested but unresolved.
+                </p>
+              </div>
 
-      <section class="mt-12">
-        <h2 class="text-2xl font-extrabold">Want to verify or contribute?</h2>
-        <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          The full source code is open at <a href={config.project.repoUrl} class="text-wtp-sky underline" target="_blank" rel="noopener">github.com/wtp-pa/dashboards</a>. Every data file is committed to git, so you can see exactly when each number changed and where it came from. Issues, corrections, and suggestions welcome via GitHub.
-        </p>
-      </section>
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">PA's history with the fund</div>
+                <div class="mt-3 space-y-2.5 text-sm text-wtp-cream/70">
+                  <div class="flex gap-4">
+                    <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">2009–10</span>
+                    <span>Depleted to $0 during the Great Recession — a textbook legitimate use: genuine, sudden, economy-driven shortfall.</span>
+                  </div>
+                  <div class="flex gap-4">
+                    <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">2015</span>
+                    <span>Gov. Wolf inherited just <strong class="text-white">$231,800</strong> in the fund — effectively empty after years of structural borrowing.</span>
+                  </div>
+                  <div class="flex gap-4">
+                    <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">2015–23</span>
+                    <span>Fund rebuilt through surplus years and federal COVID relief (ARPA). Wolf left office with ~$5B.</span>
+                  </div>
+                  <div class="flex gap-4">
+                    <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">Sept 2024</span>
+                    <span>Record high: <strong class="text-white">~$7B</strong> after a $737M deposit in the FY 2024–25 budget. It took nearly a decade to build.</span>
+                  </div>
+                  <div class="flex gap-4">
+                    <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">2026–27</span>
+                    <span class="text-wtp-red/80">Shapiro proposes withdrawing $4.6B — leaving ~$2.1B, roughly the 2013 balance, against a deficit that keeps growing.</span>
+                  </div>
+                </div>
+              </div>
 
-      <p class="mt-16 text-center text-sm">
+              <div>
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">How other states protect their reserves</div>
+                <p class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
+                  PA currently covers ~53.6 days of General Fund operations from its reserve — above the 50-state median
+                  of 49.1 days. After a $4.6B drawdown, that falls to roughly <strong class="text-white">15 days</strong>.
+                </p>
+                <div class="mt-4 overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="border-b border-white/10 text-left text-xs uppercase tracking-wider text-wtp-cream/40">
+                        <th class="pb-2 pr-6 font-semibold">State</th>
+                        <th class="pb-2 pr-6 font-semibold">Withdrawal rule</th>
+                        <th class="pb-2 font-semibold">Key guardrail</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5 text-wtp-cream/70">
+                      <tr>
+                        <td class="py-2.5 pr-6 font-medium text-white">Texas</td>
+                        <td class="py-2.5 pr-6">2/3 supermajority of legislature required</td>
+                        <td class="py-2.5">High bar prevents routine or election-year access</td>
+                      </tr>
+                      <tr>
+                        <td class="py-2.5 pr-6 font-medium text-white">California</td>
+                        <td class="py-2.5 pr-6">Prop 2 (2014): automatic deposits when revenues spike; withdrawals only during recessions</td>
+                        <td class="py-2.5">Constitutionally restricted — cannot fill structural gaps</td>
+                      </tr>
+                      <tr>
+                        <td class="py-2.5 pr-6 font-medium text-white">North Carolina</td>
+                        <td class="py-2.5 pr-6">Restricted to temporary revenue shortfalls; recurring program use prohibited</td>
+                        <td class="py-2.5">Explicit ban on funding ongoing structural imbalances</td>
+                      </tr>
+                      <tr>
+                        <td class="py-2.5 pr-6 font-medium text-white">Virginia</td>
+                        <td class="py-2.5 pr-6">Revenue Stabilization Fund: formula-driven deposits, tied to revenue volatility</td>
+                        <td class="py-2.5">Withdrawals linked to measurable economic conditions, not political convenience</td>
+                      </tr>
+                      <tr>
+                        <td class="py-2.5 pr-6 font-medium text-wtp-cream">Pennsylvania</td>
+                        <td class="py-2.5 pr-6 text-wtp-cream/60">Simple majority; "unexpected shortfalls" language only — interpretation contested</td>
+                        <td class="py-2.5 text-wtp-red/70">No explicit bar on use for predictable, structural deficits</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="mt-3 text-xs text-wtp-cream/35">Sources: Pew Charitable Trusts state reserve research · City &amp; State PA · Commonwealth Foundation · PA Fiscal Code · Ballotpedia</p>
+              </div>
+
+            </div>
+          </details>
+
+          <!-- State comparison table -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="state-comparisons">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">PA compared to peer states</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4">
+              <p class="text-sm leading-relaxed text-wtp-cream/70">
+                States with similar population or geographic proximity. Figures are approximate structural balances — not budgeted totals — sourced from Pew Fiscal 50 (FY 2023–24). PA is highlighted.
+              </p>
+
+              <div class="mt-5 overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b border-white/10 text-left text-xs uppercase tracking-wider text-wtp-cream/40">
+                      <th class="pb-2 pr-4 font-semibold">State</th>
+                      <th class="pb-2 pr-4 font-semibold">Pop.</th>
+                      <th class="pb-2 pr-4 font-semibold">Gov.</th>
+                      <th class="pb-2 pr-4 font-semibold">Legislature</th>
+                      <th class="pb-2 pr-4 font-semibold text-right">Balance</th>
+                      <th class="pb-2 font-semibold text-right">% of GF</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-white/5">
+                    {stateData.comparableStates.map((s) => (
+                      <tr class={s.isPA ? 'bg-white/[0.04]' : ''}>
+                        <td class={`py-2.5 pr-4 font-semibold ${s.isPA ? 'text-white' : 'text-wtp-cream/80'}`}>
+                          {s.state}{s.isPA ? ' ★' : ''}
+                        </td>
+                        <td class="py-2.5 pr-4 tabular-nums text-wtp-cream/50">{s.populationM}M</td>
+                        <td class="py-2.5 pr-4">
+                          <span class={`rounded px-1.5 py-0.5 text-xs font-semibold ${s.govParty === 'R' ? 'bg-red-900/40 text-red-300' : 'bg-blue-900/40 text-blue-300'}`}>
+                            {s.govParty}
+                          </span>
+                        </td>
+                        <td class="py-2.5 pr-4">
+                          {s.legislature === 'R' && <span class="rounded px-1.5 py-0.5 text-xs font-semibold bg-red-900/40 text-red-300">R</span>}
+                          {s.legislature === 'D' && <span class="rounded px-1.5 py-0.5 text-xs font-semibold bg-blue-900/40 text-blue-300">D</span>}
+                          {s.legislature === 'Split' && <span class="rounded px-1.5 py-0.5 text-xs font-semibold bg-white/10 text-wtp-cream/60">Split</span>}
+                        </td>
+                        <td class={`py-2.5 pr-4 tabular-nums text-right font-mono font-semibold ${s.structuralBalanceB < 0 ? 'text-wtp-red' : 'text-wtp-sky'}`}>
+                          {s.structuralBalanceB > 0 ? '+' : ''}{s.structuralBalanceB.toFixed(1)}B
+                        </td>
+                        <td class={`py-2.5 tabular-nums text-right font-mono text-sm ${s.balancePct < -5 ? 'text-wtp-red/80' : s.balancePct > 0 ? 'text-wtp-sky/80' : 'text-wtp-cream/50'}`}>
+                          {s.balancePct > 0 ? '+' : ''}{s.balancePct.toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="mt-3 text-xs leading-relaxed text-wtp-cream/35">
+                ★ = Pennsylvania. Gov. and legislative control as of January 2026; 2025 elections may have updated NJ and VA. All figures approximate — verify against <a href="https://fiscal50.pewtrusts.org" class="text-wtp-sky no-underline hover:underline" target="_blank" rel="noopener">Pew Fiscal 50</a> for current data.
+              </p>
+
+              <!-- Key factor rows -->
+              <div class="mt-6 space-y-2">
+                <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">Key structural factors</div>
+                {stateData.comparableStates.map((s) => (
+                  <div class="flex gap-3 text-xs text-wtp-cream/60">
+                    <span class={`w-20 flex-shrink-0 font-semibold ${s.isPA ? 'text-wtp-cream' : 'text-wtp-cream/70'}`}>{s.abbreviation}</span>
+                    <span>{s.keyFactor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </details>
+
+          <!-- All states at a glance -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="all-states">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">All states at a glance: surplus vs. structural deficit</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4">
+              <p class="text-sm leading-relaxed text-wtp-cream/70">
+                The states not in the comparison table above, grouped by approximate fiscal position. These fluctuate — states near zero move between categories year to year.
+              </p>
+              <div class="mt-5 grid gap-5 sm:grid-cols-2">
+                <div>
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-wtp-sky">
+                    <span class="inline-block h-2 w-2 rounded-full bg-wtp-sky"></span>
+                    Running structural surpluses
+                  </div>
+                  <p class="mt-2 text-sm leading-relaxed text-wtp-cream/65">
+                    {stateData.surplusStates.join(' · ')}
+                  </p>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-wtp-red">
+                    <span class="inline-block h-2 w-2 rounded-full bg-wtp-red"></span>
+                    Deficits or balanced only with one-time measures
+                  </div>
+                  <p class="mt-2 text-sm leading-relaxed text-wtp-cream/65">
+                    {stateData.deficitOrOneTimeBalancedStates.join(' · ')}
+                  </p>
+                </div>
+              </div>
+              <p class="mt-4 text-xs text-wtp-cream/35">Approx. FY 2023–24. Source: Pew Charitable Trusts Fiscal 50. States in the comparison table above are not repeated here.</p>
+            </div>
+          </details>
+
+          <!-- Transferable lessons -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30" id="lessons">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Three things surplus states do that PA could adopt</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4 space-y-5">
+              {stateData.transferableLessons.map((lesson, i) => (
+                <div class="flex gap-4">
+                  <div class="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-wtp-sky/15 text-xs font-bold text-wtp-sky">{i + 1}</div>
+                  <div>
+                    <div class="font-semibold text-white">{lesson.title}</div>
+                    <div class="mt-0.5 text-xs text-wtp-cream/40">Used by: {lesson.exampleStates.join(', ')}</div>
+                    <p class="mt-1.5 text-sm leading-relaxed text-wtp-cream/70">{lesson.description}</p>
+                  </div>
+                </div>
+              ))}
+              <p class="text-xs text-wtp-cream/35 pt-1">None of these require a tax structure change. All three are statutory or constitutional fiscal rules — the kind of thing a reform-oriented party could propose as a standalone bill.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: METHODOLOGY ── -->
+      <div class="mt-12">
+        <div class="text-xs font-semibold uppercase tracking-[0.2em] text-wtp-sky">How the dashboard works</div>
+
+        <div class="mt-4 space-y-2">
+
+          <!-- Data sources -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Where each number comes from</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4">
+              <dl class="space-y-5">
+                <div>
+                  <dt class="text-sm font-semibold text-white">Live deficit ticker</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Calculated from IFO's $3.9B annual structural deficit projection, ticked up second by second based on fraction of the fiscal year elapsed (PA fiscal year runs July 1 – June 30). The number is "deficit accrued so far this fiscal year." Source: <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">PA IFO</a>.
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-white">Revenue and spending breakdowns</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    FY 2025-26 General Fund totals (~$45B revenue, ~$50B spending) from PA IFO Monthly Revenue Update categories and the FY 2025-26 Enacted Budget published by the Office of the Budget. Per-category splits are approximate; dollar totals reconcile with IFO figures.
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-white">Federal funding context + cliff scenarios</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Compiled from <a href="https://www.usaspending.gov/state/pennsylvania" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov</a>, KFF Medicaid State Indicators (FMAP rates), and the Office of the Budget federal funds reporting. Cliff scenarios are modeled estimates based on current program sizes — actual cuts depend on specific federal legislation.
+                  </dd>
+                </div>
+                <div id="federal-by-county">
+                  <dt class="text-sm font-semibold text-white">Federal money by county</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Pulled from the <a href="https://api.usaspending.gov/api/v2/search/spending_by_geography/" class="text-wtp-sky underline" target="_blank" rel="noopener">USAspending.gov API</a> for the most recent complete federal fiscal year. <strong class="text-wtp-cream/80">Important caveat:</strong> totals include all federal obligations — contracts, grants, direct payments, loans, and insurance — not just "aid." Large federal contractors and research institutions (Pitt, UPMC, Penn, federal labs) significantly inflate metro-county totals. This is not a measure of state aid to your county.
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-white">Personal impact calculator</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Anchored on IFO's own "$1,500 per family of 4" figure for closing the FY 2025-26 deficit. We scale per capita by household size, then sum projected annual shares using IFO's growth curve ($3.9B → $6.7B → $8.4B), extrapolated linearly beyond FY 2029-30.
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-white">Rainy Day Fund countdown</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Counts down to the IFO-projected depletion window (FY 2026-27) based on the current ~$7B balance and the proposed $4.6B drawdown rate.
+                  </dd>
+                </div>
+                <div>
+                  <dt class="text-sm font-semibold text-white">Latest from PA IFO</dt>
+                  <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
+                    Scraped automatically from <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">ifo.state.pa.us</a> by a GitHub Actions cron job that runs every Monday at 06:00 UTC. New publications appear within ~7 days of release. Last refreshed: <strong class="text-white">{lastIFORefreshFormatted}</strong>.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </details>
+
+          <!-- Auto-updated vs seed -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">What's auto-updated vs. seed data</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-4 pt-4 text-sm leading-relaxed text-wtp-cream/70">
+              The IFO publications card is the only fully-live data source on this dashboard right now. Every other number was compiled from official PA sources and committed manually to the repository as JSON. Phase 2 (planned) will add automated fetchers for monthly revenue, department-level spending, and federal funding flows.
+            </div>
+          </details>
+
+          <!-- Limitations -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Limitations and caveats</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-5 pt-4">
+              <ul class="space-y-2.5 text-sm leading-relaxed text-wtp-cream/70">
+                <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>This dashboard scopes to the General Fund. Pennsylvania also operates 150+ restricted special funds outside the GF; see "Restricted funds and the shadow budget" above.</span></li>
+                <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>Per-category dollar splits are approximate; absolute totals reconcile with IFO and Office of the Budget figures.</span></li>
+                <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>"Cliff scenarios" are modeled estimates to show order-of-magnitude impact, not forecasts of specific cuts.</span></li>
+                <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>The personal impact calculator uses per-capita scaling — PA's flat income tax makes this roughly linear, but exemptions and credits vary across households.</span></li>
+                <li class="flex gap-2"><span class="text-wtp-cream/30 flex-shrink-0">—</span><span>State comparison figures (above) are approximate FY 2023–24 structural balances from Pew Fiscal 50; verify before citing.</span></li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- AI note -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">A note on AI</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-4 pt-4 space-y-3 text-sm leading-relaxed text-wtp-cream/70">
+              <p>
+                We used <a href="https://www.anthropic.com/claude" class="text-wtp-sky underline" target="_blank" rel="noopener">Claude</a>, an AI assistant from Anthropic, to help write code and draft copy for this dashboard. The data is not AI-generated — every number comes from a public PA source we cite.
+              </p>
+              <p>The energy used during development was small — roughly comparable to streaming a few hours of video.</p>
+            </div>
+          </details>
+
+          <!-- Verify / contribute -->
+          <details class="group rounded-lg border border-white/10 bg-surface transition hover:border-wtp-sky/30">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <span class="font-semibold text-white">Want to verify or contribute?</span>
+              <span class="flex-shrink-0 text-wtp-cream/50 transition group-open:rotate-180" aria-hidden="true" set:html={chevron} />
+            </summary>
+            <div class="border-t border-white/10 px-5 pb-4 pt-4 text-sm leading-relaxed text-wtp-cream/70">
+              The full source code is open at <a href={config.project.repoUrl} class="text-wtp-sky underline" target="_blank" rel="noopener">github.com/wtp-pa/dashboards</a>. Every data file is committed to git, so you can see exactly when each number changed and where it came from. Issues, corrections, and suggestions welcome via GitHub.
+            </div>
+          </details>
+
+        </div>
+      </div>
+
+      <p class="mt-14 text-center text-sm">
         <a href="/budget/" class="text-wtp-sky hover:text-white">← Back to the dashboard</a>
       </p>
     </main>

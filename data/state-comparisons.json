@@ -1,0 +1,159 @@
+{
+  "_note": "Fiscal figures are approximate structural balances — recurring revenue minus recurring spending, excluding one-time measures. All states are legally required to pass balanced budgets; 'deficit' here means structural imbalance papered over with reserves, one-time funds, or federal windfalls. Verify all figures against Pew Charitable Trusts Fiscal 50 (fiscal50.pewtrusts.org) and NASBO State Expenditure Reports before updating. Legislative control as of January 2026; 2025 state elections may affect NJ and VA entries.",
+  "source": "Pew Charitable Trusts Fiscal 50 · NASBO State Expenditure Reports · Ballotpedia · state IFO equivalents",
+  "dataLabel": "Approx. FY 2023–24",
+  "comparableStates": [
+    {
+      "state": "Pennsylvania",
+      "abbreviation": "PA",
+      "populationM": 13.0,
+      "govParty": "D",
+      "legislature": "Split",
+      "structuralBalanceB": -3.9,
+      "generalFundB": 45.0,
+      "balancePct": -8.7,
+      "keyFactor": "Medicaid and education growing ~5%/yr; revenue ~2%/yr",
+      "isPA": true
+    },
+    {
+      "state": "Ohio",
+      "abbreviation": "OH",
+      "populationM": 11.8,
+      "govParty": "R",
+      "legislature": "R",
+      "structuralBalanceB": 1.5,
+      "generalFundB": 25.0,
+      "balancePct": 6.0,
+      "keyFactor": "Spending caps; income tax cuts tied to growth benchmarks"
+    },
+    {
+      "state": "New Jersey",
+      "abbreviation": "NJ",
+      "populationM": 9.3,
+      "govParty": "R",
+      "legislature": "Split",
+      "structuralBalanceB": -4.0,
+      "generalFundB": 53.0,
+      "balancePct": -7.5,
+      "keyFactor": "Largest unfunded pension liability per capita in the country"
+    },
+    {
+      "state": "New York",
+      "abbreviation": "NY",
+      "populationM": 19.6,
+      "govParty": "D",
+      "legislature": "D",
+      "structuralBalanceB": -7.5,
+      "generalFundB": 112.0,
+      "balancePct": -6.7,
+      "keyFactor": "Highest-per-capita Medicaid in the nation; high baseline spending"
+    },
+    {
+      "state": "Maryland",
+      "abbreviation": "MD",
+      "populationM": 6.2,
+      "govParty": "D",
+      "legislature": "D",
+      "structuralBalanceB": -3.0,
+      "generalFundB": 25.0,
+      "balancePct": -12.0,
+      "keyFactor": "Blueprint education mandates driving a fast-widening structural gap"
+    },
+    {
+      "state": "Virginia",
+      "abbreviation": "VA",
+      "populationM": 8.7,
+      "govParty": "D",
+      "legislature": "Split",
+      "structuralBalanceB": 0.5,
+      "generalFundB": 30.0,
+      "balancePct": 1.7,
+      "keyFactor": "Revenue Stabilization Fund formula ties deposits/withdrawals to economic conditions"
+    },
+    {
+      "state": "North Carolina",
+      "abbreviation": "NC",
+      "populationM": 11.0,
+      "govParty": "D",
+      "legislature": "R",
+      "structuralBalanceB": 3.0,
+      "generalFundB": 30.0,
+      "balancePct": 10.0,
+      "keyFactor": "Constitutional spending cap; phased income-tax cuts benchmarked to revenue"
+    },
+    {
+      "state": "Michigan",
+      "abbreviation": "MI",
+      "populationM": 10.1,
+      "govParty": "D",
+      "legislature": "D",
+      "structuralBalanceB": 0.5,
+      "generalFundB": 27.0,
+      "balancePct": 1.9,
+      "keyFactor": "Post-COVID surplus fading; broadly neutral as federal aid winds down"
+    },
+    {
+      "state": "Georgia",
+      "abbreviation": "GA",
+      "populationM": 11.1,
+      "govParty": "R",
+      "legislature": "R",
+      "structuralBalanceB": 2.5,
+      "generalFundB": 32.0,
+      "balancePct": 7.8,
+      "keyFactor": "Constitutional budget caps; conservative appropriations; strong revenue growth"
+    },
+    {
+      "state": "Illinois",
+      "abbreviation": "IL",
+      "populationM": 12.7,
+      "govParty": "D",
+      "legislature": "D",
+      "structuralBalanceB": -5.0,
+      "generalFundB": 53.0,
+      "balancePct": -9.4,
+      "keyFactor": "Worst pension crisis in the nation; structural deficit for 20+ consecutive years"
+    },
+    {
+      "state": "Florida",
+      "abbreviation": "FL",
+      "populationM": 22.6,
+      "govParty": "R",
+      "legislature": "R",
+      "structuralBalanceB": 3.0,
+      "generalFundB": 39.0,
+      "balancePct": 7.7,
+      "keyFactor": "No state income tax; constitutional revenue cap; migration-driven growth"
+    }
+  ],
+  "transferableLessons": [
+    {
+      "title": "Constitutional spending cap",
+      "exampleStates": ["Texas", "Florida", "North Carolina", "Georgia"],
+      "description": "Limits how fast appropriations can grow — typically tied to population + inflation or personal income growth. Prevents the structural mismatch from compounding silently in years when revenue grows slower than spending. PA could adopt this by statute without a constitutional amendment."
+    },
+    {
+      "title": "Supermajority to access reserves",
+      "exampleStates": ["Texas"],
+      "description": "Texas requires a 2/3 legislative vote to withdraw from its rainy day fund. The high bar makes election-year drawdowns politically costly. PA currently requires only a simple majority, and the 'unexpected shortfall' language is contested — a supermajority rule would be the cleaner fix."
+    },
+    {
+      "title": "Formula-driven reserve deposits",
+      "exampleStates": ["Virginia", "California"],
+      "description": "Virginia's Revenue Stabilization Fund automatically deposits money when revenues spike above forecast and withdraws only when economic conditions deteriorate. Removes the political discretion that lets structural deficits accumulate quietly in good years."
+    }
+  ],
+  "surplusStates": [
+    "Florida", "Texas", "North Carolina", "Georgia", "Ohio", "Tennessee",
+    "South Carolina", "Utah", "Colorado", "Idaho", "Montana", "Wyoming",
+    "North Dakota", "South Dakota", "Nebraska", "Iowa", "Kansas",
+    "New Hampshire", "Indiana", "Missouri", "Oklahoma", "Arkansas",
+    "Mississippi", "Alabama", "Alaska"
+  ],
+  "deficitOrOneTimeBalancedStates": [
+    "Illinois", "California", "New York", "New Jersey", "Connecticut",
+    "Hawaii", "Massachusetts", "Minnesota", "Oregon", "Washington",
+    "New Mexico", "Rhode Island", "Delaware", "Kentucky", "Louisiana",
+    "Maryland", "Michigan", "Arizona", "Nevada", "Wisconsin", "West Virginia"
+  ]
+}
