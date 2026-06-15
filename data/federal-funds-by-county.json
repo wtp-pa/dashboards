@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-06-08",
+  "lastUpdated": "2026-06-15",
   "fiscalYear": "FY 2025 (federal)",
   "fiscalYearStart": "2024-10-01",
   "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238117437834,
+  "totalObligationsUSD": 238117851504,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -282,9 +282,9 @@
     {
       "fips": "42077",
       "name": "Lehigh County",
-      "totalObligationsUSD": 2489883902,
+      "totalObligationsUSD": 2489939357,
       "population": 374557,
-      "perCapitaUSD": 6647.54
+      "perCapitaUSD": 6647.69
     },
     {
       "fips": "42079",
@@ -345,9 +345,9 @@
     {
       "fips": "42095",
       "name": "Northampton County",
-      "totalObligationsUSD": 2237748284,
+      "totalObligationsUSD": 2237817434,
       "population": 312951,
-      "perCapitaUSD": 7150.47
+      "perCapitaUSD": 7150.7
     },
     {
       "fips": "42097",
@@ -450,9 +450,9 @@
     {
       "fips": "42125",
       "name": "Washington County",
-      "totalObligationsUSD": 1795213382,
+      "totalObligationsUSD": 1795502447,
       "population": 209349,
-      "perCapitaUSD": 8575.22
+      "perCapitaUSD": 8576.6
     },
     {
       "fips": "42127",

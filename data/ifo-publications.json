@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-06-08T10:25:49+00:00",
+  "lastUpdated": "2026-06-15T11:53:12+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
     {
+      "title": "Budget and Economic Update",
+      "date": "2026-06-11",
+      "url": "https://www.ifo.state.pa.us/releases/941/Budget-and-Economic-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PACA_June_2026_Final.pdf",
+      "summary": "Director Knittel provided a Budget and Economic Update to the Pennsylvania Aggregates and Concrete Association. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Medicaid Enrollment Contracts",
+      "date": "2026-06-11",
+      "url": "https://www.ifo.state.pa.us/releases/940/Medicaid-Enrollment-Contracts/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Medicaid_Enrollment_Contraction_BB_2026_06.pdf",
+      "summary": "This budget brief provides an update to Medical Assistance\u00a0(MA) enrollment and funding in\u00a0Pennsylvania. As of April 2026, 2.95 million residents were enrolled in MA programs, at a projected fiscal year (FY) 2025-26 cost of $53.9 billion in state and federal funds. MA enrollment d\u2026"
+    },
+    {
+      "title": "Impact Fee Update and Outlook",
+      "date": "2026-06-09",
+      "url": "https://www.ifo.state.pa.us/releases/939/Impact-Fee-Update-and-Outlook/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Impact_Fee_Update_and_Outlook_2026_06.pdf",
+      "summary": "This update examines 2025 impact fee collections and provides an outlook for 2026. Collections totaled $243.9 million for 2025, an increase of $79.3 million from 2024. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Labor Force Expands, but Fewer Migrants",
+      "date": "2026-06-08",
+      "url": "https://www.ifo.state.pa.us/releases/938/Labor-Force-Expands-but-Fewer-Migrants/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Migration_Impact_RB_2026_06.pdf",
+      "summary": "This\u00a0research brief examines the implications of migration trends since 2020 for the state working age population (age 18 to 64). Although that group has contracted for five consecutive years, the latest data show an expansion of the state labor force due to higher labor force pa\u2026"
+    },
+    {
       "title": "Natural Gas Production Report: 2026 Q1",
       "date": "2026-06-02",
       "url": "https://www.ifo.state.pa.us/releases/937/Natural-Gas-Production-Report-2026-Q1/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/NGPR_2026_Q1.pdf",
       "summary": "This document uses data from the Pennsylvania Department of Environmental Protection, the U.S. Energy Information Administration and Natural Gas Intelligence to provide a quarterly update on recent trends in production volume, well counts and average spot prices. ... (Full Report\u2026"
-    },
-    {
-      "title": "May 2026 Revenue Update",
-      "date": "2026-06-01",
-      "url": "https://www.ifo.state.pa.us/releases/936/May-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_05.pdf",
-      "summary": "The Commonwealth collected $3.31 billion in General Fund revenues for May, an increase of $73 million compared to May 2025. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "School District Property Tax Update",
-      "date": "2026-05-28",
-      "url": "https://www.ifo.state.pa.us/releases/935/School-District-Property-Tax-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/SD_Prop_Tax_Update_05_2026.pdf",
-      "summary": "The IFO released an updated school district property tax forecast. The report projects revenues and the Act 1 index through FY 2027-28 and provides an overview of recent trends in school district funding. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Summary and Analysis of Annual PSERS Stress Test Report",
-      "date": "2026-05-28",
-      "url": "https://www.ifo.state.pa.us/releases/934/Summary-and-Analysis-of-Annual-PSERS-Stress-Test-Report/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PSERS_Stress_Test_Impact_Analysis_2026.pdf",
-      "summary": "Pursuant to Act 128 of 2020, the IFO issued a report that summarizes results from the Public School Employees Retirement System\u2019s (PSERS) recent stress test report. Based on PSERS\u2019 baseline projections, the IFO projects that from FY 2026-27 to FY 2054-55, the Commonwealth will us\u2026"
-    },
-    {
-      "title": "Initial Revenue Estimate FY 2026-27",
-      "date": "2026-05-20",
-      "url": "https://www.ifo.state.pa.us/releases/933/Initial-Revenue-Estimate-FY-2026-27/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/FY2026-27_Initial_Revenue_Estimate_2026_05.pdf",
-      "summary": "The IFO released its initial revenue estimate for FY 2026-27. Click the hyperlink above to view the report and presentation . ... (Full Report) - opens in a new tab"
     }
   ]
 }
