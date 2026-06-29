@@ -1,11 +1,32 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-06-22T11:43:00+00:00",
+  "lastUpdated": "2026-06-29T10:46:20+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Strong Returns Reduce Member Rates",
+      "date": "2026-06-24",
+      "url": "https://www.ifo.state.pa.us/releases/945/Strong-Returns-Reduce-Member-Rates/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Strong_Returns_Reduce_Member_Rates_Pension_Brief_2026_06.pdf",
+      "summary": "The IFO published a new research brief that details potential savings from shared-gain provisions at the two state pension systems beginning in FY 2026-27 (SERS) and FY 2027-28 (PSERS). Using data from the most recent actuarial valuations and current market conditions, the brief \u2026"
+    },
+    {
+      "title": "Sports, Marketing, & Tourism Series: 2025 Major League Baseball Little League Classic",
+      "date": "2026-06-23",
+      "url": "https://www.ifo.state.pa.us/releases/944/Sports-Marketing-&-Tourism-Series-2025-Major-League-Baseball-Little-League-Classic/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/2026_06_Major_League_Baseball_Little_League_Classic_Impact_Analysis_SMAT.pdf",
+      "summary": "The IFO submitted an economic impact report for the Major League Baseball Little League Classic\u00a0in Lycoming County\u00a0(August 2025) to the General Assembly. The analysis finds that economic activity related to the event generated $2.6\u00a0million\u00a0in statewide spending and $181,000\u00a0in se\u2026"
+    },
+    {
+      "title": "Official Revenue Estimate FY 2026-27",
+      "date": "2026-06-22",
+      "url": "https://www.ifo.state.pa.us/releases/942/Official-Revenue-Estimate-FY-2026-27/",
+      "pdfUrl": "http://www.ifo.state.pa.us//Resources/Documents/Revenue_Estimate_Methodology_2026_06.pdf",
+      "summary": "The Independent Fiscal Office (IFO) released its official revenue estimate for FY 2026-27. Updated estimates for FY 2025-26 are included. Methodology ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Budget and Economic Update",
       "date": "2026-06-11",
@@ -19,27 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/940/Medicaid-Enrollment-Contracts/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Medicaid_Enrollment_Contraction_BB_2026_06.pdf",
       "summary": "This budget brief provides an update to Medical Assistance\u00a0(MA) enrollment and funding in\u00a0Pennsylvania. As of April 2026, 2.95 million residents were enrolled in MA programs, at a projected fiscal year (FY) 2025-26 cost of $53.9 billion in state and federal funds. MA enrollment d\u2026"
-    },
-    {
-      "title": "Impact Fee Update and Outlook",
-      "date": "2026-06-09",
-      "url": "https://www.ifo.state.pa.us/releases/939/Impact-Fee-Update-and-Outlook/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Impact_Fee_Update_and_Outlook_2026_06.pdf",
-      "summary": "This update examines 2025 impact fee collections and provides an outlook for 2026. Collections totaled $243.9 million for 2025, an increase of $79.3 million from 2024. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Labor Force Expands, but Fewer Migrants",
-      "date": "2026-06-08",
-      "url": "https://www.ifo.state.pa.us/releases/938/Labor-Force-Expands-but-Fewer-Migrants/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Migration_Impact_RB_2026_06.pdf",
-      "summary": "This\u00a0research brief examines the implications of migration trends since 2020 for the state working age population (age 18 to 64). Although that group has contracted for five consecutive years, the latest data show an expansion of the state labor force due to higher labor force pa\u2026"
-    },
-    {
-      "title": "Natural Gas Production Report: 2026 Q1",
-      "date": "2026-06-02",
-      "url": "https://www.ifo.state.pa.us/releases/937/Natural-Gas-Production-Report-2026-Q1/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/NGPR_2026_Q1.pdf",
-      "summary": "This document uses data from the Pennsylvania Department of Environmental Protection, the U.S. Energy Information Administration and Natural Gas Intelligence to provide a quarterly update on recent trends in production volume, well counts and average spot prices. ... (Full Report\u2026"
     }
   ]
 }
