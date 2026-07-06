@@ -1,11 +1,25 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-06-29T10:46:20+00:00",
+  "lastUpdated": "2026-07-06T10:05:54+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Gross Receipts Tax on Electricity Sales",
+      "date": "2026-07-01",
+      "url": "https://www.ifo.state.pa.us/releases/947/Gross-Receipts-Tax-on-Electricity-Sales/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/GRT_on_Electricity_Sales_RB_2026_07.pdf",
+      "summary": "The IFO released a research brief that examines revenues from the gross receipts tax levied on sales of electricity. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "June 2026 Revenue Update",
+      "date": "2026-07-01",
+      "url": "https://www.ifo.state.pa.us/releases/946/June-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_06.pdf",
+      "summary": "The Commonwealth collected\u00a0$48.93 billion in General Fund revenues for FY 2025-26, which was 5.4% (+$2.52 billion) higher than the prior year. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Strong Returns Reduce Member Rates",
       "date": "2026-06-24",
@@ -26,20 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/942/Official-Revenue-Estimate-FY-2026-27/",
       "pdfUrl": "http://www.ifo.state.pa.us//Resources/Documents/Revenue_Estimate_Methodology_2026_06.pdf",
       "summary": "The Independent Fiscal Office (IFO) released its official revenue estimate for FY 2026-27. Updated estimates for FY 2025-26 are included. Methodology ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Budget and Economic Update",
-      "date": "2026-06-11",
-      "url": "https://www.ifo.state.pa.us/releases/941/Budget-and-Economic-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PACA_June_2026_Final.pdf",
-      "summary": "Director Knittel provided a Budget and Economic Update to the Pennsylvania Aggregates and Concrete Association. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Medicaid Enrollment Contracts",
-      "date": "2026-06-11",
-      "url": "https://www.ifo.state.pa.us/releases/940/Medicaid-Enrollment-Contracts/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Medicaid_Enrollment_Contraction_BB_2026_06.pdf",
-      "summary": "This budget brief provides an update to Medical Assistance\u00a0(MA) enrollment and funding in\u00a0Pennsylvania. As of April 2026, 2.95 million residents were enrolled in MA programs, at a projected fiscal year (FY) 2025-26 cost of $53.9 billion in state and federal funds. MA enrollment d\u2026"
     }
   ]
 }
