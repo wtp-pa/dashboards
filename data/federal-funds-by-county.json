@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-07-13",
+  "lastUpdated": "2026-07-20",
   "fiscalYear": "FY 2025 (federal)",
   "fiscalYearStart": "2024-10-01",
   "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238119042441,
+  "totalObligationsUSD": 238117919354,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -58,9 +58,9 @@
     {
       "fips": "42013",
       "name": "Blair County",
-      "totalObligationsUSD": 1005868487,
+      "totalObligationsUSD": 1004744986,
       "population": 122822,
-      "perCapitaUSD": 8189.64
+      "perCapitaUSD": 8180.5
     },
     {
       "fips": "42015",
@@ -233,7 +233,7 @@
     {
       "fips": "42063",
       "name": "Indiana County",
-      "totalObligationsUSD": 599249448,
+      "totalObligationsUSD": 599249266,
       "population": 83246,
       "perCapitaUSD": 7198.54
     },
@@ -261,7 +261,7 @@
     {
       "fips": "42071",
       "name": "Lancaster County",
-      "totalObligationsUSD": 3722138415,
+      "totalObligationsUSD": 3722139011,
       "population": 552984,
       "perCapitaUSD": 6731.01
     },
