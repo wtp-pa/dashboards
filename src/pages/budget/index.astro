@@ -24,14 +24,14 @@ import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
 
 const currentFY = projections.projections.find((p) => p.fiscalYear === '2026-27');
-const annualDeficit = currentFY?.structuralDeficitUSD ?? 6_700_000_000;
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 5_030_000_000;
 
 const stat = (key: string) => keyStats.stats.find((s) => s.key === key);
 const familyShare = stat('deficitPerFamilyOf4USD');
 const rainyDayBalance = stat('rainyDayFundBalanceUSD');
 
 const baseFamilyShareUSD = typeof familyShare?.value === 'number' ? familyShare.value : 1500;
-const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 7_000_000_000;
+const rainyDayUSD = typeof rainyDayBalance?.value === 'number' ? rainyDayBalance.value : 8_000_000_000;
 
 const annualB = (annualDeficit / 1e9).toFixed(1);
 const gapB = ((spendingByCategory.totalUSD - revenueSources.totalUSD) / 1e9).toFixed(1);
@@ -174,7 +174,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <div class="mt-8 max-w-3xl rounded-lg border border-white/10 bg-surface/50 p-5">
           <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">Why this matters</div>
           <p class="mt-3 text-sm leading-relaxed text-wtp-cream/75">
-            A structural deficit isn't just a number — it's a recurring choice. The FY 2026–27 budget, signed <strong class="text-white">July 12, 2026</strong> — 12 days late, Pennsylvania's fifth straight late budget — chose not to touch the Rainy Day Fund Gov. Shapiro had proposed drawing down by $4.6B. Instead it closed the gap with one-time moves: roughly $1.7B swept from special funds and unspent agency accounts, over $4.5B in reclaimed lapsed appropriations, and $1.3B in delayed Medicaid managed-care payments. None of that repeats — Pennsylvania enters FY 2027–28 with fewer one-time levers left and the same underlying mismatch between spending and revenue. IFO's post-enactment estimate actually puts this year's structural deficit lower than expected — $5.0 billion, down from a pre-enactment projection of $6.7 billion — but that's an artifact of this year's one-time moves being counted in the number, not evidence the underlying mismatch shrank. It's still projected to reach $8.4 billion by FY 2029-30 if nothing changes. Pennsylvania's bond rating, which determines how much the state pays to borrow for roads, bridges, and schools, moves in direct response to this kind of fiscal pattern.
+            A structural deficit isn't just a number — it's a recurring choice. The FY 2026–27 budget, signed <strong class="text-white">July 12, 2026</strong> — 12 days late, Pennsylvania's fifth straight late budget — chose not to touch the Rainy Day Fund Gov. Shapiro had proposed drawing down by $4.6B. Instead it closed the gap with one-time moves: roughly $2.6B from delaying two months of DHS/Medicaid managed-care payments into the next fiscal year (a "double cycle roll"), plus $500M+ swept from special funds and unspent agency accounts. None of that repeats — Pennsylvania enters FY 2027–28 with fewer one-time levers left and the same underlying mismatch between spending and revenue. IFO's post-enactment estimate actually puts this year's structural deficit lower than expected — $5.0 billion, down from a pre-enactment projection of $5.56 billion — but that's an artifact of this year's one-time moves being counted in the number, not evidence the underlying mismatch shrank. It's still projected to reach $8.4 billion by FY 2029-30 if nothing changes. Pennsylvania's bond rating, which determines how much the state pays to borrow for roads, bridges, and schools, moves in direct response to this kind of fiscal pattern.
           </p>
         </div>
       </section>
@@ -185,7 +185,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <h2 class="mt-2 text-3xl font-extrabold md:text-4xl">The budget deadline</h2>
 
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
-          FY 2025–26 ended <strong class="text-white">June 30</strong>. The deficit clock above now tracks <strong class="text-white">FY 2026–27</strong>, which began July 1 carrying a projected <strong class="text-wtp-red">$6.7 billion</strong> structural gap under IFO's pre-enactment estimate — nearly double the year before. Gov. Shapiro's proposed budget would have bridged most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong>. The Republican-controlled Senate rejected that route, and the compromise that finally passed — signed <strong class="text-white">July 12, 2026</strong>, twelve days after the deadline — left the fund untouched entirely. IFO's post-enactment estimate has since put the gap at $5.0 billion — not because it's fixed, but because this year's one-time moves are now baked into the number.
+          FY 2025–26 ended <strong class="text-white">June 30</strong>. The deficit clock above now tracks <strong class="text-white">FY 2026–27</strong>, which began July 1 carrying a projected <strong class="text-wtp-red">$5.56 billion</strong> structural gap under IFO's pre-enactment estimate — up roughly 40% from the year before. Gov. Shapiro's proposed budget would have bridged most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong>. The Republican-controlled Senate rejected that route, and the compromise that finally passed — signed <strong class="text-white">July 12, 2026</strong>, twelve days after the deadline — left the fund untouched entirely. IFO's post-enactment estimate has since put the gap at $5.0 billion — not because it's fixed, but because this year's one-time moves are now baked into the number.
         </p>
 
         <!-- What happens if June 30 passes -->

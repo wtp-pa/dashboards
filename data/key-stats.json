@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-07-18",
+  "lastUpdated": "2026-07-20",
   "stats": [
     {
       "key": "spendingGrowthSince2018",
@@ -32,12 +32,6 @@
       "value": 8000000000,
       "label": "Rainy Day Fund balance",
       "source": "PA Treasury"
-    },
-    {
-      "key": "generalFundDepletionFY",
-      "value": "2025-26",
-      "label": "Projected General Fund balance depletion (fiscal year)",
-      "source": "PA IFO"
     },
     {
       "key": "deficitPerFamilyOf4USD",
