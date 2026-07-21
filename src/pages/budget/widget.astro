@@ -4,8 +4,8 @@ import projections from '../../../data/projections.json';
 import DeficitClock from '../../components/DeficitClock';
 import '../../styles/global.css';
 
-const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
-const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
+const currentFY = projections.projections.find((p) => p.fiscalYear === '2026-27');
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 6_700_000_000;
 ---
 
 <html lang="en">
@@ -26,14 +26,14 @@ const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
       <div class="flex items-center gap-3">
         <img src={config.brand.logoPath} alt="" class="h-8 w-auto" />
         <div class="text-[11px] uppercase tracking-[0.18em] text-wtp-sky">
-          PA Structural Deficit · FY 2025-26
+          PA Structural Deficit · FY 2026-27
         </div>
       </div>
 
       <div class="mt-3">
         <DeficitClock
           client:load
-          fiscalYear="2025-26"
+          fiscalYear="2026-27"
           annualDeficitUSD={annualDeficit}
           compact
         />

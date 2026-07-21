@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-04-26",
+  "lastUpdated": "2026-07-20",
   "fiscalYear": "2025-26",
-  "totalUSD": 45300000000,
+  "totalUSD": 48930000000,
   "source": {
     "primary": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/",
-    "notes": "FY 2025-26 General Fund net revenue. Breakdown approximated from IFO Monthly Revenue Update categories and FY 2024-25 actuals (proportions are highly stable year over year). Verify exact dollars against latest IFO publication before any public launch."
+    "notes": "FY 2025-26 General Fund net revenue — actual close-out total ($48.93B, 5.4% / $2.52B above FY 2024-25) from IFO's June 2026 Revenue Update. Per-category split is proportionally scaled from the prior approximated mix (original proportions carried forward; exact category-level actuals not yet sourced). Verify exact per-category dollars against IFO's detailed FY 2025-26 close-out before any public launch."
   },
   "sources": [
     {
       "key": "personalIncomeTax",
       "label": "Personal Income Tax",
-      "amountUSD": 18500000000,
+      "amountUSD": 19980000000,
       "shortDescription": "PA's flat 3.07% tax on wages and most income — paid by working Pennsylvanians and retirees with taxable income"
     },
     {
       "key": "salesAndUseTax",
       "label": "Sales and Use Tax",
-      "amountUSD": 13500000000,
+      "amountUSD": 14580000000,
       "shortDescription": "6% on most retail purchases (with exemptions for groceries, clothing, and prescriptions)"
     },
     {
       "key": "corporateNetIncomeTax",
       "label": "Corporate Net Income Tax",
-      "amountUSD": 4000000000,
+      "amountUSD": 4320000000,
       "shortDescription": "Tax on corporate profits — rate is being phased down to 4.99% by 2031"
     },
     {
       "key": "otherTaxes",
       "label": "Other Taxes",
-      "amountUSD": 5800000000,
+      "amountUSD": 6270000000,
       "shortDescription": "Cigarette, liquor, gross receipts, inheritance, realty transfer, and other tax revenues"
     },
     {
       "key": "nonTaxRevenue",
       "label": "Non-Tax Revenue",
-      "amountUSD": 3500000000,
+      "amountUSD": 3780000000,
       "shortDescription": "Licenses, fees, fines, and treasury earnings that enter the General Fund. Most PA non-tax revenue isn't here — gas tax, lottery, and dozens of dedicated fees feed restricted funds outside the General Fund.",
       "methodologyHref": "/budget/about#restricted-funds"
     }

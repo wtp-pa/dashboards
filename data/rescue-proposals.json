@@ -1,6 +1,6 @@
 {
-  "$comment": "Best-effort revenue estimates from PA budget office, IFO analyses, and prior gubernatorial proposals. All numbers are mid-range; treat as informative, not precise. Real revenue depends on tax rate, implementation, ramp-up, and economic conditions. Sources cited per row. Deficit updated to FY 2026-27 IFO projection.",
-  "annualDeficitUSD": 6700000000,
+  "$comment": "Best-effort revenue estimates from PA budget office, IFO analyses, and prior gubernatorial proposals. All numbers are mid-range; treat as informative, not precise. Real revenue depends on tax rate, implementation, ramp-up, and economic conditions. Sources cited per row. Deficit updated to IFO's post-enactment FY 2026-27 General Fund Budget Update (July 2026), via Commonwealth Foundation.",
+  "annualDeficitUSD": 5030000000,
   "proposals": [
     {
       "id": "cannabis",

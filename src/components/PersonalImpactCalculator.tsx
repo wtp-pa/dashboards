@@ -10,24 +10,24 @@ interface Props {
 const HOUSEHOLD_OPTIONS = [1, 2, 3, 4, 5, 6] as const;
 const YEAR_OPTIONS = [1, 5, 10, 20] as const;
 
-// IFO projections anchor the deficit growth curve.
-// Beyond FY 2029-30 we extrapolate at the FY 26-27 → 29-30 slope (~$0.5B/year).
+// IFO projections anchor the deficit growth curve. Year 1 = FY 2026-27, the current fiscal year.
+// Y1 is IFO's post-enactment estimate (General Fund Budget Update, July 2026); Y4 is the older
+// pre-enactment Five-Year Outlook figure, not yet revised. Beyond FY 2029-30 we extrapolate at
+// the Y1 → Y4 slope.
 function projectedAnnualDeficitUSD(year: number): number {
-  const Y1 = 3.9e9;   // FY 2025-26
-  const Y2 = 6.7e9;   // FY 2026-27
-  const Y5 = 8.4e9;   // FY 2029-30
+  const Y1 = 5.03e9;   // FY 2026-27 (current, post-enactment)
+  const Y4 = 8.4e9;    // FY 2029-30 (pre-enactment vintage)
   if (year <= 1) return Y1;
-  if (year <= 2) return Y2;
-  if (year <= 5) {
-    const t = (year - 2) / 3;
-    return Y2 + t * (Y5 - Y2);
+  if (year <= 4) {
+    const t = (year - 1) / 3;
+    return Y1 + t * (Y4 - Y1);
   }
-  return Y5 + (year - 5) * 0.5e9;
+  return Y4 + (year - 4) * 0.5e9;
 }
 
 function cumulativeFamilyShare(years: number, baseShareYear1: number): number {
   let total = 0;
-  const baseDeficit = 3.9e9;
+  const baseDeficit = 5.03e9;
   for (let y = 1; y <= years; y++) {
     total += baseShareYear1 * (projectedAnnualDeficitUSD(y) / baseDeficit);
   }
@@ -103,8 +103,8 @@ export default function PersonalImpactCalculator({
         </div>
         <div className="mt-3 text-xs text-wtp-cream/50">
           {years === 1
-            ? "This year, based on IFO's $1,500-per-family-of-4 figure scaled by household size."
-            : `Cumulative over ${years} years using IFO projections ($3.9B today → $6.7B FY 26-27 → $8.4B FY 29-30, then extrapolated).`}
+            ? "Based on IFO's $1,500-per-family-of-4 figure (its most recent published estimate, FY 2025-26) scaled by household size."
+            : `Cumulative over ${years} years using IFO projections ($5.03B this year → $8.4B FY 29-30, then extrapolated).`}
         </div>
       </div>
 

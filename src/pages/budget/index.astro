@@ -23,8 +23,8 @@ import DashboardNav from '../../components/shared/DashboardNav.astro';
 import SupportTipCTA from '../../components/shared/SupportTipCTA.astro';
 import '../../styles/global.css';
 
-const currentFY = projections.projections.find((p) => p.fiscalYear === '2025-26');
-const annualDeficit = currentFY?.structuralDeficitUSD ?? 3_900_000_000;
+const currentFY = projections.projections.find((p) => p.fiscalYear === '2026-27');
+const annualDeficit = currentFY?.structuralDeficitUSD ?? 6_700_000_000;
 
 const stat = (key: string) => keyStats.stats.find((s) => s.key === key);
 const familyShare = stat('deficitPerFamilyOf4USD');
@@ -99,13 +99,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <div class="mt-8">
           <DeficitClock
             client:load
-            fiscalYear="2025-26"
+            fiscalYear="2026-27"
             annualDeficitUSD={annualDeficit}
           />
         </div>
         <p class="mt-4 text-center text-xs text-wtp-cream/45">
-          Tracking FY 2025–26 — the current fiscal year, which ends <strong class="text-wtp-cream/70">June 30</strong>.
-          The FY 2026–27 budget starts July 1 and is being negotiated right now.
+          Tracking FY 2026–27 — the current fiscal year, which began <strong class="text-wtp-cream/70">July 1</strong>. The budget for this year was signed July 12, 2026, but the structural deficit it's projected to run — $5.0 billion, per IFO's post-enactment estimate — wasn't fixed, only financed for one year.
         </p>
         <p class="mt-3 text-center text-sm">
           <a href="/budget/about" class="text-wtp-sky/80 no-underline hover:text-wtp-sky">About this dashboard →</a>
@@ -137,11 +136,11 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         </div>
 
         <p class="mt-4 max-w-3xl text-xs italic leading-relaxed text-wtp-cream/50">
-          PA also collects many billions in dedicated fees and earmarked taxes — gas tax, lottery, and dozens of others — that flow to restricted funds outside the General Fund and never appear in "Where the money comes from." <a href="/budget/about#restricted-funds" class="text-wtp-sky no-underline hover:underline">Methodology →</a>
+          PA also collects many billions in dedicated fees and earmarked taxes — gas tax, lottery, and dozens of others — that flow to restricted funds outside the General Fund and never appear in "Where the money comes from." These breakdowns are FY 2025-26's actual enacted totals — the most recent full category-by-category detail the state has published. FY 2026-27's detailed breakdown isn't out yet. <a href="/budget/about#restricted-funds" class="text-wtp-sky no-underline hover:underline">Methodology →</a>
         </p>
 
         <p class="mt-10 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
-          The <strong class="text-wtp-red">~${gapB} billion gap</strong> between what comes in and what goes out is the structural deficit ticking above. It's projected to grow to <strong class="text-white">$6.7 billion</strong> next year and <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes.
+          That produced a <strong class="text-wtp-red">~${gapB} billion gap</strong> in FY 2025-26 — revenue came in well above what the enacted budget assumed. The clock above tracks the current year, FY 2026-27, where IFO's post-enactment estimate puts the <strong class="text-white">structural deficit at $5.0 billion</strong>, projected to reach <strong class="text-white">$8.4 billion</strong> by FY 2029-30 if nothing changes. These aren't the same measurement: the gap above is simple revenue-minus-spending for one year; the structural deficit strips out one-time swings to isolate the part of the mismatch that recurs.
         </p>
 
         <!-- Property tax flipper -->
@@ -175,18 +174,18 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
         <div class="mt-8 max-w-3xl rounded-lg border border-white/10 bg-surface/50 p-5">
           <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">Why this matters</div>
           <p class="mt-3 text-sm leading-relaxed text-wtp-cream/75">
-            A structural deficit isn't just a number — it's a recurring choice. Every year the gap goes unfilled, the state either drains its savings, delays payments to school districts and healthcare providers, or kicks harder decisions to the next governor. Pennsylvania rebuilt the Rainy Day Fund over nearly a decade. On the current proposal, two-thirds of it gets spent in one budget. Once that cushion is gone — the IFO projects the fund depleted by mid-2027 on the current trajectory — the only options left are abrupt service cuts or significant tax increases. Pennsylvania's bond rating, which determines how much the state pays to borrow for roads, bridges, and schools, moves in direct response to this kind of fiscal pattern.
+            A structural deficit isn't just a number — it's a recurring choice. The FY 2026–27 budget, signed <strong class="text-white">July 12, 2026</strong> — 12 days late, Pennsylvania's fifth straight late budget — chose not to touch the Rainy Day Fund Gov. Shapiro had proposed drawing down by $4.6B. Instead it closed the gap with one-time moves: roughly $1.7B swept from special funds and unspent agency accounts, over $4.5B in reclaimed lapsed appropriations, and $1.3B in delayed Medicaid managed-care payments. None of that repeats — Pennsylvania enters FY 2027–28 with fewer one-time levers left and the same underlying mismatch between spending and revenue. IFO's post-enactment estimate actually puts this year's structural deficit lower than expected — $5.0 billion, down from a pre-enactment projection of $6.7 billion — but that's an artifact of this year's one-time moves being counted in the number, not evidence the underlying mismatch shrank. It's still projected to reach $8.4 billion by FY 2029-30 if nothing changes. Pennsylvania's bond rating, which determines how much the state pays to borrow for roads, bridges, and schools, moves in direct response to this kind of fiscal pattern.
           </p>
         </div>
       </section>
 
       <!-- ── ACT 3: THE BUDGET DEADLINE ── -->
       <section class="mt-20" id="budget-deadline">
-        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">Right now</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-wtp-sky">What happened</p>
         <h2 class="mt-2 text-3xl font-extrabold md:text-4xl">The budget deadline</h2>
 
         <p class="mt-6 max-w-3xl text-base leading-relaxed text-wtp-cream/80">
-          The deficit clock above tracks <strong class="text-white">FY 2025–26</strong> — the current fiscal year ending <strong class="text-white">June 30</strong>. The bigger fight is over <strong class="text-white">FY 2026–27</strong>, which starts July 1 and carries a projected <strong class="text-wtp-red">$6.7 billion</strong> structural gap — nearly double this year's. Gov. Shapiro's proposed budget bridges most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong>, which buys a year but leaves the underlying spending-versus-revenue mismatch intact.
+          The deficit clock above tracks <strong class="text-white">FY 2025–26</strong> — the fiscal year that just ended <strong class="text-white">June 30</strong>. The bigger fight was over <strong class="text-white">FY 2026–27</strong>, which began July 1 carrying a projected <strong class="text-wtp-red">$6.7 billion</strong> structural gap — nearly double the year before. Gov. Shapiro's proposed budget would have bridged most of it with a <strong class="text-white">$4.6B one-time Rainy Day Fund drawdown</strong>. The Republican-controlled Senate rejected that route, and the compromise that finally passed — signed <strong class="text-white">July 12, 2026</strong>, twelve days after the deadline — left the fund untouched entirely. IFO's post-enactment estimate has since put the gap at $5.0 billion, not because it's fixed, but because this year's one-time moves are now baked into the number.
         </p>
 
         <!-- What happens if June 30 passes -->
@@ -198,19 +197,19 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
             </div>
           </summary>
           <div class="border-t border-white/10 px-5 pb-4 pt-3 text-sm leading-relaxed text-wtp-cream/75">
-            PA law requires a balanced budget signed by June 30. If the deadline passes unsigned, the state doesn't shut down entirely — courts have ruled that essential services and employee pay continue — but school districts, hospitals, and nonprofits that depend on state reimbursements stop getting paid. Smaller districts and nonprofits burn through cash reserves waiting; some take emergency loans. In FY 2024–25, the budget wasn't signed until <strong class="text-white">November 2025</strong> — 130 days late.
+            PA law requires a balanced budget signed by June 30. If the deadline passes unsigned, the state doesn't shut down entirely — courts have ruled that essential services and employee pay continue — but school districts, hospitals, and nonprofits that depend on state reimbursements stop getting paid. Smaller districts and nonprofits burn through cash reserves waiting; some take emergency loans. In FY 2024–25, the budget wasn't signed until <strong class="text-white">November 2025</strong> — 130 days late. This year was different: the FY 2026–27 budget was only 12 days late, short enough that most districts and nonprofits never felt it.
           </div>
         </details>
 
         <!-- Current status alert -->
-        <div class="mt-6 max-w-3xl rounded-lg border border-wtp-red/30 bg-wtp-red/5 px-5 py-4">
+        <div class="mt-6 max-w-3xl rounded-lg border border-wtp-gold/30 bg-wtp-gold/5 px-5 py-4">
           <div class="flex items-start gap-3">
-            <span class="mt-0.5 flex-shrink-0 text-wtp-red" aria-hidden="true">
+            <span class="mt-0.5 flex-shrink-0 text-wtp-gold" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </span>
             <div class="text-sm leading-relaxed text-wtp-cream/80">
-              <strong class="text-white">FY 2026–27 budget: not yet enacted.</strong>
-              As of June 2026, the House has passed a spending bill but the Republican-controlled Senate has not agreed — largely over spending levels and the skill games/cannabis revenue proposals. The new fiscal year begins July 1.
+              <strong class="text-white">FY 2026–27 budget: enacted July 12, 2026.</strong>
+              The $50.8B deal blocks tax increases and leaves the Rainy Day Fund untouched, closing the gap instead with one-time moves — agency and special-fund sweeps, reclaimed lapsed appropriations, and delayed Medicaid payments. It leaves skill-games regulation unresolved: the PA Supreme Court has ruled the machines are unlicensed slot machines, and lawmakers have until October to act before they become illegal.
             </div>
           </div>
         </div>
@@ -220,20 +219,20 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           <div class="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-cream/50">The political calendar</div>
           <div class="mt-3 grid gap-3 sm:grid-cols-3 text-sm">
             <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
-              <div class="text-xs uppercase tracking-wider text-wtp-sky">Now – June 30</div>
-              <div class="mt-1 text-wtp-cream/80">Budget negotiations. $4.6B Rainy Day drawdown proposed to balance the books for FY 2026–27.</div>
+              <div class="text-xs uppercase tracking-wider text-wtp-sky">June 30 – July 12</div>
+              <div class="mt-1 text-wtp-cream/80">Deadline passes with no deal. Budget signed 12 days later — $50.8B, no tax hikes, Rainy Day Fund untouched.</div>
             </div>
             <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
-              <div class="text-xs uppercase tracking-wider text-wtp-gold">November 2026</div>
-              <div class="mt-1 text-wtp-cream/80">Gubernatorial election. No tax increases. No significant service cuts. The fund covers the gap.</div>
+              <div class="text-xs uppercase tracking-wider text-wtp-gold">October 2026</div>
+              <div class="mt-1 text-wtp-cream/80">Skill games deadline. Left out of the budget entirely — lawmakers must regulate the machines or the state Supreme Court's ruling makes them illegal.</div>
             </div>
             <div class="rounded-md border border-white/10 bg-surface px-4 py-3">
               <div class="text-xs uppercase tracking-wider text-wtp-red">January 2027</div>
-              <div class="mt-1 text-wtp-cream/80">New governor takes office. ~$2.1B left in reserves. Structural deficit intact and growing.</div>
+              <div class="mt-1 text-wtp-cream/80">New governor takes office after the November 2026 election. Rainy Day Fund intact at ~$8B, but this year's one-time fixes are spent — the structural deficit is unresolved.</div>
             </div>
           </div>
           <p class="mt-3 text-xs leading-relaxed text-wtp-cream/45">
-            Using reserves to avoid hard choices in an election year is documented across both parties in multiple states. What makes this case notable is the scale — $4.6B of a $6.78B fund — and that the underlying deficit was entirely foreseeable, not the result of a shock.
+            Avoiding hard choices in an election year is documented across both parties in multiple states. This year's version didn't touch the marquee reserve — it swept smaller funds and delayed payments instead. Same effect, different mechanism: a one-time patch that doesn't recur, leaving the underlying mismatch for whoever holds office in 2027.
           </p>
         </div>
       </section>
@@ -301,11 +300,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
           />
         </div>
         <div class="space-y-4">
-          <RainyDayCountdown
-            client:visible
-            depletionDateISO="2027-06-30"
-            rainyDayBalanceUSD={rainyDayUSD}
-          />
+          <RainyDayCountdown rainyDayBalanceUSD={rainyDayUSD} />
           <p class="text-center text-xs text-wtp-cream/40">
             <a href="/budget/about#rainy-day" class="text-wtp-sky/70 no-underline hover:text-wtp-sky">Rainy Day Fund: law, history &amp; state comparisons →</a>
           </p>

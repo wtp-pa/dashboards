@@ -7,7 +7,7 @@
     "primary": "Pennsylvania Enacted Budget FY 2025-26",
     "secondary": "PA Office of the Budget",
     "url": "https://www.budget.pa.gov/",
-    "notes": "Approximated from FY 2025-26 enacted budget summary categories. Department-level dollar amounts vary year over year; proportions are stable. Verify exact dollars against the official Enacted Budget line-item book before any public launch."
+    "notes": "Approximated from FY 2025-26 enacted budget summary categories. This is the enacted appropriation, not confirmed year-end actual spending (unlike revenue-sources.json, which now reflects IFO's actual close-out). Department-level dollar amounts vary year over year; proportions are stable. Verify exact dollars against the official Enacted Budget line-item book before any public launch."
   },
   "categories": [
     {

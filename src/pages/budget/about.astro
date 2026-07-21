@@ -85,7 +85,7 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
                 Pennsylvania's General Fund — the state's main operating budget — is on track to spend roughly <strong class="text-white">$50 billion</strong> this fiscal year while collecting about <strong class="text-white">$45 billion</strong> in revenue. The gap between the two is the operating deficit; the portion that's <em>permanent and recurring</em> rather than papered over with one-time funds is what economists call the <strong class="text-white">structural deficit</strong>.
               </p>
               <p class="mt-3">
-                The PA Independent Fiscal Office (IFO) currently puts that figure at <strong class="text-wtp-red">$3.9 billion</strong> for FY 2025-26, projected to grow to $6.7 billion next year and $8.4 billion by FY 2029-30 if nothing changes. The key word is <em>structural</em>: it persists even in good economic years because spending is growing at ~5%/yr while revenue grows at ~2%/yr — a mismatch that compounds annually.
+The PA Independent Fiscal Office (IFO) currently puts that figure at <strong class="text-wtp-red">$5.0 billion</strong> for FY 2026-27 — revised down from a pre-enactment estimate of $6.7 billion after the enacted budget's one-time moves were factored in, and up from $3.9 billion the year before — and projects it growing to $8.4 billion by FY 2029-30 if nothing changes. The FY 2026-27 budget financed the gap for one year with one-time accounting moves rather than closing it; the lower number reflects that financing, not a smaller underlying mismatch. The key word is <em>structural</em>: it persists even in good economic years because spending is growing at ~5%/yr while revenue grows at ~2%/yr — a mismatch that compounds annually.
               </p>
             </div>
           </details>
@@ -152,7 +152,7 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
                   </div>
                   <div class="flex gap-4">
                     <span class="w-20 flex-shrink-0 font-mono text-xs text-wtp-cream/35">2026–27</span>
-                    <span class="text-wtp-red/80">Shapiro proposes withdrawing $4.6B — leaving ~$2.1B, roughly the 2013 balance, against a deficit that keeps growing.</span>
+                    <span>Shapiro proposes withdrawing $4.6B; the Senate rejects it. The enacted budget, signed July 12, 2026, leaves the fund untouched at ~$8B — closing the gap instead with one-time fund sweeps and delayed payments.</span>
                   </div>
                 </div>
               </div>
@@ -161,7 +161,9 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
                 <div class="text-xs font-semibold uppercase tracking-[0.15em] text-wtp-cream/45">How other states protect their reserves</div>
                 <p class="mt-2 text-sm leading-relaxed text-wtp-cream/70">
                   PA currently covers ~53.6 days of General Fund operations from its reserve — above the 50-state median
-                  of 49.1 days. After a $4.6B drawdown, that falls to roughly <strong class="text-white">15 days</strong>.
+                  of 49.1 days. The FY 2026–27 budget didn't test this: lawmakers left the reserve untouched and used
+                  one-time fund sweeps and delayed payments instead, so the ratio holds for now. Had Shapiro's proposed
+                  $4.6B drawdown gone through, it would have fallen to roughly <strong class="text-white">15 days</strong>.
                 </p>
                 <div class="mt-4 overflow-x-auto">
                   <table class="w-full text-sm">
@@ -779,13 +781,13 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
                 <div>
                   <dt class="text-sm font-semibold text-white">Live deficit ticker</dt>
                   <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
-                    Calculated from IFO's $3.9B annual structural deficit projection, ticked up second by second based on fraction of the fiscal year elapsed (PA fiscal year runs July 1 – June 30). The number is "deficit accrued so far this fiscal year." Source: <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">PA IFO</a>.
+                    Calculated from IFO's $5.03B FY 2026-27 structural deficit projection (post-enactment General Fund Budget Update, July 2026), ticked up second by second based on fraction of the fiscal year elapsed (PA fiscal year runs July 1 – June 30). The number is "deficit accrued so far this fiscal year." Source: <a href="https://www.ifo.state.pa.us/" class="text-wtp-sky underline" target="_blank" rel="noopener">PA IFO</a>.
                   </dd>
                 </div>
                 <div>
                   <dt class="text-sm font-semibold text-white">Revenue and spending breakdowns</dt>
                   <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
-                    FY 2025-26 General Fund totals (~$45B revenue, ~$50B spending) from PA IFO Monthly Revenue Update categories and the FY 2025-26 Enacted Budget published by the Office of the Budget. Per-category splits are approximate; dollar totals reconcile with IFO figures.
+                    FY 2025-26 General Fund totals (~$45B revenue, ~$50B spending) from PA IFO Monthly Revenue Update categories and the FY 2025-26 Enacted Budget published by the Office of the Budget — the most recent year with a published category-by-category breakdown. Per-category splits are approximate; dollar totals reconcile with IFO figures. Will update to FY 2026-27 once the Office of the Budget publishes its detailed breakdown.
                   </dd>
                 </div>
                 <div>
@@ -803,13 +805,13 @@ const chevron = `<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><pa
                 <div>
                   <dt class="text-sm font-semibold text-white">Personal impact calculator</dt>
                   <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
-                    Anchored on IFO's own "$1,500 per family of 4" figure for closing the FY 2025-26 deficit. We scale per capita by household size, then sum projected annual shares using IFO's growth curve ($3.9B → $6.7B → $8.4B), extrapolated linearly beyond FY 2029-30.
+                    Anchored on IFO's own "$1,500 per family of 4" figure — its most recent published estimate, calculated for FY 2025-26 — and applied to the current FY 2026-27 baseline. We scale per capita by household size, then sum projected annual shares using IFO's growth curve ($5.03B this year, post-enactment → $8.4B FY 2029-30, pre-enactment vintage), extrapolated linearly beyond that.
                   </dd>
                 </div>
                 <div>
-                  <dt class="text-sm font-semibold text-white">Rainy Day Fund countdown</dt>
+                  <dt class="text-sm font-semibold text-white">Rainy Day Fund status</dt>
                   <dd class="mt-1 text-sm leading-relaxed text-wtp-cream/65">
-                    Counts down to the IFO-projected depletion window (FY 2026-27) based on the current ~$7B balance and the proposed $4.6B drawdown rate.
+                    Shows the current balance (~$8B, PA Treasury) and whether it was tapped in the enacted budget. Previously a countdown to a projected depletion date based on Gov. Shapiro's proposed $4.6B drawdown — retired after the enacted FY 2026-27 budget left the fund untouched. Will return to a countdown if the IFO publishes an updated depletion projection.
                   </dd>
                 </div>
                 <div>
