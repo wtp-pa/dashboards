@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-07-20",
+  "lastUpdated": "2026-07-27",
   "fiscalYear": "FY 2025 (federal)",
   "fiscalYearStart": "2024-10-01",
   "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238117919354,
+  "totalObligationsUSD": 238104996890,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -72,16 +72,16 @@
     {
       "fips": "42017",
       "name": "Bucks County",
-      "totalObligationsUSD": 5063909749,
+      "totalObligationsUSD": 5063939309,
       "population": 646538,
-      "perCapitaUSD": 7832.35
+      "perCapitaUSD": 7832.39
     },
     {
       "fips": "42019",
       "name": "Butler County",
-      "totalObligationsUSD": 1651596875,
+      "totalObligationsUSD": 1651615669,
       "population": 193763,
-      "perCapitaUSD": 8523.8
+      "perCapitaUSD": 8523.9
     },
     {
       "fips": "42021",
@@ -331,9 +331,9 @@
     {
       "fips": "42091",
       "name": "Montgomery County",
-      "totalObligationsUSD": 13874905302,
+      "totalObligationsUSD": 13861905329,
       "population": 856553,
-      "perCapitaUSD": 16198.54
+      "perCapitaUSD": 16183.36
     },
     {
       "fips": "42093",
@@ -478,9 +478,9 @@
     {
       "fips": "42133",
       "name": "York County",
-      "totalObligationsUSD": 6110725600,
+      "totalObligationsUSD": 6110754755,
       "population": 456438,
-      "perCapitaUSD": 13387.85
+      "perCapitaUSD": 13387.92
     }
   ]
 }
