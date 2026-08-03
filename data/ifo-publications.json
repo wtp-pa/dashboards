@@ -1,11 +1,18 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-07-27T09:38:44+00:00",
+  "lastUpdated": "2026-08-03T09:31:48+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Pennsylvania Electricity Update",
+      "date": "2026-07-27",
+      "url": "https://www.ifo.state.pa.us/releases/952/Pennsylvania-Electricity-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PA_Electricity_Update_RB_2026_07.pdf",
+      "summary": "This research brief discusses recent increases in electricity prices for Pennsylvania residential consumers. The average price to compare for residential customers increased by 15% for the year (through November 2026), compared to 2025. Recent increases were largely driven by hig\u2026"
+    },
     {
       "title": "General Fund Budget Update",
       "date": "2026-07-14",
@@ -33,13 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/947/Gross-Receipts-Tax-on-Electricity-Sales/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/GRT_on_Electricity_Sales_RB_2026_07.pdf",
       "summary": "The IFO released a research brief that examines revenues from the gross receipts tax levied on sales of electricity. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "June 2026 Revenue Update",
-      "date": "2026-07-01",
-      "url": "https://www.ifo.state.pa.us/releases/946/June-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_06.pdf",
-      "summary": "The Commonwealth collected\u00a0$48.93 billion in General Fund revenues for FY 2025-26, which was 5.4% (+$2.52 billion) higher than the prior year. ... (Full Report) - opens in a new tab"
     }
   ]
 }
