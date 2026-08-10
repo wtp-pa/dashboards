@@ -1,11 +1,18 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-08-03T09:31:48+00:00",
+  "lastUpdated": "2026-08-10T07:19:00+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "July 2026 Revenue Update",
+      "date": "2026-08-03",
+      "url": "https://www.ifo.state.pa.us/releases/953/July-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_071.pdf",
+      "summary": "The Commonwealth collected $3.36 billion in General Fund revenues for July, an increase of $322 million compared to July 2025. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Pennsylvania Electricity Update",
       "date": "2026-07-27",
@@ -33,13 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/948/Pennie-Enrollees-Down-8-as-Subsidies-Expire/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Pennie_Enrollment_RB_2026_07.pdf",
       "summary": "The IFO released a budget brief on trends in effectuated enrollments for the Pennsylvania healthcare exchange (Pennie). ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Gross Receipts Tax on Electricity Sales",
-      "date": "2026-07-01",
-      "url": "https://www.ifo.state.pa.us/releases/947/Gross-Receipts-Tax-on-Electricity-Sales/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/GRT_on_Electricity_Sales_RB_2026_07.pdf",
-      "summary": "The IFO released a research brief that examines revenues from the gross receipts tax levied on sales of electricity. ... (Full Report) - opens in a new tab"
     }
   ]
 }
