@@ -1,11 +1,25 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-08-10T07:19:00+00:00",
+  "lastUpdated": "2026-08-17T06:40:49+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Act 21 of 2026 COLA Analysis",
+      "date": "2026-08-14",
+      "url": "https://www.ifo.state.pa.us/releases/955/Act-21-of-2026-COLA-Analysis/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Act_21_Pension_Analysis_2026_08.pdf",
+      "summary": "The IFO published an actuarial analysis of provisions in Act 21 of 2026 that provide ad hoc cost-of-living adjustments (COLAs) to certain members of SERS, PSERS and municipal system retirees who served as police officers or firefighters. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "SNAP Update: Payment Error Rate Declines",
+      "date": "2026-08-12",
+      "url": "https://www.ifo.state.pa.us/releases/954/SNAP-Update-Payment-Error-Rate-Declines/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/BB_SNAP_Payment_Error_Rate_08_2026.pdf",
+      "summary": "The IFO published a budget brief using the latest SNAP data from June 2026. Enrollment has reverted to pre-Covid levels after a 14% contraction from the June 2024 peak. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "July 2026 Revenue Update",
       "date": "2026-08-03",
@@ -26,20 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/951/General-Fund-Budget-Update/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/General_Fund_Budget_Update_BB_2026_07.pdf",
       "summary": "This budget brief updates the General Fund financial statement for the FY 2026-27 enacted budget. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Revenue Estimate Performance",
-      "date": "2026-07-10",
-      "url": "https://www.ifo.state.pa.us/releases/950/Revenue-Estimate-Performance/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Revenue_Estimate_Performance_2026_07.pdf",
-      "summary": "This report examines the historical performance of IFO revenue estimates. For FY 2025-26, actual collections exceeded IFO projections by 2.1%, or $1.0 billion. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Pennie Enrollees Down 8% as Subsidies Expire",
-      "date": "2026-07-06",
-      "url": "https://www.ifo.state.pa.us/releases/948/Pennie-Enrollees-Down-8-as-Subsidies-Expire/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Pennie_Enrollment_RB_2026_07.pdf",
-      "summary": "The IFO released a budget brief on trends in effectuated enrollments for the Pennsylvania healthcare exchange (Pennie). ... (Full Report) - opens in a new tab"
     }
   ]
 }
