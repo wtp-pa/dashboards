@@ -32,8 +32,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r pipeline/requirements.txt
 
+      # Scrapes a state website that intermittently drops GitHub runner
+      # traffic (connect timeouts). A dead source should leave last run's JSON
+      # in place, not abort the job before the commit step.
       - name: Run IFO fetcher
         run: python pipeline/fetch_ifo.py
+        continue-on-error: true
 
       - name: Run OpenBookPA fetcher
         run: python pipeline/fetch_openbookpa.py
@@ -45,6 +49,7 @@ jobs:
 
       - name: Run USAspending county fetcher
         run: python pipeline/fetch_usaspending_counties.py
+        continue-on-error: true  # external API; same rationale as the IFO step
 
       - name: Run data tests
         run: python3 tests/run.py
