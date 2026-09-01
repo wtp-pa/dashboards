@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-08-24",
+  "lastUpdated": "2026-09-01",
   "fiscalYear": "FY 2025 (federal)",
   "fiscalYearStart": "2024-10-01",
   "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238134939101,
+  "totalObligationsUSD": 238135062902,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -331,9 +331,9 @@
     {
       "fips": "42091",
       "name": "Montgomery County",
-      "totalObligationsUSD": 13863803316,
+      "totalObligationsUSD": 13863928141,
       "population": 856553,
-      "perCapitaUSD": 16185.58
+      "perCapitaUSD": 16185.72
     },
     {
       "fips": "42093",
@@ -366,7 +366,7 @@
     {
       "fips": "42101",
       "name": "Philadelphia County",
-      "totalObligationsUSD": 14050720690,
+      "totalObligationsUSD": 14050719666,
       "population": 1603797,
       "perCapitaUSD": 8760.91
     },

@@ -1,11 +1,32 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-08-24T06:42:54+00:00",
+  "lastUpdated": "2026-09-01T00:14:42+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Monthly and Quarterly Revenue Estimates",
+      "date": "2026-08-26",
+      "url": "https://www.ifo.state.pa.us/releases/959/Monthly-and-Quarterly-Revenue-Estimates/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MQRE_FY26-27_08_2026.pdf",
+      "summary": "This report provides revenue distributions based on the FY 2026-27 projections contained in the Official Revenue Estimate published by the IFO on June 22, 2026 and the statutory changes that were enacted with the FY 2026-27 state budget. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Performance Based Budgeting Performance Reports",
+      "date": "2026-08-26",
+      "url": "https://www.ifo.state.pa.us/releases/957/Performance-Based-Budgeting-Performance-Reports/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/IFO_Review_Initial_PBB_Reports.pdf",
+      "summary": "The IFO posted the five-year reviews of Performance Based Budgeting and Tax Credit Performance reports submitted to the PBB Board in January 2024. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Tax Credit Performance Reports",
+      "date": "2026-08-26",
+      "url": "https://www.ifo.state.pa.us/releases/958/Tax-Credit-Performance-Reports/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/IFO_Review_Initial_TC_Reports.pdf",
+      "summary": "The IFO posted the five-year reviews of Performance Based Budgeting and Tax Credit Performance reports submitted to the PBB Board in January 2024. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Personal Income Tax Progressive at Low End",
       "date": "2026-08-17",
@@ -19,27 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/955/Act-21-of-2026-COLA-Analysis/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Act_21_Pension_Analysis_2026_08.pdf",
       "summary": "The IFO published an actuarial analysis of provisions in Act 21 of 2026 that provide ad hoc cost-of-living adjustments (COLAs) to certain members of SERS, PSERS and municipal system retirees who served as police officers or firefighters. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "SNAP Update: Payment Error Rate Declines",
-      "date": "2026-08-12",
-      "url": "https://www.ifo.state.pa.us/releases/954/SNAP-Update-Payment-Error-Rate-Declines/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/BB_SNAP_Payment_Error_Rate_08_2026.pdf",
-      "summary": "The IFO published a budget brief using the latest SNAP data from June 2026. Enrollment has reverted to pre-Covid levels after a 14% contraction from the June 2024 peak. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "July 2026 Revenue Update",
-      "date": "2026-08-03",
-      "url": "https://www.ifo.state.pa.us/releases/953/July-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_071.pdf",
-      "summary": "The Commonwealth collected $3.36 billion in General Fund revenues for July, an increase of $322 million compared to July 2025. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Pennsylvania Electricity Update",
-      "date": "2026-07-27",
-      "url": "https://www.ifo.state.pa.us/releases/952/Pennsylvania-Electricity-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/PA_Electricity_Update_RB_2026_07.pdf",
-      "summary": "This research brief discusses recent increases in electricity prices for Pennsylvania residential consumers. The average price to compare for residential customers increased by 15% for the year (through November 2026), compared to 2025. Recent increases were largely driven by hig\u2026"
     }
   ]
 }
