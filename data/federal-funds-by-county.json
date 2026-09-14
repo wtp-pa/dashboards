@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-07",
+  "lastUpdated": "2026-09-14",
   "fiscalYear": "FY 2025 (federal)",
   "fiscalYearStart": "2024-10-01",
   "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238136308607,
+  "totalObligationsUSD": 238136307242,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -114,9 +114,9 @@
     {
       "fips": "42029",
       "name": "Chester County",
-      "totalObligationsUSD": 3766809583,
+      "totalObligationsUSD": 3766801187,
       "population": 534413,
-      "perCapitaUSD": 7048.5
+      "perCapitaUSD": 7048.48
     },
     {
       "fips": "42031",
@@ -163,9 +163,9 @@
     {
       "fips": "42043",
       "name": "Dauphin County",
-      "totalObligationsUSD": 5236204628,
+      "totalObligationsUSD": 5236212568,
       "population": 286401,
-      "perCapitaUSD": 18282.77
+      "perCapitaUSD": 18282.8
     },
     {
       "fips": "42045",
@@ -184,9 +184,9 @@
     {
       "fips": "42049",
       "name": "Erie County",
-      "totalObligationsUSD": 2062021254,
+      "totalObligationsUSD": 2062020345,
       "population": 270876,
-      "perCapitaUSD": 7612.42
+      "perCapitaUSD": 7612.41
     },
     {
       "fips": "42051",
