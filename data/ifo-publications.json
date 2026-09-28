@@ -1,11 +1,25 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-21T11:43:31+00:00",
+  "lastUpdated": "2026-09-28T12:38:50+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Tax Credits and Other Incentives",
+      "date": "2026-09-24",
+      "url": "https://www.ifo.state.pa.us/releases/965/Tax-Credits-and-Other-Incentives/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Economic_Development_Incentives_09_2026.pdf",
+      "summary": "This report presents data on Pennsylvania tax credits and economic development incentives for fiscal years (FY) 2021-22 through FY 2026-27. The tables provide annual detail on tax credit utilization or awards, state spending or grants, job training programs and state loan program\u2026"
+    },
+    {
+      "title": "State and Local Tax Revenues: A 50 State Comparison",
+      "date": "2026-09-21",
+      "url": "https://www.ifo.state.pa.us/releases/964/State-and-Local-Tax-Revenues-A-50-State-Comparison/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/State_and_Local_Tax_Revenues_A_50_State_Comparison_2026_09.pdf",
+      "summary": "This report uses data from the U.S. Census Bureau, the Internal Revenue Service (IRS), the U.S. Bureau of Economic Analysis (BEA) and other sources to facilitate a comparison of state and local tax systems across the 50 states. The report examines (1) state and local effective ta\u2026"
+    },
     {
       "title": "Recent County Reassessment Outcomes",
       "date": "2026-09-17",
@@ -26,20 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/961/Natural-Gas-Production-Report-2026-Q2/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/NGPR_2026_Q2.pdf",
       "summary": "This document uses data from the Pennsylvania Department of Environmental Protection, the U.S. Energy Information Administration and Natural Gas Intelligence to provide a quarterly update on recent trends in production volume, well counts and average spot prices. ... (Full Report\u2026"
-    },
-    {
-      "title": "August 2026 Revenue Update",
-      "date": "2026-09-01",
-      "url": "https://www.ifo.state.pa.us/releases/960/August-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_08.pdf",
-      "summary": "The Commonwealth collected $3.02 billion in General Fund revenues for August, an increase of $60 million (+2.0%) compared to August 2025. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Monthly and Quarterly Revenue Estimates",
-      "date": "2026-08-26",
-      "url": "https://www.ifo.state.pa.us/releases/959/Monthly-and-Quarterly-Revenue-Estimates/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MQRE_FY26-27_08_2026.pdf",
-      "summary": "This report provides revenue distributions based on the FY 2026-27 projections contained in the Official Revenue Estimate published by the IFO on June 22, 2026 and the statutory changes that were enacted with the FY 2026-27 state budget. ... (Full Report) - opens in a new tab"
     }
   ]
 }
