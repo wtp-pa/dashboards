@@ -1,11 +1,18 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-28T12:38:50+00:00",
+  "lastUpdated": "2026-10-05T13:19:28+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "September 2026 Revenue Update",
+      "date": "2026-10-01",
+      "url": "https://www.ifo.state.pa.us/releases/966/September-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_09.pdf",
+      "summary": "The Commonwealth collected $4.84 billion in General Fund revenues for September, an increase of $784 million (+19.3%) compared to September 2025. ... (Full Report) - opens in a new tab"
+    },
     {
       "title": "Tax Credits and Other Incentives",
       "date": "2026-09-24",
@@ -33,13 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/962/Interest-Earnings-Update/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/BB_Treasury_Interest_Earnings_Update_2026_09.pdf",
       "summary": "This budget brief provides data for interest earned on the General Fund and Rainy Day Fund average daily balances. It also provides estimates for FY 2026-27 and FY 2027-28. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Natural Gas Production Report: 2026 Q2",
-      "date": "2026-09-02",
-      "url": "https://www.ifo.state.pa.us/releases/961/Natural-Gas-Production-Report-2026-Q2/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/NGPR_2026_Q2.pdf",
-      "summary": "This document uses data from the Pennsylvania Department of Environmental Protection, the U.S. Energy Information Administration and Natural Gas Intelligence to provide a quarterly update on recent trends in production volume, well counts and average spot prices. ... (Full Report\u2026"
     }
   ]
 }

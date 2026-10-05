@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-28",
-  "fiscalYear": "FY 2025 (federal)",
-  "fiscalYearStart": "2024-10-01",
-  "fiscalYearEnd": "2025-09-30",
-  "totalObligationsUSD": 238135337000,
+  "lastUpdated": "2026-10-05",
+  "fiscalYear": "FY 2026 (federal)",
+  "fiscalYearStart": "2025-10-01",
+  "fiscalYearEnd": "2026-09-30",
+  "totalObligationsUSD": 229385423752,
   "countyCount": 67,
   "source": {
     "primary": "USAspending.gov",
@@ -16,471 +16,471 @@
     {
       "fips": "42001",
       "name": "Adams County",
-      "totalObligationsUSD": 824099306,
+      "totalObligationsUSD": 817014181,
       "population": 103852,
-      "perCapitaUSD": 7935.32
+      "perCapitaUSD": 7867.1
     },
     {
       "fips": "42003",
       "name": "Allegheny County",
-      "totalObligationsUSD": 25721454089,
+      "totalObligationsUSD": 26572402258,
       "population": 1250578,
-      "perCapitaUSD": 20567.65
+      "perCapitaUSD": 21248.1
     },
     {
       "fips": "42005",
       "name": "Armstrong County",
-      "totalObligationsUSD": 601016804,
+      "totalObligationsUSD": 507218199,
       "population": 65558,
-      "perCapitaUSD": 9167.71
+      "perCapitaUSD": 7736.94
     },
     {
       "fips": "42007",
       "name": "Beaver County",
-      "totalObligationsUSD": 1347340798,
+      "totalObligationsUSD": 1356572644,
       "population": 168215,
-      "perCapitaUSD": 8009.64
+      "perCapitaUSD": 8064.52
     },
     {
       "fips": "42009",
       "name": "Bedford County",
-      "totalObligationsUSD": 383658443,
+      "totalObligationsUSD": 373935148,
       "population": 47577,
-      "perCapitaUSD": 8063.95
+      "perCapitaUSD": 7859.58
     },
     {
       "fips": "42011",
       "name": "Berks County",
-      "totalObligationsUSD": 2804429415,
+      "totalObligationsUSD": 2715765478,
       "population": 428849,
-      "perCapitaUSD": 6539.43
+      "perCapitaUSD": 6332.68
     },
     {
       "fips": "42013",
       "name": "Blair County",
-      "totalObligationsUSD": 1016713121,
+      "totalObligationsUSD": 969398935,
       "population": 122822,
-      "perCapitaUSD": 8277.94
+      "perCapitaUSD": 7892.71
     },
     {
       "fips": "42015",
       "name": "Bradford County",
-      "totalObligationsUSD": 433144846,
+      "totalObligationsUSD": 435484542,
       "population": 59967,
-      "perCapitaUSD": 7223.05
+      "perCapitaUSD": 7262.07
     },
     {
       "fips": "42017",
       "name": "Bucks County",
-      "totalObligationsUSD": 5063808480,
+      "totalObligationsUSD": 4830370679,
       "population": 646538,
-      "perCapitaUSD": 7832.19
+      "perCapitaUSD": 7471.13
     },
     {
       "fips": "42019",
       "name": "Butler County",
-      "totalObligationsUSD": 1651257001,
+      "totalObligationsUSD": 1517991141,
       "population": 193763,
-      "perCapitaUSD": 8522.04
+      "perCapitaUSD": 7834.27
     },
     {
       "fips": "42021",
       "name": "Cambria County",
-      "totalObligationsUSD": 1751272381,
+      "totalObligationsUSD": 1498797368,
       "population": 133472,
-      "perCapitaUSD": 13120.9
+      "perCapitaUSD": 11229.3
     },
     {
       "fips": "42023",
       "name": "Cameron County",
-      "totalObligationsUSD": 47645323,
+      "totalObligationsUSD": 48355270,
       "population": 4547,
-      "perCapitaUSD": 10478.41
+      "perCapitaUSD": 10634.54
     },
     {
       "fips": "42025",
       "name": "Carbon County",
-      "totalObligationsUSD": 502775972,
+      "totalObligationsUSD": 488056877,
       "population": 64749,
-      "perCapitaUSD": 7765.0
+      "perCapitaUSD": 7537.67
     },
     {
       "fips": "42027",
       "name": "Centre County",
-      "totalObligationsUSD": 1523328951,
+      "totalObligationsUSD": 1658904671,
       "population": 158172,
-      "perCapitaUSD": 9630.84
+      "perCapitaUSD": 10487.98
     },
     {
       "fips": "42029",
       "name": "Chester County",
-      "totalObligationsUSD": 3766801187,
+      "totalObligationsUSD": 3699749369,
       "population": 534413,
-      "perCapitaUSD": 7048.48
+      "perCapitaUSD": 6923.02
     },
     {
       "fips": "42031",
       "name": "Clarion County",
-      "totalObligationsUSD": 266551001,
+      "totalObligationsUSD": 258162007,
       "population": 37241,
-      "perCapitaUSD": 7157.46
+      "perCapitaUSD": 6932.2
     },
     {
       "fips": "42033",
       "name": "Clearfield County",
-      "totalObligationsUSD": 586681913,
+      "totalObligationsUSD": 553971233,
       "population": 80562,
-      "perCapitaUSD": 7282.37
+      "perCapitaUSD": 6876.33
     },
     {
       "fips": "42035",
       "name": "Clinton County",
-      "totalObligationsUSD": 260784480,
+      "totalObligationsUSD": 266504680,
       "population": 37450,
-      "perCapitaUSD": 6963.54
+      "perCapitaUSD": 7116.28
     },
     {
       "fips": "42037",
       "name": "Columbia County",
-      "totalObligationsUSD": 460571534,
+      "totalObligationsUSD": 505153253,
       "population": 64727,
-      "perCapitaUSD": 7115.6
+      "perCapitaUSD": 7804.37
     },
     {
       "fips": "42039",
       "name": "Crawford County",
-      "totalObligationsUSD": 683314785,
+      "totalObligationsUSD": 614153503,
       "population": 83938,
-      "perCapitaUSD": 8140.71
+      "perCapitaUSD": 7316.75
     },
     {
       "fips": "42041",
       "name": "Cumberland County",
-      "totalObligationsUSD": 106347957052,
+      "totalObligationsUSD": 102337347461,
       "population": 259469,
-      "perCapitaUSD": 409867.68
+      "perCapitaUSD": 394410.69
     },
     {
       "fips": "42043",
       "name": "Dauphin County",
-      "totalObligationsUSD": 5236162660,
+      "totalObligationsUSD": 5421093416,
       "population": 286401,
-      "perCapitaUSD": 18282.63
+      "perCapitaUSD": 18928.33
     },
     {
       "fips": "42045",
       "name": "Delaware County",
-      "totalObligationsUSD": 4974380937,
+      "totalObligationsUSD": 5930316688,
       "population": 576830,
-      "perCapitaUSD": 8623.65
+      "perCapitaUSD": 10280.87
     },
     {
       "fips": "42047",
       "name": "Elk County",
-      "totalObligationsUSD": 240062203,
+      "totalObligationsUSD": 233611389,
       "population": 30990,
-      "perCapitaUSD": 7746.44
+      "perCapitaUSD": 7538.28
     },
     {
       "fips": "42049",
       "name": "Erie County",
-      "totalObligationsUSD": 2062019678,
+      "totalObligationsUSD": 2025858691,
       "population": 270876,
-      "perCapitaUSD": 7612.41
+      "perCapitaUSD": 7478.92
     },
     {
       "fips": "42051",
       "name": "Fayette County",
-      "totalObligationsUSD": 1078826890,
+      "totalObligationsUSD": 952495041,
       "population": 128804,
-      "perCapitaUSD": 8375.73
+      "perCapitaUSD": 7394.92
     },
     {
       "fips": "42053",
       "name": "Forest County",
-      "totalObligationsUSD": 51981889,
+      "totalObligationsUSD": 49384033,
       "population": 6973,
-      "perCapitaUSD": 7454.74
+      "perCapitaUSD": 7082.18
     },
     {
       "fips": "42055",
       "name": "Franklin County",
-      "totalObligationsUSD": 1523608422,
+      "totalObligationsUSD": 1324352492,
       "population": 155932,
-      "perCapitaUSD": 9770.98
+      "perCapitaUSD": 8493.14
     },
     {
       "fips": "42057",
       "name": "Fulton County",
-      "totalObligationsUSD": 120224374,
+      "totalObligationsUSD": 112112544,
       "population": 14556,
-      "perCapitaUSD": 8259.44
+      "perCapitaUSD": 7702.15
     },
     {
       "fips": "42059",
       "name": "Greene County",
-      "totalObligationsUSD": 253042403,
+      "totalObligationsUSD": 266310767,
       "population": 35954,
-      "perCapitaUSD": 7037.95
+      "perCapitaUSD": 7406.99
     },
     {
       "fips": "42061",
       "name": "Huntingdon County",
-      "totalObligationsUSD": 306188656,
+      "totalObligationsUSD": 293959784,
       "population": 44092,
-      "perCapitaUSD": 6944.31
+      "perCapitaUSD": 6666.96
     },
     {
       "fips": "42063",
       "name": "Indiana County",
-      "totalObligationsUSD": 599628183,
+      "totalObligationsUSD": 555502402,
       "population": 83246,
-      "perCapitaUSD": 7203.09
+      "perCapitaUSD": 6673.02
     },
     {
       "fips": "42065",
       "name": "Jefferson County",
-      "totalObligationsUSD": 342607743,
+      "totalObligationsUSD": 382881464,
       "population": 44492,
-      "perCapitaUSD": 7700.43
+      "perCapitaUSD": 8605.62
     },
     {
       "fips": "42067",
       "name": "Juniata County",
-      "totalObligationsUSD": 164733139,
+      "totalObligationsUSD": 147236945,
       "population": 23509,
-      "perCapitaUSD": 7007.24
+      "perCapitaUSD": 6263.0
     },
     {
       "fips": "42069",
       "name": "Lackawanna County",
-      "totalObligationsUSD": 1832887154,
+      "totalObligationsUSD": 1684436991,
       "population": 215896,
-      "perCapitaUSD": 8489.68
+      "perCapitaUSD": 7802.08
     },
     {
       "fips": "42071",
       "name": "Lancaster County",
-      "totalObligationsUSD": 3723275842,
+      "totalObligationsUSD": 3628266626,
       "population": 552984,
-      "perCapitaUSD": 6733.06
+      "perCapitaUSD": 6561.25
     },
     {
       "fips": "42073",
       "name": "Lawrence County",
-      "totalObligationsUSD": 652389827,
+      "totalObligationsUSD": 629090567,
       "population": 86070,
-      "perCapitaUSD": 7579.76
+      "perCapitaUSD": 7309.06
     },
     {
       "fips": "42075",
       "name": "Lebanon County",
-      "totalObligationsUSD": 1095918392,
+      "totalObligationsUSD": 1025773832,
       "population": 143257,
-      "perCapitaUSD": 7650.02
+      "perCapitaUSD": 7160.37
     },
     {
       "fips": "42077",
       "name": "Lehigh County",
-      "totalObligationsUSD": 2491618298,
+      "totalObligationsUSD": 2565094625,
       "population": 374557,
-      "perCapitaUSD": 6652.17
+      "perCapitaUSD": 6848.34
     },
     {
       "fips": "42079",
       "name": "Luzerne County",
-      "totalObligationsUSD": 2850538591,
+      "totalObligationsUSD": 2718252142,
       "population": 325594,
-      "perCapitaUSD": 8754.89
+      "perCapitaUSD": 8348.59
     },
     {
       "fips": "42081",
       "name": "Lycoming County",
-      "totalObligationsUSD": 873452197,
+      "totalObligationsUSD": 818324249,
       "population": 114188,
-      "perCapitaUSD": 7649.25
+      "perCapitaUSD": 7166.46
     },
     {
       "fips": "42083",
       "name": "Mckean County",
-      "totalObligationsUSD": 301570903,
+      "totalObligationsUSD": 300436773,
       "population": 40432,
-      "perCapitaUSD": 7458.72
+      "perCapitaUSD": 7430.67
     },
     {
       "fips": "42085",
       "name": "Mercer County",
-      "totalObligationsUSD": 974745380,
+      "totalObligationsUSD": 815267352,
       "population": 110652,
-      "perCapitaUSD": 8809.11
+      "perCapitaUSD": 7367.85
     },
     {
       "fips": "42087",
       "name": "Mifflin County",
-      "totalObligationsUSD": 314273339,
+      "totalObligationsUSD": 306810441,
       "population": 46143,
-      "perCapitaUSD": 6810.86
+      "perCapitaUSD": 6649.12
     },
     {
       "fips": "42089",
       "name": "Monroe County",
-      "totalObligationsUSD": 1304662413,
+      "totalObligationsUSD": 1317684169,
       "population": 168327,
-      "perCapitaUSD": 7750.76
+      "perCapitaUSD": 7828.12
     },
     {
       "fips": "42091",
       "name": "Montgomery County",
-      "totalObligationsUSD": 13863934488,
+      "totalObligationsUSD": 11889792540,
       "population": 856553,
-      "perCapitaUSD": 16185.73
+      "perCapitaUSD": 13880.98
     },
     {
       "fips": "42093",
       "name": "Montour County",
-      "totalObligationsUSD": 1797712476,
+      "totalObligationsUSD": 1767043800,
       "population": 18136,
-      "perCapitaUSD": 99123.98
+      "perCapitaUSD": 97432.94
     },
     {
       "fips": "42095",
       "name": "Northampton County",
-      "totalObligationsUSD": 2237907718,
+      "totalObligationsUSD": 2122328637,
       "population": 312951,
-      "perCapitaUSD": 7150.98
+      "perCapitaUSD": 6781.66
     },
     {
       "fips": "42097",
       "name": "Northumberland County",
-      "totalObligationsUSD": 657599259,
+      "totalObligationsUSD": 625171599,
       "population": 91647,
-      "perCapitaUSD": 7175.35
+      "perCapitaUSD": 6821.52
     },
     {
       "fips": "42099",
       "name": "Perry County",
-      "totalObligationsUSD": 319109682,
+      "totalObligationsUSD": 311693295,
       "population": 45842,
-      "perCapitaUSD": 6961.08
+      "perCapitaUSD": 6799.3
     },
     {
       "fips": "42101",
       "name": "Philadelphia County",
-      "totalObligationsUSD": 14050743738,
+      "totalObligationsUSD": 13263276990,
       "population": 1603797,
-      "perCapitaUSD": 8760.92
+      "perCapitaUSD": 8269.92
     },
     {
       "fips": "42103",
       "name": "Pike County",
-      "totalObligationsUSD": 491356176,
+      "totalObligationsUSD": 512654523,
       "population": 58535,
-      "perCapitaUSD": 8394.23
+      "perCapitaUSD": 8758.09
     },
     {
       "fips": "42105",
       "name": "Potter County",
-      "totalObligationsUSD": 136641160,
+      "totalObligationsUSD": 127427099,
       "population": 16396,
-      "perCapitaUSD": 8333.81
+      "perCapitaUSD": 7771.84
     },
     {
       "fips": "42107",
       "name": "Schuylkill County",
-      "totalObligationsUSD": 1033765734,
+      "totalObligationsUSD": 997926091,
       "population": 143049,
-      "perCapitaUSD": 7226.65
+      "perCapitaUSD": 6976.11
     },
     {
       "fips": "42109",
       "name": "Snyder County",
-      "totalObligationsUSD": 252876898,
+      "totalObligationsUSD": 233233320,
       "population": 39736,
-      "perCapitaUSD": 6363.92
+      "perCapitaUSD": 5869.57
     },
     {
       "fips": "42111",
       "name": "Somerset County",
-      "totalObligationsUSD": 577973408,
+      "totalObligationsUSD": 541087678,
       "population": 74129,
-      "perCapitaUSD": 7796.86
+      "perCapitaUSD": 7299.27
     },
     {
       "fips": "42113",
       "name": "Sullivan County",
-      "totalObligationsUSD": 60323489,
+      "totalObligationsUSD": 56524726,
       "population": 5840,
-      "perCapitaUSD": 10329.36
+      "perCapitaUSD": 9678.89
     },
     {
       "fips": "42115",
       "name": "Susquehanna County",
-      "totalObligationsUSD": 344996862,
+      "totalObligationsUSD": 320281836,
       "population": 38434,
-      "perCapitaUSD": 8976.35
+      "perCapitaUSD": 8333.29
     },
     {
       "fips": "42117",
       "name": "Tioga County",
-      "totalObligationsUSD": 323658385,
+      "totalObligationsUSD": 309140079,
       "population": 41045,
-      "perCapitaUSD": 7885.45
+      "perCapitaUSD": 7531.74
     },
     {
       "fips": "42119",
       "name": "Union County",
-      "totalObligationsUSD": 249098009,
+      "totalObligationsUSD": 255573748,
       "population": 42681,
-      "perCapitaUSD": 5836.27
+      "perCapitaUSD": 5988.0
     },
     {
       "fips": "42121",
       "name": "Venango County",
-      "totalObligationsUSD": 407671317,
+      "totalObligationsUSD": 398162180,
       "population": 50454,
-      "perCapitaUSD": 8080.06
+      "perCapitaUSD": 7891.59
     },
     {
       "fips": "42123",
       "name": "Warren County",
-      "totalObligationsUSD": 332762194,
+      "totalObligationsUSD": 335986037,
       "population": 38587,
-      "perCapitaUSD": 8623.69
+      "perCapitaUSD": 8707.23
     },
     {
       "fips": "42125",
       "name": "Washington County",
-      "totalObligationsUSD": 1795429955,
+      "totalObligationsUSD": 1677391679,
       "population": 209349,
-      "perCapitaUSD": 8576.25
+      "perCapitaUSD": 8012.42
     },
     {
       "fips": "42127",
       "name": "Wayne County",
-      "totalObligationsUSD": 439210216,
+      "totalObligationsUSD": 433908335,
       "population": 51155,
-      "perCapitaUSD": 8585.87
+      "perCapitaUSD": 8482.23
     },
     {
       "fips": "42129",
       "name": "Westmoreland County",
-      "totalObligationsUSD": 3039181805,
+      "totalObligationsUSD": 2750798561,
       "population": 354663,
-      "perCapitaUSD": 8569.21
+      "perCapitaUSD": 7756.09
     },
     {
       "fips": "42131",
       "name": "Wyoming County",
-      "totalObligationsUSD": 199195689,
+      "totalObligationsUSD": 190483247,
       "population": 26069,
-      "perCapitaUSD": 7641.09
+      "perCapitaUSD": 7306.89
     },
     {
       "fips": "42133",
       "name": "York County",
-      "totalObligationsUSD": 6110781947,
+      "totalObligationsUSD": 4735675432,
       "population": 456438,
-      "perCapitaUSD": 13387.98
+      "perCapitaUSD": 10375.29
     }
   ]
 }
