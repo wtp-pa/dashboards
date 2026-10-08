@@ -1,6 +1,6 @@
 {
   "$comment": "Computed by pipeline/elected-officials/score_officials.py as a JOIN of data/elected-officials/votes.json against data/legislation/bills.json + manual_review.json. Refreshed by GitHub Actions whenever votes or bills change. Do not hand-edit \u2014 your changes will be overwritten on the next pipeline run.",
-  "lastComputed": "2026-10-03T12:37:05.416432+00:00",
+  "lastComputed": "2026-10-08T13:45:53.622798+00:00",
   "scorecards": [
     {
       "officialId": "sen-rosemary-brown",
