@@ -14,6 +14,9 @@ import {
   type Race,
 } from '../../lib/quiz';
 import { track } from '../../lib/quizTrack';
+import { config } from '../../config';
+
+const PARTY = config.party.shortName;
 
 interface Props {
   issues: Issue[];
@@ -47,6 +50,10 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   const [step, setStep] = useState<Step>('intro');
   const [copied, setCopied] = useState(false);
   const [idx, setIdx] = useState(0);
+  // Questions visited this pass, so Back retraces your steps (not list order),
+  // and where Back goes when the trail runs out.
+  const [trail, setTrail] = useState<string[]>([]);
+  const [backTo, setBackTo] = useState<Step>('intro');
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [important, setImportant] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
@@ -87,6 +94,8 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   function start() {
     setStep('quiz');
     setIdx(0);
+    setTrail([]);
+    setBackTo('intro');
     setAnswers({});
     setImportant(new Set());
     setRevealed(false);
@@ -100,6 +109,8 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
     const first = questionsFor(m, d).findIndex((i) => !(i.id in answers));
     if (first >= 0) {
       setIdx(first);
+      setTrail([]);
+      setBackTo('results');
       setStep('quiz');
     }
   }
@@ -107,6 +118,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   function answer(a: Answer) {
     const next = { ...answers, [q.id]: a };
     setAnswers(next);
+    setTrail([...trail, q.id]);
     // Go to the next unanswered question (after Back, this returns you to where you were).
     const after = questions.findIndex((i, n) => n > idx && !(i.id in next));
     if (after >= 0) setIdx(after);
@@ -114,6 +126,14 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
       setStep('results');
       track({ event: 'complete', mode, race_id: district || null, source });
     }
+  }
+
+  function back() {
+    const prev = trail[trail.length - 1];
+    const at = questions.findIndex((i) => i.id === prev);
+    if (at < 0) return setStep(backTo);
+    setTrail(trail.slice(0, -1));
+    setIdx(at);
   }
 
   async function share() {
@@ -184,6 +204,10 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         <p className="mt-3 text-base text-wtp-cream/80">
           Every Pennsylvania voter picks a <strong className="text-white">Governor</strong> on Nov 3. Answer a few
           questions, then see which candidates are closest to you. Names stay hidden until the end.
+        </p>
+        <p className="mt-3 text-sm text-wtp-cream/60">
+          A starting point for your own research, not a voter guide. {PARTY} doesn't endorse candidates or take sides on
+          these issues.
         </p>
 
         <button type="button" onClick={start} className={`${btn} mt-6 w-full bg-wtp-sky py-3 text-base text-wtp-navy hover:bg-white`}>
@@ -265,7 +289,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
           <button
             type="button"
-            onClick={() => (idx > 0 ? setIdx(idx - 1) : setStep('intro'))}
+            onClick={back}
             className={`${btn} border border-white/20 hover:border-white/40`}
           >
             ← Back
@@ -276,7 +300,8 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
     );
   }
 
-  // Results
+  // Results. Counts what's left even if you backed out of the extra questions partway.
+  const unanswered = questionsFor('long', district).filter((i) => !(i.id in answers)).length;
   return (
     <div className="space-y-4">
       <div className={`${card} flex flex-wrap items-center justify-between gap-3`}>
@@ -299,6 +324,15 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
             Reveal names
           </button>
         )}
+      </div>
+
+      <div className={`${card} border-wtp-gold/40`}>
+        <p className="text-sm font-semibold">Use this as a tool, not a verdict</p>
+        <ul className="mt-2 space-y-1 text-sm text-wtp-cream/70">
+          <li>— {PARTY} doesn't endorse any candidate and hasn't taken positions on these issues.</li>
+          <li>— Positions come from public statements and votes we could find. Many are incomplete, dated, or open to interpretation, and some candidates have none on file.</li>
+          <li>— A few questions can't capture how anyone will govern. Open Details, read the sources, and decide for yourself.</li>
+        </ul>
       </div>
 
       {myRaces.map((race) => (
@@ -324,13 +358,13 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
       )}
 
       <div className="flex flex-wrap gap-2">
-        {mode === 'short' && (
+        {unanswered > 0 && (
           <button
             type="button"
             onClick={() => extend('long', district)}
             className={`${btn} border border-wtp-sky/50 text-wtp-sky hover:border-wtp-sky`}
           >
-            Answer more issues ({questionsFor('long', district).length - questions.length} more)
+            Answer more issues ({unanswered} more)
           </button>
         )}
         <button type="button" onClick={share} className={`${btn} border border-white/15 hover:border-white/30`}>
@@ -353,7 +387,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
       <VotePlan card={card} />
 
       <p className="text-xs text-wtp-cream/40">
-        A match score is a starting point, not an endorsement. Read the sources, then go vote.
+        A match score is a starting point, not an endorsement or a voter guide. Read the sources, then go vote.
       </p>
     </div>
   );

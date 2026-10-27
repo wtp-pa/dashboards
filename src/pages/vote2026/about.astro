@@ -28,6 +28,17 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
         against county election-office candidate listings and sample ballots. Write-in campaigns aren't included.
       </p>
 
+      <section class="mt-8 rounded-xl border border-wtp-gold/40 bg-surface p-5">
+        <h2 class="text-lg font-bold">What this is, and isn't</h2>
+        <p class="mt-2 text-base leading-relaxed text-wtp-cream/80">
+          This is a tool to start your own research, not a voter guide, a scorecard, or an endorsement.
+          {config.party.shortName} doesn't endorse candidates in these races and hasn't taken party positions on these
+          issues. Candidate positions are our best reading of public statements and votes. Many are incomplete or open to
+          interpretation, and some candidates have little on record. A match percentage can't tell you how someone will
+          govern. Read the sources and decide for yourself.
+        </p>
+      </section>
+
       <section class="mt-10">
         <h2 class="text-2xl font-extrabold">The fairness rules</h2>
         <ul class="mt-4 space-y-3 text-base leading-relaxed text-wtp-cream/80">
