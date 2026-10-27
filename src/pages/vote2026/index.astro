@@ -16,8 +16,8 @@ const races = racesDoc.races as Race[];
 <html lang="en">
   <head>
     <QuizHead
-      title={`Candidate Match — PA Nov 3, 2026 — ${config.party.shortName}`}
-      description="A quick, nonpartisan-style quiz: answer questions on the issues, then see which Pennsylvania candidates for Governor and U.S. House share your views."
+      title={`Vote 2026: Candidate Match — PA Nov 3 — ${config.party.shortName}`}
+      description="A quick quiz: answer questions on the issues, then see which Pennsylvania candidates for Governor and U.S. House share your views."
     />
   </head>
   <body class="min-h-screen bg-page text-white">
@@ -28,13 +28,14 @@ const races = racesDoc.races as Race[];
     <QuizHeader />
     <main class="mx-auto max-w-2xl px-4 pt-8 pb-16 sm:px-6 md:pt-12">
       <p class="text-xs uppercase tracking-[0.18em] text-wtp-gold">PA general election · Tuesday, Nov 3</p>
-      <h1 class="mt-2 text-3xl font-extrabold sm:text-4xl">Candidate Match</h1>
+      <h1 class="mt-2 text-3xl font-extrabold sm:text-4xl">Who matches you in 2026?</h1>
       <div class="mt-6">
-        <Quiz client:load issues={issues} races={races} />
+        <Quiz client:load issues={issues} races={races} hidden={config.quiz.hiddenRaces} electionDate={config.quiz.electionDate} />
       </div>
       <p class="mt-8 text-xs text-wtp-cream/50">
         Positions last checked {racesDoc.lastChecked}. Spot an error? <a href={config.party.website} class="text-wtp-sky">Tell us</a> —
-        see <a href="/quiz/about" class="text-wtp-sky">how we score</a>.
+        see <a href="/vote2026/about" class="text-wtp-sky">how we score</a> or
+        <a href="/vote2026/sources" class="text-wtp-sky">every candidate's positions and sources</a>.
       </p>
     </main>
   </body>

@@ -69,6 +69,9 @@ export const config = {
     // but officers should spot-check before this goes in an email.
     officersApprovedData: false,
     electionDate: "2026-11-03",
+    // Race ids ("gov", "pa-01" …) to pull from the quiz, e.g. if a candidate
+    // withdraws or officers want a race held back. Edit + push; live in ~2 min.
+    hiddenRaces: [] as string[],
   },
   portfolio: {
     // The umbrella that holds all WTPPPA dashboards. Used by the / landing page.
@@ -95,8 +98,8 @@ export const config = {
         status: "pre-release" as const,
       },
       {
-        name: "Candidate Match",
-        slug: "quiz",
+        name: "Vote 2026: Candidate Match",
+        slug: "vote2026",
         tagline: "Answer a few questions, then see which Nov 3 candidates share your views",
         status: "pre-release" as const,
       },

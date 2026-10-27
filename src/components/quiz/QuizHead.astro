@@ -1,5 +1,5 @@
 ---
-/** Shared <head> for /quiz pages. Pre-release pages stay noindex. */
+/** Shared <head> for /vote2026 pages. Pre-release pages stay noindex. */
 import { config } from '../../config';
 
 export interface Props {
@@ -11,6 +11,7 @@ export interface Props {
 const { title, description, noindex = !config.quiz.officersApprovedData } = Astro.props;
 const siteOrigin = Astro.site ?? Astro.url;
 const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
+const goatcounter = import.meta.env.PUBLIC_GOATCOUNTER_CODE as string | undefined;
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 ---
 
@@ -28,3 +29,12 @@ const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalUrl} />
+{/* Cookie-free usage counts; only when the GoatCounter code is set at build. */}
+{goatcounter && (
+  <script
+    is:inline
+    data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}
+    async
+    src="//gc.zgo.at/count.js"
+  ></script>
+)}

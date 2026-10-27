@@ -13,7 +13,7 @@
     { "id": "voter-id",       "level": "both",    "short": true,  "topic": "Voter ID",       "statement": "Voters should be required to show photo ID at every election." },
     { "id": "guns",           "level": "both",    "short": false, "topic": "Guns",           "statement": "Gun buyers should face universal background checks, and courts should be able to issue red-flag orders." },
     { "id": "term-limits",    "level": "both",    "short": false, "topic": "Ethics",         "statement": "Lawmakers should face term limits and be banned from trading individual stocks." },
-    { "id": "tariffs",        "level": "federal", "short": true,  "topic": "Tariffs",        "statement": "Broad tariffs on imported goods are good for Pennsylvania's economy." },
+    { "id": "tariffs",        "level": "federal", "short": true,  "topic": "Tariffs",        "statement": "The U.S. should keep broad tariffs on imported goods." },
     { "id": "aca",            "level": "federal", "short": true,  "topic": "Health insurance","statement": "Congress should extend the enhanced ACA health-insurance subsidies." },
     { "id": "medicaid-cuts",  "level": "federal", "short": false, "topic": "Medicaid",       "statement": "Federal Medicaid spending should be reduced, including through work requirements." }
   ]

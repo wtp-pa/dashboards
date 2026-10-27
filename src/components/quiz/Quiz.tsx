@@ -9,12 +9,16 @@ import {
   type Mode,
   type Race,
 } from '../../lib/quiz';
-import { loadVisibility, track } from '../../lib/quizBackend';
+import { track } from '../../lib/quizTrack';
 
 interface Props {
   issues: Issue[];
   races: Race[];
   defaultMode?: Mode;
+  /** Race ids officers pulled (config.quiz.hiddenRaces). */
+  hidden?: string[];
+  /** YYYY-MM-DD, for the countdown. */
+  electionDate: string;
   /** Widget embeds: tighter padding, links open in the parent page. */
   compact?: boolean;
 }
@@ -34,26 +38,33 @@ function readParams() {
   };
 }
 
-export default function Quiz({ issues, races, defaultMode = 'short', compact = false }: Props) {
+export default function Quiz({ issues, races, defaultMode = 'short', hidden = [], electionDate, compact = false }: Props) {
   const [mode, setMode] = useState<Mode>(defaultMode);
   const [district, setDistrict] = useState<string>('');
   const [source, setSource] = useState<string | null>(null);
-  const [visible, setVisible] = useState<Record<string, boolean>>({});
   const [step, setStep] = useState<Step>('intro');
+  const [copied, setCopied] = useState(false);
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [important, setImportant] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
+  // One random tie-break order per visit (see scoreRace).
+  const [tieOrder] = useState(() =>
+    Object.fromEntries(races.flatMap((r) => r.candidates).map((c) => [c.id, Math.random()])),
+  );
+  const [daysLeft, setDaysLeft] = useState<number | null>(null);
 
   useEffect(() => {
     const p = readParams();
     if (p.mode) setMode(p.mode);
     if (p.district) setDistrict(p.district);
     setSource(p.source);
-    loadVisibility().then(setVisible);
+    // Days until polls open, in Pennsylvania time.
+    const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+    setDaysLeft(Math.round((Date.parse(electionDate) - Date.parse(today)) / 86_400_000));
   }, []);
 
-  const shownRaces = races.filter((r) => visible[r.id] !== false);
+  const shownRaces = races.filter((r) => !hidden.includes(r.id));
   const statewide = shownRaces.filter((r) => r.level === 'state');
   const houseRaces = shownRaces.filter((r) => r.level === 'federal');
   const myRaces = [...statewide, ...houseRaces.filter((r) => r.id === district)];
@@ -74,20 +85,28 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
     track({ event: 'start', mode, race_id: district || null, source });
   }
 
-  function answer(a: Answer | null) {
-    if (a) setAnswers((prev) => ({ ...prev, [q.id]: a }));
-    else
-      setAnswers((prev) => {
-        const { [q.id]: _, ...rest } = prev;
-        return rest;
-      });
+  function answer(a: Answer) {
+    setAnswers((prev) => ({ ...prev, [q.id]: a }));
     if (idx + 1 < questions.length) setIdx(idx + 1);
-    else finish(a ? { ...answers, [q.id]: a } : answers);
+    else {
+      setStep('results');
+      track({ event: 'complete', mode, race_id: district || null, source });
+    }
   }
 
-  function finish(final: Record<string, Answer>) {
-    setStep('results');
-    track({ event: 'complete', mode, race_id: district || null, answered: Object.keys(final).length, source });
+  async function share() {
+    const url = `${window.location.origin}/vote2026/?src=share`;
+    const text = 'Which PA candidates line up with you on the issues? Names hidden until the end.';
+    track({ event: 'share', source });
+    try {
+      if (navigator.share) await navigator.share({ title: 'Vote 2026: Candidate Match', text, url });
+      else {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+      }
+    } catch {
+      // Share sheet dismissed.
+    }
   }
 
   function toggleImportant(id: string) {
@@ -105,6 +124,11 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
   if (step === 'intro') {
     return (
       <div className={card}>
+        {daysLeft !== null && daysLeft >= 0 && (
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-wtp-gold">
+            {daysLeft === 0 ? 'Election Day is today — polls open 7 a.m. to 8 p.m.' : `Election Day in ${daysLeft} day${daysLeft === 1 ? '' : 's'}`}
+          </p>
+        )}
         <h2 className="text-xl font-semibold sm:text-2xl">Who do you line up with on Nov 3?</h2>
         <p className="mt-2 text-sm text-wtp-cream/70">
           Answer a few questions on the issues. Candidate names stay hidden until the end, so you judge positions, not
@@ -193,15 +217,11 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
           ))}
         </div>
 
-        <div className="mt-4 flex items-center justify-between text-sm">
-          <label className="flex cursor-pointer items-center gap-2 text-wtp-cream/70">
-            <input type="checkbox" checked={important.has(q.id)} onChange={() => toggleImportant(q.id)} />
-            This one matters a lot to me
-          </label>
-          <button type="button" onClick={() => answer(null)} className="text-wtp-cream/50 hover:text-wtp-cream">
-            Skip
-          </button>
-        </div>
+        <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-wtp-cream/70">
+          <input type="checkbox" checked={important.has(q.id)} onChange={() => toggleImportant(q.id)} />
+          This one matters a lot to me
+        </label>
+        <p className="mt-2 text-xs text-wtp-cream/40">"Not sure" skips the issue. It doesn't count for or against anyone.</p>
       </div>
     );
   }
@@ -214,7 +234,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
           <h2 className="text-xl font-semibold">Your matches</h2>
           <p className="text-sm text-wtp-cream/60">
             {revealed ? 'Names revealed.' : 'Names hidden — compare positions first.'} Based on{' '}
-            {Object.keys(answers).length} answers.
+            {Object.values(answers).filter((a) => a !== 'neutral').length} answers.
           </p>
         </div>
         {!revealed && (
@@ -236,7 +256,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
           key={race.id}
           race={race}
           issues={questions}
-          results={scoreRace(race, questions, answers, important)}
+          results={scoreRace(race, questions, answers, important, tieOrder)}
           answers={answers}
           revealed={revealed}
           card={card}
@@ -259,21 +279,24 @@ export default function Quiz({ issues, races, defaultMode = 'short', compact = f
             Try the full version ({issuesFor(issues, 'long').length} issues)
           </button>
         )}
-        <a
-          href="/quiz/about"
-          target={compact ? '_top' : undefined}
-          className={`${btn} text-wtp-cream/60 no-underline hover:text-wtp-sky`}
-        >
+        <button type="button" onClick={share} className={`${btn} border border-white/15 hover:border-white/30`}>
+          {copied ? 'Link copied' : 'Share with a friend'}
+        </button>
+      </div>
+      <p className="text-sm">
+        <a href="/vote2026/sources" target={compact ? '_top' : undefined} className="text-wtp-sky">
+          Every candidate's positions + sources →
+        </a>
+        <span className="mx-2 text-wtp-cream/30">·</span>
+        <a href="/vote2026/about" target={compact ? '_top' : undefined} className="text-wtp-sky">
           How we score →
         </a>
-      </div>
+      </p>
+
+      <VotePlan card={card} />
 
       <p className="text-xs text-wtp-cream/40">
-        A match score is a starting point, not an endorsement. Check the sources, then find your polling place at{' '}
-        <a href="https://www.pa.gov/en/agencies/vote" target="_blank" rel="noopener" className="text-wtp-sky">
-          vote.pa.gov
-        </a>
-        .
+        A match score is a starting point, not an endorsement. Read the sources, then go vote.
       </p>
     </div>
   );
@@ -295,7 +318,7 @@ function RaceResults({
   card: string;
 }) {
   const [open, setOpen] = useState<string | null>(null);
-  const relevant = issues.filter((i) => appliesTo(i, race) && answers[i.id]);
+  const relevant = issues.filter((i) => appliesTo(i, race) && answers[i.id] && answers[i.id] !== 'neutral');
 
   return (
     <section className={card}>
@@ -323,7 +346,9 @@ function RaceResults({
                   <span className="block truncate font-medium">{label}</span>
                   <span className="block text-xs text-wtp-cream/50">
                     {revealed && `${c.party}${c.incumbent ? ' · incumbent' : ''} · `}
-                    {r.pct === null ? 'Not enough public positions to score' : `Scored on ${r.scored} of ${r.asked} issues`}
+                    {r.pct === null
+                      ? `Not enough public positions to score (${r.scored} of ${r.asked})`
+                      : `Scored on ${r.scored} of ${r.asked} issues`}
                   </span>
                 </span>
                 <span className="text-xs text-wtp-sky">{isOpen ? 'Hide' : 'Details'}</span>
@@ -367,13 +392,42 @@ function RaceResults({
                       </li>
                     );
                   })}
-                  {!revealed && <li className="text-xs text-wtp-cream/40">Reveal names to see sources.</li>}
+                  {!revealed && <li className="text-xs text-wtp-cream/40">Reveal names to see what they said and the sources.</li>}
                 </ul>
               )}
             </li>
           );
         })}
       </ul>
+    </section>
+  );
+}
+
+const EXT = { target: '_blank', rel: 'noopener', className: 'text-wtp-sky' } as const;
+
+/** Election Day checklist. Rules from vote.pa.gov — re-check before each election. */
+function VotePlan({ card }: { card: string }) {
+  return (
+    <section className={`${card} border-wtp-gold/40`}>
+      <h3 className="text-lg font-semibold">Now make your plan to vote</h3>
+      <p className="mt-1 text-sm text-wtp-cream/70">
+        Tuesday, Nov 3. Polls are open 7 a.m. to 8 p.m. If you're in line by 8, you can vote.
+      </p>
+      <ul className="mt-3 space-y-2 text-sm text-wtp-cream/80">
+        <li>
+          — <a href="https://www.pa.gov/services/vote/find-your-local-polling-place" {...EXT}>Find your polling place</a>
+        </li>
+        <li>
+          — Voting by mail? Your county has to <strong className="text-white">receive</strong> it by 8 p.m. Nov 3. A
+          postmark isn't enough, and you can't drop it at your polling place.{' '}
+          <a href="https://www.pavoterservices.pa.gov/pages/ballottracking.aspx" {...EXT}>Track your ballot</a>
+        </li>
+        <li>— Voting at your polling place for the first time? Bring ID.</li>
+        <li>
+          — Questions? <a href="https://www.pa.gov/agencies/vote" {...EXT}>vote.pa.gov</a> or your county election office.
+        </li>
+      </ul>
+      <p className="mt-3 text-sm text-wtp-cream/70">Then bring someone with you. Three PA House races in 2024 were decided by fewer than 10,000 votes.</p>
     </section>
   );
 }

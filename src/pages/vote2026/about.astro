@@ -4,6 +4,7 @@ import issuesDoc from '../../../data/quiz/issues.json';
 import racesDoc from '../../../data/quiz/races.json';
 import QuizHead from '../../components/quiz/QuizHead.astro';
 import QuizHeader from '../../components/quiz/QuizHeader.astro';
+import { MIN_SCORED } from '../../lib/quiz';
 import '../../styles/global.css';
 
 const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 0);
@@ -12,14 +13,14 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
 <html lang="en">
   <head>
     <QuizHead
-      title={`How we score — Candidate Match — ${config.party.shortName}`}
-      description="How Candidate Match picks issues, sources candidate positions, and calculates match scores."
+      title={`How we score — Vote 2026 — ${config.party.shortName}`}
+      description="How the Vote 2026 quiz picks issues, sources candidate positions, and calculates match scores."
     />
   </head>
   <body class="min-h-screen bg-page text-white">
     <QuizHeader />
     <main class="mx-auto max-w-3xl px-6 pt-8 pb-16 md:pt-12 md:pb-24">
-      <h1 class="text-3xl font-extrabold">How Candidate Match works</h1>
+      <h1 class="text-3xl font-extrabold">How the Vote 2026 quiz works</h1>
       <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
         {config.party.shortName} doesn't have candidates on the Nov 3 ballot in these races. This tool covers
         {racesDoc.races.length} races and {candidateCount} candidates: Governor and all 17 U.S. House seats, and every
@@ -34,17 +35,23 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
           <li>— <strong class="text-white">Names stay hidden.</strong> You see positions first and choose when to reveal who holds them.</li>
           <li>— <strong class="text-white">Sourced or skipped.</strong> A position counts only if it links a public source: the candidate's website, a debate, a voter-guide survey (like Vote411), an interview, or an official vote. If we couldn't find one, it's "No public position" and left out of the score. Never counted against them, never guessed from party.</li>
           <li>— <strong class="text-white">Votes count as positions.</strong> Incumbents and former officeholders have a record. A vote is treated like any other public statement. When what someone said and how they voted disagree, we mark the position "Mixed" and show both. A vote on a bill that bundles unrelated things (for example, the 2026 bill pairing a stock-trading limit with voter ID) doesn't set a position by itself, for anyone.</li>
-          <li>— <strong class="text-white">Coverage shown.</strong> Each score says how many of your answers it's based on, so a candidate with few public positions isn't mistaken for a strong match.</li>
+          <li>— <strong class="text-white">Coverage shown.</strong> Each score says how many of your answers it's based on. A candidate needs public positions on at least {MIN_SCORED} of the issues you answered to get a percentage, so one lucky overlap can't put a little-known candidate on top.</li>
+          <li>— <strong class="text-white">Balanced wording.</strong> Statements are split about evenly between positions Democrats usually hold and positions Republicans usually hold, so people who lean toward clicking "Agree" aren't nudged toward one party.</li>
+          <li>— <strong class="text-white">No order hints.</strong> Candidates with the same score are listed in random order, so position in the list never gives away party or incumbency.</li>
         </ul>
       </section>
+
+      <p class="mt-6 text-base">
+        <a href="/vote2026/sources" class="text-wtp-sky">See every candidate's positions and sources →</a>
+      </p>
 
       <section class="mt-10">
         <h2 class="text-2xl font-extrabold">The math</h2>
         <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          For each issue you answer, you and the candidate each get a value: agree = +1, not sure/mixed = 0, disagree = −1.
-          The issue scores 1 − |you − them| ÷ 2, so full agreement is 100%, one side unsure is 50%, opposite sides is 0%.
-          Issues you mark "matters a lot" count double. Your match is the weighted average over issues where the
-          candidate has a public position. Skipped questions don't count.
+          For each issue you agree or disagree with, you get +1 or −1. The candidate gets +1 (agrees), −1 (disagrees), or 0
+          (mixed). The issue scores 1 − |you − them| ÷ 2: same side is 100%, mixed is 50%, opposite sides is 0%. Issues you
+          mark "matters a lot" count double. Your match is the weighted average over issues where the candidate has a
+          public position. "Not sure" answers are skipped, not counted as a middle answer.
         </p>
         <p class="mt-3 text-base leading-relaxed text-wtp-cream/80">
           State issues are used only for Governor; federal issues only for U.S. House; shared issues for both.
@@ -65,8 +72,9 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
       <section class="mt-10">
         <h2 class="text-2xl font-extrabold">Privacy</h2>
         <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          Your answers never leave your browser. We count anonymous events (quiz started, finished, names revealed, which
-          length and district you picked) to know if the tool is useful. No names, emails, IP addresses, or answers are stored.
+          Your answers never leave your browser. We count anonymous events (quiz started, finished, names revealed, shared,
+          which length and district you picked) with <a href="https://www.goatcounter.com" class="text-wtp-sky underline" target="_blank" rel="noopener">GoatCounter</a>,
+          which uses no cookies. No names, emails, or answers are stored.
         </p>
       </section>
 
@@ -80,7 +88,7 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
         </p>
       </section>
 
-      <p class="mt-12"><a href="/quiz/" class="text-wtp-sky">← Take the quiz</a></p>
+      <p class="mt-12"><a href="/vote2026/" class="text-wtp-sky">← Take the quiz</a></p>
     </main>
   </body>
 </html>

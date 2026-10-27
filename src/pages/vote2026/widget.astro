@@ -1,10 +1,11 @@
 ---
 /**
  * Embeddable quiz. iframe it on wtpppa.org:
- *   <iframe src="https://dashboards.wtpppa.org/quiz/widget?mode=short&src=site"
+ *   <iframe src="https://dashboards.wtpppa.org/vote2026/widget?mode=short&src=site"
  *           style="width:100%;height:640px;border:0"></iframe>
  * Params: mode=short|long, district=pa-06, src=<tracking label>.
  */
+import { config } from '../../config';
 import issuesDoc from '../../../data/quiz/issues.json';
 import racesDoc from '../../../data/quiz/races.json';
 import type { Issue, Race } from '../../lib/quiz';
@@ -15,9 +16,9 @@ import '../../styles/global.css';
 
 <html lang="en">
   <head>
-    <QuizHead title="Candidate Match — PA Nov 3" description="Which PA candidates share your views?" noindex />
+    <QuizHead title="Vote 2026: Candidate Match" description="Which PA candidates share your views?" noindex />
   </head>
   <body class="bg-page p-2 text-white">
-    <Quiz client:load issues={issuesDoc.issues as Issue[]} races={racesDoc.races as Race[]} compact />
+    <Quiz client:load issues={issuesDoc.issues as Issue[]} races={racesDoc.races as Race[]} hidden={config.quiz.hiddenRaces} electionDate={config.quiz.electionDate} compact />
   </body>
 </html>

@@ -15,5 +15,12 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react()]
+  integrations: [react()],
+
+  // Quiz moved from /quiz to /vote2026 before launch; keep stray links working.
+  redirects: {
+    '/quiz': '/vote2026',
+    '/quiz/widget': '/vote2026/widget',
+    '/quiz/about': '/vote2026/about',
+  }
 });
