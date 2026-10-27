@@ -36,7 +36,7 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
           <li>— <strong class="text-white">Sourced or skipped.</strong> A position counts only if it links a public source: the candidate's website, a debate, a voter-guide survey (like Vote411), an interview, or an official vote. If we couldn't find one, it's "No public position" and left out of the score. Never counted against them, never guessed from party.</li>
           <li>— <strong class="text-white">Votes count as positions.</strong> Incumbents and former officeholders have a record. A vote is treated like any other public statement. When what someone said and how they voted disagree, we mark the position "Mixed" and show both. A vote on a bill that bundles unrelated things (for example, the 2026 bill pairing a stock-trading limit with voter ID) doesn't set a position by itself, for anyone.</li>
           <li>— <strong class="text-white">Coverage shown.</strong> Each score says how many of your answers it's based on. A candidate needs public positions on at least {MIN_SCORED} of the issues you answered to get a percentage, so one lucky overlap can't put a little-known candidate on top.</li>
-          <li>— <strong class="text-white">Balanced wording.</strong> Statements are split about evenly between positions Democrats usually hold and positions Republicans usually hold, so people who lean toward clicking "Agree" aren't nudged toward one party.</li>
+          <li>— <strong class="text-white">Two sides, not agree/disagree.</strong> Each question offers two positions and asks which comes closer to your view. Agree/disagree questions nudge people toward "agree," so we follow <a href="https://www.pewresearch.org/writing-survey-questions/" class="text-wtp-sky underline" target="_blank" rel="noopener">Pew Research Center's advice</a> to offer a choice between alternatives. Where a choice has a real cost (taxes, spending, prices), both sides name it. The two sides appear in random order.</li>
           <li>— <strong class="text-white">No order hints.</strong> Candidates with the same score are listed in random order, so position in the list never gives away party or incumbency.</li>
         </ul>
       </section>
@@ -48,8 +48,8 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
       <section class="mt-10">
         <h2 class="text-2xl font-extrabold">The math</h2>
         <p class="mt-4 text-base leading-relaxed text-wtp-cream/80">
-          For each issue you agree or disagree with, you get +1 or −1. The candidate gets +1 (agrees), −1 (disagrees), or 0
-          (mixed). The issue scores 1 − |you − them| ÷ 2: same side is 100%, mixed is 50%, opposite sides is 0%. Issues you
+          For each issue, one side counts as +1 and the other as −1. You get the value of the side you pick. The candidate
+          gets the value of the side their record supports, or 0 if their record is mixed. The issue scores 1 − |you − them| ÷ 2: same side is 100%, mixed is 50%, opposite sides is 0%. Issues you
           mark "matters a lot" count double. Your match is the weighted average over issues where the candidate has a
           public position. "Not sure" answers are skipped, not counted as a middle answer.
         </p>
@@ -63,7 +63,7 @@ const candidateCount = racesDoc.races.reduce((n, r) => n + r.candidates.length, 
         <ul class="mt-4 space-y-2 text-sm text-wtp-cream/80">
           {issuesDoc.issues.map((i) => (
             <li>
-              <strong class="text-white">{i.topic}</strong>{i.short ? ' (quick + full)' : ' (full only)'} — {i.statement}
+              <strong class="text-white">{i.topic}</strong>{i.short ? ' (quick + full)' : ' (full only)'}: {i.a} <em>or</em> {i.b}
             </li>
           ))}
         </ul>

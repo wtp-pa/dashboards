@@ -9,7 +9,6 @@ import '../../styles/global.css';
 
 const issues = issuesDoc.issues as Issue[];
 const races = (racesDoc.races as Race[]).filter((r) => !config.quiz.hiddenRaces.includes(r.id));
-const STANCE = { agree: 'Agrees', disagree: 'Disagrees', mixed: 'Mixed', unknown: 'No public position' } as const;
 const domain = (u: string) => new URL(u).hostname.replace(/^www\./, '');
 ---
 
@@ -52,8 +51,10 @@ const domain = (u: string) => new URL(u).hostname.replace(/^www\./, '');
                       <li>
                         <div class="flex justify-between gap-2">
                           <span class="font-medium">{issue.topic}</span>
-                          <span class="text-xs text-wtp-cream/60">{STANCE[pos.stance]}</span>
                         </div>
+                        <p class="text-xs text-wtp-cream/60">
+                          {pos.stance === 'agree' ? `Closer to: ${issue.a}` : pos.stance === 'disagree' ? `Closer to: ${issue.b}` : pos.stance === 'mixed' ? 'Mixed record' : 'No public position'}
+                        </p>
                         {pos.summary && (
                           <p class="mt-0.5 text-xs text-wtp-cream/70">
                             {pos.summary}{' '}

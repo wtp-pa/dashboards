@@ -8,6 +8,7 @@ import {
   type MatchResult,
   type Mode,
   type Race,
+  type Stance,
 } from '../../lib/quiz';
 import { track } from '../../lib/quizTrack';
 
@@ -25,9 +26,6 @@ interface Props {
 
 type Step = 'intro' | 'quiz' | 'results';
 
-const ANSWER_LABEL: Record<Answer, string> = { agree: 'Agree', neutral: 'Not sure', disagree: 'Disagree' };
-const STANCE_LABEL = { agree: 'Agrees', disagree: 'Disagrees', mixed: 'Mixed', unknown: 'No public position' } as const;
-
 function readParams() {
   const p = new URLSearchParams(window.location.search);
   const mode = p.get('mode');
@@ -41,6 +39,7 @@ function readParams() {
 export default function Quiz({ issues, races, defaultMode = 'short', hidden = [], electionDate, compact = false }: Props) {
   const [mode, setMode] = useState<Mode>(defaultMode);
   const [district, setDistrict] = useState<string>('');
+  const [showDistrict, setShowDistrict] = useState(false);
   const [source, setSource] = useState<string | null>(null);
   const [step, setStep] = useState<Step>('intro');
   const [copied, setCopied] = useState(false);
@@ -48,16 +47,21 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [important, setImportant] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
-  // One random tie-break order per visit (see scoreRace).
+  // Per visit: random tie-break order (see scoreRace) and which side of each
+  // question shows first, so neither side always gets the top spot.
   const [tieOrder] = useState(() =>
     Object.fromEntries(races.flatMap((r) => r.candidates).map((c) => [c.id, Math.random()])),
   );
+  const [bFirst] = useState(() => Object.fromEntries(issues.map((i) => [i.id, Math.random() < 0.5])));
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
 
   useEffect(() => {
     const p = readParams();
     if (p.mode) setMode(p.mode);
-    if (p.district) setDistrict(p.district);
+    if (p.district) {
+      setDistrict(p.district);
+      setShowDistrict(true);
+    }
     setSource(p.source);
     // Days until polls open, in Pennsylvania time.
     const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
@@ -67,13 +71,14 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   const shownRaces = races.filter((r) => !hidden.includes(r.id));
   const statewide = shownRaces.filter((r) => r.level === 'state');
   const houseRaces = shownRaces.filter((r) => r.level === 'federal');
-  const myRaces = [...statewide, ...houseRaces.filter((r) => r.id === district)];
 
   // Only ask questions that apply to a race the user will see results for.
-  const questions = useMemo(
-    () => issuesFor(issues, mode).filter((i) => myRaces.some((r) => appliesTo(i, r))),
-    [issues, mode, myRaces.map((r) => r.id).join()],
-  );
+  function questionsFor(m: Mode, d: string) {
+    const mine = [...statewide, ...houseRaces.filter((r) => r.id === d)];
+    return issuesFor(issues, m).filter((i) => mine.some((r) => appliesTo(i, r)));
+  }
+  const myRaces = [...statewide, ...houseRaces.filter((r) => r.id === district)];
+  const questions = useMemo(() => questionsFor(mode, district), [issues, mode, district, hidden.join()]);
   const q = questions[idx];
 
   function start() {
@@ -85,9 +90,23 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
     track({ event: 'start', mode, race_id: district || null, source });
   }
 
+  /** From results: add a House race or more issues, asking only what's new. */
+  function extend(m: Mode, d: string) {
+    setMode(m);
+    setDistrict(d);
+    const first = questionsFor(m, d).findIndex((i) => !(i.id in answers));
+    if (first >= 0) {
+      setIdx(first);
+      setStep('quiz');
+    }
+  }
+
   function answer(a: Answer) {
-    setAnswers((prev) => ({ ...prev, [q.id]: a }));
-    if (idx + 1 < questions.length) setIdx(idx + 1);
+    const next = { ...answers, [q.id]: a };
+    setAnswers(next);
+    // Go to the next unanswered question (after Back, this returns you to where you were).
+    const after = questions.findIndex((i, n) => n > idx && !(i.id in next));
+    if (after >= 0) setIdx(after);
     else {
       setStep('results');
       track({ event: 'complete', mode, race_id: district || null, source });
@@ -96,7 +115,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
 
   async function share() {
     const url = `${window.location.origin}/vote2026/?src=share`;
-    const text = 'Which PA candidates line up with you on the issues? Names hidden until the end.';
+    const text = "See which PA candidates for Governor line up with you on the issues. Names hidden until the end.";
     track({ event: 'share', source });
     try {
       if (navigator.share) await navigator.share({ title: 'Vote 2026: Candidate Match', text, url });
@@ -120,108 +139,133 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   const pad = compact ? 'p-4' : 'p-6 sm:p-8';
   const card = `rounded-xl border border-white/10 bg-surface ${pad}`;
   const btn = 'rounded-lg px-4 py-2.5 text-sm font-semibold transition';
+  const other: Mode = mode === 'short' ? 'long' : 'short';
+
+  const districtSelect = (value: string, onChange: (d: string) => void, emptyLabel: string) => (
+    <>
+      <select
+        aria-label="Your U.S. House district"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-2 w-full rounded-lg border border-white/15 bg-page px-3 py-2.5 text-sm"
+      >
+        <option value="">{emptyLabel}</option>
+        {houseRaces.map((r) => (
+          <option key={r.id} value={r.id}>
+            {r.office.replace('U.S. House — ', '')}
+            {r.counties?.length ? ` — ${r.counties.slice(0, 3).join(', ')}${r.counties.length > 3 ? '…' : ''}` : ''}
+          </option>
+        ))}
+      </select>
+      <a
+        href="https://www.house.gov/representatives/find-your-representative"
+        target="_blank"
+        rel="noopener"
+        className="mt-1 inline-block text-xs text-wtp-sky"
+      >
+        Don't know your district? Look it up by ZIP code →
+      </a>
+    </>
+  );
 
   if (step === 'intro') {
     return (
       <div className={card}>
         {daysLeft !== null && daysLeft >= 0 && (
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-wtp-gold">
-            {daysLeft === 0 ? 'Election Day is today — polls open 7 a.m. to 8 p.m.' : `Election Day in ${daysLeft} day${daysLeft === 1 ? '' : 's'}`}
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-wtp-gold">
+            {daysLeft === 0
+              ? 'Election Day is today. Polls are open 7 a.m. to 8 p.m.'
+              : `Election Day is in ${daysLeft} day${daysLeft === 1 ? '' : 's'}`}
           </p>
         )}
-        <h2 className="text-xl font-semibold sm:text-2xl">Who do you line up with on Nov 3?</h2>
-        <p className="mt-2 text-sm text-wtp-cream/70">
-          Answer a few questions on the issues. Candidate names stay hidden until the end, so you judge positions, not
-          parties. Every candidate on the ballot is scored the same way, from their own public record.
+        <p className="mt-3 text-base text-wtp-cream/80">
+          Every Pennsylvania voter picks a <strong className="text-white">Governor</strong> on Nov 3. Answer a few
+          questions, then see which candidates are closest to you. Names stay hidden until the end.
         </p>
 
-        <label className="mt-6 block text-sm font-medium" htmlFor="quiz-district">
-          Your U.S. House district <span className="text-wtp-cream/50">(optional)</span>
-        </label>
-        <select
-          id="quiz-district"
-          value={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-white/15 bg-page px-3 py-2.5 text-sm"
-        >
-          <option value="">Statewide races only</option>
-          {houseRaces.map((r) => (
-            <option key={r.id} value={r.id}>
-              {r.office}
-              {r.counties?.length ? ` — ${r.counties.slice(0, 3).join(', ')}${r.counties.length > 3 ? '…' : ''}` : ''}
-            </option>
-          ))}
-        </select>
-        <a
-          href="https://www.house.gov/representatives/find-your-representative"
-          target="_blank"
-          rel="noopener"
-          className="mt-1 inline-block text-xs text-wtp-sky"
-        >
-          Not sure? Look up your district by ZIP →
-        </a>
-
-        <fieldset className="mt-6">
-          <legend className="text-sm font-medium">Length</legend>
-          <div className="mt-2 flex gap-2">
-            {(['short', 'long'] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                aria-pressed={mode === m}
-                className={`${btn} border ${mode === m ? 'border-wtp-sky bg-wtp-sky/15 text-white' : 'border-white/15 text-wtp-cream/70 hover:border-white/30'}`}
-              >
-                {m === 'short' ? 'Quick' : 'Full'} · {issuesFor(issues, m).length} issues
-              </button>
-            ))}
-          </div>
-        </fieldset>
-
-        <button type="button" onClick={start} className={`${btn} mt-6 w-full bg-wtp-sky text-wtp-navy hover:bg-white`}>
-          Start →
+        <button type="button" onClick={start} className={`${btn} mt-6 w-full bg-wtp-sky py-3 text-base text-wtp-navy hover:bg-white`}>
+          Start · {questions.length} questions →
         </button>
+        <p className="mt-2 text-center text-xs text-wtp-cream/50">
+          {district ? `Governor + ${myRaces[myRaces.length - 1]?.office.replace('U.S. House — ', 'U.S. House ')}` : 'Governor race'}
+          {' · '}
+          <button type="button" onClick={() => setMode(other)} className="text-wtp-sky">
+            {mode === 'short' ? `Want more issues? Use the full version (${questionsFor('long', district).length})` : `Shorter version (${questionsFor('short', district).length})`}
+          </button>
+        </p>
+
+        <div className="mt-6 border-t border-white/10 pt-4">
+          {!showDistrict ? (
+            <button type="button" onClick={() => setShowDistrict(true)} className="text-sm font-medium text-wtp-sky">
+              + Also compare your U.S. House race (optional)
+            </button>
+          ) : (
+            <div>
+              <p className="text-sm font-medium">Your U.S. House race (optional)</p>
+              <p className="mt-1 text-xs text-wtp-cream/60">
+                You'll also vote for one U.S. House seat. Which one depends on where you live.
+              </p>
+              {districtSelect(district, setDistrict, 'Skip, just the Governor')}
+            </div>
+          )}
+          <p className="mt-4 text-xs text-wtp-cream/40">
+            Your ballot also has state legislature races, which aren't in this quiz. Your county election office posts a
+            sample ballot.
+          </p>
+        </div>
       </div>
     );
   }
 
   if (step === 'quiz' && q) {
+    const sides: Answer[] = bFirst[q.id] ? ['disagree', 'agree'] : ['agree', 'disagree'];
     return (
       <div className={card}>
-        <div className="flex items-center justify-between text-xs text-wtp-cream/50">
-          <span>
-            {idx + 1} of {questions.length} · {q.topic}
-          </span>
-          {idx > 0 && (
-            <button type="button" onClick={() => setIdx(idx - 1)} className="text-wtp-sky">
-              ← Back
-            </button>
-          )}
+        <div className="text-xs text-wtp-cream/50">
+          {idx + 1} of {questions.length} · {q.topic}
         </div>
         <div className="mt-2 h-1 rounded bg-white/10">
           <div className="h-1 rounded bg-wtp-sky transition-all" style={{ width: `${(idx / questions.length) * 100}%` }} />
         </div>
 
-        <p className="mt-6 min-h-[4.5rem] text-lg font-medium sm:text-xl">{q.statement}</p>
+        {q.context && <p className="mt-5 text-sm text-wtp-cream/60">{q.context}</p>}
+        <p className="mt-4 text-lg font-semibold">Which comes closer to your view?</p>
 
-        <div className="mt-6 grid grid-cols-3 gap-2">
-          {(['agree', 'neutral', 'disagree'] as const).map((a) => (
+        <div className="mt-3 space-y-2">
+          {sides.map((side) => (
             <button
-              key={a}
+              key={side}
               type="button"
-              onClick={() => answer(a)}
-              className={`${btn} border ${answers[q.id] === a ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/15 hover:border-wtp-sky/60'}`}
+              onClick={() => answer(side)}
+              className={`${btn} block w-full border text-left text-base font-medium ${answers[q.id] === side ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/15 hover:border-wtp-sky/60'}`}
             >
-              {ANSWER_LABEL[a]}
+              {side === 'agree' ? q.a : q.b}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => answer('neutral')}
+            className={`${btn} block w-full border font-normal text-wtp-cream/70 ${answers[q.id] === 'neutral' ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/10 hover:border-white/30'}`}
+          >
+            Not sure / neither
+          </button>
         </div>
 
         <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-wtp-cream/70">
           <input type="checkbox" checked={important.has(q.id)} onChange={() => toggleImportant(q.id)} />
-          This one matters a lot to me
+          This issue matters a lot to me
         </label>
-        <p className="mt-2 text-xs text-wtp-cream/40">"Not sure" skips the issue. It doesn't count for or against anyone.</p>
+
+        <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
+          <button
+            type="button"
+            onClick={() => (idx > 0 ? setIdx(idx - 1) : setStep('intro'))}
+            className={`${btn} border border-white/20 hover:border-white/40`}
+          >
+            ← Back
+          </button>
+          <span className="text-right text-xs text-wtp-cream/40">"Not sure" doesn't count for or against anyone.</span>
+        </div>
       </div>
     );
   }
@@ -233,7 +277,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         <div>
           <h2 className="text-xl font-semibold">Your matches</h2>
           <p className="text-sm text-wtp-cream/60">
-            {revealed ? 'Names revealed.' : 'Names hidden — compare positions first.'} Based on{' '}
+            {revealed ? 'Names revealed.' : 'Names hidden. Compare positions first.'} Based on{' '}
             {Object.values(answers).filter((a) => a !== 'neutral').length} answers.
           </p>
         </div>
@@ -263,24 +307,31 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         />
       ))}
 
+      {!district && (
+        <div className={card}>
+          <p className="text-sm font-medium">Add your U.S. House race</p>
+          <p className="mt-1 text-xs text-wtp-cream/60">
+            Every Pennsylvanian also votes for one U.S. House seat. Pick yours and we'll ask only the extra questions.
+          </p>
+          {districtSelect('', (d) => d && extend(mode, d), 'Choose your district')}
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => setStep('intro')} className={`${btn} border border-white/15 hover:border-white/30`}>
-          Retake
-        </button>
         {mode === 'short' && (
           <button
             type="button"
-            onClick={() => {
-              setMode('long');
-              setStep('intro');
-            }}
+            onClick={() => extend('long', district)}
             className={`${btn} border border-wtp-sky/50 text-wtp-sky hover:border-wtp-sky`}
           >
-            Try the full version ({issuesFor(issues, 'long').length} issues)
+            Answer more issues ({questionsFor('long', district).length - questions.length} more)
           </button>
         )}
         <button type="button" onClick={share} className={`${btn} border border-white/15 hover:border-white/30`}>
           {copied ? 'Link copied' : 'Share with a friend'}
+        </button>
+        <button type="button" onClick={() => setStep('intro')} className={`${btn} text-wtp-cream/60 hover:text-wtp-cream`}>
+          Start over
         </button>
       </div>
       <p className="text-sm">
@@ -300,6 +351,13 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
       </p>
     </div>
   );
+}
+
+/** How a candidate's stance compares with your answer, in plain words. */
+function compare(you: Answer, them: Stance): string {
+  if (them === 'unknown') return 'No public position';
+  if (them === 'mixed') return 'Mixed record';
+  return you === them ? 'Same side as you' : 'Opposite side';
 }
 
 function RaceResults({
@@ -367,7 +425,7 @@ function RaceResults({
                         <div className="flex justify-between gap-2">
                           <span className="font-medium">{issue.topic}</span>
                           <span className="text-xs text-wtp-cream/60">
-                            You: {ANSWER_LABEL[answers[issue.id]]} · Them: {STANCE_LABEL[pos.stance]}
+                            {compare(answers[issue.id], pos.stance)}
                           </span>
                         </div>
                         {/* Summaries often name the candidate, so they wait for the reveal. */}

@@ -16,6 +16,7 @@
 
 export type Level = 'state' | 'federal' | 'both';
 export type Stance = 'agree' | 'disagree' | 'mixed' | 'unknown';
+/** agree = picked side a, disagree = picked side b, neutral = not sure. */
 export type Answer = 'agree' | 'neutral' | 'disagree';
 
 export interface Issue {
@@ -23,7 +24,12 @@ export interface Issue {
   level: Level;
   short: boolean;
   topic: string;
-  statement: string;
+  /** Optional one-line background shown above the choice. */
+  context?: string;
+  /** The side a candidate stance of "agree" means. */
+  a: string;
+  /** The side a candidate stance of "disagree" means. */
+  b: string;
 }
 
 export interface Position {
