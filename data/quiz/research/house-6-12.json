@@ -141,7 +141,8 @@
       },
       "abortion": {
        "options": [
-        "states"
+        "states",
+        "ban"
        ],
        "summary": "Says he would not use federal law to set a national ban and that 'States may set their own criminal law'; personally supports exceptions only for rape, incest or the mother's life.",
        "source": "https://ivoterguide.com/candidate/91600/race/32997/election/1477",
@@ -650,7 +651,8 @@
       },
       "abortion": {
        "options": [
-        "states"
+        "states",
+        "ban"
        ],
        "summary": "Says the Supreme Court 'properly determined that this issue ... belongs at the state level'; personally would allow abortion only for rape, incest or the mother's life.",
        "source": "https://ivoterguide.com/candidate/59502",

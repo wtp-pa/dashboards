@@ -16,8 +16,8 @@
       "question": "Should state education money follow students to private schools?",
       "options": [
         { "id": "universal", "text": "Yes, for every family: state money (vouchers or savings accounts) usable at any school." },
-        { "id": "targeted", "text": "Only for students in the lowest-performing public schools (like the Lifeline/PASS scholarship proposal)." },
-        { "id": "tax-credit", "text": "No new vouchers, but keep or grow the existing business tax-credit scholarships." },
+        { "id": "targeted", "text": "Yes, but only for students in the lowest-performing public schools (like the proposed Lifeline/PASS scholarships)." },
+        { "id": "tax-credit", "text": "No vouchers, but keep or grow the tax credits businesses get for funding private-school scholarships." },
         { "id": "public-only", "text": "No. Keep state education money in public schools." }
       ],
       "near": [["universal", "targeted"], ["targeted", "tax-credit"], ["tax-credit", "public-only"]] },
@@ -78,22 +78,22 @@
 
     { "id": "abortion", "level": "both", "short": true, "topic": "Abortion",
       "context": "In Pennsylvania, abortion is legal up to 24 weeks of pregnancy.",
-      "question": "Where should abortion law go?",
+      "question": "What should abortion law be?",
       "options": [
-        { "id": "protect", "text": "Protect abortion access in law, at least as much as Roe v. Wade did." },
-        { "id": "states", "text": "Keep Pennsylvania's current law and leave abortion to each state, with no national ban or national protection." },
-        { "id": "earlier-limit", "text": "Limit it earlier in pregnancy, such as 15 weeks, with exceptions." },
+        { "id": "protect", "text": "Write stronger protections for abortion access into law, like those under Roe v. Wade." },
+        { "id": "states", "text": "Keep things as they are: legal in Pennsylvania up to 24 weeks, with each state setting its own law." },
+        { "id": "earlier-limit", "text": "Limit it earlier in pregnancy, such as 15 or 20 weeks, with exceptions after that." },
         { "id": "ban", "text": "Ban most abortions, with exceptions only for rape, incest, or the mother's life." }
       ],
       "near": [["protect", "states"], ["states", "earlier-limit"], ["earlier-limit", "ban"]] },
 
     { "id": "immigration", "level": "both", "short": true, "topic": "Immigration enforcement",
-      "question": "What role should state and local police play in immigration enforcement?",
+      "question": "Which comes closest to your view on immigration enforcement?",
       "options": [
-        { "id": "full-help", "text": "Actively help federal agents (ICE) find and detain people who are here illegally." },
-        { "id": "serious-crimes", "text": "Hand people over to ICE only when they're charged with serious crimes." },
-        { "id": "federal-only", "text": "Stay out of it; immigration enforcement is the federal government's job." },
-        { "id": "limit-ice", "text": "Stay out of it, and put new limits on ICE itself, such as requiring judges' warrants." }
+        { "id": "full-help", "text": "State and local police should actively help federal agents (ICE) find and detain people here illegally." },
+        { "id": "serious-crimes", "text": "Focus on people charged with serious crimes; local police should hand only those people to ICE." },
+        { "id": "federal-only", "text": "Leave it to federal agents; state and local police should stay out of it." },
+        { "id": "limit-ice", "text": "Rein in ICE itself, with rules like judges' warrants, no masks, and visible ID." }
       ],
       "near": [["full-help", "serious-crimes"], ["serious-crimes", "federal-only"], ["federal-only", "limit-ice"]] },
 
@@ -132,7 +132,7 @@
       "options": [
         { "id": "broad", "text": "Keep broad tariffs on most imports to bring back jobs, even if prices go up." },
         { "id": "targeted", "text": "Use tariffs only on specific countries or goods, like China or steel, and drop the broad ones." },
-        { "id": "congress", "text": "Congress, not the President alone, should vote on tariffs." },
+        { "id": "congress", "text": "Let Congress decide; the President shouldn't set broad tariffs alone." },
         { "id": "free-trade", "text": "Remove most tariffs so people and businesses can buy at the lowest price." }
       ],
       "near": [["broad", "targeted"], ["targeted", "congress"], ["targeted", "free-trade"], ["congress", "free-trade"]] },
