@@ -218,7 +218,18 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   }
 
   if (step === 'quiz' && q) {
-    const sides: Answer[] = bFirst[q.id] ? ['disagree', 'agree'] : ['agree', 'disagree'];
+    // Top side is random per visit; the scale runs from the top statement to the bottom one.
+    const top = bFirst[q.id] ? -1 : 1;
+    const choice = (value: Answer, label: string, strong: boolean) => (
+      <button
+        key={String(value)}
+        type="button"
+        onClick={() => answer(value)}
+        className={`${btn} block w-full border text-left ${strong ? 'text-base font-medium' : 'py-2 text-sm font-normal text-wtp-cream/80'} ${answers[q.id] === value ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/15 hover:border-wtp-sky/60'}`}
+      >
+        {label}
+      </button>
+    );
     return (
       <div className={card}>
         <div className="text-xs text-wtp-cream/50">
@@ -229,27 +240,22 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         </div>
 
         {q.context && <p className="mt-5 text-sm text-wtp-cream/60">{q.context}</p>}
-        <p className="mt-4 text-lg font-semibold">Which comes closer to your view?</p>
+        <p className="mt-4 text-lg font-semibold">Where do you land?</p>
 
-        <div className="mt-3 space-y-2">
-          {sides.map((side) => (
-            <button
-              key={side}
-              type="button"
-              onClick={() => answer(side)}
-              className={`${btn} block w-full border text-left text-base font-medium ${answers[q.id] === side ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/15 hover:border-wtp-sky/60'}`}
-            >
-              {side === 'agree' ? q.a : q.b}
-            </button>
-          ))}
-          <button
-            type="button"
-            onClick={() => answer('neutral')}
-            className={`${btn} block w-full border font-normal text-wtp-cream/70 ${answers[q.id] === 'neutral' ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/10 hover:border-white/30'}`}
-          >
-            Not sure / neither
-          </button>
+        <div className="mt-3 space-y-1.5">
+          {choice(top, top === 1 ? q.a : q.b, true)}
+          {choice(top / 2, '↑ Lean toward this one', false)}
+          {choice(0, 'Somewhere in between / it depends', false)}
+          {choice(-top / 2, '↓ Lean toward this one', false)}
+          {choice(-top, top === 1 ? q.b : q.a, true)}
         </div>
+        <button
+          type="button"
+          onClick={() => answer(null)}
+          className={`${btn} mt-2 w-full font-normal text-wtp-cream/60 hover:text-wtp-cream ${answers[q.id] === null ? 'underline' : ''}`}
+        >
+          Not sure, skip this one
+        </button>
 
         <label className="mt-4 flex cursor-pointer items-center gap-2 text-sm text-wtp-cream/70">
           <input type="checkbox" checked={important.has(q.id)} onChange={() => toggleImportant(q.id)} />
@@ -264,7 +270,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
           >
             ← Back
           </button>
-          <span className="text-right text-xs text-wtp-cream/40">"Not sure" doesn't count for or against anyone.</span>
+          <span className="text-right text-xs text-wtp-cream/40">Skipping doesn't count for or against anyone.</span>
         </div>
       </div>
     );
@@ -278,7 +284,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
           <h2 className="text-xl font-semibold">Your matches</h2>
           <p className="text-sm text-wtp-cream/60">
             {revealed ? 'Names revealed.' : 'Names hidden. Compare positions first.'} Based on{' '}
-            {Object.values(answers).filter((a) => a !== 'neutral').length} answers.
+            {Object.values(answers).filter((a) => a !== null).length} answers.
           </p>
         </div>
         {!revealed && (
@@ -354,10 +360,11 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
 }
 
 /** How a candidate's stance compares with your answer, in plain words. */
-function compare(you: Answer, them: Stance): string {
+function compare(you: number, them: Stance): string {
   if (them === 'unknown') return 'No public position';
-  if (them === 'mixed') return 'Mixed record';
-  return you === them ? 'Same side as you' : 'Opposite side';
+  if (them === 'mixed') return you === 0 ? 'In between, like you' : 'In between / mixed record';
+  if (you === 0) return 'Takes a side; you\'re in between';
+  return (you > 0) === (them === 'agree') ? 'Same side as you' : 'Opposite side';
 }
 
 function RaceResults({
@@ -376,7 +383,7 @@ function RaceResults({
   card: string;
 }) {
   const [open, setOpen] = useState<string | null>(null);
-  const relevant = issues.filter((i) => appliesTo(i, race) && answers[i.id] && answers[i.id] !== 'neutral');
+  const relevant = issues.filter((i) => appliesTo(i, race) && typeof answers[i.id] === 'number');
 
   return (
     <section className={card}>
@@ -389,6 +396,8 @@ function RaceResults({
           const c = r.candidate;
           const label = revealed ? c.name : `Candidate ${String.fromCharCode(65 + i)}`;
           const isOpen = open === c.id;
+          // Few overlapping positions: show the score, but say it's rough.
+          const rough = r.pct !== null && r.scored < 4;
           return (
             <li key={c.id} className="rounded-lg border border-white/10 bg-page/40 p-3">
               <button
@@ -397,7 +406,7 @@ function RaceResults({
                 aria-expanded={isOpen}
                 className="flex w-full items-center gap-3 text-left"
               >
-                <span className="w-14 flex-shrink-0 text-2xl font-semibold tabular-nums">
+                <span className={`w-16 flex-shrink-0 text-xl font-semibold tabular-nums sm:text-2xl ${rough ? 'text-wtp-cream/50' : ''}`}>
                   {r.pct === null ? '—' : `${r.pct}%`}
                 </span>
                 <span className="min-w-0 flex-1">
@@ -406,14 +415,14 @@ function RaceResults({
                     {revealed && `${c.party}${c.incumbent ? ' · incumbent' : ''} · `}
                     {r.pct === null
                       ? `Not enough public positions to score (${r.scored} of ${r.asked})`
-                      : `Scored on ${r.scored} of ${r.asked} issues`}
+                      : `Scored on ${r.scored} of ${r.asked} issues${rough ? ' · rough match, few positions to compare' : ''}`}
                   </span>
                 </span>
                 <span className="text-xs text-wtp-sky">{isOpen ? 'Hide' : 'Details'}</span>
               </button>
               {r.pct !== null && (
                 <div className="mt-2 h-1.5 rounded bg-white/10">
-                  <div className="h-1.5 rounded bg-wtp-sky" style={{ width: `${r.pct}%` }} />
+                  <div className={`h-1.5 rounded ${rough ? 'bg-wtp-sky/40' : 'bg-wtp-sky'}`} style={{ width: `${r.pct}%` }} />
                 </div>
               )}
               {isOpen && (
@@ -425,7 +434,7 @@ function RaceResults({
                         <div className="flex justify-between gap-2">
                           <span className="font-medium">{issue.topic}</span>
                           <span className="text-xs text-wtp-cream/60">
-                            {compare(answers[issue.id], pos.stance)}
+                            {compare(answers[issue.id] as number, pos.stance)}
                           </span>
                         </div>
                         {/* Summaries often name the candidate, so they wait for the reveal. */}

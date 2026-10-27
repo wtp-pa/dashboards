@@ -8,16 +8,19 @@
  *    never counted against anyone.
  *  - Incumbents' votes are a stance source like any other public statement.
  *    Where words and votes conflict, the stance is "mixed" and both show.
- *  - "Not sure" answers are skipped, not scored as a midpoint (a midpoint
- *    would make "mixed" stances look like perfect matches).
+ *  - Answers are a 5-step scale between the two sides. "In between" is a
+ *    real answer (0); "Not sure" is skipped, never scored as a midpoint.
  *  - No percentage until a candidate has enough positions on what you
  *    answered (MIN_SCORED), so one lucky overlap can't top the list.
  */
 
 export type Level = 'state' | 'federal' | 'both';
 export type Stance = 'agree' | 'disagree' | 'mixed' | 'unknown';
-/** agree = picked side a, disagree = picked side b, neutral = not sure. */
-export type Answer = 'agree' | 'neutral' | 'disagree';
+/**
+ * Where you sit between the two sides: 1 = side a, 0.5 = lean a,
+ * 0 = in between, -0.5 = lean b, -1 = side b. null = not sure (skipped).
+ */
+export type Answer = number | null;
 
 export interface Issue {
   id: string;
@@ -66,7 +69,6 @@ export function appliesTo(issue: Issue, race: Race): boolean {
   return issue.level === 'both' || issue.level === race.level;
 }
 
-const ANSWER_VAL: Partial<Record<Answer, number>> = { agree: 1, disagree: -1 };
 const STANCE_VAL: Partial<Record<Stance, number>> = { agree: 1, mixed: 0, disagree: -1 };
 
 export interface MatchResult {
@@ -75,7 +77,7 @@ export interface MatchResult {
   pct: number | null;
   /** Issues that counted toward pct. */
   scored: number;
-  /** Issues the user answered agree/disagree on that apply to this race. */
+  /** Issues the user took a side on (not "not sure") that apply to this race. */
   asked: number;
 }
 
@@ -83,19 +85,19 @@ export interface MatchResult {
 export const MIN_SCORED = 3;
 
 /**
- * Per issue: 1 − |you − them| / 2, so agree/agree = 1, agree/mixed = 0.5,
- * agree/disagree = 0. "Important" issues count double. Ties sort by
+ * Per issue: 1 − |you − them| / 2, so same side = 1, lean vs. same side =
+ * 0.75, side vs. mixed = 0.5, opposite sides = 0. "Important" issues count double. Ties sort by
  * tieOrder (candidate id → number); the quiz passes a per-visit random
  * order so list position never hints at incumbency or party.
  */
 export function scoreRace(
   race: Race,
   issues: Issue[],
-  answers: Record<string, Answer>,
+  answers: Record<string, Answer | undefined>,
   important: Set<string>,
   tieOrder: Record<string, number> = {},
 ): MatchResult[] {
-  const relevant = issues.filter((i) => appliesTo(i, race) && ANSWER_VAL[answers[i.id]] !== undefined);
+  const relevant = issues.filter((i) => appliesTo(i, race) && typeof answers[i.id] === 'number');
   const need = Math.min(MIN_SCORED, relevant.length);
   return race.candidates
     .map((c) => {
@@ -106,7 +108,7 @@ export function scoreRace(
         const theirs = STANCE_VAL[c.positions[issue.id]?.stance ?? 'unknown'];
         if (theirs === undefined) continue;
         const w = important.has(issue.id) ? 2 : 1;
-        num += w * (1 - Math.abs(ANSWER_VAL[answers[issue.id]]! - theirs) / 2);
+        num += w * (1 - Math.abs((answers[issue.id] as number) - theirs) / 2);
         den += w;
         scored++;
       }
