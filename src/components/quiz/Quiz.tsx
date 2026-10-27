@@ -203,7 +203,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
             <div>
               <p className="text-sm font-medium">Your U.S. House race (optional)</p>
               <p className="mt-1 text-xs text-wtp-cream/60">
-                You'll also vote for one U.S. House seat. Which one depends on where you live.
+                Your ballot also has a race for U.S. House. Which district depends on where you live.
               </p>
               {districtSelect(district, setDistrict, 'Skip, just the Governor')}
             </div>
@@ -311,7 +311,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         <div className={card}>
           <p className="text-sm font-medium">Add your U.S. House race</p>
           <p className="mt-1 text-xs text-wtp-cream/60">
-            Every Pennsylvanian also votes for one U.S. House seat. Pick yours and we'll ask only the extra questions.
+            Your ballot also has a race for U.S. House. Pick your district to compare those candidates too. We'll ask only the 2–3 extra questions.
           </p>
           {districtSelect('', (d) => d && extend(mode, d), 'Choose your district')}
         </div>
