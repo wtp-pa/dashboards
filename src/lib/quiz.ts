@@ -1,6 +1,6 @@
 /**
  * Candidate Match — types + scoring. Pure functions, no I/O, so the same
- * logic is easy to audit on /quiz/about.
+ * logic is easy to audit on /vote2026/about.
  *
  * Fairness rules (mirrored in the about page — keep them in sync):
  *  - Every candidate on the ballot is scored the same way, whatever party.
@@ -8,19 +8,21 @@
  *    never counted against anyone.
  *  - Incumbents' votes are a stance source like any other public statement.
  *    Where words and votes conflict, the stance is "mixed" and both show.
- *  - Answers are a 5-step scale between the two sides. "In between" is a
- *    real answer (0); "Not sure" is skipped, never scored as a midpoint.
+ *  - Each issue offers several distinct positions, not two sides. "None of
+ *    these" and "Not sure" are skipped, never scored.
  *  - No percentage until a candidate has enough positions on what you
  *    answered (MIN_SCORED), so one lucky overlap can't top the list.
  */
 
 export type Level = 'state' | 'federal' | 'both';
-export type Stance = 'agree' | 'disagree' | 'mixed' | 'unknown';
-/**
- * Where you sit between the two sides: 1 = side a, 0.5 = lean a,
- * 0 = in between, -0.5 = lean b, -1 = side b. null = not sure (skipped).
- */
-export type Answer = number | null;
+/** An option id, NONE ("none of these fit me"), or null (not sure). */
+export type Answer = string | null;
+export const NONE = '_none';
+
+export interface Option {
+  id: string;
+  text: string;
+}
 
 export interface Issue {
   id: string;
@@ -29,14 +31,16 @@ export interface Issue {
   topic: string;
   /** Optional one-line background shown above the choice. */
   context?: string;
-  /** The side a candidate stance of "agree" means. */
-  a: string;
-  /** The side a candidate stance of "disagree" means. */
-  b: string;
+  question: string;
+  /** In order along the issue's main disagreement; shown as-is or reversed. */
+  options: Option[];
+  /** Pairs of options that partly overlap (half credit). */
+  near: [string, string][];
 }
 
 export interface Position {
-  stance: Stance;
+  /** One option id; two when words and record differ; empty = no public position. */
+  options: string[];
   summary?: string;
   source?: string;
   sourceDate?: string;
@@ -69,7 +73,23 @@ export function appliesTo(issue: Issue, race: Race): boolean {
   return issue.level === 'both' || issue.level === race.level;
 }
 
-const STANCE_VAL: Partial<Record<Stance, number>> = { agree: 1, mixed: 0, disagree: -1 };
+/** You picked a real option (not "not sure" or "none of these"). */
+export function picked(a: Answer | undefined): a is string {
+  return typeof a === 'string' && a !== NONE;
+}
+
+/** 1 = same option, 0.5 = options that overlap, 0 = otherwise. */
+export function credit(issue: Issue, you: string, them: string): number {
+  if (you === them) return 1;
+  return issue.near.some(([x, y]) => (x === you && y === them) || (x === them && y === you)) ? 0.5 : 0;
+}
+
+/** Average credit over a candidate's option(s); null when they have none. */
+export function issueCredit(issue: Issue, you: string, pos: Position | undefined): number | null {
+  const opts = pos?.options ?? [];
+  if (!opts.length) return null;
+  return opts.reduce((n, o) => n + credit(issue, you, o), 0) / opts.length;
+}
 
 export interface MatchResult {
   candidate: Candidate;
@@ -77,7 +97,7 @@ export interface MatchResult {
   pct: number | null;
   /** Issues that counted toward pct. */
   scored: number;
-  /** Issues the user took a side on (not "not sure") that apply to this race. */
+  /** Issues the user picked an option on that apply to this race. */
   asked: number;
 }
 
@@ -85,8 +105,8 @@ export interface MatchResult {
 export const MIN_SCORED = 3;
 
 /**
- * Per issue: 1 − |you − them| / 2, so same side = 1, lean vs. same side =
- * 0.75, side vs. mixed = 0.5, opposite sides = 0. "Important" issues count double. Ties sort by
+ * Per issue: same option = 1, overlapping option = 0.5, else 0; a candidate
+ * with two options (words vs. record) gets the average. "Important" issues count double. Ties sort by
  * tieOrder (candidate id → number); the quiz passes a per-visit random
  * order so list position never hints at incumbency or party.
  */
@@ -97,7 +117,7 @@ export function scoreRace(
   important: Set<string>,
   tieOrder: Record<string, number> = {},
 ): MatchResult[] {
-  const relevant = issues.filter((i) => appliesTo(i, race) && typeof answers[i.id] === 'number');
+  const relevant = issues.filter((i) => appliesTo(i, race) && picked(answers[i.id]));
   const need = Math.min(MIN_SCORED, relevant.length);
   return race.candidates
     .map((c) => {
@@ -105,10 +125,10 @@ export function scoreRace(
       let den = 0;
       let scored = 0;
       for (const issue of relevant) {
-        const theirs = STANCE_VAL[c.positions[issue.id]?.stance ?? 'unknown'];
-        if (theirs === undefined) continue;
+        const got = issueCredit(issue, answers[issue.id] as string, c.positions[issue.id]);
+        if (got === null) continue;
         const w = important.has(issue.id) ? 2 : 1;
-        num += w * (1 - Math.abs((answers[issue.id] as number) - theirs) / 2);
+        num += w * got;
         den += w;
         scored++;
       }

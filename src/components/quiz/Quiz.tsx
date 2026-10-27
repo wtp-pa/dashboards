@@ -1,14 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   appliesTo,
+  issueCredit,
   issuesFor,
+  NONE,
+  picked,
   scoreRace,
   type Answer,
   type Issue,
   type MatchResult,
   type Mode,
+  type Position,
   type Race,
-  type Stance,
 } from '../../lib/quiz';
 import { track } from '../../lib/quizTrack';
 
@@ -47,12 +50,12 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [important, setImportant] = useState<Set<string>>(new Set());
   const [revealed, setRevealed] = useState(false);
-  // Per visit: random tie-break order (see scoreRace) and which side of each
-  // question shows first, so neither side always gets the top spot.
+  // Per visit: random tie-break order (see scoreRace) and whether each
+  // question's options show in order or reversed, so no end always gets the top spot.
   const [tieOrder] = useState(() =>
     Object.fromEntries(races.flatMap((r) => r.candidates).map((c) => [c.id, Math.random()])),
   );
-  const [bFirst] = useState(() => Object.fromEntries(issues.map((i) => [i.id, Math.random() < 0.5])));
+  const [reversed] = useState(() => Object.fromEntries(issues.map((i) => [i.id, Math.random() < 0.5])));
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
 
   useEffect(() => {
@@ -218,11 +221,10 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   }
 
   if (step === 'quiz' && q) {
-    // Top side is random per visit; the scale runs from the top statement to the bottom one.
-    const top = bFirst[q.id] ? -1 : 1;
-    const choice = (value: Answer, label: string, strong: boolean) => (
+    const options = reversed[q.id] ? [...q.options].reverse() : q.options;
+    const choice = (value: string, label: string, strong: boolean) => (
       <button
-        key={String(value)}
+        key={value}
         type="button"
         onClick={() => answer(value)}
         className={`${btn} block w-full border text-left ${strong ? 'text-base font-medium' : 'py-2 text-sm font-normal text-wtp-cream/80'} ${answers[q.id] === value ? 'border-wtp-sky bg-wtp-sky/15' : 'border-white/15 hover:border-wtp-sky/60'}`}
@@ -240,14 +242,12 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
         </div>
 
         {q.context && <p className="mt-5 text-sm text-wtp-cream/60">{q.context}</p>}
-        <p className="mt-4 text-lg font-semibold">Where do you land?</p>
+        <p className="mt-4 text-lg font-semibold">{q.question}</p>
+        <p className="mt-1 text-xs text-wtp-cream/50">Pick the one closest to your view.</p>
 
         <div className="mt-3 space-y-1.5">
-          {choice(top, top === 1 ? q.a : q.b, true)}
-          {choice(top / 2, '↑ Lean toward this one', false)}
-          {choice(0, 'Somewhere in between / it depends', false)}
-          {choice(-top / 2, '↓ Lean toward this one', false)}
-          {choice(-top, top === 1 ? q.b : q.a, true)}
+          {options.map((o) => choice(o.id, o.text, true))}
+          {choice(NONE, 'None of these fit my view', false)}
         </div>
         <button
           type="button"
@@ -284,7 +284,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
           <h2 className="text-xl font-semibold">Your matches</h2>
           <p className="text-sm text-wtp-cream/60">
             {revealed ? 'Names revealed.' : 'Names hidden. Compare positions first.'} Based on{' '}
-            {Object.values(answers).filter((a) => a !== null).length} answers.
+            {Object.values(answers).filter(picked).length} answers.
           </p>
         </div>
         {!revealed && (
@@ -359,12 +359,12 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
   );
 }
 
-/** How a candidate's stance compares with your answer, in plain words. */
-function compare(you: number, them: Stance): string {
-  if (them === 'unknown') return 'No public position';
-  if (them === 'mixed') return you === 0 ? 'In between, like you' : 'In between / mixed record';
-  if (you === 0) return 'Takes a side; you\'re in between';
-  return (you > 0) === (them === 'agree') ? 'Same side as you' : 'Opposite side';
+/** How a candidate's position compares with your answer, in plain words. */
+function compare(issue: Issue, you: string, pos: Position | undefined): string {
+  const got = issueCredit(issue, you, pos);
+  if (got === null) return 'No public position';
+  if ((pos?.options.length ?? 0) > 1) return 'Mixed record';
+  return got === 1 ? 'Same as you' : got > 0 ? 'Close to yours' : 'Different';
 }
 
 function RaceResults({
@@ -383,13 +383,23 @@ function RaceResults({
   card: string;
 }) {
   const [open, setOpen] = useState<string | null>(null);
-  const relevant = issues.filter((i) => appliesTo(i, race) && typeof answers[i.id] === 'number');
+  const relevant = issues.filter((i) => appliesTo(i, race) && picked(answers[i.id]));
+  // Your exact view that no one in this race holds — worth saying out loud.
+  const unmatched = relevant.filter(
+    (i) => !race.candidates.some((c) => c.positions[i.id]?.options.includes(answers[i.id] as string)),
+  );
 
   return (
     <section className={card}>
       <h3 className="text-xs uppercase tracking-[0.18em] text-wtp-sky">{race.office}</h3>
       {race.candidates.length < 2 && (
         <p className="mt-2 text-xs text-wtp-cream/50">Only one candidate is on the ballot in this race.</p>
+      )}
+      {unmatched.length > 0 && (
+        <p className="mt-2 text-xs text-wtp-cream/60">
+          No candidate here has publicly taken your position on {unmatched.map((i) => i.topic.toLowerCase()).join(', ')}.
+          Tell them: candidates hear from voters most right before an election.
+        </p>
       )}
       <ul className="mt-3 space-y-3">
         {results.map((r, i) => {
@@ -428,17 +438,19 @@ function RaceResults({
               {isOpen && (
                 <ul className="mt-3 space-y-2 border-t border-white/10 pt-3 text-sm">
                   {relevant.map((issue) => {
-                    const pos = c.positions[issue.id] ?? { stance: 'unknown' as const };
+                    const pos = c.positions[issue.id];
+                    const theirs = (pos?.options ?? []).map((id) => issue.options.find((o) => o.id === id)?.text);
                     return (
                       <li key={issue.id}>
                         <div className="flex justify-between gap-2">
                           <span className="font-medium">{issue.topic}</span>
                           <span className="text-xs text-wtp-cream/60">
-                            {compare(answers[issue.id] as number, pos.stance)}
+                            {compare(issue, answers[issue.id] as string, pos)}
                           </span>
                         </div>
+                        {theirs.length > 0 && <p className="mt-0.5 text-xs text-wtp-cream/70">{theirs.join(' / ')}</p>}
                         {/* Summaries often name the candidate, so they wait for the reveal. */}
-                        {revealed && pos.summary && (
+                        {revealed && pos?.summary && (
                           <p className="mt-0.5 text-xs text-wtp-cream/60">
                             {pos.summary}{' '}
                             {pos.source && (
@@ -448,7 +460,7 @@ function RaceResults({
                             )}
                           </p>
                         )}
-                        {revealed && pos.record && (
+                        {revealed && pos?.record && (
                           <p className="mt-0.5 text-xs text-wtp-cream/50">
                             Record: {pos.record.summary}{' '}
                             <a href={pos.record.source} target="_blank" rel="noopener" className="text-wtp-sky">

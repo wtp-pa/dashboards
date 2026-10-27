@@ -16,83 +16,93 @@
      "ballotSource": "https://ivoterguide.com/race/32997/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "disagree",
-       "summary": "Blamed administration tariffs for higher costs in Berks/Chester, e.g., ~$10,900 added to average new-home cost.",
+       "options": [],
+       "summary": "Blames the administration's tariffs for higher local costs (about $10,900 more for an average new home) but has not said which approach she favors.",
        "source": "https://whyy.org/articles/rep-houlahan-state-of-the-sixth-address/",
        "sourceDate": "2026-02-10",
        "record": {
-        "summary": "Voted YEA on H.J.Res.72 to end Canada tariff emergency (roll 65, 2026-02-11).",
-        "source": "https://clerk.house.gov/Votes/202665 (via https://watch.vote/votes/119-2026-h65)"
+        "summary": "Yea on H.J.Res. 72, which would end the Canada tariff emergency (roll 65, 2026-02-11). A vote on one country's tariffs; does not by itself pick an option.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
        }
       },
       "aca": {
-       "stance": "agree",
-       "summary": "Record-based: voted for 3-year enhanced-subsidy extension.",
-       "source": "https://watch.vote/votes/119-2026-h11",
+       "options": [
+        "restore"
+       ],
+       "summary": "Per record: voted for the 3-year extension of the enhanced credits as they were.",
+       "source": "https://clerk.house.gov/evs/2026/roll011.xml",
        "sourceDate": "2026-01-08",
        "record": {
-        "summary": "YEA on H.R.1834 (roll 11); NAY on GOP H.R.6703 (roll 349, 2025-12-17).",
-        "source": "https://clerk.house.gov/Votes/202611"
+        "summary": "Yea on H.R. 1834, the 3-year extension of the enhanced credits (roll 11, 2026-01-08). Nay on H.R. 6703 (roll 349, 2025-12-17).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
        }
       },
       "medicaid-cuts": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against the 2025 reconciliation law.",
-       "source": "https://clerk.house.gov/Votes/2025190",
+       "options": [
+        "reverse"
+       ],
+       "summary": "Per record: voted against the 2025 law that made the Medicaid cuts and work requirements.",
+       "source": "https://clerk.house.gov/evs/2025/roll190.xml",
        "sourceDate": "2025-07-03",
        "record": {
-        "summary": "NAY on H.R.1 OBBBA final passage (roll 190).",
-        "source": "https://clerk.house.gov/Votes/2025190"
+        "summary": "Nay on H.R. 1, the 2025 reconciliation law with the Medicaid cuts and work requirements (roll 190, 2025-07-03).",
+        "source": "https://clerk.house.gov/evs/2025/roll190.xml"
        }
       },
       "voter-id": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against SAVE America Act photo-ID/citizenship bill; has voiced concern about nationalizing voting.",
-       "source": "https://watch.vote/votes/119-2026-h69",
-       "sourceDate": "2026-02-11",
-       "record": {
-        "summary": "NAY on S.1383 House amendment (SAVE America Act, roll 69); NAY on SAVE Act H.R.22 (roll 102, 2025).",
-        "source": "https://clerk.house.gov/Votes/202669; https://clerk.house.gov/Votes/2025102"
-       }
-      },
-      "abortion": {
-       "stance": "agree",
-       "summary": "Called Dobbs a loss of reproductive freedom; backs codifying Roe via Women's Health Protection Act.",
-       "source": "https://www.chrissyhoulahanforcongress.com/news/2022/7/13/mychesco-6252022-houlahan-issues-statement-on-scotus-ruling-to-overturn-roe",
-       "sourceDate": "2022-06-25",
-       "record": {
-        "summary": "YEA on H.R.3755 WHPA (roll 295, 2021-09-24).",
-        "source": "https://clerk.house.gov/Votes/2021295"
-       }
-      },
-      "guns": {
-       "stance": "agree",
-       "summary": "Record-based: voted for universal background checks bill.",
-       "source": "https://clerk.house.gov/Votes/202175",
-       "sourceDate": "2021-03-11",
-       "record": {
-        "summary": "YEA on H.R.8 Bipartisan Background Checks Act (roll 75).",
-        "source": "https://clerk.house.gov/Votes/202175"
-       }
-      },
-      "immigration": {
-       "stance": "unknown",
-       "summary": "Called ICE 'vastly overfunded' and denounced local enforcement surge; no stated position on state/local police cooperation.",
-       "source": "https://whyy.org/articles/rep-houlahan-state-of-the-sixth-address/",
-       "sourceDate": "2026-02-10",
-       "record": {
-        "summary": "NAY on Laken Riley Act S.5 (roll 23, 2025-01-22).",
-        "source": "https://clerk.house.gov/Votes/202523"
-       }
-      },
-      "term-limits": {
-       "stance": "unknown",
-       "summary": "No statement found on term limits or stock-trading ban.",
+       "options": [],
+       "summary": "Voted against the SAVE America Act, which bundles photo ID with proof of citizenship; no stated position on ID rules themselves.",
        "source": null,
        "sourceDate": null,
        "record": {
-        "summary": "NAY on H.R.7008 Stop Insider Trading Act, which was bundled with voter photo-ID (roll 280, 2026-07-22).",
-        "source": "https://clerk.house.gov/Votes/2026280 (via https://watch.vote/votes/119-2026-h280)"
+        "summary": "Nay on the SAVE America Act (S. 1383 House amendment, roll 69, 2026-02-11), which bundles photo ID with proof of citizenship, and on H.R. 7008 (roll 280), which bundles a stock-purchase ban with voter ID. Bundled votes; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll069.xml"
+       }
+      },
+      "abortion": {
+       "options": [
+        "protect"
+       ],
+       "summary": "Per record: voted twice for the Women's Health Protection Act, which would protect abortion access in federal law.",
+       "source": "https://clerk.house.gov/evs/2022/roll360.xml",
+       "sourceDate": "2022-07-15",
+       "record": {
+        "summary": "Yea on H.R. 3755 (roll 295, 2021-09-24) and H.R. 8296 (roll 360, 2022-07-15).",
+        "source": "https://clerk.house.gov/evs/2021/roll295.xml"
+       }
+      },
+      "guns": {
+       "options": [
+        "checks-red-flag"
+       ],
+       "summary": "Per record: voted for universal background checks and for a federal red-flag (extreme risk order) law.",
+       "source": "https://clerk.house.gov/evs/2022/roll255.xml",
+       "sourceDate": "2022-06-09",
+       "record": {
+        "summary": "Yea on H.R. 8 (roll 75, 2021-03-11). Yea on H.R. 2377, Federal Extreme Risk Protection Order Act (roll 255, 2022-06-09).",
+        "source": "https://clerk.house.gov/evs/2022/roll255.xml"
+       }
+      },
+      "immigration": {
+       "options": [
+        "limit-ice"
+       ],
+       "summary": "Says ICE is 'vastly overfunded' and 'undertrained' and 'we need reform' of the agency.",
+       "source": "https://whyy.org/articles/rep-houlahan-state-of-the-sixth-address/",
+       "sourceDate": "2026-02-10",
+       "record": {
+        "summary": "Nay on H.R. 2056, the D.C. ICE-cooperation bill (roll 171, 2025-06-12). Nay on FY26 Homeland Security funding, H.R. 7744 (roll 87, 2026-03-05). Nay on the Laken Riley Act (roll 23, 2025-01-22).",
+        "source": "https://clerk.house.gov/evs/2025/roll171.xml"
+       }
+      },
+      "term-limits": {
+       "options": [],
+       "summary": "No statement found on term limits or a stock-trading ban.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Nay on H.R. 7008 (roll 280, 2026-07-22), which bundles a ban on new stock purchases with a voter photo-ID requirement. Bundled vote; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll280.xml"
        }
       }
      }
@@ -104,50 +114,58 @@
      "ballotSource": "https://ivoterguide.com/race/32997/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "aca": {
-       "stance": "mixed",
-       "summary": "Criticizes 'repeatedly extending' ACA subsidies as a stopgap; proposes TRICARE-style plan for children, young adults, expectant mothers.",
+       "options": [],
+       "summary": "Criticizes Congress for 'repeatedly extending' ACA subsidies and proposes a TRICARE-style plan instead; does not say what should happen to the lapsed credits.",
        "source": "https://www.voteyoung.com/fix-healthcare",
        "sourceDate": "accessed 2026-10-27"
       },
       "medicaid-cuts": {
-       "stance": "unknown",
-       "summary": "Would consolidate Medicaid/CHIP dollars into TRICARE-style system; does not address cuts or the 2025 law.",
+       "options": [],
+       "summary": "Would let TRICARE-style contractors bid for Medicaid contracts; does not address the 2025 law's cuts or work requirements.",
        "source": "https://www.voteyoung.com/fix-healthcare",
        "sourceDate": "accessed 2026-10-27"
       },
       "voter-id": {
-       "stance": "agree",
-       "summary": "Disagrees that people should vote without photo ID.",
+       "options": [
+        "photo"
+       ],
+       "summary": "Disagrees that people should vote without photo ID: 'Show the same ID you use to fly or cash a check.'",
        "source": "https://ivoterguide.com/candidate/91600/race/32997/election/1477",
        "sourceDate": "2026 general survey"
       },
       "abortion": {
-       "stance": "disagree",
-       "summary": "Agrees human life deserves legal protection from conception; would not set a national ban, leaves it to states; supports rape/incest/life exceptions.",
+       "options": [
+        "states"
+       ],
+       "summary": "Says he would not use federal law to set a national ban and that 'States may set their own criminal law'; personally supports exceptions only for rape, incest or the mother's life.",
        "source": "https://ivoterguide.com/candidate/91600/race/32997/election/1477",
        "sourceDate": "2026 general survey"
       },
       "guns": {
-       "stance": "agree",
-       "summary": "Keep PA background checks and extend them to private rifle sales; opposes rifle bans and registries; no red-flag position stated.",
+       "options": [],
+       "summary": "Would keep Pennsylvania's background checks and extend them to private rifle sales; has not stated a position on red-flag laws.",
        "source": "https://ivoterguide.com/candidate/91600/race/32997/election/1477",
        "sourceDate": "2026 general survey"
       },
       "immigration": {
-       "stance": "agree",
+       "options": [
+        "full-help"
+       ],
        "summary": "Opposes sanctuary cities: 'Cities do not get to nullify federal immigration law.'",
        "source": "https://ivoterguide.com/candidate/91600/race/32997/election/1477",
        "sourceDate": "2026 general survey"
       },
       "term-limits": {
-       "stance": "agree",
-       "summary": "States 'I support term limits' and backs banning insider trading by members.",
+       "options": [
+        "both"
+       ],
+       "summary": "Says he supports term limits and 'banning insider trading by members of Congress' (the name used for the House stock-trading ban).",
        "source": "https://www.voteyoung.com/blank",
        "sourceDate": "accessed 2026-10-27"
       }
@@ -171,83 +189,97 @@
      "ballotSource": "https://ivoterguide.com/race/33000/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "agree",
-       "summary": "Defended Trump tariffs as leverage for reciprocal trade deals while acknowledging local industry impacts.",
+       "options": [
+        "broad"
+       ],
+       "summary": "Defended the administration's tariffs, saying they 'will bring foreign powers to the table to negotiate for reciprocal trade agreements' (reporter's paraphrase).",
        "source": "https://www.witf.org/2025/05/28/pa-rep-dan-meuser-defends-possible-medicaid-cuts-tariffs-at-schuylkill-chamber-of-commerce-meeting/",
        "sourceDate": "2025-05-28",
        "record": {
-        "summary": "NAY on H.J.Res.72 (roll 65, 2026-02-11).",
-        "source": "https://clerk.house.gov/Votes/202665"
+        "summary": "Nay on H.J.Res. 72, which would end the Canada tariff emergency (roll 65, 2026-02-11). A vote on one country's tariffs; does not by itself pick an option.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
        }
       },
       "aca": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against 3-year extension.",
-       "source": "https://watch.vote/votes/119-2026-h11",
+       "options": [
+        "lapse"
+       ],
+       "summary": "Per record: voted against extending the enhanced credits and for a Republican health bill that leaves them expired.",
+       "source": "https://clerk.house.gov/evs/2026/roll011.xml",
        "sourceDate": "2026-01-08",
        "record": {
-        "summary": "NAY on H.R.1834 (roll 11); YEA on GOP H.R.6703 (roll 349).",
-        "source": "https://clerk.house.gov/Votes/202611"
+        "summary": "Nay on H.R. 1834, the 3-year extension of the enhanced credits (roll 11, 2026-01-08). Yea on H.R. 6703, a Republican health bill that does not extend them (roll 349, 2025-12-17).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
        }
       },
       "medicaid-cuts": {
-       "stance": "agree",
-       "summary": "Says OBBBA strengthens Medicaid via work requirements for able-bodied adults and removing ineligible enrollees; disputes that it 'took away' Medicaid.",
-       "source": "https://www.sungazette.com/news/top-news/2026/09/federal-lawmaker-disputes-claims-that-trumps-big-beautiful-bill-took-away-medicaid/",
-       "sourceDate": "2026-09-08",
+       "options": [
+        "keep"
+       ],
+       "summary": "Voted for the 2025 law and defended its work requirements: 'it's not harsh, it's humanitarian.'",
+       "source": "https://www.witf.org/2025/05/28/pa-rep-dan-meuser-defends-possible-medicaid-cuts-tariffs-at-schuylkill-chamber-of-commerce-meeting/",
+       "sourceDate": "2025-05-28",
        "record": {
-        "summary": "YEA on H.R.1 OBBBA (roll 190, 2025-07-03).",
-        "source": "https://clerk.house.gov/Votes/2025190"
+        "summary": "Yea on H.R. 1, the 2025 reconciliation law with the Medicaid cuts and work requirements (roll 190, 2025-07-03).",
+        "source": "https://clerk.house.gov/evs/2025/roll190.xml"
        }
       },
       "voter-id": {
-       "stance": "agree",
-       "summary": "Backed SAVE America Act requiring photo ID to vote; urged Senate action.",
+       "options": [
+        "photo"
+       ],
+       "summary": "Backed the SAVE America Act and said Senate Democrats should explain 'why they oppose requiring a photo ID to vote.'",
        "source": "https://meuser.house.gov/media/press-releases/meuser-supports-passage-save-america-act-protect-election-integrity",
        "sourceDate": "2026-02-11",
        "record": {
-        "summary": "YEA roll 69 (2026) and H.R.22 roll 102 (2025).",
-        "source": "https://clerk.house.gov/Votes/202669"
+        "summary": "Yea on the SAVE America Act (S. 1383 House amendment, roll 69, 2026-02-11), which bundles photo ID with proof of citizenship, and on H.R. 7008 (roll 280), which bundles a stock-purchase ban with voter ID. Bundled votes; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll069.xml"
        }
       },
       "abortion": {
-       "stance": "disagree",
-       "summary": "Describes himself as pro-life; 2018 survey: illegal except rape, incest, life of mother.",
-       "source": "https://votesmart.org/public-statement/1246049/issue-position-pro-life",
-       "sourceDate": "2018 (campaign-era)",
+       "options": [
+        "ban"
+       ],
+       "summary": "2018 survey: 'abortion should be illegal, except to prevent the death of the mother, or in the case of rape/incest.'",
+       "source": "https://ivoterguide.com/candidate/39930/race/150/election/610",
+       "sourceDate": "2018 general survey",
        "record": {
-        "summary": "NAY on H.R.3755 WHPA (roll 295, 2021).",
-        "source": "https://clerk.house.gov/Votes/2021295"
+        "summary": "Nay on H.R. 3755 (roll 295, 2021) and H.R. 8296 (roll 360, 2022).",
+        "source": "https://clerk.house.gov/evs/2021/roll295.xml"
        }
       },
       "guns": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against universal background checks bill.",
-       "source": "https://clerk.house.gov/Votes/202175",
-       "sourceDate": "2021-03-11",
+       "options": [
+        "enforce"
+       ],
+       "summary": "Voted against universal background checks and a federal red-flag law; in 2018 strongly disagreed that more restrictive gun control is needed.",
+       "source": "https://clerk.house.gov/evs/2022/roll255.xml",
+       "sourceDate": "2022-06-09",
        "record": {
-        "summary": "NAY on H.R.8 (roll 75).",
-        "source": "https://clerk.house.gov/Votes/202175"
+        "summary": "Nay on H.R. 8, universal background checks (roll 75, 2021-03-11). Nay on H.R. 2377, Federal Extreme Risk Protection Order Act (roll 255, 2022-06-09).",
+        "source": "https://clerk.house.gov/evs/2022/roll255.xml"
        }
       },
       "immigration": {
-       "stance": "unknown",
-       "summary": "No direct statement found on state/local cooperation with ICE.",
-       "source": null,
-       "sourceDate": null,
+       "options": [
+        "full-help"
+       ],
+       "summary": "Per record: voted to bar D.C. from limiting cooperation with ICE; in 2018 strongly disagreed with sanctuary cities.",
+       "source": "https://clerk.house.gov/evs/2025/roll171.xml",
+       "sourceDate": "2025-06-12",
        "record": {
-        "summary": "YEA on Laken Riley Act (roll 23, 2025).",
-        "source": "https://clerk.house.gov/Votes/202523"
+        "summary": "Yea on H.R. 2056, which bars D.C. from limiting cooperation with ICE, including detainer requests (roll 171, 2025-06-12). Yea on the Laken Riley Act, S. 5 (roll 23, 2025-01-22).",
+        "source": "https://clerk.house.gov/evs/2025/roll171.xml"
        }
       },
       "term-limits": {
-       "stance": "unknown",
-       "summary": "No statement found.",
+       "options": [],
+       "summary": "No statement found on term limits or a stock-trading ban.",
        "source": null,
        "sourceDate": null,
        "record": {
-        "summary": "YEA on H.R.7008 stock-purchase ban + voter ID (roll 280, 2026).",
-        "source": "https://clerk.house.gov/Votes/2026280"
+        "summary": "Yea on H.R. 7008 (roll 280, 2026-07-22), which bundles a ban on new stock purchases with a voter photo-ID requirement. Bundled vote; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll280.xml"
        }
       }
      }
@@ -259,50 +291,52 @@
      "ballotSource": "https://ivoterguide.com/race/33000/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "unknown",
-       "summary": "Notes residents feel tariff impacts on food/energy but states no tariff position.",
+       "options": [],
+       "summary": "Says residents feel the tariffs' effects but has not stated a tariff position.",
        "source": "https://www.wcexaminer.com/2025/12/11/longtime-public-servant-running-for-9th-congressional-district-in-pa",
        "sourceDate": "2025-12-11"
       },
       "aca": {
-       "stance": "agree",
-       "summary": "Would vote to extend tax credits that help people afford premiums.",
+       "options": [
+        "restore"
+       ],
+       "summary": "Would vote to extend the tax credits that help people afford premiums (reporter's paraphrase).",
        "source": "https://www.wcexaminer.com/2025/12/11/longtime-public-servant-running-for-9th-congressional-district-in-pa",
        "sourceDate": "2025-12-11"
       },
       "medicaid-cuts": {
-       "stance": "disagree",
-       "summary": "Criticized Meuser's OBBBA vote as taking health insurance from ~18,000 district residents.",
+       "options": [],
+       "summary": "Opposes the 2025 law, criticizing Meuser for voting 'to take away health insurance from 18,000 people in our district.' Doesn't say whether the work requirements should stay, so not scored.",
        "source": "https://www.wcexaminer.com/2025/12/11/longtime-public-servant-running-for-9th-congressional-district-in-pa",
        "sourceDate": "2025-12-11"
       },
       "voter-id": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "abortion": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "guns": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "immigration": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "term-limits": {
-       "stance": "unknown",
-       "summary": "Campaign lists 'root out government corruption'; no term-limit or stock-ban specifics.",
+       "options": [],
+       "summary": "Lists 'root out government corruption' as a priority; no term-limit or stock-ban specifics.",
        "source": "https://www.wallaceforcongress.com/priorities",
        "sourceDate": "accessed 2026-10-27"
       }
@@ -326,83 +360,91 @@
      "ballotSource": "https://ivoterguide.com/race/33002/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "agree",
-       "summary": "Record-based: voted against ending the Canada tariff emergency; no recent statement found.",
-       "source": "https://watch.vote/votes/119-2026-h65",
-       "sourceDate": "2026-02-11",
-       "record": {
-        "summary": "NAY on H.J.Res.72 (roll 65).",
-        "source": "https://clerk.house.gov/Votes/202665"
-       }
-      },
-      "aca": {
-       "stance": "disagree",
-       "summary": "Opposed 3-year extension as continuing a 'status quo that we know is not working'; backed GOP alternative.",
-       "source": "https://smucker.house.gov/media/press-releases/rep-smucker-we-need-real-reforms-lower-premiums",
-       "sourceDate": "2026-01-08",
-       "record": {
-        "summary": "NAY H.R.1834 (roll 11); YEA H.R.6703 (roll 349).",
-        "source": "https://clerk.house.gov/Votes/202611"
-       }
-      },
-      "medicaid-cuts": {
-       "stance": "agree",
-       "summary": "Defended OBBBA's Medicaid work/community-engagement requirements as 'modest reforms'.",
-       "source": "https://smucker.house.gov/media/in-the-news/rep-smucker-setting-record-straight-one-big-beautiful-bill",
-       "sourceDate": "2025-07-30",
-       "record": {
-        "summary": "YEA on H.R.1 OBBBA (roll 190).",
-        "source": "https://clerk.house.gov/Votes/2025190"
-       }
-      },
-      "voter-id": {
-       "stance": "agree",
-       "summary": "Record-based: voted for SAVE America Act photo-ID bill.",
-       "source": "https://watch.vote/votes/119-2026-h69",
-       "sourceDate": "2026-02-11",
-       "record": {
-        "summary": "YEA roll 69 (2026); YEA H.R.22 roll 102 (2025).",
-        "source": "https://clerk.house.gov/Votes/202669"
-       }
-      },
-      "abortion": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against Women's Health Protection Act.",
-       "source": "https://clerk.house.gov/Votes/2021295",
-       "sourceDate": "2021-09-24",
-       "record": {
-        "summary": "NAY on H.R.3755 (roll 295).",
-        "source": "https://clerk.house.gov/Votes/2021295"
-       }
-      },
-      "guns": {
-       "stance": "disagree",
-       "summary": "Record-based: voted against universal background checks bill.",
-       "source": "https://clerk.house.gov/Votes/202175",
-       "sourceDate": "2021-03-11",
-       "record": {
-        "summary": "NAY on H.R.8 (roll 75).",
-        "source": "https://clerk.house.gov/Votes/202175"
-       }
-      },
-      "immigration": {
-       "stance": "unknown",
-       "summary": "Issue page stresses border security; no stated position on local police/ICE cooperation.",
-       "source": "https://smucker.house.gov/issues/immigration",
-       "sourceDate": "accessed 2026-10-27",
-       "record": {
-        "summary": "YEA on Laken Riley Act (roll 23, 2025).",
-        "source": "https://clerk.house.gov/Votes/202523"
-       }
-      },
-      "term-limits": {
-       "stance": "unknown",
-       "summary": "No statement found.",
+       "options": [],
+       "summary": "No statement found; voted against ending the Canada tariff emergency.",
        "source": null,
        "sourceDate": null,
        "record": {
-        "summary": "YEA on H.R.7008 stock-purchase ban + voter ID (roll 280).",
-        "source": "https://clerk.house.gov/Votes/2026280"
+        "summary": "Nay on H.J.Res. 72, which would end the Canada tariff emergency (roll 65, 2026-02-11). A vote on one country's tariffs; does not by itself pick an option.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
+       }
+      },
+      "aca": {
+       "options": [
+        "lapse"
+       ],
+       "summary": "Opposed extending the enhanced credits because it 'preserves a broken system'; backs other 'targeted reforms' instead.",
+       "source": "https://smucker.house.gov/media/press-releases/rep-smucker-we-need-real-reforms-lower-premiums",
+       "sourceDate": "2026-01-08",
+       "record": {
+        "summary": "Nay on H.R. 1834, the 3-year extension of the enhanced credits (roll 11, 2026-01-08). Yea on H.R. 6703, a Republican health bill that does not extend them (roll 349, 2025-12-17).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
+       }
+      },
+      "medicaid-cuts": {
+       "options": [
+        "keep"
+       ],
+       "summary": "Per record: voted for the 2025 law with the Medicaid cuts and work requirements.",
+       "source": "https://clerk.house.gov/evs/2025/roll190.xml",
+       "sourceDate": "2025-07-03",
+       "record": {
+        "summary": "Yea on H.R. 1, the 2025 reconciliation law with the Medicaid cuts and work requirements (roll 190, 2025-07-03).",
+        "source": "https://clerk.house.gov/evs/2025/roll190.xml"
+       }
+      },
+      "voter-id": {
+       "options": [],
+       "summary": "Voted for the SAVE America Act, which bundles photo ID with proof of citizenship; no own-words statement on ID rules found.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Yea on the SAVE America Act (S. 1383 House amendment, roll 69, 2026-02-11), which bundles photo ID with proof of citizenship, and on H.R. 7008 (roll 280), which bundles a stock-purchase ban with voter ID. Bundled votes; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll069.xml"
+       }
+      },
+      "abortion": {
+       "options": [],
+       "summary": "Voted against the Women's Health Protection Act, which rules out protecting access nationwide, but no statement found choosing among state control, an earlier limit, or a ban.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Nay on the Women's Health Protection Act, H.R. 3755 (roll 295, 2021-09-24) and H.R. 8296 (roll 360, 2022-07-15).",
+        "source": "https://clerk.house.gov/evs/2022/roll360.xml"
+       }
+      },
+      "guns": {
+       "options": [
+        "enforce"
+       ],
+       "summary": "Per record: voted against universal background checks and against a federal red-flag law.",
+       "source": "https://clerk.house.gov/evs/2022/roll255.xml",
+       "sourceDate": "2022-06-09",
+       "record": {
+        "summary": "Nay on H.R. 8, universal background checks (roll 75, 2021-03-11). Nay on H.R. 2377, Federal Extreme Risk Protection Order Act (roll 255, 2022-06-09).",
+        "source": "https://clerk.house.gov/evs/2022/roll255.xml"
+       }
+      },
+      "immigration": {
+       "options": [
+        "full-help"
+       ],
+       "summary": "Per record: voted to bar D.C. from limiting cooperation with ICE, including detainer requests.",
+       "source": "https://clerk.house.gov/evs/2025/roll171.xml",
+       "sourceDate": "2025-06-12",
+       "record": {
+        "summary": "Yea on H.R. 2056, which bars D.C. from limiting cooperation with ICE, including detainer requests (roll 171, 2025-06-12). Yea on the Laken Riley Act, S. 5 (roll 23, 2025-01-22).",
+        "source": "https://clerk.house.gov/evs/2025/roll171.xml"
+       }
+      },
+      "term-limits": {
+       "options": [],
+       "summary": "No statement found on term limits or a stock-trading ban.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Yea on H.R. 7008 (roll 280, 2026-07-22), which bundles a ban on new stock purchases with a voter photo-ID requirement. Bundled vote; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll280.xml"
        }
       }
      }
@@ -414,49 +456,59 @@
      "ballotSource": "https://ivoterguide.com/race/33002/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "disagree",
-       "summary": "Would end Trump's broad tariffs and replace them with targeted tariffs protecting U.S. jobs.",
+       "options": [
+        "targeted"
+       ],
+       "summary": "Would get rid of the President's tariffs and 'swap them for targeted tariffs that protect American jobs.'",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "aca": {
-       "stance": "agree",
-       "summary": "Supports restoring ACA subsidies.",
+       "options": [
+        "restore"
+       ],
+       "summary": "'All for bringing back Affordable Care Act subsidies.'",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "medicaid-cuts": {
-       "stance": "unknown",
-       "summary": "Pledges to 'reverse healthcare budget cuts'; does not name Medicaid or H.R.1 (low confidence).",
+       "options": [],
+       "summary": "Campaign site does not address Medicaid or the 2025 law.",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "voter-id": {
-       "stance": "mixed",
-       "summary": "Supports 'inclusive' voter ID requirements but says stricter rules are unnecessary.",
+       "options": [
+        "any-id"
+       ],
+       "summary": "Advocates 'voter ID requirements that are inclusive' and says stricter rules are unnecessary.",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "abortion": {
-       "stance": "agree",
-       "summary": "Reproductive decisions belong to patient, family and provider without government intrusion.",
+       "options": [
+        "protect"
+       ],
+       "summary": "Says reproductive decisions belong to the patient, family and provider and 'No government should intrude in this decision.'",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "guns": {
-       "stance": "unknown",
-       "summary": "Supports 'stronger gun laws'; no specific mention of background checks or red-flag laws (low confidence).",
+       "options": [],
+       "summary": "Supports 'stronger gun laws' without naming background checks or red-flag laws.",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "immigration": {
-       "stance": "unknown",
-       "summary": "Says ICE should focus on people with serious criminal records; backs path to citizenship; silent on local police cooperation.",
+       "options": [
+        "limit-ice"
+       ],
+       "summary": "Says ICE funding 'should be tied to the agency following the rule of law and agents being properly identified,' and ICE should focus on people with serious criminal records.",
        "source": "https://www.nancymannion.com/Priorities/",
        "sourceDate": "accessed 2026-10-27"
       },
       "term-limits": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
@@ -481,75 +533,85 @@
      "ballotSource": "https://ivoterguide.com/race/33003/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "disagree",
-       "summary": "Record-based: voted to end Canada tariff emergency; no campaign statement found.",
-       "source": "https://watch.vote/votes/119-2026-h65",
-       "sourceDate": "2026-02-11",
+       "options": [],
+       "summary": "Called high tariffs 'reckless gambling with our future' but has not said which approach she favors.",
+       "source": "https://www.wesanews.org/politics-government/2025-04-04/pa-congressional-delegation-trump-tariffs",
+       "sourceDate": "2025-04-04",
        "record": {
-        "summary": "YEA on H.J.Res.72 (roll 65).",
-        "source": "https://clerk.house.gov/Votes/202665"
+        "summary": "Yea on H.J.Res. 72, which would end the Canada tariff emergency (roll 65, 2026-02-11). A vote on one country's tariffs; does not by itself pick an option.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
        }
       },
       "aca": {
-       "stance": "agree",
-       "summary": "Record-based: voted for 3-year extension; campaign backs Medicare for All.",
-       "source": "https://summerforpa.com/issues/",
-       "sourceDate": "accessed 2026-10-27",
+       "options": [
+        "restore"
+       ],
+       "summary": "Per record: voted for the 3-year extension of the enhanced credits as they were.",
+       "source": "https://clerk.house.gov/evs/2026/roll011.xml",
+       "sourceDate": "2026-01-08",
        "record": {
-        "summary": "YEA H.R.1834 (roll 11); NAY H.R.6703 (roll 349).",
-        "source": "https://clerk.house.gov/Votes/202611"
+        "summary": "Yea on H.R. 1834, the 3-year extension of the enhanced credits (roll 11, 2026-01-08). Nay on H.R. 6703 (roll 349, 2025-12-17).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
        }
       },
       "medicaid-cuts": {
-       "stance": "disagree",
-       "summary": "Seeks to expand Medicaid (dental/vision; end 5-year immigrant wait).",
-       "source": "https://summerforpa.com/issues/",
-       "sourceDate": "accessed 2026-10-27",
+       "options": [
+        "reverse"
+       ],
+       "summary": "Per record: voted against the 2025 law that made the Medicaid cuts and work requirements.",
+       "source": "https://clerk.house.gov/evs/2025/roll190.xml",
+       "sourceDate": "2025-07-03",
        "record": {
-        "summary": "NAY on H.R.1 OBBBA (roll 190).",
-        "source": "https://clerk.house.gov/Votes/2025190"
+        "summary": "Nay on H.R. 1, the 2025 reconciliation law with the Medicaid cuts and work requirements (roll 190, 2025-07-03).",
+        "source": "https://clerk.house.gov/evs/2025/roll190.xml"
        }
       },
       "voter-id": {
-       "stance": "disagree",
-       "summary": "Calls for 'ending racist voter ID and suppression laws'.",
+       "options": [
+        "current"
+       ],
+       "summary": "Says she is 'working to end racist voter ID and suppression laws.'",
        "source": "https://summerforpa.com/issues/",
        "sourceDate": "accessed 2026-10-27",
        "record": {
-        "summary": "NAY roll 69 (2026) and H.R.22 roll 102 (2025).",
-        "source": "https://clerk.house.gov/Votes/202669"
+        "summary": "Nay on the SAVE America Act (S. 1383 House amendment, roll 69, 2026-02-11), which bundles photo ID with proof of citizenship, and on H.R. 7008 (roll 280), which bundles a stock-purchase ban with voter ID. Bundled votes; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll069.xml"
        }
       },
       "abortion": {
-       "stance": "agree",
-       "summary": "Supports Women's Health Protection Act and repealing Hyde Amendment.",
+       "options": [
+        "protect"
+       ],
+       "summary": "'We need to protect abortion rights and guarantee access to reproductive health care at the federal level.'",
        "source": "https://summerforpa.com/issues/",
        "sourceDate": "accessed 2026-10-27"
       },
       "guns": {
-       "stance": "agree",
-       "summary": "Cosponsored Enhanced Background Check Act and Assault Weapons Ban of 2023.",
+       "options": [],
+       "summary": "Backs expanded background checks; no stated position on red-flag laws found.",
        "source": "https://summerforpa.com/issues/",
        "sourceDate": "accessed 2026-10-27"
       },
       "immigration": {
-       "stance": "disagree",
-       "summary": "Says ICE 'has become a violent policing agency' which must end; supports path to citizenship.",
+       "options": [
+        "limit-ice"
+       ],
+       "summary": "Says the system 'has turned ICE into a violent policing agency' and 'All of that must end.'",
        "source": "https://summerforpa.com/issues/",
        "sourceDate": "accessed 2026-10-27",
        "record": {
-        "summary": "NAY on Laken Riley Act (roll 23).",
-        "source": "https://clerk.house.gov/Votes/202523"
+        "summary": "Nay on H.R. 2056, the D.C. ICE-cooperation bill (roll 171, 2025-06-12). Nay on FY26 Homeland Security funding, H.R. 7744 (roll 87, 2026-03-05). Nay on the Laken Riley Act (roll 23, 2025-01-22).",
+        "source": "https://clerk.house.gov/evs/2025/roll171.xml"
        }
       },
       "term-limits": {
-       "stance": "agree",
-       "summary": "Supports banning members from trading stocks; pledges not to trade individual stocks; no term-limit position.",
+       "options": [],
+       "summary": "Supports banning members from trading stocks and pledges not to trade them; no position on congressional term limits found.",
        "source": "https://summerforpa.com/issues/",
        "sourceDate": "accessed 2026-10-27",
        "record": {
-        "summary": "NAY on H.R.7008, bundled with voter photo-ID (roll 280). Conflicts with stated support for a stock ban; the ID provision is a likely factor.",
-        "source": "https://clerk.house.gov/Votes/2026280"
+        "summary": "Nay on H.R. 7008 (roll 280, 2026-07-22), which bundles a ban on new stock purchases with a voter photo-ID requirement. Bundled vote; not used alone.",
+        "source": "https://clerk.house.gov/evs/2026/roll280.xml"
        }
       }
      }
@@ -561,49 +623,53 @@
      "ballotSource": "https://ivoterguide.com/race/33003/election/1477",
      "positions": {
       "tariffs": {
-       "stance": "unknown",
+       "options": [],
        "summary": "Platform cites overregulation hurting jobs; no tariff position.",
        "source": "https://jameshayesforpa.com/policy-vision",
        "sourceDate": "accessed 2026-10-27"
       },
       "aca": {
-       "stance": "unknown",
-       "summary": "No statement found.",
+       "options": [],
+       "summary": "No statement found on the enhanced ACA credits.",
        "source": null,
        "sourceDate": null
       },
       "medicaid-cuts": {
-       "stance": "unknown",
+       "options": [],
        "summary": "No statement found.",
        "source": null,
        "sourceDate": null
       },
       "voter-id": {
-       "stance": "agree",
-       "summary": "Strongly disagreed that people should vote without photo ID.",
+       "options": [
+        "photo"
+       ],
+       "summary": "Strongly disagrees that 'People should be able to vote without photo identification.'",
        "source": "https://ivoterguide.com/candidate/59502",
        "sourceDate": "2024 primary survey"
       },
       "abortion": {
-       "stance": "disagree",
-       "summary": "Elective abortion only for rape, incest or mother's life; says issue belongs at state level.",
+       "options": [
+        "states"
+       ],
+       "summary": "Says the Supreme Court 'properly determined that this issue ... belongs at the state level'; personally would allow abortion only for rape, incest or the mother's life.",
        "source": "https://ivoterguide.com/candidate/59502",
        "sourceDate": "2024 primary survey"
       },
       "guns": {
-       "stance": "unknown",
-       "summary": "Favors severe penalties for gun crimes; no background-check/red-flag position.",
+       "options": [],
+       "summary": "Favors severe penalties for gun crimes; no position on background checks or red-flag laws.",
        "source": "https://ivoterguide.com/candidate/59502",
        "sourceDate": "2024 primary survey"
       },
       "immigration": {
-       "stance": "unknown",
-       "summary": "Strongly agrees on securing southern border; no position on local ICE cooperation.",
+       "options": [],
+       "summary": "Strongly agrees on securing the southern border; no position on local police and ICE.",
        "source": "https://ivoterguide.com/candidate/59502",
        "sourceDate": "2024 primary survey"
       },
       "term-limits": {
-       "stance": "unknown",
+       "options": [],
        "summary": "Pledges fiscal transparency; no term-limit or stock-ban position.",
        "source": "https://jameshayesforpa.com/policy-vision",
        "sourceDate": "accessed 2026-10-27"
@@ -614,12 +680,12 @@
   }
  ],
  "notes": [
+  "Re-coded 2026-10-27 to the multi-option format in issues.json: each position has `options` (one id; two only when words and votes differ; [] when no sourced position is specific enough). Record-based rules used for every incumbent alike: H.R. 1 (roll 190) Yea = medicaid 'keep', Nay = 'reverse'; H.R. 1834 (roll 11) Yea = aca 'restore', Nay plus Yea on H.R. 6703 (no extension) = 'lapse'; H.R. 8 (2021 roll 75) and H.R. 2377 extreme-risk orders (2022 roll 255) both Yea = guns 'checks-red-flag', both Nay = 'enforce'; H.R. 2056 (2025 roll 171, bars D.C. from limiting ICE detainer cooperation) Yea = immigration 'full-help'; WHPA Yea = abortion 'protect'. WHPA Nay alone does not pick among states/earlier-limit/ban; H.J.Res. 72 (Canada only) does not pick a tariff option; SAVE America (roll 69) and H.R. 7008 (roll 280) are bundled and set no voter-id or term-limits option. Roll-call XML was read directly from clerk.house.gov/evs on 2026-10-27.",
   "Ballot lists: Ballotpedia pages came back empty and the PA DOS list was not found. Lineups are from iVoterGuide 2026 general race pages and City & State PA (2026-05-22); PA-6 also matches Chester Co's unofficial 2026 general list (2026-08-06). No minor-party or independent candidates found; confirm against the PA DOS certified list.",
   "2026 roll calls (11, 65, 69, 280): member-level votes come from watch.vote, which mirrors House Clerk data, because clerk.house.gov returned 403. The clerk URLs for these are built from the roll numbers and were not loaded. The 2021 and 2025 votes were read on clerk.house.gov itself.",
   "Roll 69 = House amendment to S.1383 carrying the SAVE America Act (photo ID to vote + proof of citizenship), passed 218-213 on 2026-02-11. H.R.22 (2025) covered citizenship proof only, not photo ID.",
   "H.R.7008 (2026-07-22, 232-198) combined a ban on new stock purchases by members with a photo-voter-ID requirement, so a NAY is not clean opposition to a stock ban. Not used to set any term-limits stance.",
   "Gun records (H.R.8, 2021) and abortion records (H.R.3755, 2021) are from the 117th Congress; Summer Lee was not yet in office.",
-  "Stance-from-record is used only for direct matches: OBBBA = medicaid-cuts, H.R.1834 = aca, H.J.Res.72 = tariffs (Canada only), SAVE America = voter-id, H.R.8 = guns, WHPA = abortion.",
   "Old sources: Hayes 2024 survey; Meuser abortion 2018; Houlahan abortion 2022 (that page now returns 404, URL from search index); Meuser tariffs May 2025.",
   "Questionnaires: Houlahan, Meuser, Smucker, Wallace and Mannion left the 2026 iVoterGuide survey blank. iVoterGuide is a conservative-affiliated guide, but the answers used are the candidates' own words.",
   "Not reachable: Capital-Star 2026 voter guide pages (403; Hayes answered there, Lee did not answer Q1), Vote411, and a PA-11 Smucker-Mannion debate listed on Wikipedia but not read. Coverage likely improves with these. Search budget ran out before the Houlahan, Wallace, Hayes and Lee gaps could be filled."

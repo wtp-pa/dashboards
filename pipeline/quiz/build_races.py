@@ -6,7 +6,8 @@ Merge researched candidate positions into data/quiz/races.json.
 
 Inputs are research notes: gov = {candidates:[...]}, house = {races:[{district,
 counties, candidates:[...]}]}. Positions without a source URL are downgraded
-to "unknown" here — the fairness rule is "sourced or skipped".
+to no position here — the fairness rule is "sourced or skipped". Option ids
+are checked against data/quiz/issues.json.
 """
 from __future__ import annotations
 
@@ -16,8 +17,9 @@ import sys
 from datetime import date
 from pathlib import Path
 
-OUT = Path(__file__).resolve().parents[2] / "data" / "quiz" / "races.json"
-STANCES = {"agree", "disagree", "mixed", "unknown"}
+DATA = Path(__file__).resolve().parents[2] / "data" / "quiz"
+OUT = DATA / "races.json"
+OPTIONS = {i["id"]: {o["id"] for o in i["options"]} for i in json.loads((DATA / "issues.json").read_text())["issues"]}
 PARTY = {"D": "Democratic", "R": "Republican", "L": "Libertarian", "G": "Green", "I": "Independent"}
 
 
@@ -42,11 +44,14 @@ BUNDLED_VOTE_ISSUES = {"voter-id", "term-limits"}
 
 
 def clean_position(p: dict, issue: str) -> dict:
-    stance = p.get("stance") if p.get("stance") in STANCES else "unknown"
+    options = p.get("options") or []
+    bad = [o for o in options if o not in OPTIONS.get(issue, set())]
+    if bad or len(options) > 2:
+        sys.exit(f"bad options for {issue}: {options}")
     source = first_url(p.get("source"))
     if issue in BUNDLED_VOTE_ISSUES and (p.get("summary") or "").lower().startswith(("per record", "record-based")):
         source = None
-    out: dict = {"stance": stance if source else "unknown"}
+    out: dict = {"options": options if source else []}
     if p.get("summary"):
         out["summary"] = p["summary"]
     if source:

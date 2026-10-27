@@ -1,57 +1,162 @@
 {
-  "_note": "Paired statements (Pew-style forced choice), not agree/disagree. a = the side a candidate stance of \"agree\" means; b = \"disagree\". The quiz shows a/b in random order. Where a choice has a real cost, both sides name it. level: state = Governor, federal = US House, both = asked for both. short: true = in the quick quiz.",
+  "_note": "Several distinct positions per issue, not two sides. Options are listed in order along the issue's main disagreement; the quiz shows them in that order or reversed (random per visit). A candidate stance is one option id, or two when their words and record differ. Scoring: same option = full credit; an option listed together in `near` = half credit; anything else = none. level: state = Governor, federal = US House, both = asked for both. short: true = in the quick quiz.",
   "issues": [
     { "id": "min-wage", "level": "state", "short": true, "topic": "Minimum wage",
       "context": "Pennsylvania's minimum wage is the federal minimum, $7.25 an hour.",
-      "a": "Raise the state minimum wage, even if some businesses raise prices or cut hours.",
-      "b": "Keep it at $7.25, even if low-wage workers fall further behind rising costs." },
+      "question": "What should Pennsylvania do about its minimum wage?",
+      "options": [
+        { "id": "raise-15", "text": "Raise it to $15 or more, even if some businesses raise prices or cut hours." },
+        { "id": "raise-some", "text": "Raise it some (to around $10–12), phased in over a few years." },
+        { "id": "keep", "text": "Keep it at $7.25 and let employers and the job market set pay." },
+        { "id": "end", "text": "Get rid of a government-set minimum wage altogether." }
+      ],
+      "near": [["raise-15", "raise-some"], ["raise-some", "keep"], ["keep", "end"]] },
+
     { "id": "vouchers", "level": "state", "short": true, "topic": "School choice",
-      "a": "Use state money for scholarships so students can attend private schools.",
-      "b": "Keep state education money in public schools." },
-    { "id": "marijuana", "level": "state", "short": false, "topic": "Marijuana",
-      "a": "Legalize and tax recreational marijuana for adults.",
-      "b": "Keep recreational marijuana illegal, even if that means giving up the tax money." },
-    { "id": "property-tax", "level": "state", "short": false, "topic": "Property tax",
+      "question": "Should state education money follow students to private schools?",
+      "options": [
+        { "id": "universal", "text": "Yes, for every family: state money (vouchers or savings accounts) usable at any school." },
+        { "id": "targeted", "text": "Only for students in the lowest-performing public schools (like the Lifeline/PASS scholarship proposal)." },
+        { "id": "tax-credit", "text": "No new vouchers, but keep or grow the existing business tax-credit scholarships." },
+        { "id": "public-only", "text": "No. Keep state education money in public schools." }
+      ],
+      "near": [["universal", "targeted"], ["targeted", "tax-credit"], ["tax-credit", "public-only"]] },
+
+    { "id": "marijuana", "level": "state", "short": true, "topic": "Marijuana",
+      "question": "What should Pennsylvania do about recreational marijuana?",
+      "options": [
+        { "id": "legal-tax", "text": "Legalize it for adults with state-licensed stores, and tax it to help the budget." },
+        { "id": "legal-light", "text": "Legalize it for adults with light taxes and rules, including growing your own." },
+        { "id": "decriminalize", "text": "Stop arresting people for small amounts, but don't set up legal sales." },
+        { "id": "illegal", "text": "Keep it illegal. Medical marijuana only." }
+      ],
+      "near": [["legal-tax", "legal-light"], ["legal-light", "decriminalize"], ["decriminalize", "illegal"]] },
+
+    { "id": "property-tax", "level": "state", "short": true, "topic": "Property tax",
       "context": "Local property taxes pay a large share of public school costs.",
-      "a": "Cut or end school property taxes and pay for schools another way, such as other taxes or cuts elsewhere in the budget.",
-      "b": "Keep school property taxes as a main way to pay for local schools." },
+      "question": "What should happen to school property taxes?",
+      "options": [
+        { "id": "eliminate", "text": "End school property taxes entirely, replacing the money with other state taxes or spending cuts." },
+        { "id": "cut-spending", "text": "Cut or cap them, and make up the difference by cutting state spending elsewhere." },
+        { "id": "relief", "text": "Keep them, but expand rebates and relief for seniors and lower-income homeowners." },
+        { "id": "keep", "text": "Keep the current system, with local school boards setting the rate." }
+      ],
+      "near": [["eliminate", "cut-spending"], ["cut-spending", "relief"], ["relief", "keep"]] },
+
     { "id": "transit", "level": "state", "short": false, "topic": "Transit",
-      "context": "The state budget already spends more than it takes in.",
-      "a": "Give public transit like SEPTA steady new state funding, even with the budget gap.",
-      "b": "Hold off on new transit money, even if that means service cuts or higher fares." },
+      "context": "The state budget already spends more than it takes in, and SEPTA and other systems have threatened cuts.",
+      "question": "How should Pennsylvania pay for public transit?",
+      "options": [
+        { "id": "steady", "text": "Give transit a steady new state funding source, even with the budget gap." },
+        { "id": "stopgap", "text": "Give short-term money to prevent cuts, tied to cost-cutting and reforms." },
+        { "id": "local", "text": "Let regions raise their own transit money, such as a local tax, instead of the state." },
+        { "id": "none", "text": "No new state money, even if that means service cuts or higher fares." }
+      ],
+      "near": [["steady", "stopgap"], ["stopgap", "local"], ["stopgap", "none"], ["local", "none"]] },
+
     { "id": "energy", "level": "state", "short": false, "topic": "Energy and climate",
-      "context": "Pennsylvania is a top natural gas producer. Some states charge power plants for carbon pollution through a program called RGGI.",
-      "a": "Put growing natural gas and energy jobs first, even if that means more carbon pollution.",
-      "b": "Charge power plants for carbon pollution to fight climate change, even if electric bills go up." },
-    { "id": "open-primaries", "level": "state", "short": false, "topic": "Open primaries",
+      "context": "Pennsylvania is a top natural gas producer. Some states charge power plants for carbon pollution; Pennsylvania dropped its plan to join them in 2025.",
+      "question": "What should Pennsylvania's energy policy put first?",
+      "options": [
+        { "id": "gas-first", "text": "Grow natural gas and fossil-fuel jobs, with no new climate rules." },
+        { "id": "all-above", "text": "Grow gas and nuclear while adding wind and solar, without charging power plants for carbon." },
+        { "id": "clean-targets", "text": "Shift to clean energy faster with state targets and incentives." },
+        { "id": "carbon-charge", "text": "Charge power plants for carbon pollution, even if electric bills go up." }
+      ],
+      "near": [["gas-first", "all-above"], ["all-above", "clean-targets"], ["clean-targets", "carbon-charge"]] },
+
+    { "id": "open-primaries", "level": "state", "short": false, "topic": "Primaries",
       "context": "Right now only registered Democrats and Republicans can vote in their party's primary.",
-      "a": "Let independent voters vote in primary elections.",
-      "b": "Keep primaries for party members, so each party picks its own nominees." },
+      "question": "Who should get to vote in primary elections?",
+      "options": [
+        { "id": "open", "text": "Let independent voters choose either party's primary to vote in." },
+        { "id": "top-two", "text": "Replace party primaries with one primary for all voters and candidates; the top finishers go to November." },
+        { "id": "closed-party-pays", "text": "Keep them for party members, but make the parties pay for them instead of taxpayers." },
+        { "id": "closed", "text": "Keep them as they are, for party members only." }
+      ],
+      "near": [["open", "top-two"], ["closed-party-pays", "closed"]] },
+
     { "id": "abortion", "level": "both", "short": true, "topic": "Abortion",
-      "a": "Abortion access should be protected by law.",
-      "b": "Lawmakers should be able to restrict abortion." },
-    { "id": "immigration", "level": "both", "short": true, "topic": "Immigration",
-      "a": "State and local police should help federal immigration agents (ICE) find and detain people.",
-      "b": "Local police should leave immigration enforcement to federal agents." },
-    { "id": "voter-id", "level": "both", "short": true, "topic": "Voter ID",
-      "context": "Right now, Pennsylvania asks for ID only from people voting at their polling place for the first time.",
-      "a": "Require every voter to show photo ID at every election.",
-      "b": "Keep the current rules, so eligible voters without photo ID aren't turned away." },
+      "context": "In Pennsylvania, abortion is legal up to 24 weeks of pregnancy.",
+      "question": "Where should abortion law go?",
+      "options": [
+        { "id": "protect", "text": "Protect abortion access in law, at least as much as Roe v. Wade did." },
+        { "id": "states", "text": "Keep Pennsylvania's current law and leave abortion to each state, with no national ban or national protection." },
+        { "id": "earlier-limit", "text": "Limit it earlier in pregnancy, such as 15 weeks, with exceptions." },
+        { "id": "ban", "text": "Ban most abortions, with exceptions only for rape, incest, or the mother's life." }
+      ],
+      "near": [["protect", "states"], ["states", "earlier-limit"], ["earlier-limit", "ban"]] },
+
+    { "id": "immigration", "level": "both", "short": true, "topic": "Immigration enforcement",
+      "question": "What role should state and local police play in immigration enforcement?",
+      "options": [
+        { "id": "full-help", "text": "Actively help federal agents (ICE) find and detain people who are here illegally." },
+        { "id": "serious-crimes", "text": "Hand people over to ICE only when they're charged with serious crimes." },
+        { "id": "federal-only", "text": "Stay out of it; immigration enforcement is the federal government's job." },
+        { "id": "limit-ice", "text": "Stay out of it, and put new limits on ICE itself, such as requiring judges' warrants." }
+      ],
+      "near": [["full-help", "serious-crimes"], ["serious-crimes", "federal-only"], ["federal-only", "limit-ice"]] },
+
+    { "id": "voter-id", "level": "both", "short": false, "topic": "Voter ID",
+      "context": "Right now, Pennsylvania asks for ID only the first time you vote at a polling place. Mail voters give a driver's license or Social Security number.",
+      "question": "What ID should voters need?",
+      "options": [
+        { "id": "photo", "text": "Photo ID every time, in person and by mail." },
+        { "id": "any-id", "text": "ID every time, but non-photo ID like a utility bill counts, and the state gives free IDs." },
+        { "id": "current", "text": "Keep the current rules, so eligible voters without ID aren't turned away." }
+      ],
+      "near": [["photo", "any-id"], ["any-id", "current"]] },
+
     { "id": "guns", "level": "both", "short": false, "topic": "Guns",
-      "a": "Require background checks on all gun sales, and let courts temporarily remove guns from people found to be a danger.",
-      "b": "Don't add these gun laws; enforce the ones already on the books." },
+      "question": "What should happen with gun laws?",
+      "options": [
+        { "id": "checks-red-flag", "text": "Background checks on all gun sales, plus red-flag laws letting courts temporarily take guns from people found dangerous." },
+        { "id": "checks-only", "text": "Background checks on all gun sales, but no red-flag laws." },
+        { "id": "enforce", "text": "No new gun laws; enforce the ones already on the books." },
+        { "id": "loosen", "text": "Loosen gun laws, such as allowing concealed carry without a permit." }
+      ],
+      "near": [["checks-red-flag", "checks-only"], ["checks-only", "enforce"], ["enforce", "loosen"]] },
+
     { "id": "term-limits", "level": "both", "short": false, "topic": "Ethics",
-      "a": "Set term limits for lawmakers and ban them from trading individual stocks.",
-      "b": "Let voters decide how long lawmakers serve, and keep current stock-trading rules." },
+      "question": "Which of these limits on lawmakers do you want?",
+      "options": [
+        { "id": "both", "text": "Term limits and a ban on trading individual stocks." },
+        { "id": "stocks-only", "text": "A stock-trading ban, but no term limits." },
+        { "id": "limits-only", "text": "Term limits, but keep current stock-trading rules." },
+        { "id": "neither", "text": "Neither. Voters decide how long lawmakers serve, and current disclosure rules are enough." }
+      ],
+      "near": [["both", "stocks-only"], ["both", "limits-only"], ["stocks-only", "neither"], ["limits-only", "neither"]] },
+
     { "id": "tariffs", "level": "federal", "short": true, "topic": "Tariffs",
-      "a": "Keep broad tariffs on imports to bring back American jobs, even if prices go up.",
-      "b": "Roll back broad tariffs to lower prices, and use targeted tariffs only where needed." },
+      "question": "What should the U.S. do about tariffs on imports?",
+      "options": [
+        { "id": "broad", "text": "Keep broad tariffs on most imports to bring back jobs, even if prices go up." },
+        { "id": "targeted", "text": "Use tariffs only on specific countries or goods, like China or steel, and drop the broad ones." },
+        { "id": "congress", "text": "Congress, not the President alone, should vote on tariffs." },
+        { "id": "free-trade", "text": "Remove most tariffs so people and businesses can buy at the lowest price." }
+      ],
+      "near": [["broad", "targeted"], ["targeted", "congress"], ["targeted", "free-trade"], ["congress", "free-trade"]] },
+
     { "id": "aca", "level": "federal", "short": true, "topic": "Health insurance",
       "context": "Extra federal help paying for ACA (Obamacare) plans, added in 2021, lapsed at the end of 2025.",
-      "a": "Extend or restore the extra help, even though it adds to federal spending.",
-      "b": "Don't extend it, to save federal money, even if premiums go up for some people." },
+      "question": "What should happen to that extra help?",
+      "options": [
+        { "id": "restore", "text": "Restore it in full, even though it adds to federal spending." },
+        { "id": "limited", "text": "Bring some back, with income limits or a phase-out, and offset the cost." },
+        { "id": "direct", "text": "Replace it by sending the money to people directly, such as in health savings accounts." },
+        { "id": "lapse", "text": "Let it stay expired to save federal money, even if premiums go up for some people." }
+      ],
+      "near": [["restore", "limited"], ["limited", "direct"], ["direct", "lapse"]] },
+
     { "id": "medicaid-cuts", "level": "federal", "short": false, "topic": "Medicaid",
-      "a": "Reduce federal Medicaid spending and add work requirements, even if some people lose coverage.",
-      "b": "Protect Medicaid funding, even though it adds to federal spending." }
+      "context": "A 2025 federal law cuts future Medicaid spending and will require many adults to work or volunteer to keep coverage, starting by 2027.",
+      "question": "What should Congress do about that law's Medicaid changes?",
+      "options": [
+        { "id": "reverse", "text": "Reverse the cuts and the work requirements, even though it adds to federal spending." },
+        { "id": "work-only", "text": "Keep the work requirements but reverse the spending cuts." },
+        { "id": "keep", "text": "Keep the law as passed: the cuts and the work requirements." },
+        { "id": "cut-more", "text": "Cut Medicaid spending more and give states more control." }
+      ],
+      "near": [["reverse", "work-only"], ["work-only", "keep"], ["keep", "cut-more"]] }
   ]
 }
