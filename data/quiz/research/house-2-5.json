@@ -1,0 +1,592 @@
+{
+ "races": [
+  {
+   "district": "PA-2",
+   "counties": "Philadelphia (part: central and Northeast Philadelphia)",
+   "uncontested": false,
+   "candidates": [
+    {
+     "name": "Brendan F. Boyle",
+     "party": "D",
+     "incumbent": true,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/ (2026-05-22)",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "No statement on photo ID found.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Voted Nay on SAVE Act (H.R. 22), which requires proof of citizenship to register. It is not a photo-ID-at-polls bill.",
+        "source": "https://clerk.house.gov/evs/2025/roll102.xml (2025-04-10)"
+       }
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Original cosponsor of the Women's Health Protection Act (H.R. 12), which would protect abortion access in federal law.",
+       "source": "https://www.govinfo.gov/app/details/BILLS-119hr12ih",
+       "sourceDate": "2025-06-24",
+       "record": {
+        "summary": "Original cosponsor of H.R. 12 (cosponsor data from congress.gov API).",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/12"
+       }
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "Original cosponsor of the Bipartisan Background Checks Act (H.R. 18), which requires a background check for every firearm sale.",
+       "source": "https://www.congress.gov/bill/119th-congress/house-bill/18",
+       "sourceDate": "2025-06-10",
+       "record": {
+        "summary": "Cosponsor of H.R. 18.",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/18"
+       }
+      },
+      "immigration": {
+       "stance": "mixed",
+       "summary": "Led a PA Democratic letter calling ICE 'a lawless, out-of-control agency' and asking for no more funding without reforms. He voted for the Laken Riley Act.",
+       "source": "https://boyle.house.gov/media-center/press-releases/boyle-house-democratic-delegation-call-pas-senators-demand-ice-reform",
+       "sourceDate": "2026-01-27",
+       "record": {
+        "summary": "Voted Yea on the Laken Riley Act (H.R. 29 and S. 5), which mandates ICE detention of certain undocumented people charged with theft. Voted Nay on the Deporting Fraudsters Act (H.R. 1958). His words criticizing ICE differ from his Laken Riley votes.",
+        "source": "https://clerk.house.gov/evs/2025/roll006.xml ; https://clerk.house.gov/evs/2025/roll023.xml ; https://clerk.house.gov/evs/2026/roll094.xml"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Calls the tariffs 'a tax increase on working families' that are 'making the cost-of-living crisis worse.'",
+       "source": "https://boyle.house.gov/media-center/press-releases/boyle-statement-house-vote-terminate-trumps-canada-tariffs",
+       "sourceDate": "2026-02-11",
+       "record": {
+        "summary": "Voted Yea on H.J.Res. 72, which ends the national emergency behind the Canada tariffs (passed 219-211).",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml (2026-02-11)"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Voted to discharge and pass the 3-year extension of the enhanced ACA subsidies. No separate statement was reviewed.",
+       "source": "https://clerk.house.gov/evs/2026/roll011.xml",
+       "sourceDate": "2026-01-08",
+       "record": {
+        "summary": "Voted Yea on the discharge motion (roll 4) and on passage of H.R. 1834, the 3-year enhanced-subsidy extension (passed 230-196).",
+        "source": "https://clerk.house.gov/evs/2026/roll004.xml ; https://clerk.house.gov/evs/2026/roll011.xml"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Has publicly opposed federal cuts to Medicaid. He voted against the 2025 reconciliation law.",
+       "source": "https://boyle.house.gov/media-center/press-releases/icymi-boyle-stands-research-leaders-oppose-cuts-philadelphia-health",
+       "sourceDate": "2025",
+       "record": {
+        "summary": "Voted Nay on the One Big Beautiful Bill Act (H.R. 1), both at House passage and at the final vote concurring in the Senate amendment.",
+        "source": "https://clerk.house.gov/evs/2025/roll145.xml ; https://clerk.house.gov/evs/2025/roll190.xml"
+       }
+      },
+      "term-limits": {
+       "stance": "unknown",
+       "summary": "No statement found on term limits or a stock-trading ban. He is not a cosponsor of H.R. 396, 4890, 5106 or 1908.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Voted Nay on the Stop Insider Trading Act (H.R. 7008), which passed 232-198. Democrats objected to the presidential exemption and the grandfathering of existing holdings.",
+        "source": "https://clerk.house.gov/Votes/2026280 (2026-07-22)"
+       }
+      }
+     }
+    },
+    {
+     "name": "Jessica Arriaga",
+     "party": "R",
+     "incumbent": false,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "Declined the PA Family Voter and iVoterGuide voter-ID questions.",
+       "source": "https://www.pafamilyvoter.com/candidate/representative-in-congress/jessica-arriaga/",
+       "sourceDate": "2026-10"
+      },
+      "abortion": {
+       "stance": "unknown",
+       "summary": "No public position found. She did not answer the iVoterGuide abortion items.",
+       "source": "https://ivoterguide.com/candidate/91583",
+       "sourceDate": "2026-10"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Profiles say she emphasizes tougher penalties for gun trafficking and illegal guns. Nothing found on background checks or red-flag laws.",
+       "source": "https://www.localcandidates.org/politicians/jessica-arriaga (secondary)",
+       "sourceDate": "2026"
+      },
+      "immigration": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      },
+      "tariffs": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      },
+      "aca": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      },
+      "medicaid-cuts": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      },
+      "term-limits": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-3",
+   "counties": "Philadelphia (part: West, Northwest, North and South Philadelphia west of Broad St.)",
+   "uncontested": false,
+   "notes": "Open seat because Dwight Evans (D) is retiring. No Republican is on the ballot: Alex Schnell failed to qualify. The only opponent is independent Dennis Mahoney.",
+   "candidates": [
+    {
+     "name": "Chris Rabb",
+     "party": "D",
+     "incumbent": false,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania (won the primary with 44.6%)",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "His platform calls to 'Strengthen Voting Rights' and publicly fund elections. Voter ID is not addressed.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "His platform lists 'Protecting Reproductive Freedom' under healthcare.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "As a PA state representative, he cosponsored universal background check and red-flag bills. In 2018 he also proposed a state 'well-regulated militia' licensing idea.",
+       "source": "https://www.phillyvoice.com/mass-shootings-pennsylvania-militia-guns-chris-rabb-second-amendment/",
+       "sourceDate": "2018-02-21",
+       "record": {
+        "summary": "Cosponsored PA HB 714 (background checks for firearms) and HB 1018 (extreme risk protection orders, i.e. red-flag), both of which passed the PA House on 2023-05-22. His individual floor votes were not confirmed.",
+        "source": "https://www.palegis.us/legislation/bills/2023/hb714 ; https://www.palegis.us/legislation/bills/2023/hb1018"
+       }
+      },
+      "immigration": {
+       "stance": "disagree",
+       "summary": "His platform calls to 'Abolish ICE & Dismantle Immigrant Concentration Camps.'",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "tariffs": {
+       "stance": "unknown",
+       "summary": "Not addressed on his platform.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "aca": {
+       "stance": "unknown",
+       "summary": "Supports Medicare for All. ACA subsidies are not addressed.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "medicaid-cuts": {
+       "stance": "unknown",
+       "summary": "Not addressed on his platform.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      },
+      "term-limits": {
+       "stance": "unknown",
+       "summary": "Not addressed. His platform rejects corporate PAC money, which is a separate issue.",
+       "source": "https://www.chrisrabb.com/platform",
+       "sourceDate": "2026"
+      }
+     }
+    },
+    {
+     "name": "Dennis Mahoney",
+     "party": "Independent (listed as 'The Independent Party'; Forward Party endorsed)",
+     "incumbent": false,
+     "ballotSource": "https://theballotbrief.com/candidate/dennis-mahoney-pa (citing Philadelphia City Commissioners' certified list) ; https://www.inquirer.com/politics/nation/3rd-district-election-dennis-mahoney-20260910.html",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      },
+      "abortion": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      },
+      "immigration": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      },
+      "tariffs": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      },
+      "aca": {
+       "stance": "unknown",
+       "summary": "Wants to 'protect families from healthcare affordability cliffs.' ACA subsidies are not named.",
+       "source": "https://mahoneyforcongress.com/platform/end-the-benefits-cliff",
+       "sourceDate": "2026"
+      },
+      "medicaid-cuts": {
+       "stance": "unknown",
+       "summary": "Criticizes benefit cliffs ('A worker picking up overtime can lose Medicaid'). Medicaid spending levels are not addressed.",
+       "source": "https://mahoneyforcongress.com/platform/end-the-benefits-cliff",
+       "sourceDate": "2026"
+      },
+      "term-limits": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://mahoneyforcongress.com/",
+       "sourceDate": "2026"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-4",
+   "counties": "Montgomery (most) and Berks (part)",
+   "uncontested": false,
+   "candidates": [
+    {
+     "name": "Madeleine Dean",
+     "party": "D",
+     "incumbent": true,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "No statement on photo ID found.",
+       "source": null,
+       "sourceDate": null,
+       "record": {
+        "summary": "Voted Nay on the SAVE Act (H.R. 22), which concerns proof of citizenship for registration, not photo ID.",
+        "source": "https://clerk.house.gov/evs/2025/roll102.xml"
+       }
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Original cosponsor of the Women's Health Protection Act (H.R. 12).",
+       "source": "https://www.congress.gov/bill/119th-congress/house-bill/12",
+       "sourceDate": "2025-06-24",
+       "record": {
+        "summary": "Cosponsor of H.R. 12.",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/12"
+       }
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "Calls gun violence 'a public health crisis.' She is an original cosponsor of the universal background check bill (H.R. 18) and the Assault Weapons Ban (H.R. 3115).",
+       "source": "https://mad4pa.com/issues",
+       "sourceDate": "2026",
+       "record": {
+        "summary": "Cosponsor of H.R. 18 (2025-06-10) and H.R. 3115 (2025-04-30).",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/18"
+       }
+      },
+      "immigration": {
+       "stance": "disagree",
+       "summary": "Said 'not one more dime for ICE until their lawless, anti-American behavior ends.' She has made no specific statement on local police cooperation.",
+       "source": "https://dean.house.gov/2026/2/congresswoman-dean-on-her-opposition-to-the-republican-funding-package",
+       "sourceDate": "2026-02-03",
+       "record": {
+        "summary": "Voted Nay on the Laken Riley Act (both votes) and Nay on H.R. 1958.",
+        "source": "https://clerk.house.gov/evs/2025/roll006.xml ; https://clerk.house.gov/evs/2025/roll023.xml"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Her campaign says the President 'damaged our economy with illegal tariffs.'",
+       "source": "https://mad4pa.com/issues",
+       "sourceDate": "2026",
+       "record": {
+        "summary": "Voted Yea on H.J.Res. 72 to end the Canada-tariff emergency.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Voted to discharge and pass the 3-year enhanced-subsidy extension.",
+       "source": "https://clerk.house.gov/evs/2026/roll011.xml",
+       "sourceDate": "2026-01-08",
+       "record": {
+        "summary": "Voted Yea on roll 4 (discharge) and roll 11 (passage of H.R. 1834).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Voted against the 2025 reconciliation law.",
+       "source": "https://clerk.house.gov/evs/2025/roll190.xml",
+       "sourceDate": "2025-07-03",
+       "record": {
+        "summary": "Voted Nay on H.R. 1 (OBBBA) at both House votes.",
+        "source": "https://clerk.house.gov/evs/2025/roll145.xml ; https://clerk.house.gov/evs/2025/roll190.xml"
+       }
+      },
+      "term-limits": {
+       "stance": "mixed",
+       "summary": "Cosponsored the TRUST in Congress Act (H.R. 396), a stock-trading ban, but voted against the GOP-led Stop Insider Trading Act. No term-limits position found.",
+       "source": "https://www.congress.gov/bill/119th-congress/house-bill/396",
+       "sourceDate": "2025-01-22",
+       "record": {
+        "summary": "Cosponsor of H.R. 396. Voted Nay on H.R. 7008 (2026-07-22).",
+        "source": "https://clerk.house.gov/Votes/2026280"
+       }
+      }
+     }
+    },
+    {
+     "name": "Aurora Stuski",
+     "party": "R",
+     "incumbent": false,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "Declined the PA Family Voter voter-ID question. Nothing on her site.",
+       "source": "https://www.pafamilyvoter.com/candidate/representative-in-congress/aurora-stuski/",
+       "sourceDate": "2026-10"
+      },
+      "abortion": {
+       "stance": "unknown",
+       "summary": "No public position found. She declined the PA Family Voter abortion items.",
+       "source": "https://www.pafamilyvoter.com/candidate/representative-in-congress/aurora-stuski/",
+       "sourceDate": "2026-10"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Says she supports the Second Amendment 'without reservation.' Nothing on background checks or red-flag laws.",
+       "source": "https://aurora4pa.com/supporting-those-who-serve-why-i-stand-with-law-enforcement/",
+       "sourceDate": "2026"
+      },
+      "immigration": {
+       "stance": "unknown",
+       "summary": "Says 'Enforce immigration law, stop trafficking, and put Pennsylvania's security first.' Local police cooperation with ICE is not addressed.",
+       "source": "https://aurora4pa.com/",
+       "sourceDate": "2026"
+      },
+      "tariffs": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": "https://aurora4pa.com/",
+       "sourceDate": "2026"
+      },
+      "aca": {
+       "stance": "unknown",
+       "summary": "Reportedly backs portable, year-round insurance and pre-existing-condition protections (VOTE411, per a secondary source). Nothing on the enhanced subsidies.",
+       "source": "https://onyourballot.vote411.org/m/candidate-detail.do?id=72147578 (could not load, HTTP 500)",
+       "sourceDate": "2026"
+      },
+      "medicaid-cuts": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      },
+      "term-limits": {
+       "stance": "unknown",
+       "summary": "No public position found.",
+       "source": null,
+       "sourceDate": null
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-5",
+   "counties": "Delaware (all), Montgomery (part), Philadelphia (part, incl. South Philly), small part of Chester",
+   "uncontested": false,
+   "candidates": [
+    {
+     "name": "Mary Gay Scanlon",
+     "party": "D",
+     "incumbent": true,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/",
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "Opposes measures that create barriers to voting. No specific photo-ID statement was verified.",
+       "source": "https://scanlon.house.gov/news/documentsingle.aspx?DocumentID=1885 (via smarter.vote, not opened)",
+       "sourceDate": null,
+       "record": {
+        "summary": "Voted Nay on the SAVE Act (H.R. 22).",
+        "source": "https://clerk.house.gov/evs/2025/roll102.xml"
+       }
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Original cosponsor of the Women's Health Protection Act (H.R. 12).",
+       "source": "https://www.congress.gov/bill/119th-congress/house-bill/12",
+       "sourceDate": "2025-06-24",
+       "record": {
+        "summary": "Cosponsor of H.R. 12.",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/12"
+       }
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "Original cosponsor of the universal background check bill (H.R. 18) and the Assault Weapons Ban (H.R. 3115).",
+       "source": "https://www.congress.gov/bill/119th-congress/house-bill/18",
+       "sourceDate": "2025-06-10",
+       "record": {
+        "summary": "Cosponsor of H.R. 18 and H.R. 3115.",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/18"
+       }
+      },
+      "immigration": {
+       "stance": "disagree",
+       "summary": "Critic of ICE: at a January 2026 town hall she criticized a 'reckless deployment of masked and armed agents.' She has made no specific statement on local police cooperation.",
+       "source": "https://swarthmorephoenix.com/2026/02/05/we-cant-bring-ourselves-to-washington-right-personal-reflections-on-congresswoman-scanlons-chester-town-hall/",
+       "sourceDate": "2026-02-05",
+       "record": {
+        "summary": "Voted Nay on the Laken Riley Act (both votes) and Nay on H.R. 1958.",
+        "source": "https://clerk.house.gov/evs/2025/roll006.xml ; https://clerk.house.gov/evs/2025/roll023.xml"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Voted to end the Canada-tariff emergency. No standalone statement was verified.",
+       "source": "https://clerk.house.gov/evs/2026/roll065.xml",
+       "sourceDate": "2026-02-11",
+       "record": {
+        "summary": "Voted Yea on H.J.Res. 72.",
+        "source": "https://clerk.house.gov/evs/2026/roll065.xml"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Supports protecting the ACA. She voted to extend the enhanced subsidies.",
+       "source": "https://scanlon.house.gov/issues/issue/?IssueID=14980",
+       "sourceDate": null,
+       "record": {
+        "summary": "Voted Yea on roll 4 (discharge) and roll 11 (passage of H.R. 1834).",
+        "source": "https://clerk.house.gov/evs/2026/roll011.xml"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Voted against the 2025 reconciliation law. A local guide says she has 'worked to preserve Medicaid.'",
+       "source": "https://thephiladelphiacitizen.org/pa-election-guide/",
+       "sourceDate": "2026-09-18",
+       "record": {
+        "summary": "Voted Nay on H.R. 1 (OBBBA) at both House votes.",
+        "source": "https://clerk.house.gov/evs/2025/roll145.xml ; https://clerk.house.gov/evs/2025/roll190.xml"
+       }
+      },
+      "term-limits": {
+       "stance": "mixed",
+       "summary": "Signed a 2022 letter urging a ban on member stock ownership and trading, and cosponsors three stock-ban bills. She reportedly voted against H.R. 7008. No term-limits position found.",
+       "source": "https://golden.house.gov/sites/evo-subsites/golden-evo.house.gov/files/220124%20Final%20MoC%20Stock%20Ban%20Letter.pdf",
+       "sourceDate": "2022-01-24",
+       "record": {
+        "summary": "Cosponsor of H.R. 396, H.R. 4890 and H.R. 5106. Her Nay vote on H.R. 7008 comes from a secondary tracker (legisletter.org) and is not confirmed on the Clerk's page.",
+        "source": "https://www.congress.gov/bill/119th-congress/house-bill/4890 ; https://legisletter.org/legislator/mary-gay-scanlon-S001205/votes"
+       }
+      }
+     }
+    },
+    {
+     "name": "Nicholas (Nick) Manganaro",
+     "party": "R",
+     "incumbent": false,
+     "ballotSource": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania ; https://www.cityandstatepa.com/politics/2026/05/whos-running-congress-pennsylvania-2026/413737/",
+     "positions": {
+      "voter-id": {
+       "stance": "agree",
+       "summary": "Answered Yes to requiring ID to vote: 'It is important that all voters' identities are verified.'",
+       "source": "https://www.pafamilyvoter.com/candidate/representative-in-congress/nick-manganaro/",
+       "sourceDate": "2026-10-08"
+      },
+      "abortion": {
+       "stance": "unknown",
+       "summary": "Says 'I respect the ruling in the Dobbs v. Jackson case' and answered Yes on care for infants born alive. He states no position on protecting access in law.",
+       "source": "https://manganaro4congress.net/policies/",
+       "sourceDate": "2026"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Said 'The Second Amendment is a good thing.' Nothing on background checks or red-flag laws.",
+       "source": "https://broadandliberty.com/2026/04/07/delco-republican-nicholas-manganaro-is-running-for-pa-5-seat/",
+       "sourceDate": "2026-04-07"
+      },
+      "immigration": {
+       "stance": "agree",
+       "summary": "Supports ICE removals and says local authorities have no role in nullifying federal law, criticizing local limits on ICE coordination.",
+       "source": "https://www.delawarecountygop.org/nick-manganaro-congress",
+       "sourceDate": "2026"
+      },
+      "tariffs": {
+       "stance": "unknown",
+       "summary": "No clear position found.",
+       "source": "https://manganaro4congress.net/",
+       "sourceDate": "2026"
+      },
+      "aca": {
+       "stance": "unknown",
+       "summary": "Calls the ACA's results 'disastrous' and opposes its mandates. He does not directly address extending the enhanced subsidies.",
+       "source": "https://manganaro4congress.net/policies/",
+       "sourceDate": "2026"
+      },
+      "medicaid-cuts": {
+       "stance": "unknown",
+       "summary": "Supports a balanced budget and opposes new entitlement expansions. Medicaid is not addressed.",
+       "source": "https://manganaro4congress.net/policies/",
+       "sourceDate": "2026"
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Signed the U.S. Term Limits pledge to cosponsor and vote for a 3-term House / 2-term Senate amendment.",
+       "source": "https://termlimits.com/nick-manganaro-pledges-to-support-term-limits-on-congress/",
+       "sourceDate": "2026-05-05"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "Ballot lists could not be confirmed against Ballotpedia (pages returned empty) or the PA Dept of State (no list retrieved). Matchups come from Wikipedia and City & State PA (2026-05-22). Mahoney's ballot status comes from The Ballot Brief citing the Philadelphia certified list. Officers should confirm all four against the PA DOS/county certified lists. No Libertarian, Green or other minor-party candidates were found for PA-2/3/4/5.",
+  "PA-3 has no Republican on the ballot, but the race is contested (Rabb vs. Mahoney).",
+  "All 2025 and 2026 roll calls (6, 23, 102, 145, 190 of 2025; 4, 11, 65, 94 of 2026) were read directly from clerk.house.gov XML. Roll 280 (H.R. 7008) could not be loaded because clerk.house.gov returned 403. The Boyle and Dean Nay votes there come from a search excerpt of the Clerk page; Scanlon's comes from a secondary tracker. Cosponsorships were confirmed through the congress.gov API and govinfo BILLSTATUS XML.",
+  "For incumbents with no direct statement, stance is set from the voting record and labeled 'record'. Voter ID is left 'unknown' because the SAVE Act is about proof of citizenship, not photo ID.",
+  "Dean and Scanlon are marked 'disagree' on immigration based on their ICE-funding words and Nay votes on the Laken Riley Act. Neither addresses local police cooperation specifically, so the caller may prefer 'unknown'. Boyle is 'mixed' because his votes for the Laken Riley Act differ from his ICE criticism.",
+  "term-limits combines term limits and a stock-trading ban. Incumbents' stances reflect stock-ban activity only, and none has a term-limits statement. Dean and Scanlon cosponsored stock bans but voted against the GOP H.R. 7008, which Democrats objected to for exempting the President and grandfathering existing holdings.",
+  "smarter.vote wrongly said Boyle introduced H.R. 3115. It is Rep. McBath's bill, and Boyle is not a cosponsor. Dean and Scanlon are.",
+  "Challengers Arriaga and Stuski have published little: they declined the PA Family Voter and iVoterGuide surveys, and the Capital-Star says Arriaga did not respond to its questions. VOTE411 (500 error) and the Capital-Star guide (403) could not be fetched.",
+  "The web search budget ran out before every gap was closed. Recheck Stuski on VOTE411, Mahoney's interviews, and Rabb's PA House floor votes."
+ ]
+}

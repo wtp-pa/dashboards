@@ -1,0 +1,41 @@
+---
+import { config } from '../../config';
+import issuesDoc from '../../../data/quiz/issues.json';
+import racesDoc from '../../../data/quiz/races.json';
+import type { Issue, Race } from '../../lib/quiz';
+import Quiz from '../../components/quiz/Quiz';
+import QuizHead from '../../components/quiz/QuizHead.astro';
+import QuizHeader from '../../components/quiz/QuizHeader.astro';
+import PreReleaseBanner from '../../components/shared/PreReleaseBanner.astro';
+import '../../styles/global.css';
+
+const issues = issuesDoc.issues as Issue[];
+const races = racesDoc.races as Race[];
+---
+
+<html lang="en">
+  <head>
+    <QuizHead
+      title={`Candidate Match — PA Nov 3, 2026 — ${config.party.shortName}`}
+      description="A quick, nonpartisan-style quiz: answer questions on the issues, then see which Pennsylvania candidates for Governor and U.S. House share your views."
+    />
+  </head>
+  <body class="min-h-screen bg-page text-white">
+    <PreReleaseBanner
+      approved={config.quiz.officersApprovedData}
+      body="Candidate positions are sourced and linked, but this tool is awaiting WTPPPA officer review before it goes public."
+    />
+    <QuizHeader />
+    <main class="mx-auto max-w-2xl px-4 pt-8 pb-16 sm:px-6 md:pt-12">
+      <p class="text-xs uppercase tracking-[0.18em] text-wtp-gold">PA general election · Tuesday, Nov 3</p>
+      <h1 class="mt-2 text-3xl font-extrabold sm:text-4xl">Candidate Match</h1>
+      <div class="mt-6">
+        <Quiz client:load issues={issues} races={races} />
+      </div>
+      <p class="mt-8 text-xs text-wtp-cream/50">
+        Positions last checked {racesDoc.lastChecked}. Spot an error? <a href={config.party.website} class="text-wtp-sky">Tell us</a> —
+        see <a href="/quiz/about" class="text-wtp-sky">how we score</a>.
+      </p>
+    </main>
+  </body>
+</html>

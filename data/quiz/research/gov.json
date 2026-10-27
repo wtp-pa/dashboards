@@ -1,0 +1,298 @@
+{
+ "candidates": [
+  {
+   "name": "Josh Shapiro",
+   "party": "Democratic",
+   "office": "Governor",
+   "runningMate": "Austin Davis (incumbent Lt. Gov.)",
+   "incumbent": true,
+   "ballotSource": "https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/ (updated 2026-10-08); https://www.thegreenpapers.com/G26/PA",
+   "positions": {
+    "min-wage": {
+     "stance": "agree",
+     "summary": "Proposes raising the $7.25 minimum wage to $15 and calls it an unfinished second-term priority.",
+     "source": "https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/",
+     "sourceDate": "2026-10-08",
+     "record": {
+      "summary": "His FY2026-27 budget proposal (Feb 2026) again called for $15; it has not passed the Senate.",
+      "source": "https://www.wesa.fm/politics-government/2026-02-03/pa-budget-shapiro-taxes-marijuana"
+     }
+    },
+    "marijuana": {
+     "stance": "agree",
+     "summary": "Supports legalizing and taxing adult-use marijuana.",
+     "source": "https://www.spotlightpa.org/news/2026/09/josh-shapiro-stacy-garrity-pennsylvania-governor-election-guide-elections/",
+     "sourceDate": "2026-09-14",
+     "record": {
+      "summary": "Has proposed legalization in each annual budget, including FY2026-27; it has not been enacted.",
+      "source": "https://www.wesa.fm/politics-government/2026-02-03/pa-budget-shapiro-taxes-marijuana"
+     }
+    },
+    "vouchers": {
+     "stance": "mixed",
+     "summary": "Says he is open to vouchers if both chambers agree and to the federal tax-credit scholarship program, but had not decided on opting in as of mid-October.",
+     "source": "https://www.spotlightpa.org/news/2026/10/josh-shapiro-stacy-garrity-pennsylvania-governor-debate-elections/",
+     "sourceDate": "2026-10-07",
+     "record": {
+      "summary": "Signaled support for Lifeline/PASS scholarships in 2023, then vetoed that funding from the budget; has increased funding for the existing tax-credit scholarship programs.",
+      "source": "https://www.chalkbeat.org/philadelphia/2026/10/15/shapiro-facing-pressure-to-opt-in-to-trump-education-tax-credit-program/"
+     }
+    },
+    "property-tax": {
+     "stance": "unknown",
+     "summary": "No stated position found on eliminating or replacing school property taxes.",
+     "source": null,
+     "sourceDate": null,
+     "record": {
+      "summary": "Expanded the Property Tax/Rent Rebate program in his first term.",
+      "source": "https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/"
+     }
+    },
+    "transit": {
+     "stance": "agree",
+     "summary": "Seeks permanent statewide transit funding and would put part of skill-game tax revenue toward mass transit.",
+     "source": "https://www.spotlightpa.org/news/2026/10/josh-shapiro-stacy-garrity-pennsylvania-governor-debate-elections/",
+     "sourceDate": "2026-10-07",
+     "record": {
+      "summary": "Proposed $300M more for transit from 2027 via a larger sales-tax share (FY26-27 budget); in 2025 moved up to $394M in capital funds to SEPTA operations as a stopgap.",
+      "source": "https://levittownnow.com/2026/02/03/53-2-billion-pa-budget-pitch-calls-for-more-investment-in-schools-transit/; https://northeasttimes.com/2026/07/25/septa-riders-fear-funding-cliff-after-strong-fifa-summer/"
+     }
+    },
+    "energy": {
+     "stance": "mixed",
+     "summary": "Takes an 'all of the above' approach: gas, nuclear and renewables.",
+     "source": "https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/",
+     "sourceDate": "2026-10-08",
+     "record": {
+      "summary": "Signed the FY2025-26 budget on 2025-11-12, which ended Pennsylvania's participation in RGGI.",
+      "source": "https://www.wvia.org/news/local/2025-11-12/months-long-budget-stalemate-ends-as-gov-josh-shapiro-signs-50-1-billion-state-spending-plan"
+     }
+    },
+    "voter-id": {
+     "stance": "mixed",
+     "summary": "Said he is 'open to putting a voter ID bill on my desk,' but not one based on 'conspiracy theories.'",
+     "source": "https://www.spotlightpa.org/news/2026/10/josh-shapiro-stacy-garrity-pennsylvania-governor-debate-elections/",
+     "sourceDate": "2026-10-07"
+    },
+    "open-primaries": {
+     "stance": "mixed",
+     "summary": "Said he is 'open to getting a bill on my desk to open up our primaries.'",
+     "source": "https://levittownnow.com/2026/05/20/gov-shapiro-says-hes-open-to-open-primaries/",
+     "sourceDate": "2026-05-20"
+    },
+    "abortion": {
+     "stance": "agree",
+     "summary": "Pledges abortion 'will remain safe and legal' and would veto further restrictions.",
+     "source": "https://www.spotlightpa.org/news/2026/06/josh-shapiro-stacy-garrity-abortion-access-medicaid-guide-governor-race-elections/",
+     "sourceDate": "2026-06-12",
+     "record": {
+      "summary": "Declined to appeal the Commonwealth Court ruling on Medicaid abortion coverage, ended a state contract with an anti-abortion counseling nonprofit, and created a state abortion-access info site.",
+      "source": "https://www.spotlightpa.org/news/2026/06/josh-shapiro-stacy-garrity-abortion-access-medicaid-guide-governor-race-elections/"
+     }
+    },
+    "guns": {
+     "stance": "agree",
+     "summary": "Supports universal background checks and red-flag laws and said he would sign the House-passed bills.",
+     "source": "https://cbsnews.com/amp/pittsburgh/news/gov-josh-shapiro-pittsburgh-issues",
+     "sourceDate": "2023-01-20"
+    },
+    "immigration": {
+     "stance": "disagree",
+     "summary": "Says 'We do not do ICE's work for them here in Pennsylvania.'",
+     "source": "https://www.spotlightpa.org/news/2026/10/pennsylvania-election-immigration-detention-warehouses-cdl-agriculture-deportation-elections/",
+     "sourceDate": "2026-10-13",
+     "record": {
+      "summary": "His DEP issued orders blocking water/sewer service for proposed ICE detention warehouses (ICE later dropped the plan); 2022 State Police policy bars immigration-status arrests; joined a 21-governor suit against USDOT over driver records.",
+      "source": "https://www.spotlightpa.org/news/2026/10/pennsylvania-election-immigration-detention-warehouses-cdl-agriculture-deportation-elections/"
+     }
+    },
+    "term-limits": {
+     "stance": "unknown",
+     "summary": "No stated position found on term limits or a stock-trading ban.",
+     "source": null,
+     "sourceDate": null
+    }
+   }
+  },
+  {
+   "name": "Stacy Garrity",
+   "party": "Republican",
+   "office": "Governor",
+   "runningMate": "Jason Richey",
+   "incumbent": false,
+   "ballotSource": "https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/ (updated 2026-10-08); https://www.thegreenpapers.com/G26/PA",
+   "positions": {
+    "min-wage": {
+     "stance": "unknown",
+     "summary": "No stated position found.",
+     "source": null,
+     "sourceDate": null
+    },
+    "marijuana": {
+     "stance": "disagree",
+     "summary": "Opposes legalization and says she would veto it.",
+     "source": "https://www.spotlightpa.org/news/2026/09/josh-shapiro-stacy-garrity-pennsylvania-governor-election-guide-elections/",
+     "sourceDate": "2026-09-14"
+    },
+    "vouchers": {
+     "stance": "agree",
+     "summary": "Backs private-school options and scholarships and would opt into the federal tax-credit scholarship program on 'day one.'",
+     "source": "https://www.spotlightpa.org/news/2026/04/pennsylvania-primary-election-stacy-garrity-governor-guide-elections/",
+     "sourceDate": "2026-04-09"
+    },
+    "property-tax": {
+     "stance": "mixed",
+     "summary": "Wants lower property taxes, especially for seniors, through larger rebates funded by existing state money; she has not proposed eliminating them.",
+     "source": "https://www.spotlightpa.org/news/2026/09/josh-shapiro-stacy-garrity-pennsylvania-governor-election-guide-elections/",
+     "sourceDate": "2026-09-14"
+    },
+    "transit": {
+     "stance": "mixed",
+     "summary": "Preferred the 2025 Senate GOP plan (capital funds for operations, inflation-indexed fares, roads and bridges) and pledges to 'demand accountability from transit agencies.'",
+     "source": "https://penncapital-star.com/campaigns-elections/garrity-brings-gubernatorial-campaign-to-suburban-philadelphia-swing-county/",
+     "sourceDate": "2025-09-25"
+    },
+    "energy": {
+     "stance": "agree",
+     "summary": "Wants to 'unleash' natural gas, including drilling on public land, and cut the electricity gross-receipts tax; says the focus should be gas, not a RGGI replacement.",
+     "source": "https://www.spotlightpa.org/news/2026/04/pennsylvania-primary-election-stacy-garrity-governor-guide-elections/",
+     "sourceDate": "2026-04-09"
+    },
+    "voter-id": {
+     "stance": "agree",
+     "summary": "Supports 'strong voter ID requirements' and mandatory voter ID.",
+     "source": "https://www.spotlightpa.org/news/2026/10/josh-shapiro-stacy-garrity-pennsylvania-governor-debate-elections/",
+     "sourceDate": "2026-10-07"
+    },
+    "open-primaries": {
+     "stance": "unknown",
+     "summary": "Did not respond to a request for her position.",
+     "source": "https://levittownnow.com/2026/05/20/gov-shapiro-says-hes-open-to-open-primaries/",
+     "sourceDate": "2026-05-20"
+    },
+    "abortion": {
+     "stance": "mixed",
+     "summary": "Calls herself pro-life with exceptions for rape, incest and the mother's life, but says she would 'respect' current PA law and would not back a ban; opposes Medicaid abortion coverage.",
+     "source": "https://www.spotlightpa.org/news/2026/06/josh-shapiro-stacy-garrity-abortion-access-medicaid-guide-governor-race-elections/",
+     "sourceDate": "2026-06-12"
+    },
+    "guns": {
+     "stance": "unknown",
+     "summary": "No direct statement found on background checks or red-flag laws.",
+     "source": null,
+     "sourceDate": null
+    },
+    "immigration": {
+     "stance": "agree",
+     "summary": "Has said it is 'best to cooperate' with ICE and wants a governor who works with the federal government 'not sue it'; declined specific questions.",
+     "source": "https://www.spotlightpa.org/news/2026/10/pennsylvania-election-immigration-detention-warehouses-cdl-agriculture-deportation-elections/",
+     "sourceDate": "2026-10-13"
+    },
+    "term-limits": {
+     "stance": "unknown",
+     "summary": "No stated position found.",
+     "source": null,
+     "sourceDate": null
+    }
+   }
+  },
+  {
+   "name": "Ken Krawchuk",
+   "party": "Libertarian",
+   "office": "Governor",
+   "runningMate": "John C. Thomas",
+   "incumbent": false,
+   "ballotSource": "https://www.kenk4pa.com/ballot-certified/ (2026-08-04, campaign release citing PA DOS certification); https://whyy.org/articles/election-2026-pennsylvania-governor-voter-guide-shapiro-garrity/",
+   "positions": {
+    "min-wage": {
+     "stance": "unknown",
+     "summary": "No stated position found.",
+     "source": null,
+     "sourceDate": null
+    },
+    "marijuana": {
+     "stance": "mixed",
+     "summary": "Favors decriminalizing drugs on the alcohol model, explicitly 'not legalize.'",
+     "source": "https://www.kenk4pa.com/issues/drugs/",
+     "sourceDate": "undated"
+    },
+    "vouchers": {
+     "stance": "agree",
+     "summary": "Proposes roughly $11,500 education savings accounts for every student and full privatization of public schools.",
+     "source": "https://www.kenk4pa.com/issues/education/",
+     "sourceDate": "undated"
+    },
+    "property-tax": {
+     "stance": "agree",
+     "summary": "Would largely eliminate school property taxes by funding ESAs from existing state and federal money.",
+     "source": "https://www.kenk4pa.com/issues/education/",
+     "sourceDate": "undated"
+    },
+    "transit": {
+     "stance": "unknown",
+     "summary": "No stated position found.",
+     "source": null,
+     "sourceDate": null
+    },
+    "energy": {
+     "stance": "agree",
+     "summary": "Calls fracking 'good for Pennsylvania,' opposes taxing it and criticizes selling 'rights to pollute,' while holding polluters liable.",
+     "source": "https://www.kenk4pa.com/issues/environment/",
+     "sourceDate": "undated"
+    },
+    "voter-id": {
+     "stance": "agree",
+     "summary": "Would require positive ID to vote and end no-excuse mail ballots.",
+     "source": "https://www.kenk4pa.com/issues/elections/",
+     "sourceDate": "undated"
+    },
+    "open-primaries": {
+     "stance": "unknown",
+     "summary": "Does not address open primaries; would 'defund the primaries' and have parties pay for them.",
+     "source": "https://www.kenk4pa.com/issues/elections/",
+     "sourceDate": "undated"
+    },
+    "abortion": {
+     "stance": "mixed",
+     "summary": "Calls himself 'pro-option' and proposes 'pre-natal adoption' as a step before abortion while saying it preserves a woman's choice.",
+     "source": "https://www.kenk4pa.com/issues/abortion/",
+     "sourceDate": "undated"
+    },
+    "guns": {
+     "stance": "disagree",
+     "summary": "Opposes new gun-control laws in general; does not mention background checks or red-flag laws specifically.",
+     "source": "https://www.kenk4pa.com/issues/gun-control/",
+     "sourceDate": "undated"
+    },
+    "immigration": {
+     "stance": "unknown",
+     "summary": "Says enforcing federal immigration law is 'the Fed's responsibility,' not the governor's; takes no side on ICE cooperation.",
+     "source": "https://www.kenk4pa.com/issues/responses-to-facebook-questions/",
+     "sourceDate": "undated"
+    },
+    "term-limits": {
+     "stance": "agree",
+     "summary": "Would institute term limits for state legislators, judges and offices above county level; says nothing on stock trading.",
+     "source": "https://www.kenk4pa.com/issues/elections/",
+     "sourceDate": "undated"
+    }
+   }
+  }
+ ],
+ "extraIssues": [
+  "Skill-game regulation and tax (Shapiro 52% rate with revenue for transit vs. Garrity $500/month per-terminal fee)",
+  "Gas prices and a gas-tax pause (Garrity: 2-3 month pause plus $750 rebate; Shapiro open but defers to the legislature)",
+  "Electricity costs and the gross-receipts tax on utilities",
+  "Data centers (Garrity backs a moratorium for local zoning; Shapiro opposes one and cites his executive order)",
+  "Federal tax-credit scholarship opt-in (Garrity 'day one'; Shapiro undecided)",
+  "Federal 2025 reconciliation law and Medicaid work requirements (Garrity supports; Shapiro opposes)",
+  "State budget deficit and use of the Rainy Day Fund",
+  "Death penalty (Garrity: enforce it; Shapiro: opposes)",
+  "Public money for sports stadiums (both skeptical)",
+  "Election certification and Garrity's 2022 remarks on the 2020 election",
+  "Vaccines and RFK Jr. / measles",
+  "Education funding: adequacy formula vs. accountability and reading proficiency",
+  "Vereb harassment settlement; whether Shapiro will serve a full term"
+ ],
+ "notes": "Only one debate (Oct 7, 2026, WHTM Harrisburg; Krawchuk not invited). Green nominee Tony Dastra and running mate Craig Bolton withdrew as balloted candidates on 2025-08-25 after a petition challenge; The Green Papers lists Dastra, Tony Lane (Socialist Workers) and James Moore as write-ins. Official PA DOS certified list and Ballotpedia could not be retrieved; verify at vote.pa.gov before publishing. No Vote411 or Ballotpedia Candidate Connection responses were retrieved. Krawchuk positions come from undated campaign pages. Shapiro gun sources are from 2023. Garrity's Sept 2025 SEPTA remark predates her nomination. Shapiro said on Oct 7 he would announce his federal tax-credit decision 'in the next few weeks'; recheck before launch. Stances marked 'unknown' had no direct source found and were not inferred from party."
+}

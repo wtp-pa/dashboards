@@ -63,6 +63,13 @@ export const config = {
     // to true once officers approve.
     officersApprovedData: false,
   },
+  quiz: {
+    // Same officer gate as the other dashboards. Candidate positions were
+    // gathered with AI-assisted web research; every one links its source,
+    // but officers should spot-check before this goes in an email.
+    officersApprovedData: false,
+    electionDate: "2026-11-03",
+  },
   portfolio: {
     // The umbrella that holds all WTPPPA dashboards. Used by the / landing page.
     name: "WTPPPA Dashboards",
@@ -85,6 +92,12 @@ export const config = {
         name: "PA Legislation Watch",
         slug: "legislation",
         tagline: "Scoring PA bills against the WTPPPA platform",
+        status: "pre-release" as const,
+      },
+      {
+        name: "Candidate Match",
+        slug: "quiz",
+        tagline: "Answer a few questions, then see which Nov 3 candidates share your views",
         status: "pre-release" as const,
       },
       {

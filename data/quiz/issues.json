@@ -1,0 +1,20 @@
+{
+  "_note": "Neutral agree/disagree statements. level: state = Governor/LG, federal = US House, both = asked for both. short: true = included in the short quiz.",
+  "issues": [
+    { "id": "min-wage",       "level": "state",   "short": true,  "topic": "Minimum wage",   "statement": "Pennsylvania should raise its minimum wage above the federal $7.25." },
+    { "id": "vouchers",       "level": "state",   "short": true,  "topic": "School choice",  "statement": "The state should fund scholarships so students can attend private schools." },
+    { "id": "marijuana",      "level": "state",   "short": false, "topic": "Marijuana",      "statement": "Pennsylvania should legalize recreational marijuana for adults." },
+    { "id": "property-tax",   "level": "state",   "short": false, "topic": "Property tax",   "statement": "Pennsylvania should eliminate or sharply cut school property taxes and replace them with other revenue." },
+    { "id": "transit",        "level": "state",   "short": false, "topic": "Transit",        "statement": "The state should increase recurring funding for public transit like SEPTA." },
+    { "id": "energy",         "level": "state",   "short": false, "topic": "Energy",         "statement": "Pennsylvania should prioritize natural gas and energy production over climate programs like RGGI." },
+    { "id": "open-primaries", "level": "state",   "short": false, "topic": "Open primaries", "statement": "Independent voters should be allowed to vote in Pennsylvania primaries." },
+    { "id": "abortion",       "level": "both",    "short": true,  "topic": "Abortion",       "statement": "Abortion access should be protected in law." },
+    { "id": "immigration",    "level": "both",    "short": true,  "topic": "Immigration",    "statement": "State and local police should cooperate with federal immigration enforcement (ICE)." },
+    { "id": "voter-id",       "level": "both",    "short": true,  "topic": "Voter ID",       "statement": "Voters should be required to show photo ID at every election." },
+    { "id": "guns",           "level": "both",    "short": false, "topic": "Guns",           "statement": "Gun buyers should face universal background checks, and courts should be able to issue red-flag orders." },
+    { "id": "term-limits",    "level": "both",    "short": false, "topic": "Ethics",         "statement": "Lawmakers should face term limits and be banned from trading individual stocks." },
+    { "id": "tariffs",        "level": "federal", "short": true,  "topic": "Tariffs",        "statement": "Broad tariffs on imported goods are good for Pennsylvania's economy." },
+    { "id": "aca",            "level": "federal", "short": true,  "topic": "Health insurance","statement": "Congress should extend the enhanced ACA health-insurance subsidies." },
+    { "id": "medicaid-cuts",  "level": "federal", "short": false, "topic": "Medicaid",       "statement": "Federal Medicaid spending should be reduced, including through work requirements." }
+  ]
+}

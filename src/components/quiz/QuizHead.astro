@@ -1,0 +1,30 @@
+---
+/** Shared <head> for /quiz pages. Pre-release pages stay noindex. */
+import { config } from '../../config';
+
+export interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = !config.quiz.officersApprovedData } = Astro.props;
+const siteOrigin = Astro.site ?? Astro.url;
+const ogImageUrl = new URL(config.brand.ogImagePath, siteOrigin).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+---
+
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex" />}
+<link rel="canonical" href={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />

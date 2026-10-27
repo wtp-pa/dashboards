@@ -16,11 +16,11 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-SUITE = ROOT / "elected_officials"
+SUITES = [ROOT / "elected_officials", ROOT / "quiz"]
 
 
 def discover(prefix: str) -> list[Path]:
-    return sorted(p for p in SUITE.glob(f"{prefix}_*.py") if p.is_file())
+    return sorted(p for s in SUITES for p in s.glob(f"{prefix}_*.py") if p.is_file())
 
 
 def run_one(path: Path) -> bool:

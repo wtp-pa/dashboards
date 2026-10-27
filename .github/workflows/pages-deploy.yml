@@ -46,6 +46,11 @@ jobs:
           # key as the pipeline secret since OpenStates rate-limits per
           # key, not per environment.
           PUBLIC_OPENSTATES_API_KEY: ${{ secrets.OPENSTATES_API_KEY }}
+          # Candidate Match usage counts + officer race toggles. Publishable
+          # key is safe client-side; RLS in supabase/migrations/0001_quiz.sql
+          # limits anon to inserting events and reading race visibility.
+          PUBLIC_SUPABASE_URL: ${{ vars.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build
 
       - name: Upload Pages artifact

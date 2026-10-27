@@ -1,0 +1,612 @@
+{
+ "races": [
+  {
+   "district": "PA-1",
+   "rating": "Lean R",
+   "ratingSource": "Cook Lean R (moved from Likely R, Oct 9 2026); Sabato Leans R (Oct 8 2026); Inside Elections Leans R (Oct 15 2026) \u2014 https://www.270towin.com/2026-house-election/table/inside-elections-2026-house-ratings/",
+   "counties": [
+    "Bucks (all)",
+    "Montgomery (part)"
+   ],
+   "candidates": [
+    {
+     "name": "Brian Fitzpatrick",
+     "party": "R",
+     "incumbent": true,
+     "positions": {
+      "voter-id": {
+       "stance": "agree",
+       "summary": "Reported to support voter ID.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/",
+       "sourceDate": "2026-07",
+       "record": {
+        "summary": "Yea, H.R.22 SAVE Act, 220-208, Apr 10 2025.",
+        "source": "https://clerk.house.gov/Votes/2025102"
+       }
+      },
+      "abortion": {
+       "stance": "mixed",
+       "summary": "Supports PA's current law (legal to 24 weeks); record mixed.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/",
+       "sourceDate": "2026-07",
+       "record": {
+        "summary": "Voted for a 20-week ban (2017) and against the Women's Health Protection Act; voted for the interstate-travel protection bill (2022).",
+        "source": "https://whyy.org/articles/election-2026-pennsylvania-1st-congressional-district-voter-guide/"
+       }
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "Longtime GOP co-lead on universal background-check bills.",
+       "source": "https://govinfo.gov/app/details/BILLS-119hr18ih",
+       "sourceDate": "2025",
+       "record": {
+        "summary": "Original cosponsor of H.R.18 Bipartisan Background Checks Act (2025); voted for the 2022 Bipartisan Safer Communities Act (red-flag grants).",
+        "source": "https://govinfo.gov/app/details/BILLS-119hr18ih"
+       }
+      },
+      "immigration": {
+       "stance": "mixed",
+       "summary": "Would fully fund ICE/DHS but require body cameras, visible ID and limits on masks; no stated view on local police cooperation.",
+       "source": "https://www.bucks-news.com/news/2026/10/22/fitzpatrick-and-harvie-make-their-case-for-congress/",
+       "sourceDate": "2026-10-22",
+       "record": {
+        "summary": "Yea, Laken Riley Act, 263-156, Jan 22 2025; introduced H.R.8173 ICE reform bill (Apr 2026).",
+        "source": "https://clerk.house.gov/Votes/202523"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Opposes 'blanket and indiscriminate' tariffs.",
+       "source": "https://sauconsource.com/2026/10/26/pa-election-2026-where-fitzpatrick-harvie-stand-on-tax-policies-affordability-jobs/",
+       "sourceDate": "2026-10-26",
+       "record": {
+        "summary": "One of 6 Republicans voting to end the Canada tariff emergency (H.J.Res.72, 219-211, Feb 11 2026). Earlier voted for procedural rules that blocked tariff-disapproval votes.",
+        "source": "https://penncapital-star.com/2026/02/11/repub/us-house-in-bipartisan-vote-defies-trump-agrees-to-end-his-tariffs-on-canada/"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Introduced a bill to extend enhanced premium tax credits through 2027.",
+       "source": "https://sauconsource.com/2026/10/26/pa-election-2026-where-fitzpatrick-harvie-stand-on-tax-policies-affordability-jobs/",
+       "sourceDate": "2026-10-26",
+       "record": {
+        "summary": "Signed the discharge petition; among 17 Republicans voting yes on the 3-year extension (H.R.1834, 230-196, Jan 8 2026).",
+        "source": "https://www.aha.org/news/headline/2026-01-09-house-passes-bill-extending-enhanced-premium-tax-credits"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "mixed",
+       "summary": "Backed the May 2025 House OBBBA, then opposed the final law, saying Senate changes 'fell short' for his community.",
+       "source": "https://www.fox29.com/news/big-beautiful-bill-pennsylvania-gop-rep-brian-fitzpatrick-votes-no-twice",
+       "sourceDate": "2025-07-03",
+       "record": {
+        "summary": "Nay on OBBBA final passage (218-214, Jul 3 2025), one of 2 Republicans; Yea on the May 2025 House version (per news).",
+        "source": "https://clerk.house.gov/Votes/2025190"
+       }
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Has long sponsored a 12-year term-limits amendment; co-leads a member stock-trading ban.",
+       "source": "https://fitzpatrick.house.gov/2025/9/news-fitzpatrick-leads-historic-bipartisan-effort-to-ban-congressional-stock-trading",
+       "sourceDate": "2025-09"
+      }
+     }
+    },
+    {
+     "name": "Bob Harvie",
+     "party": "D",
+     "incumbent": false,
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "No stated position found.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/",
+       "sourceDate": "2026-07"
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Says women should make their own reproductive choices; backs mifepristone access.",
+       "source": "https://whyy.org/articles/election-2026-pennsylvania-1st-congressional-district-voter-guide/",
+       "sourceDate": "2026-09-09"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Reportedly backs 'common sense' gun laws (e.g., barring felons and no-fly-list buyers); no explicit position on universal checks or red-flag laws.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/",
+       "sourceDate": "2026-07"
+      },
+      "immigration": {
+       "stance": "disagree",
+       "summary": "Wants ICE 'completely restructured' and a path to citizenship for long-time residents.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/ (citing PhillyBurbs)",
+       "sourceDate": "2026-04-01",
+       "record": {
+        "summary": "As Bucks commissioner: voted 2-1 (May 2025) that the sheriff lacked authority for a 287(g) ICE agreement; opposed ICE detention sites (Feb 2026).",
+        "source": "https://whyy.org/articles/bucks-county-commissioners-sheriff-ice-agreement/"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Says he will 'fight to roll back Trump's tariffs.'",
+       "source": "https://sauconsource.com/2026/10/26/pa-election-2026-where-fitzpatrick-harvie-stand-on-tax-policies-affordability-jobs/",
+       "sourceDate": "2026-10-26"
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Pledges to 'permanently restore and expand' the ACA tax credits.",
+       "source": "https://sauconsource.com/2026/10/26/pa-election-2026-where-fitzpatrick-harvie-stand-on-tax-policies-affordability-jobs/",
+       "sourceDate": "2026-10-26"
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Pledges to 'protect Medicare and Medicaid'; criticized the OBBBA.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-01-us-house-voters-guide/",
+       "sourceDate": "2026-07"
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Would ban congressional stock trading and add a lifetime lobbying ban and an 80-year age limit; no stated term-limit position.",
+       "source": "https://politicspa.com/2026-election-preview-1st-congressional-district/154493/",
+       "sourceDate": "2026-10-26"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-7",
+   "rating": "Lean D",
+   "ratingSource": "Cook Lean D (moved from Toss-up, Oct 9 2026); Sabato Leans D (moved from Toss-up, Sep 29 2026); Inside Elections Tilt D (Oct 15 2026) \u2014 https://centerforpolitics.org/crystalball/2026-rating-changes/",
+   "counties": [
+    "Carbon",
+    "Lehigh",
+    "Northampton",
+    "Monroe (part)"
+   ],
+   "candidates": [
+    {
+     "name": "Ryan Mackenzie",
+     "party": "R",
+     "incumbent": true,
+     "positions": {
+      "voter-id": {
+       "stance": "agree",
+       "summary": "Called the SAVE Act's photo-ID requirement 'a commonsense position that over 80% of people agree with.'",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15",
+       "record": {
+        "summary": "Yea, H.R.22 SAVE Act, 220-208, Apr 10 2025; voted for the SAVE America Act (S.1383, 218-213, Feb 11 2026, per news).",
+        "source": "https://clerk.house.gov/Votes/2025102"
+       }
+      },
+      "abortion": {
+       "stance": "disagree",
+       "summary": "Describes himself as pro-life, with exceptions for rape, incest and the life of the mother.",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "No stated position on universal background checks or red-flag laws found; his 2023 PA House votes on HB 714 and HB 1018 could not be retrieved.",
+       "source": "none found",
+       "sourceDate": ""
+      },
+      "immigration": {
+       "stance": "agree",
+       "summary": "Denounced Northampton County's limits on ICE cooperation and urged it to rescind them.",
+       "source": "https://mackenzie.house.gov/media/press-releases/congressman-mackenzie-denounces-northampton-county-executives-decision-not",
+       "sourceDate": "2025-02-13",
+       "record": {
+        "summary": "Yea, Laken Riley Act, 263-156, Jan 22 2025; supported $70B ICE/CBP funding (Secure America Act).",
+        "source": "https://clerk.house.gov/Votes/202523"
+       }
+      },
+      "tariffs": {
+       "stance": "mixed",
+       "summary": "Has supported higher tariffs but says they 'can be disruptive' and that the policy uncertainty 'was definitely not helpful.'",
+       "source": "https://www.spotlightpa.org/news/2026/09/pennsylvania-election-seventh-district-ryan-mackenzie-bob-brooks-economy-guide-elections/",
+       "sourceDate": "2026-09-30",
+       "record": {
+        "summary": "Voted no on H.J.Res.72 to end the Canada tariffs (Feb 11 2026); voted to shield the reciprocal tariffs from disapproval votes.",
+        "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Co-sponsored the discharge petition and voted to extend enhanced ACA subsidies.",
+       "source": "https://www.spotlightpa.org/news/2026/09/pennsylvania-election-seventh-district-ryan-mackenzie-bob-brooks-economy-guide-elections/",
+       "sourceDate": "2026-09-30",
+       "record": {
+        "summary": "Yes on the 3-year extension (H.R.1834, 230-196, Jan 8 2026). CONFLICT: voted for the OBBBA, which did not extend the subsidies.",
+        "source": "https://www.aha.org/news/headline/2026-01-09-house-passes-bill-extending-enhanced-premium-tax-credits"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "agree",
+       "summary": "Calls the OBBBA's Medicaid provisions 'common sense reforms' that tighten eligibility and strengthen the program.",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15",
+       "record": {
+        "summary": "Aye on OBBBA final passage, 218-214, Jul 3 2025.",
+        "source": "https://clerk.house.gov/Votes/2025190"
+       }
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Signed a three-term House limit pledge and backs a congressional stock-trading ban.",
+       "source": "https://www.spotlightpa.org/news/2026/10/brooks-mackenzie-midterm-election-campaign-finance-anticorruption-elections/",
+       "sourceDate": "2026-10-23",
+       "record": {
+        "summary": "Co-sponsor of a three-term limit amendment and stock-ban bills; voted for the Stop Insider Trading Act (passed the House, failed in the Senate).",
+        "source": "https://www.spotlightpa.org/news/2026/10/brooks-mackenzie-midterm-election-campaign-finance-anticorruption-elections/"
+       }
+      }
+     }
+    },
+    {
+     "name": "Bob Brooks",
+     "party": "D",
+     "incumbent": false,
+     "positions": {
+      "voter-id": {
+       "stance": "disagree",
+       "summary": "Opposes the SAVE Act, calling it a 'direct attack on voting rights.'",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15"
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "'I will always support a woman's right to choose her own healthcare.'",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Posted that 'sensible gun safety laws save lives' (Dec 2025) but has given no position on universal checks or red-flag laws; he apologized in Apr 2026 for 2019 posts blaming shootings on 'hearts without God.'",
+       "source": "https://www.lehighvalleypublicmedia.org/elections/pa-7-democratic-debate-turns-ugly-over-brooks-facebook-posts-criticizing-obama-and-defending-guns",
+       "sourceDate": "2026-04-24"
+      },
+      "immigration": {
+       "stance": "disagree",
+       "summary": "Says ICE should refocus on criminals and opposes 'masked men' detaining people; no stated view on local police cooperation.",
+       "source": "https://armchairlehighvalley.substack.com/p/where-mackenzie-and-brooks-stand",
+       "sourceDate": "2026-10-15"
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "'Blanket tariffs are crushing people'; opposes across-the-board tariffs on allies.",
+       "source": "https://www.spotlightpa.org/news/2026/09/pennsylvania-election-seventh-district-ryan-mackenzie-bob-brooks-economy-guide-elections/",
+       "sourceDate": "2026-09-30"
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Supports restoring enhanced subsidies and moving toward universal coverage (Medicare for All).",
+       "source": "https://www.spotlightpa.org/news/2026/09/pennsylvania-election-seventh-district-ryan-mackenzie-bob-brooks-economy-guide-elections/",
+       "sourceDate": "2026-09-30"
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Would 'bring back everything that was cut' in the OBBBA, including Medicaid; opposes the work requirements.",
+       "source": "https://www.spotlightpa.org/news/2026/09/pennsylvania-election-seventh-district-ryan-mackenzie-bob-brooks-economy-guide-elections/",
+       "sourceDate": "2026-09-30"
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Backs a five-term House limit and a congressional stock-trading ban; his household still holds individual stocks, which his campaign says will be sold if he is elected.",
+       "source": "https://www.spotlightpa.org/news/2026/10/brooks-mackenzie-midterm-election-campaign-finance-anticorruption-elections/",
+       "sourceDate": "2026-10-23"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-8",
+   "rating": "Toss-up",
+   "ratingSource": "Cook Toss-up; Sabato Toss-up (moved from Leans R, Jul 30 2026); Inside Elections Tilt D (Oct 15 2026)",
+   "counties": [
+    "Lackawanna",
+    "Pike",
+    "Wayne",
+    "Luzerne (part)",
+    "Monroe (part)"
+   ],
+   "candidates": [
+    {
+     "name": "Rob Bresnahan Jr.",
+     "party": "R",
+     "incumbent": true,
+     "positions": {
+      "voter-id": {
+       "stance": "agree",
+       "summary": "'Only Americans should be in a position to vote in American elections'; backs the SAVE America Act.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/",
+       "sourceDate": "2026-07",
+       "record": {
+        "summary": "Yea, H.R.22 SAVE Act, Apr 10 2025; yes on S.1383 SAVE America Act, Feb 11 2026 (per guides.vote).",
+        "source": "https://clerk.house.gov/Votes/2025102"
+       }
+      },
+      "abortion": {
+       "stance": "mixed",
+       "summary": "Would 'never support a federal ban'; supports Dobbs returning the issue to the states and PA's 24-week law.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/ (Times-Tribune quotes)",
+       "sourceDate": "2024-10-27"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Calls himself a 'stalwart supporter of the second amendment'; no statement on universal checks or red-flag laws.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/",
+       "sourceDate": "undated"
+      },
+      "immigration": {
+       "stance": "unknown",
+       "summary": "Backs border funding and a border wall; no statement on local police cooperating with ICE.",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/",
+       "sourceDate": "2026-01-21",
+       "record": {
+        "summary": "Yea, Laken Riley Act, 263-156, Jan 22 2025.",
+        "source": "https://clerk.house.gov/Votes/202523"
+       }
+      },
+      "tariffs": {
+       "stance": "mixed",
+       "summary": "Supports the administration's tariffs but acknowledges strain locally: 'We need to know where the goalpost is.'",
+       "source": "https://www.spotlightpa.org/news/2026/09/rob-bresnahan-paige-cognetti-economy-midterm-election-guide-elections/",
+       "sourceDate": "2026-09-23",
+       "record": {
+        "summary": "Not among the 6 Republicans who voted to end the Canada tariffs (H.J.Res.72, Feb 11 2026); his individual vote is not confirmed.",
+        "source": "https://www.nbcnews.com/politics/congress/house-votes-end-trump-tariffs-canada-rcna258661"
+       }
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Backed a 3-year extension to protect about 28,000 constituents from premium spikes, while calling the ACA a failure on costs.",
+       "source": "https://www.spotlightpa.org/news/2026/09/rob-bresnahan-paige-cognetti-economy-midterm-election-guide-elections/",
+       "sourceDate": "2026-09-23",
+       "record": {
+        "summary": "Signed the discharge petition; yes on H.R.1834 (230-196, Jan 8 2026). CONFLICT: voted for the OBBBA, under which the subsidies lapsed.",
+        "source": "https://www.aha.org/news/headline/2026-01-09-house-passes-bill-extending-enhanced-premium-tax-credits"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "mixed",
+       "summary": "Defends the OBBBA Medicaid changes as 'securing Medicaid for those who truly need it' but vowed to fight the 2026 HHS rules as going too far.",
+       "source": "https://www.wvia.org/news/local/2026-06-05/bresnahan-promises-to-fight-proposed-medicaid-rules-that-could-cost-seriously-ill-to-lose-coverage",
+       "sourceDate": "2026-06-05",
+       "record": {
+        "summary": "Aye on OBBBA final passage, 218-214, Jul 3 2025.",
+        "source": "https://clerk.house.gov/Votes/2025190"
+       }
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Signed a 3-term limit pledge; introduced a member stock-trading ban (with a blind-trust exemption).",
+       "source": "https://www.spotlightpa.org/news/2026/10/bresnahan-cognetti-midterm-election-campaign-finance-anticorruption-elections/",
+       "sourceDate": "2026-10-15",
+       "record": {
+        "summary": "Voted for the Stop Insider Trading Act. CONFLICT: about 650 individual stock trades in 2025 while proposing a ban; he says an advisor made the trades and he has stopped.",
+        "source": "https://www.spotlightpa.org/news/2026/10/bresnahan-cognetti-midterm-election-campaign-finance-anticorruption-elections/"
+       }
+      }
+     }
+    },
+    {
+     "name": "Paige Cognetti",
+     "party": "D",
+     "incumbent": false,
+     "positions": {
+      "voter-id": {
+       "stance": "unknown",
+       "summary": "No stated position found.",
+       "source": "https://paigeforpa.com/priorities/",
+       "sourceDate": "2026-10-27 (accessed)"
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Abortion 'needs to be legal, it needs to be safe.'",
+       "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/",
+       "sourceDate": "undated"
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "No direct quote found; endorsing groups (Giffords) say she backs universal checks, but that is their description, not her words.",
+       "source": "https://giffords.org/candidates/paige-cognetti/",
+       "sourceDate": "undated",
+       "record": {
+        "summary": "As Scranton mayor, backed Philadelphia's challenge to state preemption of local gun laws (2021).",
+        "source": "https://guides.vote/guide/2026-pennsylvania-pa-08-us-house-voters-guide/"
+       }
+      },
+      "immigration": {
+       "stance": "mixed",
+       "summary": "Supports a secure border plus comprehensive reform with paths to citizenship.",
+       "source": "https://www.timesleader.com/news/1763325/election-2026-8th-congressional-district-candidates-bresnahan-cognetti-answer-questions-at-forum",
+       "sourceDate": "2026-10-24",
+       "record": {
+        "summary": "As mayor (2020): Scranton police would not take part in ICE raids; she says Scranton is not a sanctuary city and lawful ICE warrants are executed.",
+        "source": "https://www.washingtonexaminer.com/news/campaigns/congressional/4694753/paige-cognetti-ice-cooperation-comments-pennsylvania-house-race/"
+       }
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Would 'stop broad tariffs that help the big guys and hurt families'; supports targeted tariffs.",
+       "source": "https://paigeforpa.com/priorities/",
+       "sourceDate": "2026-10-27 (accessed)"
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Supports restoring enhanced ACA tax credits.",
+       "source": "https://www.spotlightpa.org/news/2026/09/rob-bresnahan-paige-cognetti-economy-midterm-election-guide-elections/",
+       "sourceDate": "2026-09-23"
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Would reverse the OBBBA Medicaid, Medicare and SNAP cuts.",
+       "source": "https://www.timesleader.com/news/1763325/election-2026-8th-congressional-district-candidates-bresnahan-cognetti-answer-questions-at-forum",
+       "sourceDate": "2026-10-24"
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Backs an 18-year House service cap amendment and a congressional stock-trading ban.",
+       "source": "https://www.spotlightpa.org/news/2026/10/bresnahan-cognetti-midterm-election-campaign-finance-anticorruption-elections/",
+       "sourceDate": "2026-10-15"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "district": "PA-10",
+   "rating": "Lean D / Toss-up",
+   "ratingSource": "Cook Lean D (moved from Toss-up, Oct 9 2026); Inside Elections Toss-up (Oct 15 2026); Sabato: no 2026 change logged, Toss-up as of July per Ballotpedia (current rating not confirmed)",
+   "counties": [
+    "Dauphin (all)",
+    "Cumberland (part)",
+    "York (part)"
+   ],
+   "candidates": [
+    {
+     "name": "Scott Perry",
+     "party": "R",
+     "incumbent": true,
+     "positions": {
+      "voter-id": {
+       "stance": "agree",
+       "summary": "Backs the SAVE America Act's ID and citizenship rules; has 'voted for it multiple times.'",
+       "source": "https://www.cityandstatepa.com/politics/2026/09/q-us-rep-scott-perry/415733/",
+       "sourceDate": "2026-09-01",
+       "record": {
+        "summary": "Yea, H.R.22 SAVE Act, 220-208, Apr 10 2025.",
+        "source": "https://clerk.house.gov/Votes/2025102"
+       }
+      },
+      "abortion": {
+       "stance": "disagree",
+       "summary": "Pro-life, with exceptions for rape, incest and the life of the mother.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06",
+       "record": {
+        "summary": "CONFLICT: cosponsored the Life at Conception Act (118th Congress, H.R.431), which has no rape or incest exceptions.",
+        "source": "https://www.govinfo.gov/app/details/BILLS-118hr431ih"
+       }
+      },
+      "guns": {
+       "stance": "unknown",
+       "summary": "Pledges to resist 'any effort to limit' gun freedoms; did not address background checks or red-flag laws.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06"
+      },
+      "immigration": {
+       "stance": "agree",
+       "summary": "Supports banning sanctuary cities; stands 'shoulder to shoulder' with ICE.",
+       "source": "https://www.witf.org/2026/10/07/election-2026-where-scott-perry-janelle-stelson-stand-on-immigration/",
+       "sourceDate": "2026-10-07",
+       "record": {
+        "summary": "Yea, Laken Riley Act, 263-156, Jan 22 2025.",
+        "source": "https://clerk.house.gov/Votes/202523"
+       }
+      },
+      "tariffs": {
+       "stance": "agree",
+       "summary": "Says Americans should 'be patient' for the long-term benefits of the tariffs.",
+       "source": "https://www.spotlightpa.org/news/2026/09/scott-perry-janelle-stelson-10th-congressional-district-election-elections/",
+       "sourceDate": "2026-09-16",
+       "record": {
+        "summary": "Not among the 6 Republicans who voted to end the Canada tariffs (Feb 11 2026); individual vote not confirmed.",
+        "source": "https://www.washingtonexaminer.com/news/4455570/six-republicans-vote-against-trump-canada-tariffs/"
+       }
+      },
+      "aca": {
+       "stance": "disagree",
+       "summary": "Calls the ACA 'an abject failure' and opposed extending the enhanced credits; supports protecting pre-existing conditions.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06",
+       "record": {
+        "summary": "Voted against the 3-year extension (230-196, Jan 8 2026).",
+        "source": "https://www.spotlightpa.org/news/2026/09/scott-perry-janelle-stelson-10th-congressional-district-election-elections/"
+       }
+      },
+      "medicaid-cuts": {
+       "stance": "agree",
+       "summary": "Says the OBBBA 'strengthens and cleans up' Medicaid by cutting waste and fraud.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06",
+       "record": {
+        "summary": "Aye on OBBBA final passage, 218-214, Jul 3 2025.",
+        "source": "https://clerk.house.gov/Votes/2025190"
+       }
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Supports a congressional stock-trading ban and a three-term House limit.",
+       "source": "https://www.spotlightpa.org/news/2026/10/scott-perry-janelle-stelson-10th-congressional-district-election-anti-corruption-campaign-finance-elections/",
+       "sourceDate": "2026-10-12",
+       "record": {
+        "summary": "Voted for the Stop Insider Trading Act; cosponsor of H.J.Res.12 (three-term limit). Signed the term-limits pledge in 2020 and is seeking an 8th term.",
+        "source": "https://perry.house.gov/news/documentsingle.aspx?DocumentID=404500"
+       }
+      }
+     }
+    },
+    {
+     "name": "Janelle Stelson",
+     "party": "D",
+     "incumbent": false,
+     "positions": {
+      "voter-id": {
+       "stance": "mixed",
+       "summary": "Says she supports voter ID but opposes the SAVE Act.",
+       "source": "https://www.yahoo.com/news/politics/articles/rep-scott-perry-janelle-stelson-030828933.html",
+       "sourceDate": "2026-10-15"
+      },
+      "abortion": {
+       "stance": "agree",
+       "summary": "Would restore protections once guaranteed under Roe.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06"
+      },
+      "guns": {
+       "stance": "agree",
+       "summary": "Backs universal background checks and red-flag laws alongside the Second Amendment.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06"
+      },
+      "immigration": {
+       "stance": "mixed",
+       "summary": "Supports deporting violent criminals and border funding but says ICE has gone too far; no stated view on local police cooperation.",
+       "source": "https://www.witf.org/2026/10/07/election-2026-where-scott-perry-janelle-stelson-stand-on-immigration/",
+       "sourceDate": "2026-10-07"
+      },
+      "tariffs": {
+       "stance": "disagree",
+       "summary": "Would work to repeal the tariffs.",
+       "source": "https://www.spotlightpa.org/news/2026/09/scott-perry-janelle-stelson-10th-congressional-district-election-elections/",
+       "sourceDate": "2026-09-16"
+      },
+      "aca": {
+       "stance": "agree",
+       "summary": "Would make the enhanced ACA tax credits permanent.",
+       "source": "https://www.spotlightpa.org/news/2026/09/scott-perry-janelle-stelson-10th-congressional-district-election-elections/",
+       "sourceDate": "2026-09-16"
+      },
+      "medicaid-cuts": {
+       "stance": "disagree",
+       "summary": "Would reverse the OBBBA Medicaid cuts.",
+       "source": "https://www.witf.org/2026/10/06/election-2026-where-scott-perry-janelle-stelson-stand-on-health-care-safety/",
+       "sourceDate": "2026-10-06"
+      },
+      "term-limits": {
+       "stance": "agree",
+       "summary": "Proposes a 12-year congressional limit and a ban on members trading individual stocks.",
+       "source": "https://www.spotlightpa.org/news/2026/10/scott-perry-janelle-stelson-10th-congressional-district-election-anti-corruption-campaign-finance-elections/",
+       "sourceDate": "2026-10-12"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "noSenateRace": true,
+ "notes": "1) Senate: McCormick's seat (Class 1) is up in 2030 and Fetterman's (Class 3) in 2028 (thegreenpapers.com/G26/PA). 2) No other PA district is rated Lean or Toss-up; PA-17 is Safe D. 3) Minor-party candidates, none confirmed on an official ballot list. PA-7: Green candidate Andrew Tupone was removed by Commonwealth Court (Sep 4 2026; Spotlight PA Sep 30 says removed); he appealed and threatened a write-in, and no appeal ruling was found. Ballotpedia also lists Frank Golden (Unaffiliated) and Ramon Granados (I), but no news coverage confirms them. PA-1: Fox29 (Oct 21) names Jamie Frost Remmey and Josh/John Hoban; Spotlight PA, WHYY and PoliticsPA list only two candidates. PA-10: independent Isabelle Harman is listed by Ballotpedia, but PennWatch (Oct 14) says Perry and Stelson are the only candidates on the ballot. PA-8: only two candidates found. Confirm all with county sample ballots or the PA Department of State. 4) Unverified 2026 roll calls: the Jan 8 ACA, Feb 11 SAVE America and Feb 11 Canada-tariff votes rest on news (clerk.house.gov returned 403). The 2025 rolls 190, 23 and 102 were confirmed on clerk.house.gov. 5) The term-limits issue bundles term limits with a stock-trading ban; all 8 candidates say they support it, so it does not separate any race. Consider splitting it. 6) Conflicts between stated position and record are flagged CONFLICT in the record summaries: Mackenzie and Bresnahan voted for the OBBBA then for the ACA extension; Bresnahan's stock trades vs his ban bill; Perry's stated abortion exceptions vs the Life at Conception cosponsorship; Fitzpatrick's May Yea vs July Nay on the OBBBA. 7) The PA-7 general-election debate was canceled after Brooks withdrew (WVIA, Oct 20). The PA-8 WVIA debate is Oct 29."
+}
