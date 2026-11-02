@@ -206,8 +206,8 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
           questions, then see which candidates are closest to you. Names stay hidden until the end.
         </p>
         <p className="mt-3 text-sm text-wtp-cream/60">
-          A starting point for your own research, not a voter guide. {PARTY} hasn't endorsed anyone in these races or taken
-          sides on these issues.
+          A starting point for your own research, not a voter guide. {PARTY} hasn't endorsed anyone in these races, and
+          candidates are matched to your answers, not our platform.
         </p>
 
         <button type="button" onClick={start} className={`${btn} mt-6 w-full bg-wtp-sky py-3 text-base text-wtp-navy hover:bg-white`}>
@@ -329,7 +329,7 @@ export default function Quiz({ issues, races, defaultMode = 'short', hidden = []
       <div className={`${card} border-wtp-gold/40`}>
         <p className="text-sm font-semibold">Use this as a tool, not a verdict</p>
         <ul className="mt-2 space-y-1 text-sm text-wtp-cream/70">
-          <li>— {PARTY} hasn't endorsed anyone in these races and hasn't taken positions on these issues.</li>
+          <li>— {PARTY} hasn't endorsed anyone in these races. Candidates are matched to your answers, not to our platform.</li>
           <li>— Positions come from public statements and votes we could find. Many are incomplete, dated, or open to interpretation, and some candidates have none on file.</li>
           <li>— A few questions can't capture how anyone will govern. Open Details, read the sources, and decide for yourself.</li>
         </ul>
