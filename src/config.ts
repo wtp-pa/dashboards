@@ -66,8 +66,8 @@ export const config = {
   quiz: {
     // Same officer gate as the other dashboards. Candidate positions were
     // gathered with AI-assisted web research; every one links its source,
-    // but officers should spot-check before this goes in an email.
-    officersApprovedData: false,
+    // Officers approved sharing it 2026-11-01. Nav still says "beta" (status: pre-release).
+    officersApprovedData: true,
     electionDate: "2026-11-03",
     // Race ids ("gov", "pa-01" …) to pull from the quiz, e.g. if a candidate
     // withdraws or officers want a race held back. Edit + push; live in ~2 min.
