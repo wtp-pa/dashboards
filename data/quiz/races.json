@@ -285,8 +285,10 @@
        "source": "https://www.kenk4pa.com/issues/environment/"
       },
       "voter-id": {
-       "options": [],
-       "summary": "Would 'require positive ID for citizens to vote' and end mail ballots, but does not say whether non-photo ID would count.",
+       "options": [
+        "any-id"
+       ],
+       "summary": "Calls voter ID 'a no-brainer' and would require 'photo or other positive ID' to vote, so non-photo ID would count.",
        "source": "https://www.kenk4pa.com/issues/elections/"
       },
       "open-primaries": {
@@ -297,8 +299,10 @@
        "source": "https://www.kenk4pa.com/issues/elections/"
       },
       "abortion": {
-       "options": [],
-       "summary": "Calls himself 'pro-option' and proposes 'pre-natal adoption' (a woman signs away the pregnancy so others can adopt) but sets no week limit or ban, so no option fits.",
+       "options": [
+        "states"
+       ],
+       "summary": "Calls himself 'pro-option': proposes voluntary 'pre-natal adoption', and says that if no one adopts, the result is 'exactly what we have today.' No new limits or bans.",
        "source": "https://www.kenk4pa.com/issues/abortion/"
       },
       "guns": {
