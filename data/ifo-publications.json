@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-11-02T14:30:26+00:00",
+  "lastUpdated": "2026-11-09T14:54:48+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
     {
+      "title": "Revenue Estimates for Single Payer Proposal",
+      "date": "2026-11-05",
+      "url": "https://www.ifo.state.pa.us/releases/974/Revenue-Estimates-for-Single-Payer-Proposal/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/IFO_Response_Letter_October_30_2026.pdf",
+      "summary": "In response to a member request, the IFO provided revenue estimates for certain provisions of HB 2763, entitled The Universal Health Care Act. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "Fiscal Outlook",
+      "date": "2026-11-05",
+      "url": "https://www.ifo.state.pa.us/releases/973/Fiscal-Outlook/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/2026_Fiscal_Outlook_Announcement_Final.pdf",
+      "summary": "The IFO will release its long-term fiscal outlook for FY 2026-27\u00a0to FY 2031-32\u00a0on November 12 at 1:30 pm. The report will include an assessment of the General Fund surplus and Rainy Day Fund under current law and policies, and recommendations for the FY 2027-28 Executive Budget t\u2026"
+    },
+    {
+      "title": "Act 1 Index Forecast",
+      "date": "2026-11-02",
+      "url": "https://www.ifo.state.pa.us/releases/972/Act-1-Index-Forecast/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Act_1_Index_Forecast_11_2026.pdf",
+      "summary": "The IFO released an updated forecast of the Act 1 Index, which limits school district property tax rate increases. The report projects the index through FY 2031-32 and provides an overview of recent usage of the index by school districts. ... (Full Report) - opens in a new tab"
+    },
+    {
+      "title": "October 2026 Revenue Update",
+      "date": "2026-11-02",
+      "url": "https://www.ifo.state.pa.us/releases/971/October-2026-Revenue-Update/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_10.pdf",
+      "summary": "The Commonwealth collected $4.06 billion in General Fund revenues for October, an increase of $596 million (+17.2%) compared to October 2025. ... (Full Report) - opens in a new tab"
+    },
+    {
       "title": "2026 Demographic Outlook",
       "date": "2026-10-27",
       "url": "https://www.ifo.state.pa.us/releases/969/2026-Demographic-Outlook/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Pennsylvania_Demographic_Outlook_2026_10.pdf",
       "summary": "Section 604-B (a)(2) of the Administrative Code of 1929 specifies that the Independent Fiscal Office (IFO) shall \u201cprovide an assessment of the state\u2019s current fiscal condition and a projection of what the fiscal condition will be during the next five years. The assessment shall t\u2026"
-    },
-    {
-      "title": "Economic Update",
-      "date": "2026-10-27",
-      "url": "https://www.ifo.state.pa.us/releases/970/Economic-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/GSVC_October_2026_Final.pdf",
-      "summary": "Director Knittel provided an \u201cEconomic Update\u201d at the Greater Susquehanna Valley Chamber of Commerce's annual Economic Forecast. ... (Full Report) - opens in a new tab"
-    },
-    {
-      "title": "Drivers Unresponsive to High Gasoline Prices",
-      "date": "2026-10-14",
-      "url": "https://www.ifo.state.pa.us/releases/968/Drivers-Unresponsive-to-High-Gasoline-Prices/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Fuel_Consumption_RB_2026_10.pdf",
-      "summary": "The IFO released a research brief that updates fuel consumption through July 2026. Despite a large spike in gasoline prices over the summer, Pennsylvania drivers did not reduce consumption. The brief also examines the modest contraction of fuel taxes deposited into the Motor Lice\u2026"
-    },
-    {
-      "title": "County Home Sales and Price Trends",
-      "date": "2026-10-07",
-      "url": "https://www.ifo.state.pa.us/releases/967/County-Home-Sales-and-Price-Trends/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/County_Home_Sales_and_Price_Trends_RB_10_2026.pdf",
-      "summary": "The IFO published a research brief that compares residential home sales trends across counties from 2019 to 2025. Data from the State Tax Equalization Board show that the average sales price increased by 58% during that period, while total sales declined by 15%. The brief shows t\u2026"
-    },
-    {
-      "title": "September 2026 Revenue Update",
-      "date": "2026-10-01",
-      "url": "https://www.ifo.state.pa.us/releases/966/September-2026-Revenue-Update/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/MRU_2026_09.pdf",
-      "summary": "The Commonwealth collected $4.84 billion in General Fund revenues for September, an increase of $784 million (+19.3%) compared to September 2025. ... (Full Report) - opens in a new tab"
     }
   ]
 }
