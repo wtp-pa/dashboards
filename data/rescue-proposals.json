@@ -1,5 +1,5 @@
 {
-  "$comment": "Best-effort revenue estimates from PA budget office, IFO analyses, and prior gubernatorial proposals. All numbers are mid-range; treat as informative, not precise. Real revenue depends on tax rate, implementation, ramp-up, and economic conditions. Sources cited per row. Deficit updated to IFO's post-enactment FY 2026-27 General Fund Budget Update (July 2026), via Commonwealth Foundation.",
+  "$comment": "Best-effort revenue estimates from PA budget office, IFO analyses, and prior gubernatorial proposals. All numbers are mid-range; treat as informative, not precise. Real revenue depends on tax rate, implementation, ramp-up, and economic conditions. Sources cited per row. Deficit updated to IFO's post-enactment FY 2026-27 General Fund Budget Update (July 2026), via Commonwealth Foundation. Refreshed November 2026 from IFO February 2026 Analysis of Revenue Proposals, PA Dept of Revenue February 2026 fiscal analyses, Gov. Shapiro FY 2026-27 Executive Budget, and IFO July 2026 enacted-budget General Fund analysis. Note: IFO November 2026 Five-Year Outlook not yet published as of refresh date (Nov 15).",
   "annualDeficitUSD": 5030000000,
   "proposals": [
     {
@@ -7,11 +7,11 @@
       "name": "Tax recreational cannabis",
       "description": "Pennsylvania is one of the few states without legal recreational cannabis. Gov. Shapiro's FY 2026-27 budget estimates $729M in year-one revenue from taxes and one-time licensing fees; the IFO puts mature recurring yield lower as license fees drop off.",
       "revenueLowUSD": 250000000,
-      "revenueMidUSD": 500000000,
+      "revenueMidUSD": 430000000,
       "revenueHighUSD": 1000000000,
       "status": "blocked",
-      "statusDetail": "Proposed in Gov. Shapiro's FY 2026-27 budget; blocked in PA Senate",
-      "sourceDetail": "Shapiro FY 2026-27 executive budget; PA IFO analyses",
+      "statusDetail": "HB 1200 passed PA House (May 2025) for the first time ever; killed in Senate; excluded from FY 2026-27 enacted budget",
+      "sourceDetail": "IFO February 2026 Analysis of Revenue Proposals (mature recurring ~$432M, year-1 ~$140M); Shapiro FY 2026-27 executive budget ($729M year-1 including one-time license fees)",
       "category": "new-revenue"
     },
     {
@@ -19,11 +19,11 @@
       "name": "Tax skill games",
       "description": "The slot-like \"skill game\" terminals in PA bars and convenience stores operate in a legal gray area with no state tax. Shapiro proposed a 52% tax rate in FY 2026-27, projecting ~$766M in year-one revenue; industry estimates are lower.",
       "revenueLowUSD": 400000000,
-      "revenueMidUSD": 766000000,
-      "revenueHighUSD": 1200000000,
+      "revenueMidUSD": 650000000,
+      "revenueHighUSD": 1190000000,
       "status": "active-bill",
-      "statusDetail": "Active in current session; rate and regulatory structure still contested",
-      "sourceDetail": "Gov. Shapiro FY 2026-27 budget; legislative fiscal notes",
+      "statusDetail": "PA Supreme Court declared skill games illegal (June 2026); enforcement deadline passed Oct 2026; multiple bills to regulate and tax introduced but no law enacted",
+      "sourceDetail": "IFO February 2026 Analysis of Revenue Proposals (year-1 ~$487M, mature ~$1.19B at 52% rate); PA Supreme Court ruling Commonwealth v. Dent (June 2026)",
       "category": "new-revenue"
     },
     {
@@ -34,8 +34,8 @@
       "revenueMidUSD": 500000000,
       "revenueHighUSD": 700000000,
       "status": "blocked",
-      "statusDetail": "Proposed repeatedly since the Marcellus boom; blocked by industry lobby",
-      "sourceDetail": "Prior Wolf-era budget proposals; PA Dept of Revenue analyses",
+      "statusDetail": "SB910 (6.5% rate) and HB2129 (9% base + export tax) introduced in 2025-2026 session; both stalled; industry lobby continues to block",
+      "sourceDetail": "Prior Wolf-era budget proposals; PA Dept of Revenue analyses; SB910 and HB2129 (2025-2026 session); IFO impact fee revenue report (2025 fees: $243.9M)",
       "category": "new-revenue"
     },
     {
@@ -54,12 +54,12 @@
       "id": "data-center-exemption",
       "name": "End the data center tax exemption",
       "description": "Act 7 of 2017 (expanded by HB 952 in 2022) waives the 6% PA sales tax on data center equipment — a corporate giveaway that has grown significantly as Amazon ($20B Salem Township), Microsoft (Three Mile Island), and others build major facilities here. Repeal or sunset the exemption rather than give away the boom.",
-      "revenueLowUSD": 100000000,
-      "revenueMidUSD": 200000000,
-      "revenueHighUSD": 400000000,
-      "status": "concept",
-      "statusDetail": "No active repeal bill; would require sunsetting Act 7",
-      "sourceDetail": "Act 7 of 2017; HB 952 of 2022; PA Dept of Revenue exemption analyses",
+      "revenueLowUSD": 180000000,
+      "revenueMidUSD": 270000000,
+      "revenueHighUSD": 520000000,
+      "status": "active-bill",
+      "statusDetail": "HB 2198 (repeal) passed House 197-5; Senate passed similar language in HB 1667 44-6; both excluded from FY 2026-27 enacted budget signed July 12",
+      "sourceDetail": "PA Dept of Revenue February 2026 fiscal analysis (FY 2026 cost: $188.4M, projected $517M/yr by 2030); HB 2198; HB 1667",
       "category": "close-loophole"
     },
     {
@@ -69,9 +69,9 @@
       "revenueLowUSD": 200000000,
       "revenueMidUSD": 300000000,
       "revenueHighUSD": 400000000,
-      "status": "blocked",
-      "statusDetail": "Repeatedly proposed; opposed by business lobby",
-      "sourceDetail": "PA Dept of Revenue analyses; multiple gubernatorial budget proposals",
+      "status": "active-bill",
+      "statusDetail": "HB 1610 passed PA House 104-99 in June 2025; stalled in Republican-controlled Senate Finance Committee",
+      "sourceDetail": "Gov. Shapiro FY 2026-27 budget ($328.4M FY 2026-27 projection); PA Policy Center April 2026 Revenue & Tax Fairness analysis; HB 1610 (2025-2026 session)",
       "category": "close-loophole"
     },
     {
@@ -82,8 +82,8 @@
       "revenueMidUSD": 100000000,
       "revenueHighUSD": 200000000,
       "status": "concept",
-      "statusDetail": "Pre-bill stage; analogous proposals exist in OH and VA",
-      "sourceDetail": "Emerging policy area; ratepayer-advocate research",
+      "statusDetail": "Pre-bill stage; PA House passed HB 1834 (data center grid-cost protection bill, not a revenue surcharge) March 2026; per-MWh revenue surcharge concept still developing",
+      "sourceDetail": "PA House HB 1834 (passed March 2026); PA PUC data center tariff proceedings (2026); ratepayer-advocate research",
       "category": "close-loophole"
     }
   ]
