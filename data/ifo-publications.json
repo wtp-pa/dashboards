@@ -1,11 +1,18 @@
 {
   "schemaVersion": 1,
-  "lastUpdated": "2026-11-16T14:30:54+00:00",
+  "lastUpdated": "2026-11-23T17:05:46+00:00",
   "source": {
     "name": "PA Independent Fiscal Office",
     "url": "https://www.ifo.state.pa.us/"
   },
   "publications": [
+    {
+      "title": "Modest Out-Migration Continued in 2024",
+      "date": "2026-11-23",
+      "url": "https://www.ifo.state.pa.us/releases/978/Modest-Out-Migration-Continued-in-2024/",
+      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/IRS_Migration_RB_2026_11.pdf",
+      "summary": "This research brief examines IRS tax data to track\u00a0migration\u00a0between states for 2023 to 2024. The IRS data indicate net domestic\u00a0migration\u00a0for Pennsylvania was -7,172 (-0.05% of state population), which ranked 34th across all states. Large net inflows came from border states and \u2026"
+    },
     {
       "title": "Pennsylvania Fiscal Outlook: FY 2026-27 to FY 2031-32",
       "date": "2026-11-12",
@@ -33,13 +40,6 @@
       "url": "https://www.ifo.state.pa.us/releases/973/Fiscal-Outlook/",
       "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/2026_Fiscal_Outlook_Announcement_Final.pdf",
       "summary": "The IFO will release its long-term fiscal outlook for FY 2026-27\u00a0to FY 2031-32\u00a0on November 12 at 1:30 pm. The report will include an assessment of the General Fund surplus and Rainy Day Fund under current law and policies, and recommendations for the FY 2027-28 Executive Budget t\u2026"
-    },
-    {
-      "title": "Act 1 Index Forecast",
-      "date": "2026-11-02",
-      "url": "https://www.ifo.state.pa.us/releases/972/Act-1-Index-Forecast/",
-      "pdfUrl": "https://www.ifo.state.pa.us/Resources/Documents/Act_1_Index_Forecast_11_2026.pdf",
-      "summary": "The IFO released an updated forecast of the Act 1 Index, which limits school district property tax rate increases. The report projects the index through FY 2031-32 and provides an overview of recent usage of the index by school districts. ... (Full Report) - opens in a new tab"
     }
   ]
 }
